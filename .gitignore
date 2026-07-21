@@ -1,0 +1,11 @@
+.DS_Store
+.idea/
+*.iml
+
+# Kotlin Toolchain output
+/build/
+/.kotlin/
+/.amper/
+
+# Local upstream reference checkouts
+/projects/
