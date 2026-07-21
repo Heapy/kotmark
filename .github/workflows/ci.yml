@@ -22,6 +22,20 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v7.0.1
 
+      - name: Check out commonmark-java fixtures
+        uses: actions/checkout@v7.0.1
+        with:
+          repository: commonmark/commonmark-java
+          ref: 9477a93b6b0965efc54c55bd40ad88fbbe25bc6f
+          path: projects/commonmark-java
+
+      - name: Check out CommonMark specification
+        uses: actions/checkout@v7.0.1
+        with:
+          repository: commonmark/commonmark-spec
+          ref: 3da939428d80f146f270cd1765e4ba462e96bb1b
+          path: projects/commonmark-spec
+
       - name: Cache Kotlin Toolchain
         uses: actions/cache@v6.1.0
         with:
