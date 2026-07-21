@@ -47,4 +47,4 @@ jobs:
       - name: Run JVM tests
         env:
           KOTLIN_CLI_NO_WELCOME_BANNER: "1"
-        run: ./kotlin test --platform jvm
+        run: ./kotlin test --platform jvm --jvm-args=-Xss4m
