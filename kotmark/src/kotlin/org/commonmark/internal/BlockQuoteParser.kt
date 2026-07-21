@@ -1,0 +1,60 @@
+package org.commonmark.internal
+
+import org.commonmark.internal.util.Parsing
+import org.commonmark.node.Block
+import org.commonmark.node.BlockQuote
+import org.commonmark.parser.block.AbstractBlockParser
+import org.commonmark.parser.block.AbstractBlockParserFactory
+import org.commonmark.parser.block.BlockContinue
+import org.commonmark.parser.block.BlockStart
+import org.commonmark.parser.block.MatchedBlockParser
+import org.commonmark.parser.block.ParserState
+import org.commonmark.text.Characters
+
+class BlockQuoteParser : AbstractBlockParser() {
+    override val block: BlockQuote = BlockQuote()
+
+    override fun isContainer(): Boolean = true
+
+    override fun canContain(childBlock: Block): Boolean = true
+
+    override fun tryContinue(parserState: ParserState): BlockContinue? {
+        val nextNonSpace = parserState.nextNonSpaceIndex
+        if (!isMarker(parserState, nextNonSpace)) {
+            return BlockContinue.none()
+        }
+
+        var newColumn = parserState.column + parserState.indent + 1
+        if (Characters.isSpaceOrTab(parserState.line.content, nextNonSpace + 1)) {
+            newColumn++
+        }
+        return BlockContinue.atColumn(newColumn)
+    }
+
+    class Factory : AbstractBlockParserFactory() {
+        override fun tryStart(
+            state: ParserState,
+            matchedBlockParser: MatchedBlockParser,
+        ): BlockStart? {
+            val nextNonSpace = state.nextNonSpaceIndex
+            if (!isMarker(state, nextNonSpace)) {
+                return BlockStart.none()
+            }
+
+            var newColumn = state.column + state.indent + 1
+            if (Characters.isSpaceOrTab(state.line.content, nextNonSpace + 1)) {
+                newColumn++
+            }
+            return BlockStart.of(BlockQuoteParser()).atColumn(newColumn)
+        }
+    }
+
+    companion object {
+        private fun isMarker(state: ParserState, index: Int): Boolean {
+            val line = state.line.content
+            return state.indent < Parsing.CODE_BLOCK_INDENT &&
+                index < line.length &&
+                line[index] == '>'
+        }
+    }
+}
