@@ -1,0 +1,129 @@
+package org.commonmark.ext.autolink
+
+import org.commonmark.Extension
+import org.commonmark.node.Link
+import org.commonmark.node.Paragraph
+import org.commonmark.node.SoftLineBreak
+import org.commonmark.node.SourceSpan
+import org.commonmark.node.Text
+import org.commonmark.parser.IncludeSourceSpans
+import org.commonmark.parser.Parser
+import org.commonmark.renderer.html.HtmlRenderer
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
+import kotlin.test.assertIs
+
+class AutolinkTest {
+    private val extensions: List<Extension> = listOf(AutolinkExtension.create())
+    private val parser = Parser.builder().extensions(extensions).build()
+    private val renderer = HtmlRenderer.builder().extensions(extensions).build()
+
+    @Test
+    fun urlsEmailsAndWwwLinks() {
+        assertHtml(
+            "foo http://one.org/ bar http://two.org/",
+            "<p>foo <a href=\"http://one.org/\">http://one.org/</a> bar " +
+                "<a href=\"http://two.org/\">http://two.org/</a></p>\n",
+        )
+        assertHtml(
+            "foo http://one.org/ bar `code` baz http://two.org/",
+            "<p>foo <a href=\"http://one.org/\">http://one.org/</a> bar <code>code</code> baz " +
+                "<a href=\"http://two.org/\">http://two.org/</a></p>\n",
+        )
+        assertHtml(
+            "foo@example.com",
+            "<p><a href=\"mailto:foo@example.com\">foo@example.com</a></p>\n",
+        )
+        assertHtml("foo@com", "<p>foo@com</p>\n")
+        assertHtml(
+            "www.example.com",
+            "<p><a href=\"http://www.example.com\">www.example.com</a></p>\n",
+        )
+    }
+
+    @Test
+    fun trimsExtendedAutolinkPaths() {
+        assertHtml(
+            "http://example.com/one. Example 2 (see http://example.com/two). " +
+                "Example 3: http://example.com/foo_(bar)",
+            "<p><a href=\"http://example.com/one\">http://example.com/one</a>. " +
+                "Example 2 (see <a href=\"http://example.com/two\">http://example.com/two</a>). " +
+                "Example 3: <a href=\"http://example.com/foo_(bar)\">http://example.com/foo_(bar)</a></p>\n",
+        )
+        assertHtml(
+            "www.google.com/search?q=Markup+(business)))",
+            "<p><a href=\"http://www.google.com/search?q=Markup+(business)\">" +
+                "www.google.com/search?q=Markup+(business)</a>))</p>\n",
+        )
+        assertHtml(
+            "www.google.com/search?q=commonmark&hl;",
+            "<p><a href=\"http://www.google.com/search?q=commonmark\">" +
+                "www.google.com/search?q=commonmark</a>&amp;hl;</p>\n",
+        )
+    }
+
+    @Test
+    fun existingLinksAreNotNested() {
+        assertHtml(
+            "<http://example.com>",
+            "<p><a href=\"http://example.com\">http://example.com</a></p>\n",
+        )
+    }
+
+    @Test
+    fun linkTypesAreConfigurable() {
+        val extension =
+            AutolinkExtension.builder()
+                .linkTypes(AutolinkType.URL, AutolinkType.EMAIL)
+                .build()
+        val configuredParser = Parser.builder().extensions(listOf(extension)).build()
+        val configuredRenderer = HtmlRenderer.builder().extensions(listOf(extension)).build()
+        assertEquals(
+            "<p>www.example.com <a href=\"mailto:foo@example.com\">foo@example.com</a></p>\n",
+            configuredRenderer.render(
+                configuredParser.parse("www.example.com foo@example.com"),
+            ),
+        )
+        assertFailsWith<IllegalArgumentException> {
+            AutolinkExtension.builder().linkTypes(emptySet())
+        }
+    }
+
+    @Test
+    fun sourceSpansAreSplitWithTextNodes() {
+        val spansParser =
+            Parser.builder()
+                .extensions(extensions)
+                .includeSourceSpans(IncludeSourceSpans.BLOCKS_AND_INLINES)
+                .build()
+        val paragraph =
+            assertIs<Paragraph>(
+                spansParser.parse(
+                    "abc\nhttp://example.com/one\ndef http://example.com/two\n" +
+                        "ghi http://example.com/three jkl",
+                ).firstChild,
+            )
+        val abc = assertIs<Text>(paragraph.firstChild)
+        assertEquals(listOf(SourceSpan.of(0, 0, 0, 3)), abc.getSourceSpans())
+        assertIs<SoftLineBreak>(abc.next)
+        val one = assertIs<Link>(abc.next?.next)
+        assertEquals("http://example.com/one", one.destination)
+        assertEquals(listOf(SourceSpan.of(1, 0, 4, 22)), one.getSourceSpans())
+        val def = assertIs<Text>(one.next?.next)
+        assertEquals("def ", def.literal)
+        assertEquals(listOf(SourceSpan.of(2, 0, 27, 4)), def.getSourceSpans())
+        val two = assertIs<Link>(def.next)
+        assertEquals(listOf(SourceSpan.of(2, 4, 31, 22)), two.getSourceSpans())
+        val ghi = assertIs<Text>(two.next?.next)
+        val three = assertIs<Link>(ghi.next)
+        assertEquals(listOf(SourceSpan.of(3, 4, 58, 24)), three.getSourceSpans())
+        val jkl = assertIs<Text>(three.next)
+        assertEquals(" jkl", jkl.literal)
+        assertEquals(listOf(SourceSpan.of(3, 28, 82, 4)), jkl.getSourceSpans())
+    }
+
+    private fun assertHtml(source: String, expected: String) {
+        assertEquals(expected, renderer.render(parser.parse(source)))
+    }
+}
