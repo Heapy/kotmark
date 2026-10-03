@@ -14,7 +14,7 @@ description: Kotlin Multiplatform port of commonmark-java — Markdown parsing a
 
 settings:
   kotlin:
-    version: 2.3.20
+    version: 2.4.20
     languageVersion: 2.3
     apiVersion: 2.3
     allWarningsAsErrors: false
