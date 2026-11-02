@@ -1,0 +1,11 @@
+apply:
+  - //common.module-template.yaml
+
+product: jvm/app
+
+description: Coverage-guided Markdown robustness fuzzing (test infrastructure only).
+
+dependencies:
+  - //integration-test
+  - //kotmark
+  - com.code-intelligence:jazzer:0.30.0

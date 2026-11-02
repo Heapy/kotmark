@@ -117,6 +117,58 @@ only its own coordinate; `Finished` has no coordinate or Boolean flag.
 
 Run the complete JVM suite with `./kotlin test --platform jvm`.
 
+### Property tests and fuzzing
+
+The common integration suite includes deterministic property tests and mutation fuzz
+smoke tests for the core parser and all extensions together. It checks generated
+Markdown round trips, line-ending/NUL normalization, parser reuse, AST links,
+source-span bounds, and all three renderers. Arbitrary UTF-16 (including lone
+surrogates), mutations of pinned CommonMark examples, and truncated extension
+syntax exercise malformed input. These tests use `kotlin.random.Random` and
+`kotlin.test`, so they run on every supported target without a JVM-only property
+framework. Each run checks 1,500 generated cases plus all prefixes of the seed set.
+
+```shell
+./kotlin test --platform jvm -m integration-test
+```
+
+Seeds and iteration counts are in
+[`GeneratedMarkdownTest.kt`](integration-test/test/robustness/GeneratedMarkdownTest.kt).
+Failures report the seed, iteration, original input, and a bounded deletion-shrunk
+reproducer as UTF-16 escapes. Paste a reproducer into a focused regression test;
+rerun the same test to replay its fixed seed. VM errors escape immediately rather
+than being retried by the shrinker. Round-trip equality is checked on a bounded
+valid Markdown grammar; arbitrary malformed input is checked for structural and
+rendering consistency.
+
+For coverage-guided JVM fuzzing, the separate `fuzz` app uses pinned
+[Jazzer 0.30.0](https://github.com/CodeIntelligenceTesting/jazzer/tree/v0.30.0).
+It decodes mutated bytes as UTF-8 and runs the shared invariants with core syntax
+and all extensions, across all source-span modes. Jazzer dependencies belong only
+to the fuzz app. CI runs a 60-second campaign and uploads `build/fuzz/` with its
+corpus and any crash artifacts.
+
+```shell
+# Default 60-second campaign, seeded from common extension examples.
+./kotlin run -m fuzz --jvm-args="-Xmx1024m -Xss4m"
+
+# Longer campaign; the corpus persists between runs.
+./kotlin run -m fuzz --jvm-args="-Xmx1024m -Xss4m" -- -max_total_time=600 build/fuzz/corpus
+
+# Replay one saved crash, or minimize it (replace HASH with the actual filename).
+./kotlin run -m fuzz --jvm-args="-Xmx1024m -Xss4m" -- build/fuzz/crash-HASH
+./kotlin run -m fuzz --jvm-args="-Xmx1024m -Xss4m" -- -minimize_crash=1 build/fuzz/crash-HASH
+```
+
+Explicit arguments replace the default duration and corpus arguments; include a
+corpus directory for campaigns. Defaults cap inputs at 4 KiB, each input at
+10 seconds, and RSS at 2 GiB; Jazzer/libFuzzer flags can override these limits.
+Build outputs are ignored by Git. Promote minimized findings into committed
+regression tests before cleaning `build/`. A bounded smoke run supplements the
+specification suite; it does not establish absence of parser bugs.
+
+### Conformance and platform tests
+
 The specification and integration suites are common Kotlin tests on every target:
 both pinned CommonMark corpora (652 and 655 examples), the cmark and commonmark.js
 regressions, Markdown round trips, GFM table and alert examples, and integration

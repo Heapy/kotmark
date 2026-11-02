@@ -1,5 +1,6 @@
 modules:
   - ./autolink
+  - ./fuzz
   - ./integration-test
   - ./kotmark
   - ./kotmark-ext-autolink
