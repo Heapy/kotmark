@@ -2,12 +2,14 @@
 package io.heapy.kotmark.autolink
 
 import kotlin.test.Test
-import kotlin.test.assertEquals
 
 class AutolinkWwwTest : AutolinkTestCase() {
     @Test
     fun notLinkedConfiguration1() {
-        val extractor = LinkExtractor.builder().linkTypes(setOf(LinkType.WWW)).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = setOf(LinkType.WWW)
+            emailDomainMustHaveDot = true
+        }
         assertNotLinked(extractor, "")
         assertNotLinked(extractor, "wwwsomething.com")
         assertNotLinked(extractor, "ww.foo.com")
@@ -22,7 +24,10 @@ class AutolinkWwwTest : AutolinkTestCase() {
 
     @Test
     fun notLinkedConfiguration2() {
-        val extractor = LinkExtractor.builder().linkTypes(LinkType.entries.toSet()).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = LinkType.entries.toSet()
+            emailDomainMustHaveDot = true
+        }
         assertNotLinked(extractor, "")
         assertNotLinked(extractor, "wwwsomething.com")
         assertNotLinked(extractor, "ww.foo.com")
@@ -37,7 +42,10 @@ class AutolinkWwwTest : AutolinkTestCase() {
 
     @Test
     fun linkedConfiguration1() {
-        val extractor = LinkExtractor.builder().linkTypes(setOf(LinkType.WWW)).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = setOf(LinkType.WWW)
+            emailDomainMustHaveDot = true
+        }
         assertLinked(extractor, LinkType.WWW, "www.s.com", "|www.s.com|")
         assertLinked(extractor, LinkType.WWW, "www.fo.uk", "|www.fo.uk|")
         assertLinked(extractor, LinkType.WWW, "foo:www.fo.uk", "foo:|www.fo.uk|")
@@ -47,7 +55,10 @@ class AutolinkWwwTest : AutolinkTestCase() {
 
     @Test
     fun linkedConfiguration2() {
-        val extractor = LinkExtractor.builder().linkTypes(LinkType.entries.toSet()).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = LinkType.entries.toSet()
+            emailDomainMustHaveDot = true
+        }
         assertLinked(extractor, LinkType.WWW, "www.s.com", "|www.s.com|")
         assertLinked(extractor, LinkType.WWW, "www.fo.uk", "|www.fo.uk|")
         assertLinked(extractor, LinkType.WWW, "foo:www.fo.uk", "foo:|www.fo.uk|")
@@ -57,7 +68,10 @@ class AutolinkWwwTest : AutolinkTestCase() {
 
     @Test
     fun htmlConfiguration1() {
-        val extractor = LinkExtractor.builder().linkTypes(setOf(LinkType.WWW)).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = setOf(LinkType.WWW)
+            emailDomainMustHaveDot = true
+        }
         assertLinked(extractor, LinkType.WWW, """<a href="somelink">www.example.org</a>""", """<a href="somelink">|www.example.org|</a>""")
         assertLinked(extractor, LinkType.WWW, """<a href="www.example.org">sometext</a>""", """<a href="|www.example.org|">sometext</a>""")
         assertLinked(extractor, LinkType.WWW, "<p>www.example.org</p>", "<p>|www.example.org|</p>")
@@ -66,7 +80,10 @@ class AutolinkWwwTest : AutolinkTestCase() {
 
     @Test
     fun htmlConfiguration2() {
-        val extractor = LinkExtractor.builder().linkTypes(LinkType.entries.toSet()).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = LinkType.entries.toSet()
+            emailDomainMustHaveDot = true
+        }
         assertLinked(extractor, LinkType.WWW, """<a href="somelink">www.example.org</a>""", """<a href="somelink">|www.example.org|</a>""")
         assertLinked(extractor, LinkType.WWW, """<a href="www.example.org">sometext</a>""", """<a href="|www.example.org|">sometext</a>""")
         assertLinked(extractor, LinkType.WWW, "<p>www.example.org</p>", "<p>|www.example.org|</p>")
@@ -75,7 +92,10 @@ class AutolinkWwwTest : AutolinkTestCase() {
 
     @Test
     fun multipleConfiguration1() {
-        val extractor = LinkExtractor.builder().linkTypes(setOf(LinkType.WWW)).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = setOf(LinkType.WWW)
+            emailDomainMustHaveDot = true
+        }
         assertLinked(extractor, LinkType.WWW, "www.one.org/ www.two.org/", "|www.one.org/| |www.two.org/|")
         assertLinked(extractor, LinkType.WWW, "www.one.org/ : www.two.org/", "|www.one.org/| : |www.two.org/|")
         assertLinked(extractor, LinkType.WWW, "(www.one.org/)(www.two.org/)", "(|www.one.org/|)(|www.two.org/|)")
@@ -84,7 +104,10 @@ class AutolinkWwwTest : AutolinkTestCase() {
 
     @Test
     fun multipleConfiguration2() {
-        val extractor = LinkExtractor.builder().linkTypes(LinkType.entries.toSet()).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = LinkType.entries.toSet()
+            emailDomainMustHaveDot = true
+        }
         assertLinked(extractor, LinkType.WWW, "www.one.org/ www.two.org/", "|www.one.org/| |www.two.org/|")
         assertLinked(extractor, LinkType.WWW, "www.one.org/ : www.two.org/", "|www.one.org/| : |www.two.org/|")
         assertLinked(extractor, LinkType.WWW, "(www.one.org/)(www.two.org/)", "(|www.one.org/|)(|www.two.org/|)")
@@ -93,7 +116,10 @@ class AutolinkWwwTest : AutolinkTestCase() {
 
     @Test
     fun internationalConfiguration1() {
-        val extractor = LinkExtractor.builder().linkTypes(setOf(LinkType.WWW)).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = setOf(LinkType.WWW)
+            emailDomainMustHaveDot = true
+        }
         assertLinked(extractor, LinkType.WWW, "www.üñîçøðé.com/ä", "|www.üñîçøðé.com/ä|")
         assertLinked(extractor, LinkType.WWW, "www.example.org/\u00A1", "|www.example.org/\u00A1|")
         assertLinked(extractor, LinkType.WWW, "www.example.org/\u00A2", "|www.example.org/\u00A2|")
@@ -102,7 +128,10 @@ class AutolinkWwwTest : AutolinkTestCase() {
 
     @Test
     fun internationalConfiguration2() {
-        val extractor = LinkExtractor.builder().linkTypes(LinkType.entries.toSet()).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = LinkType.entries.toSet()
+            emailDomainMustHaveDot = true
+        }
         assertLinked(extractor, LinkType.WWW, "www.üñîçøðé.com/ä", "|www.üñîçøðé.com/ä|")
         assertLinked(extractor, LinkType.WWW, "www.example.org/\u00A1", "|www.example.org/\u00A1|")
         assertLinked(extractor, LinkType.WWW, "www.example.org/\u00A2", "|www.example.org/\u00A2|")
@@ -111,7 +140,10 @@ class AutolinkWwwTest : AutolinkTestCase() {
 
     @Test
     fun replyLevelConfiguration1() {
-        val extractor = LinkExtractor.builder().linkTypes(setOf(LinkType.WWW)).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = setOf(LinkType.WWW)
+            emailDomainMustHaveDot = true
+        }
         assertLinked(extractor, LinkType.WWW, ">www.example.org/", ">|www.example.org/|")
         assertLinked(extractor, LinkType.WWW, "> www.example.org/", "> |www.example.org/|")
         assertLinked(extractor, LinkType.WWW, ">>www.example.org/", ">>|www.example.org/|")
@@ -125,7 +157,10 @@ class AutolinkWwwTest : AutolinkTestCase() {
 
     @Test
     fun replyLevelConfiguration2() {
-        val extractor = LinkExtractor.builder().linkTypes(LinkType.entries.toSet()).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = LinkType.entries.toSet()
+            emailDomainMustHaveDot = true
+        }
         assertLinked(extractor, LinkType.WWW, ">www.example.org/", ">|www.example.org/|")
         assertLinked(extractor, LinkType.WWW, "> www.example.org/", "> |www.example.org/|")
         assertLinked(extractor, LinkType.WWW, ">>www.example.org/", ">>|www.example.org/|")
@@ -136,5 +171,4 @@ class AutolinkWwwTest : AutolinkTestCase() {
         assertLinked(extractor, LinkType.WWW, "> > > www.example.org/", "> > > |www.example.org/|")
 
     }
-
 }

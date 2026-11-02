@@ -23,9 +23,9 @@ import kotlin.test.assertEquals
 
 class SourceSpansTest {
     private val blocksParser =
-        Parser.builder().includeSourceSpans(IncludeSourceSpans.BLOCKS).build()
+        parser { includeSourceSpans = IncludeSourceSpans.BLOCKS }
     private val inlinesParser =
-        Parser.builder().includeSourceSpans(IncludeSourceSpans.BLOCKS_AND_INLINES).build()
+        parser { includeSourceSpans = IncludeSourceSpans.BLOCKS_AND_INLINES }
 
     @Test
     fun blockSpans() {

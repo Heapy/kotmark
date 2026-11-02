@@ -2,17 +2,18 @@
 // Copyright (c) 2015 Robin Stocker. BSD 2-Clause; see UPSTREAM.md.
 package io.heapy.kotmark.ext.autolink
 
-import io.heapy.kotmark.node.*
 import io.heapy.kotmark.parser.IncludeSourceSpans
-import io.heapy.kotmark.parser.Parser
-import io.heapy.kotmark.renderer.html.HtmlRenderer
+import io.heapy.kotmark.parser.parser
+import io.heapy.kotmark.renderer.html.htmlRenderer
+
+import io.heapy.kotmark.node.*
 import kotlin.test.*
 
 class UpstreamAutolinkTest {
     private val extensions = listOf(AutolinkExtension.create())
-    private val parser = Parser.builder().extensions(extensions).build()
-    private val renderer = HtmlRenderer.builder().extensions(extensions).build()
-    private val noWwwParser = Parser.builder().extensions(listOf(AutolinkExtension.builder().linkTypes(AutolinkType.URL, AutolinkType.EMAIL).build())).build()
+    private val parser = parser { extensions(extensions) }
+    private val renderer = htmlRenderer { extensions(extensions) }
+    private val noWwwParser = parser { extensions(listOf(autolinkExtension { linkTypes = setOf(AutolinkType.URL, AutolinkType.EMAIL) })) }
 
     @Test
     fun oneTextNode() {
@@ -74,10 +75,10 @@ class UpstreamAutolinkTest {
 
     @Test
     fun sourceSpans() {
-        val parser = Parser.builder()
-                .extensions(extensions)
-                .includeSourceSpans(IncludeSourceSpans.BLOCKS_AND_INLINES)
-                .build()
+        val parser = parser {
+            extensions(extensions)
+            includeSourceSpans = IncludeSourceSpans.BLOCKS_AND_INLINES
+        }
         val document = parser.parse("abc\n" +
                 """
                     |http://example.com/one

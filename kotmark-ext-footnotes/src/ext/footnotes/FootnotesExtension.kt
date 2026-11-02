@@ -1,6 +1,7 @@
 package io.heapy.kotmark.ext.footnotes
 
 import io.heapy.kotmark.Extension
+import io.heapy.kotmark.KotmarkDsl
 import io.heapy.kotmark.ext.footnotes.internal.FootnoteBlockParser
 import io.heapy.kotmark.ext.footnotes.internal.FootnoteHtmlNodeRenderer
 import io.heapy.kotmark.ext.footnotes.internal.FootnoteLinkProcessor
@@ -18,21 +19,20 @@ class FootnotesExtension private constructor(
 ) : Parser.ParserExtension,
     HtmlRenderer.HtmlRendererExtension,
     MarkdownRenderer.MarkdownRendererExtension {
-    override fun extend(parserBuilder: Parser.Builder) {
-        parserBuilder
-            .customBlockParserFactory(FootnoteBlockParser.Factory())
-            .linkProcessor(FootnoteLinkProcessor())
+    override fun extend(parserConfiguration: Parser.Configuration) {
+        parserConfiguration.customBlockParserFactory(FootnoteBlockParser.Factory())
+        parserConfiguration.linkProcessor(FootnoteLinkProcessor())
         if (inlineFootnotes) {
-            parserBuilder.linkMarker('^')
+            parserConfiguration.linkMarker('^')
         }
     }
 
-    override fun extend(rendererBuilder: HtmlRenderer.Builder) {
-        rendererBuilder.nodeRendererFactory(::FootnoteHtmlNodeRenderer)
+    override fun extend(rendererConfiguration: HtmlRenderer.Configuration) {
+        rendererConfiguration.nodeRendererFactory(::FootnoteHtmlNodeRenderer)
     }
 
-    override fun extend(rendererBuilder: MarkdownRenderer.Builder) {
-        rendererBuilder.nodeRendererFactory(
+    override fun extend(rendererConfiguration: MarkdownRenderer.Configuration) {
+        rendererConfiguration.nodeRendererFactory(
             object : MarkdownNodeRendererFactory {
                 override val specialCharacters: Set<Char> = emptySet()
 
@@ -42,21 +42,19 @@ class FootnotesExtension private constructor(
         )
     }
 
-    class Builder internal constructor() {
-        private var inlineFootnotes = false
+    @KotmarkDsl
+    class Configuration internal constructor() {
+        var inlineFootnotes = false
 
-        fun inlineFootnotes(inlineFootnotes: Boolean): Builder = apply {
-            this.inlineFootnotes = inlineFootnotes
-        }
-
-        fun build(): FootnotesExtension = FootnotesExtension(inlineFootnotes)
+        internal fun create(): FootnotesExtension = FootnotesExtension(inlineFootnotes)
     }
 
     companion object {
         @JvmStatic
-        fun create(): Extension = builder().build()
-
-        @JvmStatic
-        fun builder(): Builder = Builder()
+        fun create(): Extension = footnotesExtension()
     }
 }
+
+/** Creates [FootnotesExtension] with the supplied configuration. */
+fun footnotesExtension(configure: FootnotesExtension.Configuration.() -> Unit = {}): FootnotesExtension =
+    FootnotesExtension.Configuration().apply(configure).create()

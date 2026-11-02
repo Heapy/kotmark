@@ -1,13 +1,13 @@
 package io.heapy.kotmark.test
 
-import io.heapy.kotmark.parser.Parser
-import io.heapy.kotmark.renderer.html.HtmlRenderer
+import io.heapy.kotmark.parser.parser
+import io.heapy.kotmark.renderer.html.htmlRenderer
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class PathologicalTest {
-    private val parser = Parser.builder().build()
-    private val renderer = HtmlRenderer.builder().build()
+    private val parser = parser()
+    private val renderer = htmlRenderer()
     private val size = 100_000
 
     @Test

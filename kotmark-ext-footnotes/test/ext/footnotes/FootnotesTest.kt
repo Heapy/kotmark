@@ -10,7 +10,7 @@ import io.heapy.kotmark.node.Paragraph
 import io.heapy.kotmark.node.SourceSpan
 import io.heapy.kotmark.node.Text
 import io.heapy.kotmark.parser.IncludeSourceSpans
-import io.heapy.kotmark.parser.Parser
+import io.heapy.kotmark.parser.parser
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
@@ -18,7 +18,7 @@ import kotlin.test.assertNull
 
 class FootnotesTest {
     private val extensions: List<Extension> = listOf(FootnotesExtension.create())
-    private val parser = Parser.builder().extensions(extensions).build()
+    private val parser = parser { extensions(extensions) }
 
     @Test
     fun definitionSyntaxAndContents() {
@@ -83,8 +83,8 @@ class FootnotesTest {
 
     @Test
     fun inlineFootnotesParseFullInlineContent() {
-        val extension = FootnotesExtension.builder().inlineFootnotes(true).build()
-        val inlineParser = Parser.builder().extensions(listOf(extension)).build()
+        val extension = footnotesExtension { inlineFootnotes = true }
+        val inlineParser = parser { extensions(listOf(extension)) }
         val inline = find<InlineFootnote>(inlineParser.parse("Test ^[inline *footnote*]"))
         assertEquals("inline ", (inline.firstChild as Text).literal)
         assertIs<Emphasis>(inline.lastChild)
@@ -100,10 +100,10 @@ class FootnotesTest {
     @Test
     fun sourceSpans() {
         val spansParser =
-            Parser.builder()
-                .extensions(extensions)
-                .includeSourceSpans(IncludeSourceSpans.BLOCKS_AND_INLINES)
-                .build()
+            parser {
+                extensions(extensions)
+                includeSourceSpans = IncludeSourceSpans.BLOCKS_AND_INLINES
+            }
         val document = spansParser.parse("Test [^foo]\n\n[^foo]: /url\n")
         assertEquals(
             listOf(SourceSpan.of(0, 5, 5, 6)),

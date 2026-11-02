@@ -2,23 +2,19 @@ package io.heapy.kotmark.renderer.text
 
 import io.heapy.kotmark.node.Link
 import io.heapy.kotmark.node.Node
-import io.heapy.kotmark.parser.Parser
+import io.heapy.kotmark.parser.parser
 import io.heapy.kotmark.renderer.NodeRenderer
 import kotlin.reflect.KClass
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class TextContentRendererTest {
-    private val parser = Parser.builder().build()
-    private val compact = TextContentRenderer.builder().build()
+    private val parser = parser()
+    private val compact = textContentRenderer()
     private val separate =
-        TextContentRenderer.builder()
-            .lineBreakRendering(LineBreakRendering.SEPARATE_BLOCKS)
-            .build()
+        textContentRenderer { lineBreakRendering = LineBreakRendering.SEPARATE_BLOCKS }
     private val stripped =
-        TextContentRenderer.builder()
-            .lineBreakRendering(LineBreakRendering.STRIP)
-            .build()
+        textContentRenderer { lineBreakRendering = LineBreakRendering.STRIP }
 
     @Test
     fun textHeadingsEmphasisAndQuotes() {
@@ -327,7 +323,7 @@ class TextContentRendererTest {
                     }
                 }
             }
-        val renderer = TextContentRenderer.builder().nodeRendererFactory(factory).build()
+        val renderer = textContentRenderer { nodeRendererFactory(factory) }
         assertEquals(
             """Hi "Example"""",
             renderer.render(parser.parse("Hi [Example](https://example.com)")),
@@ -360,5 +356,4 @@ class TextContentRendererTest {
     private fun assertAll(source: String, expected: String) {
         assertModes(source, expected, expected, expected)
     }
-
 }

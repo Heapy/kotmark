@@ -9,12 +9,12 @@ import kotlin.test.assertTrue
 class LinkExtractorTest {
     @Test
     fun emptyInputAndDisabledTypes() {
-        val extractor = LinkExtractor.builder().build()
+        val extractor = linkExtractor()
         assertFalse(extractor.extractLinks("").iterator().hasNext())
         assertFalse(extractor.extractSpans("").iterator().hasNext())
         assertFailsWith<NoSuchElementException> { extractor.extractLinks("").iterator().next() }
         assertFailsWith<NoSuchElementException> { extractor.extractSpans("").iterator().next() }
-        val disabled = LinkExtractor.builder().linkTypes(emptySet()).build()
+        val disabled = linkExtractor { linkTypes = emptySet() }
         val input = "http://example.com www.example.com foo@example.com"
         assertTrue(disabled.extractLinks(input).none())
         val span = disabled.extractSpans(input).single()
@@ -25,10 +25,13 @@ class LinkExtractorTest {
     @Test
     fun configurationAndIteratorsAreIndependent() {
         val types = mutableSetOf(LinkType.URL)
-        val builder = LinkExtractor.builder().linkTypes(types)
-        types.clear()
-        val extractor = builder.build()
-        builder.linkTypes(setOf(LinkType.EMAIL))
+        lateinit var configuration: LinkExtractor.Configuration
+        val extractor = linkExtractor {
+            configuration = this
+            linkTypes = types
+            types.clear()
+        }
+        configuration.linkTypes = setOf(LinkType.EMAIL)
         val links = extractor.extractLinks("http://one.org http://two.org a@example.com")
         val first = links.iterator()
         val second = links.iterator()
@@ -41,7 +44,7 @@ class LinkExtractorTest {
 
     @Test
     fun utf16IndicesAndSurrogates() {
-        val extractor = LinkExtractor.builder().build()
+        val extractor = linkExtractor()
         for (suffix in listOf("\uD83D\uDE00", "\uD800", "\uDC00")) {
             val url = "https://example.com/$suffix"
             val input = "\uD83D\uDE00 $url tail"
@@ -58,7 +61,7 @@ class LinkExtractorTest {
 
     @Test
     fun uppercaseWwwIsNotAnUpstreamLink() {
-        val extractor = LinkExtractor.builder().build()
+        val extractor = linkExtractor()
         assertTrue(extractor.extractLinks("WWW.example.com wWw.example.com").none())
     }
 }

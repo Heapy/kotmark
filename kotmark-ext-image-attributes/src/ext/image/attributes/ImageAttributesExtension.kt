@@ -10,12 +10,12 @@ import kotlin.jvm.JvmStatic
 class ImageAttributesExtension private constructor() :
     Parser.ParserExtension,
     HtmlRenderer.HtmlRendererExtension {
-    override fun extend(parserBuilder: Parser.Builder) {
-        parserBuilder.customDelimiterProcessor(ImageAttributesDelimiterProcessor())
+    override fun extend(parserConfiguration: Parser.Configuration) {
+        parserConfiguration.customDelimiterProcessor(ImageAttributesDelimiterProcessor())
     }
 
-    override fun extend(rendererBuilder: HtmlRenderer.Builder) {
-        rendererBuilder.attributeProviderFactory { ImageAttributesAttributeProvider.create() }
+    override fun extend(rendererConfiguration: HtmlRenderer.Configuration) {
+        rendererConfiguration.attributeProviderFactory { ImageAttributesAttributeProvider.create() }
     }
 
     companion object {

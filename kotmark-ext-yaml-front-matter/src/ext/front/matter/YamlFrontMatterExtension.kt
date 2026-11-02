@@ -13,12 +13,12 @@ import kotlin.jvm.JvmStatic
 class YamlFrontMatterExtension private constructor() :
     Parser.ParserExtension,
     MarkdownRenderer.MarkdownRendererExtension {
-    override fun extend(parserBuilder: Parser.Builder) {
-        parserBuilder.customBlockParserFactory(YamlFrontMatterBlockParser.Factory())
+    override fun extend(parserConfiguration: Parser.Configuration) {
+        parserConfiguration.customBlockParserFactory(YamlFrontMatterBlockParser.Factory())
     }
 
-    override fun extend(rendererBuilder: MarkdownRenderer.Builder) {
-        rendererBuilder.nodeRendererFactory(
+    override fun extend(rendererConfiguration: MarkdownRenderer.Configuration) {
+        rendererConfiguration.nodeRendererFactory(
             object : MarkdownNodeRendererFactory {
                 override val specialCharacters: Set<Char> = emptySet()
 

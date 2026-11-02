@@ -1,7 +1,7 @@
 package io.heapy.kotmark.ext.gfm.alerts
 
-import io.heapy.kotmark.parser.Parser
-import io.heapy.kotmark.renderer.html.HtmlRenderer
+import io.heapy.kotmark.parser.parser
+import io.heapy.kotmark.renderer.html.htmlRenderer
 import io.heapy.kotmark.testfixtures.example.ExampleReader
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -11,12 +11,12 @@ class AlertsSpecTest {
     @Test
     fun upstreamAlertsSpec() {
         val extension = AlertsExtension.create()
-        val parser = Parser.builder().extensions(listOf(extension)).build()
+        val parser = parser { extensions(listOf(extension)) }
         val renderer =
-            HtmlRenderer.builder()
-                .extensions(listOf(extension))
-                .softbreak("<br>\n")
-                .build()
+            htmlRenderer {
+                extensions(listOf(extension))
+                softbreak = "<br>\n"
+            }
         val examples = ExampleReader.readExamples("commonmark-java/alerts-spec.txt")
 
         val failures = mutableListOf<String>()

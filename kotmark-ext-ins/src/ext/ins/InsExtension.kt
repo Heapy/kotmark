@@ -19,20 +19,20 @@ class InsExtension private constructor() :
     HtmlRenderer.HtmlRendererExtension,
     TextContentRenderer.TextContentRendererExtension,
     MarkdownRenderer.MarkdownRendererExtension {
-    override fun extend(parserBuilder: Parser.Builder) {
-        parserBuilder.customDelimiterProcessor(InsDelimiterProcessor())
+    override fun extend(parserConfiguration: Parser.Configuration) {
+        parserConfiguration.customDelimiterProcessor(InsDelimiterProcessor())
     }
 
-    override fun extend(rendererBuilder: HtmlRenderer.Builder) {
-        rendererBuilder.nodeRendererFactory(::InsHtmlNodeRenderer)
+    override fun extend(rendererConfiguration: HtmlRenderer.Configuration) {
+        rendererConfiguration.nodeRendererFactory(::InsHtmlNodeRenderer)
     }
 
-    override fun extend(rendererBuilder: TextContentRenderer.Builder) {
-        rendererBuilder.nodeRendererFactory(::InsTextContentNodeRenderer)
+    override fun extend(rendererConfiguration: TextContentRenderer.Configuration) {
+        rendererConfiguration.nodeRendererFactory(::InsTextContentNodeRenderer)
     }
 
-    override fun extend(rendererBuilder: MarkdownRenderer.Builder) {
-        rendererBuilder.nodeRendererFactory(
+    override fun extend(rendererConfiguration: MarkdownRenderer.Configuration) {
+        rendererConfiguration.nodeRendererFactory(
             object : MarkdownNodeRendererFactory {
                 override val specialCharacters: Set<Char> = setOf('+')
 

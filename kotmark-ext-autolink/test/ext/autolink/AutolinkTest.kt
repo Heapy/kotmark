@@ -7,8 +7,8 @@ import io.heapy.kotmark.node.SoftLineBreak
 import io.heapy.kotmark.node.SourceSpan
 import io.heapy.kotmark.node.Text
 import io.heapy.kotmark.parser.IncludeSourceSpans
-import io.heapy.kotmark.parser.Parser
-import io.heapy.kotmark.renderer.html.HtmlRenderer
+import io.heapy.kotmark.parser.parser
+import io.heapy.kotmark.renderer.html.htmlRenderer
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -16,8 +16,8 @@ import kotlin.test.assertIs
 
 class AutolinkTest {
     private val extensions: List<Extension> = listOf(AutolinkExtension.create())
-    private val parser = Parser.builder().extensions(extensions).build()
-    private val renderer = HtmlRenderer.builder().extensions(extensions).build()
+    private val parser = parser { extensions(extensions) }
+    private val renderer = htmlRenderer { extensions(extensions) }
 
     @Test
     fun arbitrarySchemesAndUserInfo() {
@@ -100,11 +100,9 @@ class AutolinkTest {
     @Test
     fun linkTypesAreConfigurable() {
         val extension =
-            AutolinkExtension.builder()
-                .linkTypes(AutolinkType.URL, AutolinkType.EMAIL)
-                .build()
-        val configuredParser = Parser.builder().extensions(listOf(extension)).build()
-        val configuredRenderer = HtmlRenderer.builder().extensions(listOf(extension)).build()
+            autolinkExtension { linkTypes = setOf(AutolinkType.URL, AutolinkType.EMAIL) }
+        val configuredParser = parser { extensions(listOf(extension)) }
+        val configuredRenderer = htmlRenderer { extensions(listOf(extension)) }
         assertEquals(
             """<p>www.example.com <a href="mailto:foo@example.com">foo@example.com</a></p>""" + "\n",
             configuredRenderer.render(
@@ -112,17 +110,17 @@ class AutolinkTest {
             ),
         )
         assertFailsWith<IllegalArgumentException> {
-            AutolinkExtension.builder().linkTypes(emptySet())
+            autolinkExtension { linkTypes = emptySet() }
         }
     }
 
     @Test
     fun sourceSpansAreSplitWithTextNodes() {
         val spansParser =
-            Parser.builder()
-                .extensions(extensions)
-                .includeSourceSpans(IncludeSourceSpans.BLOCKS_AND_INLINES)
-                .build()
+            parser {
+                extensions(extensions)
+                includeSourceSpans = IncludeSourceSpans.BLOCKS_AND_INLINES
+            }
         val paragraph =
             assertIs<Paragraph>(
                 spansParser.parse(

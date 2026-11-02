@@ -1,7 +1,7 @@
 package io.heapy.kotmark.ext.autolink
 
-import io.heapy.kotmark.parser.Parser
-import io.heapy.kotmark.renderer.html.HtmlRenderer
+import io.heapy.kotmark.parser.parser
+import io.heapy.kotmark.renderer.html.htmlRenderer
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -9,8 +9,8 @@ class AutolinkSpecTest {
     @Test
     fun matchesUpstreamOnGfmCorpus() {
         val extensions = listOf(AutolinkExtension.create())
-        val parser = Parser.builder().extensions(extensions).build()
-        val renderer = HtmlRenderer.builder().extensions(extensions).build()
+        val parser = parser { extensions(extensions) }
+        val renderer = htmlRenderer { extensions(extensions) }
         assertEquals(11, gfmAutolinkExamples.size)
         for (example in gfmAutolinkExamples) {
             assertEquals(example.upstreamHtml, renderer.render(parser.parse(example.source)), "GFM example ${example.number}")

@@ -1,13 +1,13 @@
 package io.heapy.kotmark.ext.heading.anchor
 
+import io.heapy.kotmark.KotmarkDsl
 import io.heapy.kotmark.internal.util.UnicodeCategories
-import kotlin.jvm.JvmStatic
 
-class IdGenerator private constructor(builder: Builder) {
+class IdGenerator private constructor(configuration: Configuration) {
     private val identities = mutableMapOf<String, Int>()
-    private val defaultIdentifier = builder.defaultIdentifier
-    private val prefix = builder.prefix
-    private val suffix = builder.suffix
+    private val defaultIdentifier = configuration.defaultId
+    private val prefix = configuration.prefix
+    private val suffix = configuration.suffix
 
     fun generateId(text: String?): String {
         var normalized = text?.let(::normalizeText) ?: defaultIdentifier
@@ -46,24 +46,13 @@ class IdGenerator private constructor(builder: Builder) {
             }
         }
 
-    class Builder internal constructor() {
-        internal var defaultIdentifier = "id"
-        internal var prefix = ""
-        internal var suffix = ""
+    @KotmarkDsl
+    class Configuration internal constructor() {
+        var defaultId = "id"
+        var prefix = ""
+        var suffix = ""
 
-        fun defaultId(defaultId: String): Builder = apply {
-            defaultIdentifier = defaultId
-        }
-
-        fun prefix(prefix: String): Builder = apply {
-            this.prefix = prefix
-        }
-
-        fun suffix(suffix: String): Builder = apply {
-            this.suffix = suffix
-        }
-
-        fun build(): IdGenerator = IdGenerator(this)
+        internal fun create(): IdGenerator = IdGenerator(this)
     }
 
     companion object {
@@ -74,8 +63,9 @@ class IdGenerator private constructor(builder: Builder) {
             CharCategory.NON_SPACING_MARK, CharCategory.COMBINING_SPACING_MARK,
             CharCategory.ENCLOSING_MARK, CharCategory.CONNECTOR_PUNCTUATION,
         )
-
-        @JvmStatic
-        fun builder(): Builder = Builder()
     }
 }
+
+/** Creates [IdGenerator] with the supplied configuration. */
+fun idGenerator(configure: IdGenerator.Configuration.() -> Unit = {}): IdGenerator =
+    IdGenerator.Configuration().apply(configure).create()

@@ -1,16 +1,16 @@
 package io.heapy.kotmark.renderer.markdown
 
 import io.heapy.kotmark.Extension
+import io.heapy.kotmark.KotmarkDsl
 import io.heapy.kotmark.internal.renderer.NodeRendererMap
 import io.heapy.kotmark.node.Node
 import io.heapy.kotmark.renderer.NodeRenderer
 import io.heapy.kotmark.renderer.Renderer
-import kotlin.jvm.JvmStatic
 
-class MarkdownRenderer private constructor(builder: Builder) : Renderer {
+class MarkdownRenderer private constructor(configuration: Configuration) : Renderer {
     private val nodeRendererFactories =
         buildList {
-            addAll(builder.nodeRendererFactories)
+            addAll(configuration.nodeRendererFactories)
             add(
                 object : MarkdownNodeRendererFactory {
                     override fun create(context: MarkdownNodeRendererContext): NodeRenderer =
@@ -30,18 +30,19 @@ class MarkdownRenderer private constructor(builder: Builder) : Renderer {
             render(node, this)
         }
 
-    class Builder internal constructor() {
+    @KotmarkDsl
+    class Configuration internal constructor() {
         internal val nodeRendererFactories = mutableListOf<MarkdownNodeRendererFactory>()
 
-        fun build(): MarkdownRenderer = MarkdownRenderer(this)
+        internal fun create(): MarkdownRenderer = MarkdownRenderer(this)
 
         fun nodeRendererFactory(
             nodeRendererFactory: MarkdownNodeRendererFactory,
-        ): Builder = apply {
+        ) {
             nodeRendererFactories.add(nodeRendererFactory)
         }
 
-        fun extensions(extensions: Iterable<Extension>): Builder = apply {
+        fun extensions(extensions: Iterable<Extension>) {
             for (extension in extensions) {
                 if (extension is MarkdownRendererExtension) {
                     extension.extend(this)
@@ -51,7 +52,7 @@ class MarkdownRenderer private constructor(builder: Builder) : Renderer {
     }
 
     fun interface MarkdownRendererExtension : Extension {
-        fun extend(rendererBuilder: Builder)
+        fun extend(rendererConfiguration: Configuration)
     }
 
     private inner class RendererContext(
@@ -75,9 +76,8 @@ class MarkdownRenderer private constructor(builder: Builder) : Renderer {
             nodeRendererMap.render(node)
         }
     }
-
-    companion object {
-        @JvmStatic
-        fun builder(): Builder = Builder()
-    }
 }
+
+/** Creates [MarkdownRenderer] with the supplied configuration. */
+fun markdownRenderer(configure: MarkdownRenderer.Configuration.() -> Unit = {}): MarkdownRenderer =
+    MarkdownRenderer.Configuration().apply(configure).create()

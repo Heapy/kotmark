@@ -1,47 +1,38 @@
 package io.heapy.kotmark.ext.heading.anchor
 
 import io.heapy.kotmark.Extension
+import io.heapy.kotmark.KotmarkDsl
 import io.heapy.kotmark.ext.heading.anchor.internal.HeadingIdAttributeProvider
 import io.heapy.kotmark.renderer.html.HtmlRenderer
 import kotlin.jvm.JvmStatic
 
-class HeadingAnchorExtension private constructor(builder: Builder) :
+class HeadingAnchorExtension private constructor(configuration: Configuration) :
     HtmlRenderer.HtmlRendererExtension {
-    private val defaultId = builder.defaultId
-    private val idPrefix = builder.idPrefix
-    private val idSuffix = builder.idSuffix
+    private val defaultId = configuration.defaultId
+    private val idPrefix = configuration.idPrefix
+    private val idSuffix = configuration.idSuffix
 
-    override fun extend(rendererBuilder: HtmlRenderer.Builder) {
-        rendererBuilder.attributeProviderFactory {
+    override fun extend(rendererConfiguration: HtmlRenderer.Configuration) {
+        rendererConfiguration.attributeProviderFactory {
             HeadingIdAttributeProvider.create(defaultId, idPrefix, idSuffix)
         }
     }
 
-    class Builder internal constructor() {
-        internal var defaultId = "id"
-        internal var idPrefix = ""
-        internal var idSuffix = ""
+    @KotmarkDsl
+    class Configuration internal constructor() {
+        var defaultId = "id"
+        var idPrefix = ""
+        var idSuffix = ""
 
-        fun defaultId(value: String): Builder = apply {
-            defaultId = value
-        }
-
-        fun idPrefix(value: String): Builder = apply {
-            idPrefix = value
-        }
-
-        fun idSuffix(value: String): Builder = apply {
-            idSuffix = value
-        }
-
-        fun build(): Extension = HeadingAnchorExtension(this)
+        internal fun create(): HeadingAnchorExtension = HeadingAnchorExtension(this)
     }
 
     companion object {
         @JvmStatic
-        fun create(): Extension = HeadingAnchorExtension(Builder())
-
-        @JvmStatic
-        fun builder(): Builder = Builder()
+        fun create(): Extension = headingAnchorExtension()
     }
 }
+
+/** Creates [HeadingAnchorExtension] with the supplied configuration. */
+fun headingAnchorExtension(configure: HeadingAnchorExtension.Configuration.() -> Unit = {}): HeadingAnchorExtension =
+    HeadingAnchorExtension.Configuration().apply(configure).create()

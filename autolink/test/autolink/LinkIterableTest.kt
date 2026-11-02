@@ -26,5 +26,5 @@ class LinkIterableTest {
     }
 
     private fun getSingleLinkIterable(): Iterable<LinkSpan> =
-        LinkExtractor.builder().build().extractLinks("foo http://example.com")
+        linkExtractor().extractLinks("foo http://example.com")
 }

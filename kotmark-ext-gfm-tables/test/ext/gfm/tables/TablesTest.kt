@@ -3,19 +3,19 @@ package io.heapy.kotmark.ext.gfm.tables
 import io.heapy.kotmark.Extension
 import io.heapy.kotmark.node.SourceSpan
 import io.heapy.kotmark.parser.IncludeSourceSpans
-import io.heapy.kotmark.parser.Parser
-import io.heapy.kotmark.renderer.html.HtmlRenderer
-import io.heapy.kotmark.renderer.markdown.MarkdownRenderer
+import io.heapy.kotmark.parser.parser
+import io.heapy.kotmark.renderer.html.htmlRenderer
+import io.heapy.kotmark.renderer.markdown.markdownRenderer
 import io.heapy.kotmark.renderer.text.LineBreakRendering
-import io.heapy.kotmark.renderer.text.TextContentRenderer
+import io.heapy.kotmark.renderer.text.textContentRenderer
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
 
 class TablesTest {
     private val extensions: List<Extension> = listOf(TablesExtension.create())
-    private val parser = Parser.builder().extensions(extensions).build()
-    private val html = HtmlRenderer.builder().extensions(extensions).build()
+    private val parser = parser { extensions(extensions) }
+    private val html = htmlRenderer { extensions(extensions) }
 
     @Test
     fun tableSyntaxAndAlignment() {
@@ -111,7 +111,7 @@ class TablesTest {
 
     @Test
     fun markdownRoundTripsCanonicalTables() {
-        val markdown = MarkdownRenderer.builder().extensions(extensions).build()
+        val markdown = markdownRenderer { extensions(extensions) }
         for (
             input in
                 listOf(
@@ -186,10 +186,10 @@ class TablesTest {
     @Test
     fun cellMetadataAndSourceSpans() {
         val spansParser =
-            Parser.builder()
-                .extensions(extensions)
-                .includeSourceSpans(IncludeSourceSpans.BLOCKS_AND_INLINES)
-                .build()
+            parser {
+                extensions(extensions)
+                includeSourceSpans = IncludeSourceSpans.BLOCKS_AND_INLINES
+            }
         val table =
             assertIs<TableBlock>(
                 spansParser.parse("Abc|Def\n-----|:---:\n|1|2\n").firstChild,
@@ -217,8 +217,8 @@ class TablesTest {
     @Test
     fun attributeProvidersSeeAllTableNodes() {
         val renderer =
-            HtmlRenderer.builder()
-                .attributeProviderFactory {
+            htmlRenderer {
+                attributeProviderFactory {
                     { node, _, attributes ->
                         val value =
                             when (node) {
@@ -232,8 +232,8 @@ class TablesTest {
                         value?.let { attributes["test"] = it }
                     }
                 }
-                .extensions(extensions)
-                .build()
+                extensions(extensions)
+            }
         assertEquals(
             """
                 |<table test="block">
@@ -256,10 +256,10 @@ class TablesTest {
 
     private fun assertText(source: String, mode: LineBreakRendering, expected: String) {
         val renderer =
-            TextContentRenderer.builder()
-                .extensions(extensions)
-                .lineBreakRendering(mode)
-                .build()
+            textContentRenderer {
+                extensions(extensions)
+                lineBreakRendering = mode
+            }
         assertEquals(expected, renderer.render(parser.parse(source)))
     }
 

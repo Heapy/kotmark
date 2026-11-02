@@ -7,7 +7,7 @@ import io.heapy.kotmark.parser.beta.InlineParserState
 import io.heapy.kotmark.parser.beta.ParsedInline
 import io.heapy.kotmark.parser.beta.Position
 import io.heapy.kotmark.parser.beta.Scanner
-import io.heapy.kotmark.text.AsciiMatcher
+import io.heapy.kotmark.text.asciiMatcher
 
 class HtmlInlineParser : InlineContentParser {
     override fun tryParse(inlineParserState: InlineParserState): ParsedInline? {
@@ -40,18 +40,41 @@ class HtmlInlineParser : InlineContentParser {
     }
 
     companion object {
-        private val ASCII_LETTER = AsciiMatcher.builder().range('A', 'Z').range('a', 'z').build()
+        private val ASCII_LETTER = asciiMatcher {
+            range('A', 'Z')
+            range('a', 'z')
+        }
         private val TAG_NAME_START = ASCII_LETTER
         private val TAG_NAME_CONTINUE =
-            TAG_NAME_START.newBuilder().range('0', '9').c('-').build()
+            asciiMatcher(TAG_NAME_START) {
+                range('0', '9')
+                c('-')
+            }
         private val ATTRIBUTE_START =
-            ASCII_LETTER.newBuilder().c('_').c(':').build()
+            asciiMatcher(ASCII_LETTER) {
+                c('_')
+                c(':')
+            }
         private val ATTRIBUTE_CONTINUE =
-            ATTRIBUTE_START.newBuilder().range('0', '9').c('.').c('-').build()
-        private val ATTRIBUTE_VALUE_END = AsciiMatcher.builder()
-            .c(' ').c('\t').c('\n').c('\u000B').c('\u000C').c('\r')
-            .c('"').c('\'').c('=').c('<').c('>').c('`')
-            .build()
+            asciiMatcher(ATTRIBUTE_START) {
+                range('0', '9')
+                c('.')
+                c('-')
+            }
+        private val ATTRIBUTE_VALUE_END = asciiMatcher {
+            c(' ')
+            c('\t')
+            c('\n')
+            c('\u000B')
+            c('\u000C')
+            c('\r')
+            c('"')
+            c('\'')
+            c('=')
+            c('<')
+            c('>')
+            c('`')
+        }
 
         private fun htmlInline(start: Position, scanner: Scanner): ParsedInline {
             val node = HtmlInline()

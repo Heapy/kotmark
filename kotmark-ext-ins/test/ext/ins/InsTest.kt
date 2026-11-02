@@ -4,19 +4,19 @@ import io.heapy.kotmark.Extension
 import io.heapy.kotmark.node.Paragraph
 import io.heapy.kotmark.node.SourceSpan
 import io.heapy.kotmark.parser.IncludeSourceSpans
-import io.heapy.kotmark.parser.Parser
-import io.heapy.kotmark.renderer.html.HtmlRenderer
-import io.heapy.kotmark.renderer.markdown.MarkdownRenderer
-import io.heapy.kotmark.renderer.text.TextContentRenderer
+import io.heapy.kotmark.parser.parser
+import io.heapy.kotmark.renderer.html.htmlRenderer
+import io.heapy.kotmark.renderer.markdown.markdownRenderer
+import io.heapy.kotmark.renderer.text.textContentRenderer
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class InsTest {
     private val extensions: List<Extension> = listOf(InsExtension.create())
-    private val parser = Parser.builder().extensions(extensions).build()
-    private val html = HtmlRenderer.builder().extensions(extensions).build()
-    private val text = TextContentRenderer.builder().extensions(extensions).build()
-    private val markdown = MarkdownRenderer.builder().extensions(extensions).build()
+    private val parser = parser { extensions(extensions) }
+    private val html = htmlRenderer { extensions(extensions) }
+    private val text = textContentRenderer { extensions(extensions) }
+    private val markdown = markdownRenderer { extensions(extensions) }
 
     @Test
     fun syntaxAndRendering() {
@@ -61,10 +61,10 @@ class InsTest {
         }
 
         val spansParser =
-            Parser.builder()
-                .extensions(extensions)
-                .includeSourceSpans(IncludeSourceSpans.BLOCKS_AND_INLINES)
-                .build()
+            parser {
+                extensions(extensions)
+                includeSourceSpans = IncludeSourceSpans.BLOCKS_AND_INLINES
+            }
         val paragraph = spansParser.parse("hey ++there++\n").firstChild as Paragraph
         assertEquals(
             listOf(SourceSpan.of(0, 4, 4, 9)),

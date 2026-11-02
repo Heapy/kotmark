@@ -1,5 +1,8 @@
 package io.heapy.kotmark.ext.autolink.internal
 
+import io.heapy.kotmark.autolink.LinkSpan
+import io.heapy.kotmark.autolink.LinkType
+import io.heapy.kotmark.autolink.linkExtractor
 import io.heapy.kotmark.ext.autolink.AutolinkType
 import io.heapy.kotmark.node.AbstractVisitor
 import io.heapy.kotmark.node.Link
@@ -7,9 +10,6 @@ import io.heapy.kotmark.node.Node
 import io.heapy.kotmark.node.SourceSpan
 import io.heapy.kotmark.node.Text
 import io.heapy.kotmark.parser.PostProcessor
-import io.heapy.kotmark.autolink.LinkExtractor
-import io.heapy.kotmark.autolink.LinkType
-import io.heapy.kotmark.autolink.LinkSpan
 
 class AutolinkPostProcessor(
     linkTypes: Set<AutolinkType>,
@@ -18,9 +18,7 @@ class AutolinkPostProcessor(
         require(linkTypes.isNotEmpty()) { "linkTypes must not be empty" }
     }
 
-    private val extractor = LinkExtractor.builder()
-        .linkTypes(linkTypes.map { LinkType.valueOf(it.name) }.toSet())
-        .build()
+    private val extractor = linkExtractor { this.linkTypes = linkTypes.map { LinkType.valueOf(it.name) }.toSet() }
 
     override fun process(node: Node): Node {
         node.accept(AutolinkVisitor())

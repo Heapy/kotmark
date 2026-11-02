@@ -7,13 +7,13 @@ import io.heapy.kotmark.ext.gfm.tables.TableHead
 import io.heapy.kotmark.ext.gfm.tables.TableRow
 import io.heapy.kotmark.node.Node
 import io.heapy.kotmark.renderer.markdown.MarkdownNodeRendererContext
-import io.heapy.kotmark.text.AsciiMatcher
+import io.heapy.kotmark.text.asciiMatcher
 
 class TableMarkdownNodeRenderer(
     private val context: MarkdownNodeRendererContext,
 ) : TableNodeRenderer() {
     private val writer = context.writer
-    private val pipe = AsciiMatcher.builder().c('|').build()
+    private val pipe = asciiMatcher { c('|') }
     private val columns = mutableListOf<TableCell.Alignment?>()
 
     override fun renderBlock(node: TableBlock) {

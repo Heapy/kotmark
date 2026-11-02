@@ -8,12 +8,12 @@ import io.heapy.kotmark.node.IndentedCodeBlock
 import io.heapy.kotmark.node.Node
 import io.heapy.kotmark.node.Text
 import io.heapy.kotmark.parser.IncludeSourceSpans
-import io.heapy.kotmark.parser.Parser
+import io.heapy.kotmark.parser.parser
 import io.heapy.kotmark.renderer.NodeRenderer
 import io.heapy.kotmark.renderer.html.AttributeProvider
 import io.heapy.kotmark.renderer.html.HtmlNodeRendererContext
-import io.heapy.kotmark.renderer.html.HtmlRenderer
-import io.heapy.kotmark.renderer.markdown.MarkdownRenderer
+import io.heapy.kotmark.renderer.html.htmlRenderer
+import io.heapy.kotmark.renderer.markdown.markdownRenderer
 import kotlin.reflect.KClass
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -21,15 +21,15 @@ import kotlin.test.assertEquals
 class UsageExampleTest {
     @Test
     fun parseAndRender() {
-        val parser = Parser.builder().build()
+        val parser = parser()
         val document = parser.parse("This is *Markdown*")
-        val renderer = HtmlRenderer.builder().escapeHtml(true).build()
+        val renderer = htmlRenderer { escapeHtml = true }
         assertEquals("<p>This is <em>Markdown</em></p>\n", renderer.render(document))
     }
 
     @Test
     fun renderToMarkdown() {
-        val renderer = MarkdownRenderer.builder().build()
+        val renderer = markdownRenderer()
         val document = Document()
         val heading = Heading()
         heading.level = 2
@@ -41,7 +41,7 @@ class UsageExampleTest {
 
     @Test
     fun visitor() {
-        val parser = Parser.builder().build()
+        val parser = parser()
         val node = parser.parse("Example\n=======\n\nSome more text")
         val visitor = WordCountVisitor()
         node.accept(visitor)
@@ -50,7 +50,7 @@ class UsageExampleTest {
 
     @Test
     fun sourcePositions() {
-        val parser = Parser.builder().includeSourceSpans(IncludeSourceSpans.BLOCKS_AND_INLINES).build()
+        val parser = parser { includeSourceSpans = IncludeSourceSpans.BLOCKS_AND_INLINES }
 
         val source = "foo\n\nbar *baz*"
         val doc = parser.parse(source)
@@ -65,11 +65,11 @@ class UsageExampleTest {
 
     @Test
     fun addAttributes() {
-        val parser = Parser.builder().build()
+        val parser = parser()
         val renderer =
-            HtmlRenderer.builder()
-                .attributeProviderFactory { ImageAttributeProvider() }
-                .build()
+            htmlRenderer {
+                attributeProviderFactory { ImageAttributeProvider() }
+            }
 
         val document = parser.parse("![text](/url.png)")
         assertEquals("""<p><img src="/url.png" alt="text" class="border" /></p>""" + "\n", renderer.render(document))
@@ -77,11 +77,11 @@ class UsageExampleTest {
 
     @Test
     fun customizeRendering() {
-        val parser = Parser.builder().build()
+        val parser = parser()
         val renderer =
-            HtmlRenderer.builder()
-                .nodeRendererFactory { context -> IndentedCodeBlockNodeRenderer(context) }
-                .build()
+            htmlRenderer {
+                nodeRendererFactory { context -> IndentedCodeBlockNodeRenderer(context) }
+            }
 
         val document = parser.parse("Example:\n\n    code")
         assertEquals("<p>Example:</p>\n<pre>code\n</pre>\n", renderer.render(document))

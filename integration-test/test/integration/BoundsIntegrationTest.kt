@@ -1,13 +1,13 @@
 package io.heapy.kotmark.integration
 
-import io.heapy.kotmark.parser.Parser
+import io.heapy.kotmark.parser.parser
 import io.heapy.kotmark.testfixtures.example.ExampleReader
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.fail
 
 class BoundsIntegrationTest {
-    private val parser = Parser.builder().build()
+    private val parser = parser()
 
     @Test
     fun everySpecExampleCanBeTruncatedAtEveryBoundary() {

@@ -16,16 +16,16 @@ class TaskListItemsExtension private constructor() :
     Parser.ParserExtension,
     HtmlRenderer.HtmlRendererExtension,
     MarkdownRenderer.MarkdownRendererExtension {
-    override fun extend(parserBuilder: Parser.Builder) {
-        parserBuilder.postProcessor(TaskListItemPostProcessor())
+    override fun extend(parserConfiguration: Parser.Configuration) {
+        parserConfiguration.postProcessor(TaskListItemPostProcessor())
     }
 
-    override fun extend(rendererBuilder: HtmlRenderer.Builder) {
-        rendererBuilder.nodeRendererFactory(::TaskListItemHtmlNodeRenderer)
+    override fun extend(rendererConfiguration: HtmlRenderer.Configuration) {
+        rendererConfiguration.nodeRendererFactory(::TaskListItemHtmlNodeRenderer)
     }
 
-    override fun extend(rendererBuilder: MarkdownRenderer.Builder) {
-        rendererBuilder.nodeRendererFactory(
+    override fun extend(rendererConfiguration: MarkdownRenderer.Configuration) {
+        rendererConfiguration.nodeRendererFactory(
             object : MarkdownNodeRendererFactory {
                 override val specialCharacters: Set<Char> = emptySet()
 

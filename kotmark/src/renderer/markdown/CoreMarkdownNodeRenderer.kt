@@ -23,9 +23,9 @@ import io.heapy.kotmark.node.StrongEmphasis
 import io.heapy.kotmark.node.Text
 import io.heapy.kotmark.node.ThematicBreak
 import io.heapy.kotmark.renderer.NodeRenderer
-import io.heapy.kotmark.text.AsciiMatcher
 import io.heapy.kotmark.text.CharMatcher
 import io.heapy.kotmark.text.Characters
+import io.heapy.kotmark.text.asciiMatcher
 import kotlin.reflect.KClass
 
 class CoreMarkdownNodeRenderer(
@@ -33,18 +33,18 @@ class CoreMarkdownNodeRenderer(
 ) : AbstractVisitor(), NodeRenderer {
     private val writer = context.writer
     private val textEscape =
-        AsciiMatcher.builder()
-            .anyOf("[]<>`*_&\n\\")
-            .anyOf(context.specialCharacters)
-            .build()
+        asciiMatcher {
+            anyOf("[]<>`*_&\n\\")
+            anyOf(context.specialCharacters)
+        }
     private val textEscapeInHeading =
-        textEscape.newBuilder().c('#').build()
+        asciiMatcher(textEscape) { c('#') }
     private val linkDestinationNeedsAngleBrackets =
-        AsciiMatcher.builder().anyOf(" ()<>\n\\").build()
+        asciiMatcher { anyOf(" ()<>\n\\") }
     private val linkDestinationEscapeInAngleBrackets =
-        AsciiMatcher.builder().anyOf("<>\n\\").build()
+        asciiMatcher { anyOf("<>\n\\") }
     private val linkTitleEscapeInQuotes =
-        AsciiMatcher.builder().anyOf("\"\n\\").build()
+        asciiMatcher { anyOf("\"\n\\") }
     private val orderedListMarkerPattern = Regex("^([0-9]{1,9})([.)])")
     private var listHolder: ListHolder? = null
 

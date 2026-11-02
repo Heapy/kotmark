@@ -9,7 +9,7 @@ retained. CommonMark APIs and extensions are under `io.heapy.kotmark`.
 
 UTF-16 begin/end indices retain the upstream inclusive/exclusive semantics. Extraction is lazy, iterables are reusable, and iterators keep independent state. Configuration copies the caller’s link-type set; an empty set disables extraction. The default email domain must contain a dot. Character classification uses the explicit upstream ASCII and UTF-16 rules, independent of backend Unicode tables.
 
-Java getters become Kotlin properties (with equivalent JVM getters); nullable inputs are excluded by Kotlin types. Builders retain the upstream options and `builder()` is exposed with `@JvmStatic`. Kotlin read-only `Iterator` omits `remove`; the generated JVM implementation still throws `UnsupportedOperationException`. Internal implementation classes are Kotlin `internal`. Deprecated `Autolink.renderLinks` and `LinkRenderer` are retained. Java module descriptors and package-info documentation are not KMP runtime components.
+Java getters become Kotlin properties (with equivalent JVM getters); nullable inputs are excluded by Kotlin types. The `linkExtractor { … }` configuration DSL retains the upstream options as `linkTypes` and `emailDomainMustHaveDot` properties; it replaces the upstream builder API. Kotlin read-only `Iterator` omits `remove`; the generated JVM implementation still throws `UnsupportedOperationException`. Internal implementation classes are Kotlin `internal`. Deprecated `Autolink.renderLinks` and `LinkRenderer` are retained. Java module descriptors and package-info documentation are not KMP runtime components.
 
 There is no GFM mode. `kotmark-ext-autolink` delegates extraction directly to this module, retaining the upstream AST handling, type configuration, source-span splitting, nested-link suppression, and href prefixes.
 
@@ -125,3 +125,14 @@ done
 ```
 
 CI is configured to include the new module, but no remote CI run was triggered in this session. Successful local runtime checks do not establish equivalence on every possible input or runtime coverage on other platforms.
+
+```kotlin
+import io.heapy.kotmark.autolink.LinkType
+import io.heapy.kotmark.autolink.linkExtractor
+
+val extractor = linkExtractor {
+    linkTypes = setOf(LinkType.URL, LinkType.EMAIL)
+    emailDomainMustHaveDot = true
+}
+val links = extractor.extractLinks("Visit https://example.com")
+```

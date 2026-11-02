@@ -1,16 +1,16 @@
 package io.heapy.kotmark.ext.footnotes
 
 import io.heapy.kotmark.Extension
-import io.heapy.kotmark.parser.Parser
-import io.heapy.kotmark.renderer.html.HtmlRenderer
-import io.heapy.kotmark.renderer.markdown.MarkdownRenderer
+import io.heapy.kotmark.parser.parser
+import io.heapy.kotmark.renderer.html.htmlRenderer
+import io.heapy.kotmark.renderer.markdown.markdownRenderer
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class FootnoteRenderingTest {
     private val extensions: List<Extension> = listOf(FootnotesExtension.create())
-    private val parser = Parser.builder().extensions(extensions).build()
-    private val html = HtmlRenderer.builder().extensions(extensions).build()
+    private val parser = parser { extensions(extensions) }
+    private val html = htmlRenderer { extensions(extensions) }
 
     @Test
     fun rendersOneFootnote() {
@@ -98,9 +98,9 @@ class FootnoteRenderingTest {
 
     @Test
     fun inlineFootnotesAndNestedInlineFootnotes() {
-        val inlineExtension = FootnotesExtension.builder().inlineFootnotes(true).build()
-        val inlineParser = Parser.builder().extensions(listOf(inlineExtension)).build()
-        val inlineHtml = HtmlRenderer.builder().extensions(listOf(inlineExtension)).build()
+        val inlineExtension = footnotesExtension { inlineFootnotes = true }
+        val inlineParser = parser { extensions(listOf(inlineExtension)) }
+        val inlineHtml = htmlRenderer { extensions(listOf(inlineExtension)) }
         assertEquals(
             """
                 |<p>Test <sup class="footnote-ref"><a href="#fn1" id="fnref1" data-footnote-ref>1</a></sup></p>
@@ -122,9 +122,9 @@ class FootnoteRenderingTest {
 
     @Test
     fun markdownRoundTrips() {
-        val inlineExtension = FootnotesExtension.builder().inlineFootnotes(true).build()
-        val roundTripParser = Parser.builder().extensions(listOf(inlineExtension)).build()
-        val markdown = MarkdownRenderer.builder().extensions(listOf(inlineExtension)).build()
+        val inlineExtension = footnotesExtension { inlineFootnotes = true }
+        val roundTripParser = parser { extensions(listOf(inlineExtension)) }
+        val markdown = markdownRenderer { extensions(listOf(inlineExtension)) }
         for (
             input in
                 listOf(

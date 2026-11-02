@@ -4,7 +4,7 @@ import io.heapy.kotmark.node.AbstractVisitor
 import io.heapy.kotmark.node.Delimited
 import io.heapy.kotmark.node.Emphasis
 import io.heapy.kotmark.node.StrongEmphasis
-import io.heapy.kotmark.parser.Parser
+import io.heapy.kotmark.parser.parser
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -17,7 +17,7 @@ class DelimitedTest {
                 "* _important_ \n" +
                 "* __CRITICAL__ \n"
 
-        val document = Parser.builder().build().parse(input)
+        val document = parser().parse(input)
 
         val list = mutableListOf<Delimited>()
         document.accept(

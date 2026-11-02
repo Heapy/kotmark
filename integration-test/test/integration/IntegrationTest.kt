@@ -12,8 +12,9 @@ import io.heapy.kotmark.ext.ins.InsExtension
 import io.heapy.kotmark.ext.task.list.items.TaskListItemsExtension
 import io.heapy.kotmark.parser.IncludeSourceSpans
 import io.heapy.kotmark.parser.Parser
-import io.heapy.kotmark.renderer.html.HtmlRenderer
-import io.heapy.kotmark.renderer.markdown.MarkdownRenderer
+import io.heapy.kotmark.parser.parser
+import io.heapy.kotmark.renderer.html.htmlRenderer
+import io.heapy.kotmark.renderer.markdown.markdownRenderer
 import io.heapy.kotmark.testfixtures.example.ExampleReader
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -32,12 +33,15 @@ class IntegrationTest {
             TaskListItemsExtension.create(),
             YamlFrontMatterExtension.create(),
         )
-    private val parser = Parser.builder().extensions(extensions).build()
+    private val parser =
+        parser {
+            extensions(extensions)
+        }
     private val html =
-        HtmlRenderer.builder()
-            .extensions(extensions)
-            .percentEncodeUrls(true)
-            .build()
+        htmlRenderer {
+            extensions(extensions)
+            percentEncodeUrls = true
+        }
 
     @Test
     fun extensionsWorkTogether() {
@@ -63,9 +67,7 @@ class IntegrationTest {
                 |> |~deleted~|
                 |
             """.trimMargin(),
-            MarkdownRenderer.builder()
-                .extensions(extensions)
-                .build()
+            markdownRenderer { extensions(extensions) }
                 .render(
                     parser.parse(
                         """
@@ -82,16 +84,16 @@ class IntegrationTest {
 
     @Test
     fun allExtensionsPreserveTheCoreSpec() {
-        assertSpec(Parser.builder().extensions(extensions).build())
+        assertSpec(parser { extensions(extensions) })
     }
 
     @Test
     fun allExtensionsWithBlockSourceSpansPreserveTheCoreSpec() {
         assertSpec(
-            Parser.builder()
-                .extensions(extensions)
-                .includeSourceSpans(IncludeSourceSpans.BLOCKS)
-                .build(),
+            parser {
+                extensions(extensions)
+                includeSourceSpans = IncludeSourceSpans.BLOCKS
+            },
         )
     }
 
@@ -99,15 +101,15 @@ class IntegrationTest {
         val overrides =
             mapOf(
                 "<https://foo.bar/baz bim>\n" to
-                    """<p>&lt;<a href="https://foo.bar/baz">https://foo.bar/baz</a> bim&gt;</p>""" + "\n",
+                        """<p>&lt;<a href="https://foo.bar/baz">https://foo.bar/baz</a> bim&gt;</p>""" + "\n",
                 """<foo\+@bar.example.com>""" + "\n" to
-                    """<p>&lt;<a href="mailto:foo+@bar.example.com">foo+@bar.example.com</a>&gt;</p>""" + "\n",
+                        """<p>&lt;<a href="mailto:foo+@bar.example.com">foo+@bar.example.com</a>&gt;</p>""" + "\n",
                 "< https://foo.bar >\n" to
-                    """<p>&lt; <a href="https://foo.bar">https://foo.bar</a> &gt;</p>""" + "\n",
+                        """<p>&lt; <a href="https://foo.bar">https://foo.bar</a> &gt;</p>""" + "\n",
                 "https://example.com\n" to
-                    """<p><a href="https://example.com">https://example.com</a></p>""" + "\n",
+                        """<p><a href="https://example.com">https://example.com</a></p>""" + "\n",
                 "foo@bar.example.com\n" to
-                    """<p><a href="mailto:foo@bar.example.com">foo@bar.example.com</a></p>""" + "\n",
+                        """<p><a href="mailto:foo@bar.example.com">foo@bar.example.com</a></p>""" + "\n",
                 """
                     |---
                     |Foo
@@ -133,7 +135,7 @@ class IntegrationTest {
         if (failures.isNotEmpty()) {
             fail(
                 "${failures.size}/${examples.size} integration examples failed:\n\n" +
-                    failures.take(20).joinToString("\n---\n"),
+                        failures.take(20).joinToString("\n---\n"),
             )
         }
     }

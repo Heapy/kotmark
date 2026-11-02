@@ -1,13 +1,12 @@
 package io.heapy.kotmark.renderer.html
 
-import io.heapy.kotmark.node.Code
 import io.heapy.kotmark.node.Document
 import io.heapy.kotmark.node.FencedCodeBlock
 import io.heapy.kotmark.node.Image
 import io.heapy.kotmark.node.Link
 import io.heapy.kotmark.node.Node
 import io.heapy.kotmark.node.Paragraph
-import io.heapy.kotmark.parser.Parser
+import io.heapy.kotmark.parser.parser
 import io.heapy.kotmark.renderer.NodeRenderer
 import kotlin.reflect.KClass
 import kotlin.test.Test
@@ -59,14 +58,14 @@ class HtmlRendererTest {
         )
         assertEquals(
             "<p>paragraph with &lt;span id='foo'&gt;inline &amp; html&lt;/span&gt;</p>\n",
-            render(inline, HtmlRenderer.builder().escapeHtml(true).build()),
+            render(inline, htmlRenderer { escapeHtml = true }),
         )
 
         val block = "<div id='foo'>block &amp;</div>"
         assertEquals("<div id='foo'>block &amp;</div>\n", render(block))
         assertEquals(
             "<p>&lt;div id='foo'&gt;block &amp;amp;&lt;/div&gt;</p>\n",
-            render(block, HtmlRenderer.builder().escapeHtml(true).build()),
+            render(block, htmlRenderer { escapeHtml = true }),
         )
     }
 
@@ -81,17 +80,17 @@ class HtmlRendererTest {
         paragraph.appendChild(Link("&colon;", null))
         assertEquals(
             """<p><a href="&amp;colon;"></a></p>""" + "\n",
-            HtmlRenderer.builder().build().render(paragraph),
+            htmlRenderer().render(paragraph),
         )
     }
 
     @Test
     fun sanitizesUrls() {
         val renderer =
-            HtmlRenderer.builder()
-                .sanitizeUrls(true)
-                .urlSanitizer(DefaultUrlSanitizer())
-                .build()
+            htmlRenderer {
+                sanitizeUrls = true
+                urlSanitizer = DefaultUrlSanitizer()
+            }
 
         assertEquals(
             """<p><a rel="nofollow" href="https://example.com">safe</a></p>""" + "\n",
@@ -109,7 +108,7 @@ class HtmlRendererTest {
 
     @Test
     fun percentEncodesUrls() {
-        val renderer = HtmlRenderer.builder().percentEncodeUrls(true).build()
+        val renderer = htmlRenderer { percentEncodeUrls = true }
         assertEquals(
             """<p><a href="foo%20%C3%A4%5B%5D">a</a></p>""" + "\n",
             render("[a](foo%20ä[])", renderer),
@@ -136,7 +135,7 @@ class HtmlRendererTest {
                     }
                 }
             }
-        val renderer = HtmlRenderer.builder().attributeProviderFactory(factory).build()
+        val renderer = htmlRenderer { attributeProviderFactory(factory) }
 
         assertEquals(
             """
@@ -155,8 +154,8 @@ class HtmlRendererTest {
     @Test
     fun customNodeRendererOverridesCoreRenderer() {
         val renderer =
-            HtmlRenderer.builder()
-                .nodeRendererFactory { context ->
+            htmlRenderer {
+                nodeRendererFactory { context ->
                     object : NodeRenderer {
                         override val nodeTypes: Set<KClass<out Node>> = setOf(Link::class)
 
@@ -165,7 +164,7 @@ class HtmlRendererTest {
                         }
                     }
                 }
-                .build()
+            }
 
         assertEquals("<p>foo test</p>\n", render("foo [bar](/url)", renderer))
     }
@@ -184,14 +183,14 @@ class HtmlRendererTest {
             "hi <em>there</em>",
             render(
                 "hi *there*",
-                HtmlRenderer.builder().omitSingleParagraphP(true).build(),
+                htmlRenderer { omitSingleParagraphP = true },
             ),
         )
     }
 
     @Test
     fun rendersDetachedInlineContents() {
-        val parsed = Parser.builder().build().parse("Here is `code`")
+        val parsed = parser().parse("Here is `code`")
         val paragraph = requireNotNull(parsed.firstChild)
         val document = Document()
         var child = paragraph.firstChild
@@ -203,7 +202,7 @@ class HtmlRendererTest {
 
         assertEquals(
             "Here is <code>code</code>",
-            HtmlRenderer.builder().build().render(document),
+            htmlRenderer().render(document),
         )
     }
 
@@ -223,7 +222,7 @@ class HtmlRendererTest {
 
     private fun render(
         source: String,
-        renderer: HtmlRenderer = HtmlRenderer.builder().build(),
+        renderer: HtmlRenderer = htmlRenderer(),
     ): String =
-        renderer.render(Parser.builder().build().parse(source))
+        renderer.render(parser().parse(source))
 }

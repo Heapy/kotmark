@@ -8,7 +8,7 @@ import io.heapy.kotmark.parser.beta.InlineParserState
 import io.heapy.kotmark.parser.beta.ParsedInline
 import io.heapy.kotmark.parser.beta.Position
 import io.heapy.kotmark.parser.beta.Scanner
-import io.heapy.kotmark.text.AsciiMatcher
+import io.heapy.kotmark.text.asciiMatcher
 
 class EntityInlineParser : InlineContentParser {
     override fun tryParse(inlineParserState: InlineParserState): ParsedInline? {
@@ -52,9 +52,16 @@ class EntityInlineParser : InlineContentParser {
     }
 
     companion object {
-        private val HEX = AsciiMatcher.builder().range('0', '9').range('A', 'F').range('a', 'f').build()
-        private val DECIMAL = AsciiMatcher.builder().range('0', '9').build()
-        private val ENTITY_START = AsciiMatcher.builder().range('A', 'Z').range('a', 'z').build()
-        private val ENTITY_CONTINUE = ENTITY_START.newBuilder().range('0', '9').build()
+        private val HEX = asciiMatcher {
+            range('0', '9')
+            range('A', 'F')
+            range('a', 'f')
+        }
+        private val DECIMAL = asciiMatcher { range('0', '9') }
+        private val ENTITY_START = asciiMatcher {
+            range('A', 'Z')
+            range('a', 'z')
+        }
+        private val ENTITY_CONTINUE = asciiMatcher(ENTITY_START) { range('0', '9') }
     }
 }

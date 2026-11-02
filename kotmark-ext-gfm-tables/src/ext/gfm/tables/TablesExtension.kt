@@ -19,20 +19,20 @@ class TablesExtension private constructor() :
     HtmlRenderer.HtmlRendererExtension,
     TextContentRenderer.TextContentRendererExtension,
     MarkdownRenderer.MarkdownRendererExtension {
-    override fun extend(parserBuilder: Parser.Builder) {
-        parserBuilder.customBlockParserFactory(TableBlockParser.Factory())
+    override fun extend(parserConfiguration: Parser.Configuration) {
+        parserConfiguration.customBlockParserFactory(TableBlockParser.Factory())
     }
 
-    override fun extend(rendererBuilder: HtmlRenderer.Builder) {
-        rendererBuilder.nodeRendererFactory(::TableHtmlNodeRenderer)
+    override fun extend(rendererConfiguration: HtmlRenderer.Configuration) {
+        rendererConfiguration.nodeRendererFactory(::TableHtmlNodeRenderer)
     }
 
-    override fun extend(rendererBuilder: TextContentRenderer.Builder) {
-        rendererBuilder.nodeRendererFactory(::TableTextContentNodeRenderer)
+    override fun extend(rendererConfiguration: TextContentRenderer.Configuration) {
+        rendererConfiguration.nodeRendererFactory(::TableTextContentNodeRenderer)
     }
 
-    override fun extend(rendererBuilder: MarkdownRenderer.Builder) {
-        rendererBuilder.nodeRendererFactory(
+    override fun extend(rendererConfiguration: MarkdownRenderer.Configuration) {
+        rendererConfiguration.nodeRendererFactory(
             object : MarkdownNodeRendererFactory {
                 override val specialCharacters: Set<Char> = setOf('|')
 

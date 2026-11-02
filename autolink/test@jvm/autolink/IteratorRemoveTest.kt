@@ -8,11 +8,11 @@ import kotlin.test.assertFailsWith
 // Kotlin read-only Iterator has no remove. Verify the Java-facing contract on JVM.
 class IteratorRemoveTest {
     @Test fun linkIterableRemoveUnsupported() {
-        val iterator = LinkExtractor.builder().build().extractLinks("foo http://example.com").iterator()
+        val iterator = linkExtractor().extractLinks("foo http://example.com").iterator()
         assertFailsWith<UnsupportedOperationException> { (iterator as java.util.Iterator<LinkSpan>).remove() }
     }
     @Test fun spanIterableRemoveUnsupported() {
-        val iterator = LinkExtractor.builder().build().extractSpans("test").iterator()
+        val iterator = linkExtractor().extractSpans("test").iterator()
         assertFailsWith<UnsupportedOperationException> { (iterator as java.util.Iterator<Span>).remove() }
     }
 }

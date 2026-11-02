@@ -1,7 +1,7 @@
 package io.heapy.kotmark.ext.gfm.tables
 
-import io.heapy.kotmark.parser.Parser
-import io.heapy.kotmark.renderer.html.HtmlRenderer
+import io.heapy.kotmark.parser.parser
+import io.heapy.kotmark.renderer.html.htmlRenderer
 import io.heapy.kotmark.testfixtures.example.ExampleReader
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -11,8 +11,8 @@ class TablesSpecTest {
     @Test
     fun upstreamGfmTableExamples() {
         val extension = TablesExtension.create()
-        val parser = Parser.builder().extensions(listOf(extension)).build()
-        val renderer = HtmlRenderer.builder().extensions(listOf(extension)).build()
+        val parser = parser { extensions(listOf(extension)) }
+        val renderer = htmlRenderer { extensions(listOf(extension)) }
         val examples = ExampleReader.readExamples("commonmark-java/gfm-spec.txt")
             .filter { it.section == "Tables (extension)" }
         val failures = mutableListOf<String>()

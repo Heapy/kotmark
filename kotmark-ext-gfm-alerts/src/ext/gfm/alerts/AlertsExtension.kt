@@ -1,6 +1,7 @@
 package io.heapy.kotmark.ext.gfm.alerts
 
 import io.heapy.kotmark.Extension
+import io.heapy.kotmark.KotmarkDsl
 import io.heapy.kotmark.ext.gfm.alerts.internal.AlertBlockParser
 import io.heapy.kotmark.ext.gfm.alerts.internal.AlertHtmlNodeRenderer
 import io.heapy.kotmark.ext.gfm.alerts.internal.AlertMarkdownNodeRenderer
@@ -15,17 +16,17 @@ import io.heapy.kotmark.renderer.text.TextContentRenderer
 import kotlin.jvm.JvmField
 import kotlin.jvm.JvmStatic
 
-class AlertsExtension private constructor(builder: Builder) :
+class AlertsExtension private constructor(configuration: Configuration) :
     Parser.ParserExtension,
     HtmlRenderer.HtmlRendererExtension,
     TextContentRenderer.TextContentRendererExtension,
     MarkdownRenderer.MarkdownRendererExtension {
-    private val allowedTypes = builder.allowedTypes.toMap()
-    private val customTitlesAllowed = builder.customTitlesAllowed
-    private val nestedAlertsAllowed = builder.nestedAlertsAllowed
+    private val allowedTypes = configuration.allowedTypes.toMap()
+    private val customTitlesAllowed = configuration.customTitlesAllowed
+    private val nestedAlertsAllowed = configuration.nestedAlertsAllowed
 
-    override fun extend(parserBuilder: Parser.Builder) {
-        parserBuilder.customBlockParserFactory(
+    override fun extend(parserConfiguration: Parser.Configuration) {
+        parserConfiguration.customBlockParserFactory(
             AlertBlockParser.Factory(
                 allowedTypes.keys,
                 customTitlesAllowed,
@@ -34,20 +35,20 @@ class AlertsExtension private constructor(builder: Builder) :
         )
     }
 
-    override fun extend(rendererBuilder: HtmlRenderer.Builder) {
-        rendererBuilder.nodeRendererFactory { context ->
+    override fun extend(rendererConfiguration: HtmlRenderer.Configuration) {
+        rendererConfiguration.nodeRendererFactory { context ->
             AlertHtmlNodeRenderer(context, allowedTypes)
         }
     }
 
-    override fun extend(rendererBuilder: TextContentRenderer.Builder) {
-        rendererBuilder.nodeRendererFactory { context ->
+    override fun extend(rendererConfiguration: TextContentRenderer.Configuration) {
+        rendererConfiguration.nodeRendererFactory { context ->
             AlertTextContentNodeRenderer(context, allowedTypes)
         }
     }
 
-    override fun extend(rendererBuilder: MarkdownRenderer.Builder) {
-        rendererBuilder.nodeRendererFactory(
+    override fun extend(rendererConfiguration: MarkdownRenderer.Configuration) {
+        rendererConfiguration.nodeRendererFactory(
             object : MarkdownNodeRendererFactory {
                 override val specialCharacters: Set<Char> = emptySet()
 
@@ -57,33 +58,25 @@ class AlertsExtension private constructor(builder: Builder) :
         )
     }
 
-    class Builder internal constructor() {
-        internal var allowedTypes = STANDARD_TYPES.toMutableMap()
-        internal var customTitlesAllowed = false
-        internal var nestedAlertsAllowed = false
-
-        fun setAllowedTypes(allowedTypes: Map<String, String>): Builder = apply {
-            require(allowedTypes.isNotEmpty()) { "allowedTypes must not be empty" }
-            for ((type, title) in allowedTypes) {
-                validateTypeAndTitle(type, title)
+    @KotmarkDsl
+    class Configuration internal constructor() {
+        var allowedTypes: Map<String, String> = STANDARD_TYPES.toMap()
+            set(value) {
+                require(value.isNotEmpty()) { "allowedTypes must not be empty" }
+                for ((type, title) in value) {
+                    validateTypeAndTitle(type, title)
+                }
+                field = value.toMap()
             }
-            this.allowedTypes = allowedTypes.toMutableMap()
-        }
+        var customTitlesAllowed = false
+        var nestedAlertsAllowed = false
 
-        fun addCustomType(type: String, title: String): Builder = apply {
+        fun addCustomType(type: String, title: String) {
             validateTypeAndTitle(type, title)
-            allowedTypes[type] = title
+            allowedTypes = allowedTypes + (type to title)
         }
 
-        fun allowCustomTitles(allow: Boolean): Builder = apply {
-            customTitlesAllowed = allow
-        }
-
-        fun allowNestedAlerts(allow: Boolean): Builder = apply {
-            nestedAlertsAllowed = allow
-        }
-
-        fun build(): Extension = AlertsExtension(this)
+        internal fun create(): AlertsExtension = AlertsExtension(this)
 
         private fun validateTypeAndTitle(type: String, title: String) {
             require(type.isNotEmpty()) { "Type must not be empty" }
@@ -104,9 +97,10 @@ class AlertsExtension private constructor(builder: Builder) :
             )
 
         @JvmStatic
-        fun create(): Extension = builder().build()
-
-        @JvmStatic
-        fun builder(): Builder = Builder()
+        fun create(): Extension = alertsExtension()
     }
 }
+
+/** Creates [AlertsExtension] with the supplied configuration. */
+fun alertsExtension(configure: AlertsExtension.Configuration.() -> Unit = {}): AlertsExtension =
+    AlertsExtension.Configuration().apply(configure).create()

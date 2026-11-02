@@ -9,6 +9,67 @@ The repository contains the core `kotmark` module, shared test fixtures, integra
 The independent `autolink` module ports [autolink-java 0.12.0](UPSTREAM.md).
 The Markdown autolink extension uses its upstream rules, which differ from GFM in some cases.
 
+## Configuration DSLs
+
+Create parsers and renderers with configuration blocks. Omitting the block uses the defaults.
+
+```kotlin
+import io.heapy.kotmark.ext.gfm.strikethrough.strikethroughExtension
+import io.heapy.kotmark.parser.IncludeSourceSpans
+import io.heapy.kotmark.parser.parser
+import io.heapy.kotmark.renderer.html.htmlRenderer
+
+val extensions = listOf(strikethroughExtension { requireTwoTildes = true })
+val parser = parser {
+    includeSourceSpans = IncludeSourceSpans.BLOCKS_AND_INLINES
+    extensions(extensions)
+}
+val renderer = htmlRenderer {
+    escapeHtml = true
+    softbreak = "<br />\n"
+    extensions(extensions)
+}
+val html = renderer.render(parser.parse("Hello **Kotlin** and ~~builders~~!"))
+```
+
+Every former builder now has a top-level factory in the same package as its class:
+
+| Class | Factory |
+| --- | --- |
+| `Parser` | `parser { … }` |
+| `HtmlRenderer` | `htmlRenderer { … }` |
+| `MarkdownRenderer` | `markdownRenderer { … }` |
+| `TextContentRenderer` | `textContentRenderer { … }` |
+| `AutolinkExtension` | `autolinkExtension { … }` |
+| `FootnotesExtension` | `footnotesExtension { … }` |
+| `AlertsExtension` | `alertsExtension { … }` |
+| `StrikethroughExtension` | `strikethroughExtension { … }` |
+| `HeadingAnchorExtension` | `headingAnchorExtension { … }` |
+| `IdGenerator` | `idGenerator { … }` |
+| `LinkExtractor` | `linkExtractor { … }` |
+| `AsciiMatcher` | `asciiMatcher { … }`, `asciiMatcher(existing) { … }` |
+
+This replaces the builder API and is a source and binary breaking change.
+Replace `Parser.builder().includeSourceSpans(value).build()` with
+`parser { includeSourceSpans = value }`, and import the factory function.
+Scalar options are properties. Registration functions such as `extensions(...)`,
+`nodeRendererFactory(...)`, and `postProcessor(...)` return `Unit` and run in order.
+Extension hooks receive `Parser.Configuration`, `HtmlRenderer.Configuration`,
+`MarkdownRenderer.Configuration`, or `TextContentRenderer.Configuration`.
+
+For alerts, use `allowedTypes`, `customTitlesAllowed`, and `nestedAlertsAllowed`
+properties in place of `setAllowedTypes`, `allowCustomTitles`, and `allowNestedAlerts`.
+Use `linkTypes = setOf(...)` for autolinks, and
+`lineBreakRendering = LineBreakRendering.STRIP` instead of `stripNewlines(true)`.
+Replace `matcher.newBuilder()` with `asciiMatcher(matcher) { … }`.
+Existing no-argument extension `create()` factories remain available.
+
+Each factory uses a fresh configuration and snapshots its options and registrations.
+Later changes to a captured configuration do not affect the created instance.
+Registered factories, processors, and sanitizers themselves are shared, so their
+own mutable state remains the caller's responsibility. DSL markers prevent nested
+blocks in the same DSL family from implicitly configuring an outer receiver.
+
 ## Development
 
 Run the complete JVM suite with `./kotlin test --platform jvm`.

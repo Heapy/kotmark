@@ -1,6 +1,7 @@
 package io.heapy.kotmark.ext.gfm.strikethrough
 
 import io.heapy.kotmark.Extension
+import io.heapy.kotmark.KotmarkDsl
 import io.heapy.kotmark.ext.gfm.strikethrough.internal.StrikethroughDelimiterProcessor
 import io.heapy.kotmark.ext.gfm.strikethrough.internal.StrikethroughHtmlNodeRenderer
 import io.heapy.kotmark.ext.gfm.strikethrough.internal.StrikethroughMarkdownNodeRenderer
@@ -20,22 +21,22 @@ class StrikethroughExtension private constructor(
     HtmlRenderer.HtmlRendererExtension,
     TextContentRenderer.TextContentRendererExtension,
     MarkdownRenderer.MarkdownRendererExtension {
-    override fun extend(parserBuilder: Parser.Builder) {
-        parserBuilder.customDelimiterProcessor(
+    override fun extend(parserConfiguration: Parser.Configuration) {
+        parserConfiguration.customDelimiterProcessor(
             StrikethroughDelimiterProcessor(requireTwoTildes),
         )
     }
 
-    override fun extend(rendererBuilder: HtmlRenderer.Builder) {
-        rendererBuilder.nodeRendererFactory(::StrikethroughHtmlNodeRenderer)
+    override fun extend(rendererConfiguration: HtmlRenderer.Configuration) {
+        rendererConfiguration.nodeRendererFactory(::StrikethroughHtmlNodeRenderer)
     }
 
-    override fun extend(rendererBuilder: TextContentRenderer.Builder) {
-        rendererBuilder.nodeRendererFactory(::StrikethroughTextContentNodeRenderer)
+    override fun extend(rendererConfiguration: TextContentRenderer.Configuration) {
+        rendererConfiguration.nodeRendererFactory(::StrikethroughTextContentNodeRenderer)
     }
 
-    override fun extend(rendererBuilder: MarkdownRenderer.Builder) {
-        rendererBuilder.nodeRendererFactory(
+    override fun extend(rendererConfiguration: MarkdownRenderer.Configuration) {
+        rendererConfiguration.nodeRendererFactory(
             object : MarkdownNodeRendererFactory {
                 override val specialCharacters: Set<Char> = setOf('~')
 
@@ -45,21 +46,19 @@ class StrikethroughExtension private constructor(
         )
     }
 
-    class Builder internal constructor() {
-        private var requireTwoTildes = false
+    @KotmarkDsl
+    class Configuration internal constructor() {
+        var requireTwoTildes = false
 
-        fun requireTwoTildes(requireTwoTildes: Boolean): Builder = apply {
-            this.requireTwoTildes = requireTwoTildes
-        }
-
-        fun build(): Extension = StrikethroughExtension(requireTwoTildes)
+        internal fun create(): StrikethroughExtension = StrikethroughExtension(requireTwoTildes)
     }
 
     companion object {
         @JvmStatic
-        fun create(): Extension = builder().build()
-
-        @JvmStatic
-        fun builder(): Builder = Builder()
+        fun create(): Extension = strikethroughExtension()
     }
 }
+
+/** Creates [StrikethroughExtension] with the supplied configuration. */
+fun strikethroughExtension(configure: StrikethroughExtension.Configuration.() -> Unit = {}): StrikethroughExtension =
+    StrikethroughExtension.Configuration().apply(configure).create()

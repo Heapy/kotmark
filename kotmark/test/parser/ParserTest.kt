@@ -28,7 +28,7 @@ class ParserTest {
     fun parsesBlocksAndInlinesEndToEnd() {
         val document =
             assertIs<Document>(
-                Parser.builder().build().parse(
+                parser().parse(
                     """
                     # Heading *one*
 
@@ -74,7 +74,7 @@ class ParserTest {
     @Test
     fun resolvesReferenceLinksAndKeepsDefinitionNode() {
         val document =
-            Parser.builder().build().parse(
+            parser().parse(
                 """
                 [label]: /destination "title"
 
@@ -94,9 +94,7 @@ class ParserTest {
     @Test
     fun handlesCrLfNullReplacementAndSourceSpans() {
         val document =
-            Parser.builder()
-                .includeSourceSpans(IncludeSourceSpans.BLOCKS_AND_INLINES)
-                .build()
+            parser { includeSourceSpans = IncludeSourceSpans.BLOCKS_AND_INLINES }
                 .parse("# a\r\n\r\nb\u0000c")
 
         val heading = assertIs<Heading>(document.firstChild)
@@ -120,29 +118,25 @@ class ParserTest {
     @Test
     fun enabledBlockTypesCanDisableCoreSyntax() {
         val headingOnly =
-            Parser.builder()
-                .enabledBlockTypes(setOf(Heading::class))
-                .build()
+            parser { enabledBlockTypes = setOf(Heading::class) }
                 .parse("# heading\n\n---")
         assertIs<Heading>(headingOnly.firstChild)
         assertIs<Paragraph>(headingOnly.lastChild)
 
         val none =
-            Parser.builder()
-                .enabledBlockTypes(emptySet())
-                .build()
+            parser { enabledBlockTypes = emptySet() }
                 .parse("# heading")
         assertIs<Paragraph>(none.firstChild)
 
         assertFailsWith<IllegalArgumentException> {
-            Parser.builder().enabledBlockTypes(setOf(BulletList::class))
+            parser { enabledBlockTypes = setOf(BulletList::class) }
         }
     }
 
     @Test
     fun parsesNestedListIndentation() {
         val document =
-            Parser.builder().build().parse(
+            parser().parse(
                 " - 1 space\n   - 3 spaces\n     - 5 spaces\n\t - tab + space",
             )
 
@@ -164,10 +158,10 @@ class ParserTest {
         val inlineParser = InlineParser { _, node -> node.appendChild(Code("custom")) }
         val replacement = Document()
         val parser =
-            Parser.builder()
-                .inlineParserFactory(InlineParserFactory { inlineParser })
-                .postProcessor { replacement }
-                .build()
+            parser {
+                inlineParserFactory = InlineParserFactory { inlineParser }
+                postProcessor { replacement }
+            }
 
         val parsed = parser.parse("input")
         assertSame(replacement, parsed)
@@ -176,13 +170,11 @@ class ParserTest {
     @Test
     fun validatesMaximumOpenBlocks() {
         assertFailsWith<IllegalArgumentException> {
-            Parser.builder().maxOpenBlockParsers(-1)
+            parser { maxOpenBlockParsers = -1 }
         }
 
         val document =
-            Parser.builder()
-                .maxOpenBlockParsers(0)
-                .build()
+            parser { maxOpenBlockParsers = 0 }
                 .parse("# plain")
         assertIs<Paragraph>(document.firstChild)
         assertNull(document.firstChild?.next)

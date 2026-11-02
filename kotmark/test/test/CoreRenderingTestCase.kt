@@ -1,7 +1,7 @@
 package io.heapy.kotmark.test
 
-import io.heapy.kotmark.parser.Parser
-import io.heapy.kotmark.renderer.html.HtmlRenderer
+import io.heapy.kotmark.parser.parser
+import io.heapy.kotmark.renderer.html.htmlRenderer
 
 /**
  * Base class for Markdown-to-HTML tests, with source context and visible tabs in assertion failures.
@@ -22,7 +22,7 @@ abstract class CoreRenderingTestCase {
     private fun showTabs(value: String): String = value.replace('\t', '→')
 
     companion object {
-        private val PARSER = Parser.builder().build()
-        private val RENDERER = HtmlRenderer.builder().build()
+        private val PARSER = parser()
+        private val RENDERER = htmlRenderer()
     }
 }

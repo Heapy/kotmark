@@ -33,7 +33,7 @@ class SpanIterableTest {
         assertFailsWith<NoSuchElementException> { iterator.next() }
     }
 
-    private fun extractSpans(input: String): Iterable<Span> = LinkExtractor.builder().build().extractSpans(input)
+    private fun extractSpans(input: String): Iterable<Span> = linkExtractor().extractSpans(input)
     private fun extractSpansAsText(input: String): List<String> =
         extractSpans(input).map { input.substring(it.beginIndex, it.endIndex) }
 }

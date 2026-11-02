@@ -11,7 +11,7 @@ import io.heapy.kotmark.node.OrderedList
 import io.heapy.kotmark.node.Paragraph
 import io.heapy.kotmark.node.Text
 import io.heapy.kotmark.node.ThematicBreak
-import io.heapy.kotmark.parser.Parser
+import io.heapy.kotmark.parser.parser
 import io.heapy.kotmark.renderer.NodeRenderer
 import kotlin.reflect.KClass
 import kotlin.test.Test
@@ -226,7 +226,7 @@ class MarkdownRendererTest {
                         }
                     }
             }
-        val renderer = MarkdownRenderer.builder().nodeRendererFactory(factory).build()
+        val renderer = markdownRenderer { nodeRendererFactory(factory) }
         assertEquals("# Custom heading\n", renderer.render(parse("# Hello")))
     }
 
@@ -236,7 +236,7 @@ class MarkdownRendererTest {
         }
     }
 
-    private fun parse(source: String): Node = Parser.builder().build().parse(source)
+    private fun parse(source: String): Node = parser().parse(source)
 
-    private fun render(node: Node): String = MarkdownRenderer.builder().build().render(node)
+    private fun render(node: Node): String = markdownRenderer().render(node)
 }

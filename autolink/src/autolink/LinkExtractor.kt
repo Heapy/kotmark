@@ -1,8 +1,6 @@
 // Port of autolink-java 0.12.0. Copyright (c) 2015 Robin Stocker. MIT; see UPSTREAM.md.
 package io.heapy.kotmark.autolink
 
-import kotlin.jvm.JvmStatic
-
 import io.heapy.kotmark.autolink.internal.EmailScanner
 import io.heapy.kotmark.autolink.internal.Scanner
 import io.heapy.kotmark.autolink.internal.SpanImpl
@@ -19,17 +17,15 @@ class LinkExtractor private constructor(
 
     fun extractSpans(input: CharSequence): Iterable<Span> = Iterable { SpanIterator(input, LinkIterator(input)) }
 
-    class Builder internal constructor() {
-        private var linkTypes = LinkType.entries.toSet()
-        private var emailDomainMustHaveDot = true
+    @AutolinkDsl
+    class Configuration internal constructor() {
+        var linkTypes = LinkType.entries.toSet()
+            set(value) {
+                field = value.toSet()
+            }
+        var emailDomainMustHaveDot = true
 
-        fun linkTypes(linkTypes: Set<LinkType>): Builder = apply { this.linkTypes = linkTypes.toSet() }
-
-        fun emailDomainMustHaveDot(emailDomainMustHaveDot: Boolean): Builder = apply {
-            this.emailDomainMustHaveDot = emailDomainMustHaveDot
-        }
-
-        fun build(): LinkExtractor = LinkExtractor(
+        internal fun create(): LinkExtractor = LinkExtractor(
             if (LinkType.URL in linkTypes) UrlScanner() else null,
             if (LinkType.WWW in linkTypes) WwwScanner() else null,
             if (LinkType.EMAIL in linkTypes) EmailScanner(emailDomainMustHaveDot) else null,
@@ -90,9 +86,8 @@ class LinkExtractor private constructor(
             return link
         }
     }
-
-    companion object {
-        @JvmStatic
-        fun builder(): Builder = Builder()
-    }
 }
+
+/** Creates [LinkExtractor] with the supplied configuration. */
+fun linkExtractor(configure: LinkExtractor.Configuration.() -> Unit = {}): LinkExtractor =
+    LinkExtractor.Configuration().apply(configure).create()

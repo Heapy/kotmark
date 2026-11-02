@@ -6,7 +6,7 @@ import io.heapy.kotmark.node.LinkReferenceDefinition
 import io.heapy.kotmark.node.ListItem
 import io.heapy.kotmark.node.Node
 import io.heapy.kotmark.node.Paragraph
-import io.heapy.kotmark.parser.Parser
+import io.heapy.kotmark.parser.parser
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
@@ -115,7 +115,7 @@ class LinkReferenceDefinitionNodeTest {
         assertDef(nodes[1], "fOo")
     }
 
-    private fun parse(input: String): Node = Parser.builder().build().parse(input)
+    private fun parse(input: String): Node = parser().parse(input)
 
     private fun assertDef(node: Node, label: String): LinkReferenceDefinition {
         val def = assertIs<LinkReferenceDefinition>(node)

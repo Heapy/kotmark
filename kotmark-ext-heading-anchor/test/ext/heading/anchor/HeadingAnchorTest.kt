@@ -1,23 +1,21 @@
 package io.heapy.kotmark.ext.heading.anchor
 
 import io.heapy.kotmark.Extension
-import io.heapy.kotmark.parser.Parser
-import io.heapy.kotmark.renderer.html.HtmlRenderer
+import io.heapy.kotmark.parser.parser
+import io.heapy.kotmark.renderer.html.htmlRenderer
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class HeadingAnchorTest {
-    private val parser = Parser.builder().build()
+    private val parser = parser()
     private val renderer =
-        HtmlRenderer.builder()
-            .extensions(listOf(HeadingAnchorExtension.create()))
-            .build()
+        htmlRenderer { extensions(listOf(HeadingAnchorExtension.create())) }
 
     @Test
     fun supplementaryLettersDigitsAndMarksArePreserved() {
         val text = "\uD840\uDC00\uD835\uDFCE\uD834\uDD65"
         assertHtml("# $text", """<h1 id="$text">$text</h1>""" + "\n")
-        assertEquals("id", IdGenerator.builder().build().generateId("\uD83D\uDE00"))
+        assertEquals("id", idGenerator().generateId("\uD83D\uDE00"))
     }
 
     @Test
@@ -106,12 +104,12 @@ class HeadingAnchorTest {
         expected: String,
     ) {
         val extension: Extension =
-            HeadingAnchorExtension.builder()
-                .defaultId(defaultId)
-                .idPrefix(prefix)
-                .idSuffix(suffix)
-                .build()
-        val configuredRenderer = HtmlRenderer.builder().extensions(listOf(extension)).build()
+            headingAnchorExtension {
+                this.defaultId = defaultId
+                idPrefix = prefix
+                idSuffix = suffix
+            }
+        val configuredRenderer = htmlRenderer { extensions(listOf(extension)) }
         assertEquals(expected, configuredRenderer.render(parser.parse(source)))
     }
 

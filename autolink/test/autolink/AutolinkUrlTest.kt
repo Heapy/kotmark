@@ -7,7 +7,10 @@ import kotlin.test.assertEquals
 class AutolinkUrlTest : AutolinkTestCase() {
     @Test
     fun notLinkedConfiguration1() {
-        val extractor = LinkExtractor.builder().linkTypes(setOf(LinkType.URL)).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = setOf(LinkType.URL)
+            emailDomainMustHaveDot = true
+        }
         assertNotLinked(extractor, "")
         assertNotLinked(extractor, "foo")
         assertNotLinked(extractor, ":")
@@ -18,7 +21,10 @@ class AutolinkUrlTest : AutolinkTestCase() {
 
     @Test
     fun notLinkedConfiguration2() {
-        val extractor = LinkExtractor.builder().linkTypes(LinkType.entries.toSet()).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = LinkType.entries.toSet()
+            emailDomainMustHaveDot = true
+        }
         assertNotLinked(extractor, "")
         assertNotLinked(extractor, "foo")
         assertNotLinked(extractor, ":")
@@ -29,7 +35,10 @@ class AutolinkUrlTest : AutolinkTestCase() {
 
     @Test
     fun schemesConfiguration1() {
-        val extractor = LinkExtractor.builder().linkTypes(setOf(LinkType.URL)).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = setOf(LinkType.URL)
+            emailDomainMustHaveDot = true
+        }
         assertNotLinked(extractor, "://foo")
         assertNotLinked(extractor, "1://foo")
         assertNotLinked(extractor, "123://foo")
@@ -49,7 +58,10 @@ class AutolinkUrlTest : AutolinkTestCase() {
 
     @Test
     fun schemesConfiguration2() {
-        val extractor = LinkExtractor.builder().linkTypes(LinkType.entries.toSet()).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = LinkType.entries.toSet()
+            emailDomainMustHaveDot = true
+        }
         assertNotLinked(extractor, "://foo")
         assertNotLinked(extractor, "1://foo")
         assertNotLinked(extractor, "123://foo")
@@ -69,7 +81,10 @@ class AutolinkUrlTest : AutolinkTestCase() {
 
     @Test
     fun authorityConfiguration1() {
-        val extractor = LinkExtractor.builder().linkTypes(setOf(LinkType.URL)).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = setOf(LinkType.URL)
+            emailDomainMustHaveDot = true
+        }
         assertLinked(extractor, LinkType.URL, "ab://", "ab://")
         assertLinked(extractor, LinkType.URL, "http://", "http://")
         assertLinked(extractor, LinkType.URL, "http:// ", "http:// ")
@@ -82,7 +97,10 @@ class AutolinkUrlTest : AutolinkTestCase() {
 
     @Test
     fun authorityConfiguration2() {
-        val extractor = LinkExtractor.builder().linkTypes(LinkType.entries.toSet()).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = LinkType.entries.toSet()
+            emailDomainMustHaveDot = true
+        }
         assertLinked(extractor, LinkType.URL, "ab://", "ab://")
         assertLinked(extractor, LinkType.URL, "http://", "http://")
         assertLinked(extractor, LinkType.URL, "http:// ", "http:// ")
@@ -95,7 +113,10 @@ class AutolinkUrlTest : AutolinkTestCase() {
 
     @Test
     fun linkingConfiguration1() {
-        val extractor = LinkExtractor.builder().linkTypes(setOf(LinkType.URL)).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = setOf(LinkType.URL)
+            emailDomainMustHaveDot = true
+        }
         assertLinked(extractor, LinkType.URL, "ab://c", "|ab://c|")
         assertLinked(extractor, LinkType.URL, "http://example.org/", "|http://example.org/|")
         assertLinked(extractor, LinkType.URL, "http://example.org/123", "|http://example.org/123|")
@@ -107,7 +128,10 @@ class AutolinkUrlTest : AutolinkTestCase() {
 
     @Test
     fun linkingConfiguration2() {
-        val extractor = LinkExtractor.builder().linkTypes(LinkType.entries.toSet()).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = LinkType.entries.toSet()
+            emailDomainMustHaveDot = true
+        }
         assertLinked(extractor, LinkType.URL, "ab://c", "|ab://c|")
         assertLinked(extractor, LinkType.URL, "http://example.org/", "|http://example.org/|")
         assertLinked(extractor, LinkType.URL, "http://example.org/123", "|http://example.org/123|")
@@ -119,21 +143,30 @@ class AutolinkUrlTest : AutolinkTestCase() {
 
     @Test
     fun schemeSeparatedByNonAlphanumericConfiguration1() {
-        val extractor = LinkExtractor.builder().linkTypes(setOf(LinkType.URL)).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = setOf(LinkType.URL)
+            emailDomainMustHaveDot = true
+        }
         assertLinked(extractor, LinkType.URL, ".http://example.org/", ".|http://example.org/|")
 
     }
 
     @Test
     fun schemeSeparatedByNonAlphanumericConfiguration2() {
-        val extractor = LinkExtractor.builder().linkTypes(LinkType.entries.toSet()).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = LinkType.entries.toSet()
+            emailDomainMustHaveDot = true
+        }
         assertLinked(extractor, LinkType.URL, ".http://example.org/", ".|http://example.org/|")
 
     }
 
     @Test
     fun spaceCharactersStopUrlConfiguration1() {
-        val extractor = LinkExtractor.builder().linkTypes(setOf(LinkType.URL)).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = setOf(LinkType.URL)
+            emailDomainMustHaveDot = true
+        }
         assertLinked(extractor, LinkType.URL, "foo http://example.org/", "foo |http://example.org/|")
         assertLinked(extractor, LinkType.URL, "http://example.org/ bar", "|http://example.org/| bar")
         assertLinked(extractor, LinkType.URL, "http://example.org/\tbar", "|http://example.org/|\tbar")
@@ -146,7 +179,10 @@ class AutolinkUrlTest : AutolinkTestCase() {
 
     @Test
     fun spaceCharactersStopUrlConfiguration2() {
-        val extractor = LinkExtractor.builder().linkTypes(LinkType.entries.toSet()).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = LinkType.entries.toSet()
+            emailDomainMustHaveDot = true
+        }
         assertLinked(extractor, LinkType.URL, "foo http://example.org/", "foo |http://example.org/|")
         assertLinked(extractor, LinkType.URL, "http://example.org/ bar", "|http://example.org/| bar")
         assertLinked(extractor, LinkType.URL, "http://example.org/\tbar", "|http://example.org/|\tbar")
@@ -159,7 +195,10 @@ class AutolinkUrlTest : AutolinkTestCase() {
 
     @Test
     fun illegalCharactersStopUrlConfiguration1() {
-        val extractor = LinkExtractor.builder().linkTypes(setOf(LinkType.URL)).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = setOf(LinkType.URL)
+            emailDomainMustHaveDot = true
+        }
         assertLinked(extractor, LinkType.URL, "http://example.org/<", "|http://example.org/|<")
         assertLinked(extractor, LinkType.URL, "http://example.org/>", "|http://example.org/|>")
         assertLinked(extractor, LinkType.URL, "http://example.org/<>", "|http://example.org/|<>")
@@ -172,7 +211,10 @@ class AutolinkUrlTest : AutolinkTestCase() {
 
     @Test
     fun illegalCharactersStopUrlConfiguration2() {
-        val extractor = LinkExtractor.builder().linkTypes(LinkType.entries.toSet()).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = LinkType.entries.toSet()
+            emailDomainMustHaveDot = true
+        }
         assertLinked(extractor, LinkType.URL, "http://example.org/<", "|http://example.org/|<")
         assertLinked(extractor, LinkType.URL, "http://example.org/>", "|http://example.org/|>")
         assertLinked(extractor, LinkType.URL, "http://example.org/<>", "|http://example.org/|<>")
@@ -185,7 +227,10 @@ class AutolinkUrlTest : AutolinkTestCase() {
 
     @Test
     fun delimiterAtEndConfiguration1() {
-        val extractor = LinkExtractor.builder().linkTypes(setOf(LinkType.URL)).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = setOf(LinkType.URL)
+            emailDomainMustHaveDot = true
+        }
         assertLinked(extractor, LinkType.URL, "http://example.org/.", "|http://example.org/|.")
         assertLinked(extractor, LinkType.URL, "http://example.org/..", "|http://example.org/|..")
         assertLinked(extractor, LinkType.URL, "http://example.org/,", "|http://example.org/|,")
@@ -198,7 +243,10 @@ class AutolinkUrlTest : AutolinkTestCase() {
 
     @Test
     fun delimiterAtEndConfiguration2() {
-        val extractor = LinkExtractor.builder().linkTypes(LinkType.entries.toSet()).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = LinkType.entries.toSet()
+            emailDomainMustHaveDot = true
+        }
         assertLinked(extractor, LinkType.URL, "http://example.org/.", "|http://example.org/|.")
         assertLinked(extractor, LinkType.URL, "http://example.org/..", "|http://example.org/|..")
         assertLinked(extractor, LinkType.URL, "http://example.org/,", "|http://example.org/|,")
@@ -211,7 +259,10 @@ class AutolinkUrlTest : AutolinkTestCase() {
 
     @Test
     fun matchingPunctuationConfiguration1() {
-        val extractor = LinkExtractor.builder().linkTypes(setOf(LinkType.URL)).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = setOf(LinkType.URL)
+            emailDomainMustHaveDot = true
+        }
         assertLinked(extractor, LinkType.URL, "http://example.org/a(b)", "|http://example.org/a(b)|")
         assertLinked(extractor, LinkType.URL, "http://example.org/a[b]", "|http://example.org/a[b]|")
         assertLinked(extractor, LinkType.URL, "http://example.org/a{b}", "|http://example.org/a{b}|")
@@ -227,7 +278,10 @@ class AutolinkUrlTest : AutolinkTestCase() {
 
     @Test
     fun matchingPunctuationConfiguration2() {
-        val extractor = LinkExtractor.builder().linkTypes(LinkType.entries.toSet()).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = LinkType.entries.toSet()
+            emailDomainMustHaveDot = true
+        }
         assertLinked(extractor, LinkType.URL, "http://example.org/a(b)", "|http://example.org/a(b)|")
         assertLinked(extractor, LinkType.URL, "http://example.org/a[b]", "|http://example.org/a[b]|")
         assertLinked(extractor, LinkType.URL, "http://example.org/a{b}", "|http://example.org/a{b}|")
@@ -243,7 +297,10 @@ class AutolinkUrlTest : AutolinkTestCase() {
 
     @Test
     fun matchingPunctuationTrickyConfiguration1() {
-        val extractor = LinkExtractor.builder().linkTypes(setOf(LinkType.URL)).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = setOf(LinkType.URL)
+            emailDomainMustHaveDot = true
+        }
         assertLinked(extractor, LinkType.URL, "((http://example.org/))", "((|http://example.org/|))")
         assertLinked(extractor, LinkType.URL, "((http://example.org/a(b)))", "((|http://example.org/a(b)|))")
         assertLinked(extractor, LinkType.URL, "[(http://example.org/)]", "[(|http://example.org/|)]")
@@ -259,7 +316,10 @@ class AutolinkUrlTest : AutolinkTestCase() {
 
     @Test
     fun matchingPunctuationTrickyConfiguration2() {
-        val extractor = LinkExtractor.builder().linkTypes(LinkType.entries.toSet()).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = LinkType.entries.toSet()
+            emailDomainMustHaveDot = true
+        }
         assertLinked(extractor, LinkType.URL, "((http://example.org/))", "((|http://example.org/|))")
         assertLinked(extractor, LinkType.URL, "((http://example.org/a(b)))", "((|http://example.org/a(b)|))")
         assertLinked(extractor, LinkType.URL, "[(http://example.org/)]", "[(|http://example.org/|)]")
@@ -275,7 +335,10 @@ class AutolinkUrlTest : AutolinkTestCase() {
 
     @Test
     fun quotesConfiguration1() {
-        val extractor = LinkExtractor.builder().linkTypes(setOf(LinkType.URL)).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = setOf(LinkType.URL)
+            emailDomainMustHaveDot = true
+        }
         assertLinked(extractor, LinkType.URL, "http://example.org/'_(foo)", "|http://example.org/'_(foo)|")
         assertLinked(extractor, LinkType.URL, "http://example.org/'_(foo)'", "|http://example.org/'_(foo)'|")
         assertLinked(extractor, LinkType.URL, "http://example.org/''", "|http://example.org/''|")
@@ -293,7 +356,10 @@ class AutolinkUrlTest : AutolinkTestCase() {
 
     @Test
     fun quotesConfiguration2() {
-        val extractor = LinkExtractor.builder().linkTypes(LinkType.entries.toSet()).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = LinkType.entries.toSet()
+            emailDomainMustHaveDot = true
+        }
         assertLinked(extractor, LinkType.URL, "http://example.org/'_(foo)", "|http://example.org/'_(foo)|")
         assertLinked(extractor, LinkType.URL, "http://example.org/'_(foo)'", "|http://example.org/'_(foo)'|")
         assertLinked(extractor, LinkType.URL, "http://example.org/''", "|http://example.org/''|")
@@ -311,7 +377,10 @@ class AutolinkUrlTest : AutolinkTestCase() {
 
     @Test
     fun htmlConfiguration1() {
-        val extractor = LinkExtractor.builder().linkTypes(setOf(LinkType.URL)).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = setOf(LinkType.URL)
+            emailDomainMustHaveDot = true
+        }
         assertLinked(extractor, LinkType.URL, """http://example.org">""", """|http://example.org|">""")
         assertLinked(extractor, LinkType.URL, "http://example.org'>", "|http://example.org|'>")
         assertLinked(extractor, LinkType.URL, """http://example.org"/>""", """|http://example.org|"/>""")
@@ -323,7 +392,10 @@ class AutolinkUrlTest : AutolinkTestCase() {
 
     @Test
     fun htmlConfiguration2() {
-        val extractor = LinkExtractor.builder().linkTypes(LinkType.entries.toSet()).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = LinkType.entries.toSet()
+            emailDomainMustHaveDot = true
+        }
         assertLinked(extractor, LinkType.URL, """http://example.org">""", """|http://example.org|">""")
         assertLinked(extractor, LinkType.URL, "http://example.org'>", "|http://example.org|'>")
         assertLinked(extractor, LinkType.URL, """http://example.org"/>""", """|http://example.org|"/>""")
@@ -335,7 +407,10 @@ class AutolinkUrlTest : AutolinkTestCase() {
 
     @Test
     fun cssConfiguration1() {
-        val extractor = LinkExtractor.builder().linkTypes(setOf(LinkType.URL)).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = setOf(LinkType.URL)
+            emailDomainMustHaveDot = true
+        }
         assertLinked(extractor, LinkType.URL, """http://example.org");""", """|http://example.org|");""")
         assertLinked(extractor, LinkType.URL, "http://example.org');", "|http://example.org|');")
 
@@ -343,7 +418,10 @@ class AutolinkUrlTest : AutolinkTestCase() {
 
     @Test
     fun cssConfiguration2() {
-        val extractor = LinkExtractor.builder().linkTypes(LinkType.entries.toSet()).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = LinkType.entries.toSet()
+            emailDomainMustHaveDot = true
+        }
         assertLinked(extractor, LinkType.URL, """http://example.org");""", """|http://example.org|");""")
         assertLinked(extractor, LinkType.URL, "http://example.org');", "|http://example.org|');")
 
@@ -351,7 +429,10 @@ class AutolinkUrlTest : AutolinkTestCase() {
 
     @Test
     fun slashConfiguration1() {
-        val extractor = LinkExtractor.builder().linkTypes(setOf(LinkType.URL)).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = setOf(LinkType.URL)
+            emailDomainMustHaveDot = true
+        }
         assertLinked(extractor, LinkType.URL, "http://example.org/", "|http://example.org/|")
         assertLinked(extractor, LinkType.URL, "http://example.org/a/", "|http://example.org/a/|")
         assertLinked(extractor, LinkType.URL, "http://example.org//", "|http://example.org//|")
@@ -360,7 +441,10 @@ class AutolinkUrlTest : AutolinkTestCase() {
 
     @Test
     fun slashConfiguration2() {
-        val extractor = LinkExtractor.builder().linkTypes(LinkType.entries.toSet()).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = LinkType.entries.toSet()
+            emailDomainMustHaveDot = true
+        }
         assertLinked(extractor, LinkType.URL, "http://example.org/", "|http://example.org/|")
         assertLinked(extractor, LinkType.URL, "http://example.org/a/", "|http://example.org/a/|")
         assertLinked(extractor, LinkType.URL, "http://example.org//", "|http://example.org//|")
@@ -369,7 +453,10 @@ class AutolinkUrlTest : AutolinkTestCase() {
 
     @Test
     fun multipleConfiguration1() {
-        val extractor = LinkExtractor.builder().linkTypes(setOf(LinkType.URL)).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = setOf(LinkType.URL)
+            emailDomainMustHaveDot = true
+        }
         assertLinked(extractor, LinkType.URL, "http://one.org/ http://two.org/", "|http://one.org/| |http://two.org/|")
         assertLinked(extractor, LinkType.URL, "http://one.org/ : http://two.org/", "|http://one.org/| : |http://two.org/|")
         assertLinked(extractor, LinkType.URL, "(http://one.org/)(http://two.org/)", "(|http://one.org/|)(|http://two.org/|)")
@@ -378,7 +465,10 @@ class AutolinkUrlTest : AutolinkTestCase() {
 
     @Test
     fun multipleConfiguration2() {
-        val extractor = LinkExtractor.builder().linkTypes(LinkType.entries.toSet()).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = LinkType.entries.toSet()
+            emailDomainMustHaveDot = true
+        }
         assertLinked(extractor, LinkType.URL, "http://one.org/ http://two.org/", "|http://one.org/| |http://two.org/|")
         assertLinked(extractor, LinkType.URL, "http://one.org/ : http://two.org/", "|http://one.org/| : |http://two.org/|")
         assertLinked(extractor, LinkType.URL, "(http://one.org/)(http://two.org/)", "(|http://one.org/|)(|http://two.org/|)")
@@ -387,7 +477,10 @@ class AutolinkUrlTest : AutolinkTestCase() {
 
     @Test
     fun internationalConfiguration1() {
-        val extractor = LinkExtractor.builder().linkTypes(setOf(LinkType.URL)).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = setOf(LinkType.URL)
+            emailDomainMustHaveDot = true
+        }
         assertLinked(extractor, LinkType.URL, "http://üñîçøðé.com/ä", "|http://üñîçøðé.com/ä|")
         assertLinked(extractor, LinkType.URL, "http://example.org/\u00A1", "|http://example.org/\u00A1|")
         assertLinked(extractor, LinkType.URL, "http://example.org/\u00A2", "|http://example.org/\u00A2|")
@@ -396,7 +489,10 @@ class AutolinkUrlTest : AutolinkTestCase() {
 
     @Test
     fun internationalConfiguration2() {
-        val extractor = LinkExtractor.builder().linkTypes(LinkType.entries.toSet()).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = LinkType.entries.toSet()
+            emailDomainMustHaveDot = true
+        }
         assertLinked(extractor, LinkType.URL, "http://üñîçøðé.com/ä", "|http://üñîçøðé.com/ä|")
         assertLinked(extractor, LinkType.URL, "http://example.org/\u00A1", "|http://example.org/\u00A1|")
         assertLinked(extractor, LinkType.URL, "http://example.org/\u00A2", "|http://example.org/\u00A2|")
@@ -405,7 +501,10 @@ class AutolinkUrlTest : AutolinkTestCase() {
 
     @Test
     fun unicodeWhitespaceConfiguration1() {
-        val extractor = LinkExtractor.builder().linkTypes(setOf(LinkType.URL)).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = setOf(LinkType.URL)
+            emailDomainMustHaveDot = true
+        }
         val whitespace = charArrayOf(
                 '\u00A0', // no-break space
                 '\u2000', // en quad
@@ -434,7 +533,10 @@ class AutolinkUrlTest : AutolinkTestCase() {
 
     @Test
     fun unicodeWhitespaceConfiguration2() {
-        val extractor = LinkExtractor.builder().linkTypes(LinkType.entries.toSet()).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = LinkType.entries.toSet()
+            emailDomainMustHaveDot = true
+        }
         val whitespace = charArrayOf(
                 '\u00A0', // no-break space
                 '\u2000', // en quad
@@ -463,7 +565,10 @@ class AutolinkUrlTest : AutolinkTestCase() {
 
     @Test
     fun replyLevelConfiguration1() {
-        val extractor = LinkExtractor.builder().linkTypes(setOf(LinkType.URL)).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = setOf(LinkType.URL)
+            emailDomainMustHaveDot = true
+        }
         assertLinked(extractor, LinkType.URL, ">http://example.org/", ">|http://example.org/|")
         assertLinked(extractor, LinkType.URL, "> http://example.org/", "> |http://example.org/|")
         assertLinked(extractor, LinkType.URL, ">>http://example.org/", ">>|http://example.org/|")
@@ -477,7 +582,10 @@ class AutolinkUrlTest : AutolinkTestCase() {
 
     @Test
     fun replyLevelConfiguration2() {
-        val extractor = LinkExtractor.builder().linkTypes(LinkType.entries.toSet()).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = LinkType.entries.toSet()
+            emailDomainMustHaveDot = true
+        }
         assertLinked(extractor, LinkType.URL, ">http://example.org/", ">|http://example.org/|")
         assertLinked(extractor, LinkType.URL, "> http://example.org/", "> |http://example.org/|")
         assertLinked(extractor, LinkType.URL, ">>http://example.org/", ">>|http://example.org/|")
@@ -491,7 +599,10 @@ class AutolinkUrlTest : AutolinkTestCase() {
 
     @Test
     fun linkToStringConfiguration1() {
-        val extractor = LinkExtractor.builder().linkTypes(setOf(LinkType.URL)).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = setOf(LinkType.URL)
+            emailDomainMustHaveDot = true
+        }
         val links = extractor.extractLinks("wow, so example: http://test.com")
         assertEquals("Link{type=URL, beginIndex=17, endIndex=32}", links.iterator().next().toString())
 
@@ -499,10 +610,12 @@ class AutolinkUrlTest : AutolinkTestCase() {
 
     @Test
     fun linkToStringConfiguration2() {
-        val extractor = LinkExtractor.builder().linkTypes(LinkType.entries.toSet()).emailDomainMustHaveDot(true).build()
+        val extractor = linkExtractor {
+            linkTypes = LinkType.entries.toSet()
+            emailDomainMustHaveDot = true
+        }
         val links = extractor.extractLinks("wow, so example: http://test.com")
         assertEquals("Link{type=URL, beginIndex=17, endIndex=32}", links.iterator().next().toString())
 
     }
-
 }

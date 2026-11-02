@@ -1,6 +1,7 @@
 package io.heapy.kotmark.parser
 
 import io.heapy.kotmark.Extension
+import io.heapy.kotmark.KotmarkDsl
 import io.heapy.kotmark.internal.Definitions
 import io.heapy.kotmark.internal.DocumentParser
 import io.heapy.kotmark.internal.InlineParserContextImpl
@@ -11,26 +12,25 @@ import io.heapy.kotmark.parser.beta.InlineContentParserFactory
 import io.heapy.kotmark.parser.beta.LinkProcessor
 import io.heapy.kotmark.parser.block.BlockParserFactory
 import io.heapy.kotmark.parser.delimiter.DelimiterProcessor
-import kotlin.jvm.JvmStatic
 import kotlin.reflect.KClass
 
 /**
  * Parses Markdown input to a tree of nodes.
  */
-class Parser private constructor(builder: Builder) {
+class Parser private constructor(configuration: Configuration) {
     private val blockParserFactories =
         DocumentParser.calculateBlockParserFactories(
-            builder.blockParserFactories,
-            builder.enabledBlockTypes,
+            configuration.blockParserFactories,
+            configuration.enabledBlockTypes,
         )
-    private val inlineContentParserFactories = builder.inlineContentParserFactories.toList()
-    private val delimiterProcessors = builder.delimiterProcessors.toList()
-    private val linkProcessors = builder.linkProcessors.toList()
-    private val linkMarkers = builder.linkMarkers.toSet()
-    private val inlineParserFactory = builder.resolveInlineParserFactory()
-    private val postProcessors = builder.postProcessors.toList()
-    private val includeSourceSpans = builder.includeSourceSpans
-    private val maxOpenBlockParsers = builder.maxOpenBlockParsers
+    private val inlineContentParserFactories = configuration.inlineContentParserFactories.toList()
+    private val delimiterProcessors = configuration.delimiterProcessors.toList()
+    private val linkProcessors = configuration.linkProcessors.toList()
+    private val linkMarkers = configuration.linkMarkers.toSet()
+    private val inlineParserFactory = configuration.resolveInlineParserFactory()
+    private val postProcessors = configuration.postProcessors.toList()
+    private val includeSourceSpans = configuration.includeSourceSpans
+    private val maxOpenBlockParsers = configuration.maxOpenBlockParsers
 
     init {
         val context =
@@ -72,22 +72,31 @@ class Parser private constructor(builder: Builder) {
         return result
     }
 
-    class Builder internal constructor() {
+    @KotmarkDsl
+    class Configuration internal constructor() {
         internal val blockParserFactories = mutableListOf<BlockParserFactory>()
         internal val inlineContentParserFactories = mutableListOf<InlineContentParserFactory>()
         internal val delimiterProcessors = mutableListOf<DelimiterProcessor>()
         internal val linkProcessors = mutableListOf<LinkProcessor>()
         internal val postProcessors = mutableListOf<PostProcessor>()
         internal val linkMarkers = mutableSetOf<Char>()
-        internal var enabledBlockTypes: Set<KClass<out Block>> =
+        var enabledBlockTypes: Set<KClass<out Block>> =
             DocumentParser.getDefaultBlockParserTypes()
-        internal var inlineParserFactory: InlineParserFactory? = null
-        internal var includeSourceSpans: IncludeSourceSpans = IncludeSourceSpans.NONE
-        internal var maxOpenBlockParsers: Int = Int.MAX_VALUE
+            set(value) {
+                DocumentParser.checkEnabledBlockTypes(value)
+                field = value.toSet()
+            }
+        var inlineParserFactory: InlineParserFactory? = null
+        var includeSourceSpans: IncludeSourceSpans = IncludeSourceSpans.NONE
+        var maxOpenBlockParsers: Int = Int.MAX_VALUE
+            set(value) {
+                require(value >= 0) { "maxOpenBlockParsers must be >= 0" }
+                field = value
+            }
 
-        fun build(): Parser = Parser(this)
+        internal fun create(): Parser = Parser(this)
 
-        fun extensions(extensions: Iterable<Extension>): Builder = apply {
+        fun extensions(extensions: Iterable<Extension>) {
             for (extension in extensions) {
                 if (extension is ParserExtension) {
                     extension.extend(this)
@@ -95,50 +104,30 @@ class Parser private constructor(builder: Builder) {
             }
         }
 
-        fun enabledBlockTypes(enabledBlockTypes: Set<KClass<out Block>>): Builder = apply {
-            DocumentParser.checkEnabledBlockTypes(enabledBlockTypes)
-            this.enabledBlockTypes = enabledBlockTypes
-        }
-
-        fun includeSourceSpans(includeSourceSpans: IncludeSourceSpans): Builder = apply {
-            this.includeSourceSpans = includeSourceSpans
-        }
-
-        fun maxOpenBlockParsers(maxOpenBlockParsers: Int): Builder = apply {
-            require(maxOpenBlockParsers >= 0) {
-                "maxOpenBlockParsers must be >= 0"
-            }
-            this.maxOpenBlockParsers = maxOpenBlockParsers
-        }
-
-        fun customBlockParserFactory(blockParserFactory: BlockParserFactory): Builder = apply {
+        fun customBlockParserFactory(blockParserFactory: BlockParserFactory) {
             blockParserFactories.add(blockParserFactory)
         }
 
         fun customInlineContentParserFactory(
             inlineContentParserFactory: InlineContentParserFactory,
-        ): Builder = apply {
+        ) {
             inlineContentParserFactories.add(inlineContentParserFactory)
         }
 
-        fun customDelimiterProcessor(delimiterProcessor: DelimiterProcessor): Builder = apply {
+        fun customDelimiterProcessor(delimiterProcessor: DelimiterProcessor) {
             delimiterProcessors.add(delimiterProcessor)
         }
 
-        fun linkProcessor(linkProcessor: LinkProcessor): Builder = apply {
+        fun linkProcessor(linkProcessor: LinkProcessor) {
             linkProcessors.add(linkProcessor)
         }
 
-        fun linkMarker(linkMarker: Char): Builder = apply {
+        fun linkMarker(linkMarker: Char) {
             linkMarkers.add(linkMarker)
         }
 
-        fun postProcessor(postProcessor: PostProcessor): Builder = apply {
+        fun postProcessor(postProcessor: PostProcessor) {
             postProcessors.add(postProcessor)
-        }
-
-        fun inlineParserFactory(inlineParserFactory: InlineParserFactory?): Builder = apply {
-            this.inlineParserFactory = inlineParserFactory
         }
 
         internal fun resolveInlineParserFactory(): InlineParserFactory =
@@ -146,11 +135,10 @@ class Parser private constructor(builder: Builder) {
     }
 
     fun interface ParserExtension : Extension {
-        fun extend(parserBuilder: Builder)
-    }
-
-    companion object {
-        @JvmStatic
-        fun builder(): Builder = Builder()
+        fun extend(parserConfiguration: Configuration)
     }
 }
+
+/** Creates [Parser] with the supplied configuration. */
+fun parser(configure: Parser.Configuration.() -> Unit = {}): Parser =
+    Parser.Configuration().apply(configure).create()

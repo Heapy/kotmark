@@ -7,7 +7,7 @@ import kotlin.test.assertEquals
 class UsageExampleTest {
     @Test fun linkify() {
         val input = "wow http://test.com such linked"
-        val extractor = LinkExtractor.builder().linkTypes(setOf(LinkType.URL)).build()
+        val extractor = linkExtractor { linkTypes = setOf(LinkType.URL) }
         val html = buildString {
             for (span in extractor.extractSpans(input)) {
                 val text = input.substring(span.beginIndex, span.endIndex)
@@ -21,7 +21,7 @@ class UsageExampleTest {
 
     @Test fun extractLinks() {
         val input = "hey https://test.com and https://example.com"
-        val extractor = LinkExtractor.builder().linkTypes(setOf(LinkType.URL)).build()
+        val extractor = linkExtractor { linkTypes = setOf(LinkType.URL) }
         val links = extractor.extractLinks(input).map { input.substring(it.beginIndex, it.endIndex) }
         assertEquals(listOf("https://test.com", "https://example.com"), links)
     }

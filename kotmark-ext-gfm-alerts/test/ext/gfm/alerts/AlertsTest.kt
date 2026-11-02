@@ -5,11 +5,11 @@ import io.heapy.kotmark.node.Emphasis
 import io.heapy.kotmark.node.SourceSpan
 import io.heapy.kotmark.node.Text
 import io.heapy.kotmark.parser.IncludeSourceSpans
-import io.heapy.kotmark.parser.Parser
-import io.heapy.kotmark.renderer.html.HtmlRenderer
-import io.heapy.kotmark.renderer.markdown.MarkdownRenderer
+import io.heapy.kotmark.parser.parser
+import io.heapy.kotmark.renderer.html.htmlRenderer
+import io.heapy.kotmark.renderer.markdown.markdownRenderer
 import io.heapy.kotmark.renderer.text.LineBreakRendering
-import io.heapy.kotmark.renderer.text.TextContentRenderer
+import io.heapy.kotmark.renderer.text.textContentRenderer
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -18,11 +18,32 @@ import kotlin.test.assertIs
 class AlertsTest {
     private val extensions: List<Extension> = listOf(AlertsExtension.create())
     private val parser =
-        Parser.builder()
-            .extensions(extensions)
-            .includeSourceSpans(IncludeSourceSpans.BLOCKS_AND_INLINES)
-            .build()
-    private val html = HtmlRenderer.builder().extensions(extensions).build()
+        parser {
+            extensions(extensions)
+            includeSourceSpans = IncludeSourceSpans.BLOCKS_AND_INLINES
+        }
+    private val html = htmlRenderer { extensions(extensions) }
+
+    @Test
+    fun configurationSnapshotsAllowedTypesAndValidatesAssignments() {
+        lateinit var configuration: AlertsExtension.Configuration
+        val types = mutableMapOf("INFO" to "Information")
+        val extension = alertsExtension {
+            configuration = this
+            allowedTypes = types
+            types.clear()
+        }
+        configuration.allowedTypes = mapOf("NOTE" to "Changed")
+        val parser = parser { extensions(listOf(extension)) }
+        val renderer = htmlRenderer { extensions(listOf(extension)) }
+        assertEquals(
+            alertHtml("info", "Information", "<p>Body</p>\n"),
+            renderer.render(parser.parse("> [!INFO]\n> Body")),
+        )
+        for (invalid in listOf(mapOf("info" to "Info"), mapOf("" to "Info"), mapOf("INFO" to ""))) {
+            assertFailsWith<IllegalArgumentException> { alertsExtension { allowedTypes = invalid } }
+        }
+    }
 
     @Test
     fun standardTypesAndContent() {
@@ -66,12 +87,12 @@ class AlertsTest {
     @Test
     fun customTypesAndValidation() {
         val extension =
-            AlertsExtension.builder()
-                .addCustomType("INFO", "Information")
-                .addCustomType("NOTE", "Nota")
-                .build()
-        val customParser = Parser.builder().extensions(listOf(extension)).build()
-        val customHtml = HtmlRenderer.builder().extensions(listOf(extension)).build()
+            alertsExtension {
+                addCustomType("INFO", "Information")
+                addCustomType("NOTE", "Nota")
+            }
+        val customParser = parser { extensions(listOf(extension)) }
+        val customHtml = htmlRenderer { extensions(listOf(extension)) }
         assertEquals(
             alertHtml("info", "Information", "<p>Custom alert</p>\n"),
             customHtml.render(customParser.parse("> [!INFO]\n> Custom alert")),
@@ -81,29 +102,29 @@ class AlertsTest {
             customHtml.render(customParser.parse("> [!NOTE]\n> Localized title")),
         )
         assertFailsWith<IllegalArgumentException> {
-            AlertsExtension.builder().addCustomType("info", "Information")
+            alertsExtension { addCustomType("info", "Information") }
         }
         assertFailsWith<IllegalArgumentException> {
-            AlertsExtension.builder().addCustomType("", "Title")
+            alertsExtension { addCustomType("", "Title") }
         }
         assertFailsWith<IllegalArgumentException> {
-            AlertsExtension.builder().addCustomType("INFO", "")
+            alertsExtension { addCustomType("INFO", "") }
         }
         assertFailsWith<IllegalArgumentException> {
-            AlertsExtension.builder().setAllowedTypes(emptyMap())
+            alertsExtension { allowedTypes = emptyMap() }
         }
     }
 
     @Test
     fun customTitlesAndSourceSpans() {
         val customExtensions =
-            listOf(AlertsExtension.builder().allowCustomTitles(true).build())
+            listOf(alertsExtension { customTitlesAllowed = true })
         val customParser =
-            Parser.builder()
-                .extensions(customExtensions)
-                .includeSourceSpans(IncludeSourceSpans.BLOCKS_AND_INLINES)
-                .build()
-        val customHtml = HtmlRenderer.builder().extensions(customExtensions).build()
+            parser {
+                extensions(customExtensions)
+                includeSourceSpans = IncludeSourceSpans.BLOCKS_AND_INLINES
+            }
+        val customHtml = htmlRenderer { extensions(customExtensions) }
         val source = "> [!NOTE] Custom _title_\n> Body text"
         assertEquals(
             alertHtml("note", "Custom <em>title</em>", "<p>Body text</p>\n"),
@@ -160,9 +181,9 @@ class AlertsTest {
         )
 
         val nestedExtensions =
-            listOf(AlertsExtension.builder().allowNestedAlerts(true).build())
-        val nestedParser = Parser.builder().extensions(nestedExtensions).build()
-        val nestedHtml = HtmlRenderer.builder().extensions(nestedExtensions).build()
+            listOf(alertsExtension { nestedAlertsAllowed = true })
+        val nestedParser = parser { extensions(nestedExtensions) }
+        val nestedHtml = htmlRenderer { extensions(nestedExtensions) }
         assertEquals(
             alertHtml(
                 "tip",
@@ -176,7 +197,7 @@ class AlertsTest {
 
     @Test
     fun markdownRoundTrips() {
-        val renderer = MarkdownRenderer.builder().extensions(extensions).build()
+        val renderer = markdownRenderer { extensions(extensions) }
         for (
             input in
                 listOf(
@@ -206,9 +227,9 @@ class AlertsTest {
         )
 
         val customExtensions =
-            listOf(AlertsExtension.builder().allowCustomTitles(true).build())
-        val customParser = Parser.builder().extensions(customExtensions).build()
-        val customRenderer = MarkdownRenderer.builder().extensions(customExtensions).build()
+            listOf(alertsExtension { customTitlesAllowed = true })
+        val customParser = parser { extensions(customExtensions) }
+        val customRenderer = markdownRenderer { extensions(customExtensions) }
         val titled = """
             |> [!WARNING] Custom _title **with `formatting`**_
             |> Be careful
@@ -242,10 +263,10 @@ class AlertsTest {
 
     private fun assertText(source: String, mode: LineBreakRendering, expected: String) {
         val renderer =
-            TextContentRenderer.builder()
-                .extensions(extensions)
-                .lineBreakRendering(mode)
-                .build()
+            textContentRenderer {
+                extensions(extensions)
+                lineBreakRendering = mode
+            }
         assertEquals(expected, renderer.render(parser.parse(source)))
     }
 

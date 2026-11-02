@@ -1,16 +1,16 @@
 package io.heapy.kotmark.renderer.text
 
 import io.heapy.kotmark.Extension
+import io.heapy.kotmark.KotmarkDsl
 import io.heapy.kotmark.internal.renderer.NodeRendererMap
 import io.heapy.kotmark.node.Node
 import io.heapy.kotmark.renderer.Renderer
-import kotlin.jvm.JvmStatic
 
-class TextContentRenderer private constructor(builder: Builder) : Renderer {
-    private val lineBreakRendering = builder.lineBreakRendering
+class TextContentRenderer private constructor(configuration: Configuration) : Renderer {
+    private val lineBreakRendering = configuration.lineBreakRendering
     private val nodeRendererFactories =
         buildList {
-            addAll(builder.nodeRendererFactories)
+            addAll(configuration.nodeRendererFactories)
             add(TextContentNodeRendererFactory(::CoreTextContentNodeRenderer))
         }
 
@@ -23,33 +23,20 @@ class TextContentRenderer private constructor(builder: Builder) : Renderer {
             render(node, this)
         }
 
-    class Builder internal constructor() {
+    @KotmarkDsl
+    class Configuration internal constructor() {
         internal val nodeRendererFactories = mutableListOf<TextContentNodeRendererFactory>()
-        internal var lineBreakRendering = LineBreakRendering.COMPACT
+        var lineBreakRendering = LineBreakRendering.COMPACT
 
-        fun build(): TextContentRenderer = TextContentRenderer(this)
-
-        fun lineBreakRendering(lineBreakRendering: LineBreakRendering): Builder = apply {
-            this.lineBreakRendering = lineBreakRendering
-        }
-
-        @Deprecated("Use lineBreakRendering(LineBreakRendering.STRIP) instead")
-        fun stripNewlines(stripNewlines: Boolean): Builder = apply {
-            lineBreakRendering =
-                if (stripNewlines) {
-                    LineBreakRendering.STRIP
-                } else {
-                    LineBreakRendering.COMPACT
-                }
-        }
+        internal fun create(): TextContentRenderer = TextContentRenderer(this)
 
         fun nodeRendererFactory(
             nodeRendererFactory: TextContentNodeRendererFactory,
-        ): Builder = apply {
+        ) {
             nodeRendererFactories.add(nodeRendererFactory)
         }
 
-        fun extensions(extensions: Iterable<Extension>): Builder = apply {
+        fun extensions(extensions: Iterable<Extension>) {
             for (extension in extensions) {
                 if (extension is TextContentRendererExtension) {
                     extension.extend(this)
@@ -59,7 +46,7 @@ class TextContentRenderer private constructor(builder: Builder) : Renderer {
     }
 
     fun interface TextContentRendererExtension : Extension {
-        fun extend(rendererBuilder: Builder)
+        fun extend(rendererConfiguration: Configuration)
     }
 
     private inner class RendererContext(
@@ -79,9 +66,8 @@ class TextContentRenderer private constructor(builder: Builder) : Renderer {
             nodeRendererMap.render(node)
         }
     }
-
-    companion object {
-        @JvmStatic
-        fun builder(): Builder = Builder()
-    }
 }
+
+/** Creates [TextContentRenderer] with the supplied configuration. */
+fun textContentRenderer(configure: TextContentRenderer.Configuration.() -> Unit = {}): TextContentRenderer =
+    TextContentRenderer.Configuration().apply(configure).create()

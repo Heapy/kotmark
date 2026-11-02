@@ -3,20 +3,20 @@ package io.heapy.kotmark.ext.image.attributes
 import io.heapy.kotmark.Extension
 import io.heapy.kotmark.ext.image.attributes.internal.ImageAttributesDelimiterProcessor
 import io.heapy.kotmark.node.Image
-import io.heapy.kotmark.node.Text
-import io.heapy.kotmark.parser.delimiter.DelimiterRun
 import io.heapy.kotmark.node.Paragraph
 import io.heapy.kotmark.node.SourceSpan
+import io.heapy.kotmark.node.Text
 import io.heapy.kotmark.parser.IncludeSourceSpans
-import io.heapy.kotmark.parser.Parser
-import io.heapy.kotmark.renderer.html.HtmlRenderer
+import io.heapy.kotmark.parser.delimiter.DelimiterRun
+import io.heapy.kotmark.parser.parser
+import io.heapy.kotmark.renderer.html.htmlRenderer
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class ImageAttributesTest {
     private val extensions: List<Extension> = listOf(ImageAttributesExtension.create())
-    private val parser = Parser.builder().extensions(extensions).build()
-    private val renderer = HtmlRenderer.builder().extensions(extensions).build()
+    private val parser = parser { extensions(extensions) }
+    private val renderer = htmlRenderer { extensions(extensions) }
 
     @Test
     fun processorAcceptsTrailingWhitespace() {
@@ -164,10 +164,10 @@ class ImageAttributesTest {
     @Test
     fun sourceSpansRemainMergedForPlainText() {
         val spansParser =
-            Parser.builder()
-                .extensions(extensions)
-                .includeSourceSpans(IncludeSourceSpans.BLOCKS_AND_INLINES)
-                .build()
+            parser {
+                extensions(extensions)
+                includeSourceSpans = IncludeSourceSpans.BLOCKS_AND_INLINES
+            }
         val paragraph = spansParser.parse("x{height=3 width=4}\n").firstChild as Paragraph
         assertEquals(
             listOf(SourceSpan.of(0, 0, 0, 19)),

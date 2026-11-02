@@ -1,7 +1,7 @@
 package io.heapy.kotmark.test
 
-import io.heapy.kotmark.parser.Parser
-import io.heapy.kotmark.renderer.html.HtmlRenderer
+import io.heapy.kotmark.parser.parser
+import io.heapy.kotmark.renderer.html.htmlRenderer
 import io.heapy.kotmark.testfixtures.example.ExampleReader
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -53,8 +53,8 @@ class SpecCoreTest {
         sourceTransform: (String) -> String = { it },
         expectedOverrides: Map<String, String> = emptyMap(),
     ) {
-        val parser = Parser.builder().build()
-        val renderer = HtmlRenderer.builder().percentEncodeUrls(true).build()
+        val parser = parser()
+        val renderer = htmlRenderer { percentEncodeUrls = true }
         val failures = mutableListOf<String>()
         var count = 0
         for (example in ExampleReader.readExamples(resource)) {

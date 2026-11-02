@@ -6,17 +6,17 @@ import io.heapy.kotmark.node.Document
 import io.heapy.kotmark.node.ListItem
 import io.heapy.kotmark.node.Paragraph
 import io.heapy.kotmark.node.Text
-import io.heapy.kotmark.parser.Parser
-import io.heapy.kotmark.renderer.html.HtmlRenderer
-import io.heapy.kotmark.renderer.markdown.MarkdownRenderer
+import io.heapy.kotmark.parser.parser
+import io.heapy.kotmark.renderer.html.htmlRenderer
+import io.heapy.kotmark.renderer.markdown.markdownRenderer
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class TaskListItemsTest {
     private val extensions: List<Extension> = listOf(TaskListItemsExtension.create())
-    private val parser = Parser.builder().extensions(extensions).build()
-    private val html = HtmlRenderer.builder().extensions(extensions).build()
-    private val markdown = MarkdownRenderer.builder().extensions(extensions).build()
+    private val parser = parser { extensions(extensions) }
+    private val html = htmlRenderer { extensions(extensions) }
+    private val markdown = markdownRenderer { extensions(extensions) }
 
     @Test
     fun syntaxAndHtmlRendering() {

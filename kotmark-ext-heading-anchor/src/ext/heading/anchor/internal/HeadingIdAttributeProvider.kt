@@ -1,6 +1,6 @@
 package io.heapy.kotmark.ext.heading.anchor.internal
 
-import io.heapy.kotmark.ext.heading.anchor.IdGenerator
+import io.heapy.kotmark.ext.heading.anchor.idGenerator
 import io.heapy.kotmark.node.AbstractVisitor
 import io.heapy.kotmark.node.Code
 import io.heapy.kotmark.node.Heading
@@ -14,11 +14,11 @@ class HeadingIdAttributeProvider private constructor(
     suffix: String,
 ) : AttributeProvider {
     private val idGenerator =
-        IdGenerator.builder()
-            .defaultId(defaultId)
-            .prefix(prefix)
-            .suffix(suffix)
-            .build()
+        idGenerator {
+            this.defaultId = defaultId
+            this.prefix = prefix
+            this.suffix = suffix
+        }
 
     override fun setAttributes(
         node: Node,
