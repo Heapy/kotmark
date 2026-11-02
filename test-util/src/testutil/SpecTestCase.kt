@@ -7,7 +7,6 @@ abstract class SpecTestCase {
     protected lateinit var example: Example
 
     companion object {
-        @JvmStatic
         fun data(): List<Example> = ExampleReader.readExamples(TestResources.getSpec())
     }
 }

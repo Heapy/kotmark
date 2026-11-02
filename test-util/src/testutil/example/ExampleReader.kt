@@ -1,7 +1,6 @@
 package io.heapy.kotmark.testutil.example
 
-import java.io.File
-import java.net.URL
+import io.heapy.kotmark.testfixtures.TestFixtures
 
 class ExampleReader private constructor(
     private val input: String,
@@ -75,23 +74,19 @@ class ExampleReader private constructor(
         private const val EXAMPLE_END_MARKER =
             "````````````````````````````````"
 
-        @JvmStatic
-        fun readExamples(url: URL): List<Example> =
+        fun readExamples(path: String): List<Example> =
             ExampleReader(
-                url.openStream().bufferedReader(Charsets.UTF_8).use { it.readText() },
-                File(url.path).name,
+                TestFixtures.readText(path),
+                path.substringAfterLast('/'),
             ).read()
 
-        @JvmStatic
-        fun readExamples(url: URL, info: String): List<Example> =
-            readExamples(url).filter { info in it.info }
+        fun readExamples(path: String, info: String): List<Example> =
+            readExamples(path).filter { info in it.info }
 
-        @JvmStatic
-        fun readExampleObjects(url: URL, info: String): List<Array<Any>> =
-            readExamples(url, info).map { arrayOf(it) }
+        fun readExampleObjects(path: String, info: String): List<Array<Any>> =
+            readExamples(path, info).map { arrayOf(it) }
 
-        @JvmStatic
-        fun readExampleSources(url: URL): List<String> =
-            readExamples(url).map(Example::source)
+        fun readExampleSources(path: String): List<String> =
+            readExamples(path).map(Example::source)
     }
 }

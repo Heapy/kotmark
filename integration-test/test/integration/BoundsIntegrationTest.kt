@@ -4,6 +4,7 @@ import io.heapy.kotmark.parser.Parser
 import io.heapy.kotmark.testutil.TestResources
 import io.heapy.kotmark.testutil.example.ExampleReader
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.fail
 
 class BoundsIntegrationTest {
@@ -11,7 +12,9 @@ class BoundsIntegrationTest {
 
     @Test
     fun everySpecExampleCanBeTruncatedAtEveryBoundary() {
-        for (source in ExampleReader.readExampleSources(TestResources.getSpec())) {
+        val sources = ExampleReader.readExampleSources(TestResources.getSpec())
+        assertEquals(652, sources.size, "Complete CommonMark corpus must execute at every boundary")
+        for (source in sources) {
             for (index in 1 until source.length - 1) {
                 parse(source.substring(index))
             }

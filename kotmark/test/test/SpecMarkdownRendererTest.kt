@@ -5,6 +5,7 @@ import io.heapy.kotmark.parser.Parser
 import io.heapy.kotmark.renderer.html.HtmlRenderer
 import io.heapy.kotmark.renderer.markdown.MarkdownRenderer
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.fail
 
 class SpecMarkdownRendererTest {
@@ -27,6 +28,7 @@ class SpecMarkdownRendererTest {
                         "expected:\n${example.html}\nactual:\n$actual"
             }
         }
+        assertEquals(652, count, "Complete CommonMark corpus must execute")
         if (failures.isNotEmpty()) {
             fail(
                 "${failures.size}/$count Markdown round-trip examples failed:\n\n" +

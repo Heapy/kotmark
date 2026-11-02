@@ -11,6 +11,33 @@ The Markdown autolink extension uses its upstream rules, which differ from GFM i
 
 ## Development
 
+Run the complete JVM suite with `./kotlin test --platform jvm`.
+
+The specification and integration suites are common Kotlin tests on every target:
+both pinned CommonMark corpora (652 and 655 examples), the cmark and commonmark.js
+regressions, Markdown round trips, GFM table and alert examples, and integration
+with extensions and truncated inputs. Existing expected-output overrides are
+shared across platforms; examples are not skipped for individual targets.
+The GFM checks cover the supported sections, not full GFM conformance.
+
+`test-fixtures` embeds all six committed corpus files as common Kotlin text.
+Normal test runs need no upstream checkout, source download, resource loader or
+generation step. The original bytes and revisions remain pinned in
+[UPSTREAM.md](UPSTREAM.md). JVM integrity tests compare every embedded corpus with
+the original resource and its SHA-256; common tests check the complete corpus counts.
+Only tests of Java-specific APIs and the resource/SHA-256 integrity check remain
+JVM-only. Fixture and test utility modules are test infrastructure, not dependencies
+of the production parsing libraries.
+
+After intentionally updating the pinned fixture files and checksums, regenerate
+their committed Kotlin representation with:
+
+```shell
+kotlinr scripts/generate-test-fixtures.main.kts
+```
+
+Add `--check` to verify generation is current without changing files.
+
 JVM artifacts target Java 17, and JVM tests run on JDK 17. Kotlin Toolchain
 provisions a matching JDK when needed. The shared template also configures the
 larger test thread stack required by deeply nested Markdown fixtures.

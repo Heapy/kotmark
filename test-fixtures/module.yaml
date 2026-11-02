@@ -1,9 +1,11 @@
 apply:
   - //common.module-template.yaml
 
-product: jvm/lib
+product:
+  type: kmp/lib
+  platforms: [jvm, android, js, wasmJs, wasmWasi, linuxX64, linuxArm64, macosArm64, tvosArm64, tvosSimulatorArm64, iosArm64, iosSimulatorArm64, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, mingwX64]
 
-description: Pinned upstream test data shared by the JVM compatibility suites.
+description: Pinned upstream test data shared by all multiplatform compatibility suites.
 
 test-dependencies:
   - $kotlin.test

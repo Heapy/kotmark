@@ -26,7 +26,12 @@ function modulesFor(platform) {
     .filter(name => {
       try {
         const yaml = readFileSync(resolve(root, name, 'module.yaml'), 'utf8');
-        return yaml.match(/platforms:\s*\[([^\]]+)\]/s)?.[1].split(',').map(p => p.trim()).includes(platform);
+        const supportsPlatform = yaml.match(/platforms:\s*\[([^\]]+)\]/s)?.[1].split(',').map(p => p.trim()).includes(platform);
+        // Shared test utilities have no tests of their own. They are compiled
+        // through the suites that depend on them, not run as empty executables.
+        const hasTests = readdirSync(resolve(root, name), { withFileTypes: true })
+          .some(entry => entry.isDirectory() && /^test(?:@.+)?$/.test(entry.name));
+        return supportsPlatform && hasTests;
       } catch (error) {
         if (error.code === 'ENOENT') return false;
         throw error;

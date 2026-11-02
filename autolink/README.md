@@ -90,7 +90,7 @@ Kotmark’s previous uppercase `WWW` expectation also differed from upstream, wh
 
 ## Reproduction
 
-The autolink and extension suites use committed Kotlin test data. Shared JVM corpus files for the core, other extensions, and integration suites are bundled in `test-fixtures`, with [exact revisions, hashes and licenses](../UPSTREAM.md). No upstream checkout or fixture-download script is needed:
+The autolink and extension suites use committed Kotlin test data. Shared corpus files for the core, other extensions, and integration suites are embedded as common Kotlin text in `test-fixtures`, with [exact revisions, hashes and licenses](../UPSTREAM.md). No upstream checkout or fixture-download script is needed:
 
 ```shell
 ./kotlin test --platform jvm

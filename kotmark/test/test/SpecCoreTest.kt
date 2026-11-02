@@ -4,23 +4,25 @@ import io.heapy.kotmark.testfixtures.TestFixtures
 import io.heapy.kotmark.parser.Parser
 import io.heapy.kotmark.renderer.html.HtmlRenderer
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.fail
 
 class SpecCoreTest {
     @Test
     fun commonMarkJavaBundledSpec() {
-        assertSpec("commonmark-java/spec.txt")
+        assertSpec("commonmark-java/spec.txt", expectedExampleCount = 652)
     }
 
     @Test
     fun pinnedCommonMarkReferenceSpec() {
-        assertSpec("commonmark-spec/spec.txt")
+        assertSpec("commonmark-spec/spec.txt", expectedExampleCount = 655)
     }
 
     @Test
     fun commonMarkJavaBundledSpecWithCrLfInput() {
         assertSpec(
             "commonmark-java/spec.txt",
+            expectedExampleCount = 652,
             sourceTransform = { source -> source.replace("\n", "\r\n") },
         )
     }
@@ -35,16 +37,19 @@ class SpecCoreTest {
             )
         assertSpec(
             "commonmark-java/cmark-regression.txt",
+            expectedExampleCount = 15,
             expectedOverrides = overrides,
         )
         assertSpec(
             "commonmark-java/commonmark.js-regression.txt",
+            expectedExampleCount = 20,
             expectedOverrides = overrides,
         )
     }
 
     private fun assertSpec(
         resource: String,
+        expectedExampleCount: Int,
         sourceTransform: (String) -> String = { it },
         expectedOverrides: Map<String, String> = emptyMap(),
     ) {
@@ -73,6 +78,7 @@ class SpecCoreTest {
                     }
             }
         }
+        assertEquals(expectedExampleCount, count, "Complete corpus must execute: $resource")
         if (failures.isNotEmpty()) {
             fail(
                 "${failures.size}/$count CommonMark examples failed:\n\n" +

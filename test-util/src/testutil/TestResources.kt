@@ -1,27 +1,19 @@
 package io.heapy.kotmark.testutil
 
-import java.net.URL
 import io.heapy.kotmark.testfixtures.TestFixtures
 
 object TestResources {
-    @JvmStatic
-    fun getSpec(): URL =
-        TestFixtures.resource("commonmark-java/spec.txt")
+    fun getSpec(): String = "commonmark-java/spec.txt"
 
-    @JvmStatic
-    fun getGfmSpec(): URL =
-        TestFixtures.resource("commonmark-java/gfm-spec.txt")
+    fun getGfmSpec(): String = "commonmark-java/gfm-spec.txt"
 
-    @JvmStatic
-    fun getRegressions(): List<URL> =
+    fun getRegressions(): List<String> =
         listOf(
-            TestFixtures.resource("commonmark-java/cmark-regression.txt"),
-            TestFixtures.resource("commonmark-java/commonmark.js-regression.txt"),
+            "commonmark-java/cmark-regression.txt",
+            "commonmark-java/commonmark.js-regression.txt",
         )
 
-    @JvmStatic
-    fun readAsString(url: URL): String =
-        url.openStream().bufferedReader(Charsets.UTF_8).useLines { lines ->
-            lines.joinToString(separator = "\n", postfix = "\n")
-        }
+    fun readAsString(path: String): String =
+        TestFixtures.readText(path).replace("\r\n", "\n").replace('\r', '\n')
+            .let { if (it.endsWith('\n')) it else "$it\n" }
 }

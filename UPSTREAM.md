@@ -29,9 +29,18 @@ adaptations, test coverage and known GFM differences are documented in
 ## Test fixtures
 
 The six files below are bundled byte for byte under
-`test-fixtures/resources/upstream/`. Tests read them from the classpath and do
-not download upstream sources. [SHA256SUMS](test-fixtures/resources/upstream/SHA256SUMS)
-pins their bytes; integrity tests also verify the example counts.
+`test-fixtures/resources/upstream/`.
+[SHA256SUMS](test-fixtures/resources/upstream/SHA256SUMS) pins their bytes.
+`scripts/generate-test-fixtures.main.kts` converts their complete UTF-8 text to
+committed common Kotlin sources in `test-fixtures/src/testfixtures/generated/`,
+preserving every character, line ending and notice. These generated files have
+the same respective licenses as their source corpora.
+
+All platforms read the same embedded text without filesystem or network access.
+JVM integrity tests compare its encoded bytes to every original resource and
+SHA-256; common integrity tests verify all six example counts. Ordinary test runs
+do not require generation or upstream checkouts. This module is test infrastructure
+and is not a dependency of the production parsing and rendering libraries.
 
 | Bundled file | Source at pinned revision | Examples | License |
 | --- | --- | --- | --- |
@@ -69,7 +78,8 @@ commits; the fixture versions are pinned by commonmark-java and SHA-256 above.
 
 When updating fixtures, record the new source revision, checksums and example
 counts, and preserve attribution and license notices. Keep the two CommonMark
-corpus versions distinct. Run `./kotlin test --platform jvm` to verify the suites.
+corpus versions distinct. Run `kotlinr scripts/generate-test-fixtures.main.kts`
+after updating the originals, then run the JVM and common platform suites.
 
 ## Unicode data
 

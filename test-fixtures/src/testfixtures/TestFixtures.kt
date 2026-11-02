@@ -1,14 +1,8 @@
 package io.heapy.kotmark.testfixtures
 
-import java.net.URL
+import io.heapy.kotmark.testfixtures.generated.embeddedFixture
 
-/** Pinned resources shipped with the test suite; no filesystem or network fallback. */
+/** Complete pinned fixture text available on every target without filesystem or network access. */
 object TestFixtures {
-    fun resource(path: String): URL =
-        requireNotNull(TestFixtures::class.java.getResource("/upstream/$path")) {
-            "Missing bundled test fixture: $path"
-        }
-
-    fun readText(path: String): String =
-        resource(path).openStream().bufferedReader(Charsets.UTF_8).use { it.readText() }
+    fun readText(path: String): String = embeddedFixture(path)
 }

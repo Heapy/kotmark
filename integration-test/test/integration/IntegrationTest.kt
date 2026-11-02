@@ -99,6 +99,7 @@ class IntegrationTest {
             )
         val failures = mutableListOf<String>()
         val examples = ExampleReader.readExamples(TestResources.getSpec())
+        assertEquals(652, examples.size, "Complete CommonMark corpus must execute with extensions")
         for (example in examples) {
             val expected = overrides[example.source] ?: example.html
             val actual = html.render(integrationParser.parse(example.source)).replace('\t', '\u2192')
