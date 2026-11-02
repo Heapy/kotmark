@@ -39,7 +39,7 @@ class ListBlockParser(
         } else if (hadBlankLine) {
             linesAfterBlank++
         }
-        return BlockContinue.atIndex(parserState.index)
+        return BlockContinue.AtIndex(parserState.index)
     }
 
     class Factory : AbstractBlockParserFactory() {

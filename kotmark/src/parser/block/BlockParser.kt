@@ -15,6 +15,11 @@ interface BlockParser {
 
     val block: Block
 
+    /**
+     * Continue at an absolute index or column, finish the block and consume this line,
+     * or return `null` when this block does not continue. A `null` result leaves the line
+     * available to the enclosing parser, including its lazy-continuation handling.
+     */
     fun tryContinue(parserState: ParserState): BlockContinue?
 
     fun addLine(line: SourceLine)

@@ -19,9 +19,9 @@ class ParagraphParser : AbstractBlockParser() {
 
     override fun tryContinue(parserState: ParserState): BlockContinue? =
         if (!parserState.isBlank) {
-            BlockContinue.atIndex(parserState.index)
+            BlockContinue.AtIndex(parserState.index)
         } else {
-            BlockContinue.none()
+            null
         }
 
     override fun addLine(line: SourceLine) {

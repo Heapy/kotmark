@@ -35,7 +35,7 @@ class FencedCodeBlockParser(
             nextNonSpace < line.length &&
             tryClosing(line, nextNonSpace)
         ) {
-            return BlockContinue.finished()
+            return BlockContinue.Finished
         }
 
         var indentToSkip = block.fenceIndent
@@ -43,7 +43,7 @@ class FencedCodeBlockParser(
             newIndex++
             indentToSkip--
         }
-        return BlockContinue.atIndex(newIndex)
+        return BlockContinue.AtIndex(newIndex)
     }
 
     override fun addLine(line: SourceLine) {

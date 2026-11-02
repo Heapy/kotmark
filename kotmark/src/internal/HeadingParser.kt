@@ -23,7 +23,7 @@ class HeadingParser(
     }
 
     override fun tryContinue(parserState: ParserState): BlockContinue? =
-        BlockContinue.none()
+        null
 
     override fun parseInlines(inlineParser: InlineParser) {
         inlineParser.parse(content, block)

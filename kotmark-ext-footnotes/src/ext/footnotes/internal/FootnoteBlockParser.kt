@@ -25,9 +25,9 @@ class FootnoteBlockParser(
 
     override fun tryContinue(parserState: ParserState): BlockContinue? =
         when {
-            parserState.indent >= 4 -> BlockContinue.atColumn(4)
-            parserState.isBlank -> BlockContinue.atIndex(parserState.index)
-            else -> BlockContinue.none()
+            parserState.indent >= 4 -> BlockContinue.AtColumn(4)
+            parserState.isBlank -> BlockContinue.AtIndex(parserState.index)
+            else -> null
         }
 
     override val definitions: List<DefinitionMap<*>>

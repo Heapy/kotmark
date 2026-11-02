@@ -34,16 +34,16 @@ class TableBlockParser private constructor(
         val content = parserState.line.content
         val pipe = Characters.find('|', content, parserState.nextNonSpaceIndex)
         if (pipe == -1) {
-            return BlockContinue.none()
+            return null
         }
         if (
             pipe == parserState.nextNonSpaceIndex &&
             Characters.skipSpaceTab(content, pipe + 1, content.length) == content.length
         ) {
             lazyContinuationLines = false
-            return BlockContinue.none()
+            return null
         }
-        return BlockContinue.atIndex(parserState.index)
+        return BlockContinue.AtIndex(parserState.index)
     }
 
     override fun addLine(line: SourceLine) {

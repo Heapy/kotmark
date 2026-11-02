@@ -20,12 +20,12 @@ class IndentedCodeBlockParser : AbstractBlockParser() {
     override fun tryContinue(parserState: ParserState): BlockContinue? =
         when {
             parserState.indent >= Parsing.CODE_BLOCK_INDENT ->
-                BlockContinue.atColumn(parserState.column + Parsing.CODE_BLOCK_INDENT)
+                BlockContinue.AtColumn(parserState.column + Parsing.CODE_BLOCK_INDENT)
 
             parserState.isBlank ->
-                BlockContinue.atIndex(parserState.nextNonSpaceIndex)
+                BlockContinue.AtIndex(parserState.nextNonSpaceIndex)
 
-            else -> BlockContinue.none()
+            else -> null
         }
 
     override fun addLine(line: SourceLine) {

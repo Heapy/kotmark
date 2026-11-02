@@ -16,7 +16,7 @@ class ThematicBreakParser(
     }
 
     override fun tryContinue(parserState: ParserState): BlockContinue? =
-        BlockContinue.none()
+        null
 
     class Factory : AbstractBlockParserFactory() {
         override fun tryStart(

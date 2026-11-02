@@ -1,6 +1,5 @@
 package io.heapy.kotmark.parser
 
-import io.heapy.kotmark.internal.BlockContinueImpl
 import io.heapy.kotmark.internal.BlockStartImpl
 import io.heapy.kotmark.internal.Definitions
 import io.heapy.kotmark.internal.InlineParserContextImpl
@@ -56,17 +55,25 @@ class ParserContractsTest {
     fun blockContinueFactories() {
         assertNull(BlockContinue.none())
 
-        val byIndex = assertIs<BlockContinueImpl>(BlockContinue.atIndex(4))
+        val byIndex = assertIs<BlockContinue.AtIndex>(BlockContinue.atIndex(4))
         assertEquals(4, byIndex.newIndex)
-        assertEquals(-1, byIndex.newColumn)
-        assertFalse(byIndex.isFinalize)
-
-        val byColumn = assertIs<BlockContinueImpl>(BlockContinue.atColumn(8))
-        assertEquals(-1, byColumn.newIndex)
+        val byColumn = assertIs<BlockContinue.AtColumn>(BlockContinue.atColumn(8))
         assertEquals(8, byColumn.newColumn)
-        assertFalse(byColumn.isFinalize)
+        assertSame(BlockContinue.Finished, BlockContinue.finished())
+    }
 
-        assertTrue(assertIs<BlockContinueImpl>(BlockContinue.finished()).isFinalize)
+    @Test
+    fun blockContinuePositionsRejectNegativeValues() {
+        assertEquals(0, BlockContinue.AtIndex(0).newIndex)
+        assertEquals(0, BlockContinue.AtColumn(0).newColumn)
+        for (invalid in listOf(-1, Int.MIN_VALUE)) {
+            assertFailsWith<IllegalArgumentException> { BlockContinue.AtIndex(invalid) }
+            assertFailsWith<IllegalArgumentException> { BlockContinue.AtColumn(invalid) }
+            assertFailsWith<IllegalArgumentException> { BlockContinue.atIndex(invalid) }
+            assertFailsWith<IllegalArgumentException> { BlockContinue.atColumn(invalid) }
+            assertFailsWith<IllegalArgumentException> { BlockContinue.AtIndex(0).copy(newIndex = invalid) }
+            assertFailsWith<IllegalArgumentException> { BlockContinue.AtColumn(0).copy(newColumn = invalid) }
+        }
     }
 
     @Test

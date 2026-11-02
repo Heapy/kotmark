@@ -70,6 +70,43 @@ Registered factories, processors, and sanitizers themselves are shared, so their
 own mutable state remains the caller's responsibility. DSL markers prevent nested
 blocks in the same DSL family from implicitly configuring an outer receiver.
 
+## Block continuation outcomes
+
+`BlockParser.tryContinue` returns `BlockContinue?`. Its non-null outcomes are now
+sealed and can be handled exhaustively:
+
+| Outcome | Meaning |
+| --- | --- |
+| `BlockContinue.AtIndex(newIndex)` | Continue at an absolute UTF-16 index in the current line. |
+| `BlockContinue.AtColumn(newColumn)` | Continue at an absolute visual column, accounting for expanded tabs. |
+| `BlockContinue.Finished` | Close the block and its open children, consuming the current line. |
+| `null` | The block does not continue; the enclosing parser handles the line, including possible lazy continuation. |
+
+An extension can return these outcomes directly:
+
+```kotlin
+override fun tryContinue(state: ParserState): BlockContinue? = when {
+    state.line.content.toString() == "END" -> BlockContinue.Finished
+    state.indent >= 4 -> BlockContinue.AtColumn(state.column + 4)
+    state.isBlank -> BlockContinue.AtIndex(state.index)
+    else -> null
+}
+```
+
+The existing `atIndex`, `atColumn`, `finished`, and `none` companion factories
+remain available with their original signatures, including JVM static access.
+Extensions using these factories and the nullable return type need no signature changes.
+Indices and columns must now be non-negative; constructors, factories, and `copy`
+reject negative values with `IllegalArgumentException`.
+
+`BlockContinue` can no longer be subclassed by extensions, and `BlockContinueImpl`
+has been removed. This breaks source and binary compatibility for code that
+subclassed `BlockContinue` or referenced that implementation class. Such extensions
+must migrate and recompile: return a public outcome, and replace implementation
+casts and sentinel checks with `when` branches for `AtIndex`, `AtColumn`,
+`Finished`, and (when the input is nullable) `null`. Each position outcome carries
+only its own coordinate; `Finished` has no coordinate or Boolean flag.
+
 ## Development
 
 Run the complete JVM suite with `./kotlin test --platform jvm`.

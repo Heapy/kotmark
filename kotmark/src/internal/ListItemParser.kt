@@ -31,17 +31,17 @@ class ListItemParser(
     override fun tryContinue(parserState: ParserState): BlockContinue? {
         if (parserState.isBlank) {
             if (block.firstChild == null) {
-                return BlockContinue.none()
+                return null
             }
             val activeBlock = parserState.activeBlockParser.block
             hadBlankLine = activeBlock is Paragraph || activeBlock is ListItem
-            return BlockContinue.atIndex(parserState.nextNonSpaceIndex)
+            return BlockContinue.AtIndex(parserState.nextNonSpaceIndex)
         }
 
         return if (parserState.indent >= contentIndent) {
-            BlockContinue.atColumn(parserState.column + contentIndent)
+            BlockContinue.AtColumn(parserState.column + contentIndent)
         } else {
-            BlockContinue.none()
+            null
         }
     }
 }

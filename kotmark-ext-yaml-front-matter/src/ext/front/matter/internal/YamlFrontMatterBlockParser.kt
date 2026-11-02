@@ -23,7 +23,7 @@ class YamlFrontMatterBlockParser : AbstractBlockParser() {
         val line = parserState.line.content.toString()
         if (REGEX_END.matches(line)) {
             appendCurrentNode()
-            return BlockContinue.finished()
+            return BlockContinue.Finished
         }
 
         val metadata = REGEX_METADATA.matchEntire(line)
@@ -54,7 +54,7 @@ class YamlFrontMatterBlockParser : AbstractBlockParser() {
                 currentValues.add(parseString(listItem.groupValues[1]))
             }
         }
-        return BlockContinue.atIndex(parserState.index)
+        return BlockContinue.AtIndex(parserState.index)
     }
 
     private fun appendCurrentNode() {

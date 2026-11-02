@@ -19,9 +19,9 @@ class HtmlBlockParser private constructor(
 
     override fun tryContinue(parserState: ParserState): BlockContinue? =
         if (finished || parserState.isBlank && closingPattern == null) {
-            BlockContinue.none()
+            null
         } else {
-            BlockContinue.atIndex(parserState.index)
+            BlockContinue.AtIndex(parserState.index)
         }
 
     override fun addLine(line: SourceLine) {

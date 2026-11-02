@@ -14,5 +14,5 @@ class DocumentBlockParser : AbstractBlockParser() {
     override fun canContain(childBlock: Block): Boolean = true
 
     override fun tryContinue(parserState: ParserState): BlockContinue =
-        BlockContinue.atIndex(parserState.index)
+        BlockContinue.AtIndex(parserState.index)
 }

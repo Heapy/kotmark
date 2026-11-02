@@ -37,14 +37,14 @@ class AlertBlockParser private constructor(
             nextNonSpace >= line.length ||
             line[nextNonSpace] != '>'
         ) {
-            return BlockContinue.none()
+            return null
         }
 
         var newColumn = parserState.column + parserState.indent + 1
         if (Characters.isSpaceOrTab(line, nextNonSpace + 1)) {
             newColumn++
         }
-        return BlockContinue.atColumn(newColumn)
+        return BlockContinue.AtColumn(newColumn)
     }
 
     override fun parseInlines(inlineParser: InlineParser) {

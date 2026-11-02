@@ -18,6 +18,7 @@ import io.heapy.kotmark.parser.SourceLine
 import io.heapy.kotmark.parser.SourceLines
 import io.heapy.kotmark.parser.beta.InlineContentParserFactory
 import io.heapy.kotmark.parser.beta.LinkProcessor
+import io.heapy.kotmark.parser.block.BlockContinue
 import io.heapy.kotmark.parser.block.BlockParser
 import io.heapy.kotmark.parser.block.BlockParserFactory
 import io.heapy.kotmark.parser.block.MatchedBlockParser
@@ -111,16 +112,16 @@ class DocumentParser(
             val blockParser = openBlockParser.blockParser
             findNextNonSpace()
 
-            val blockContinue = blockParser.tryContinue(this) as? BlockContinueImpl ?: break
+            val blockContinue = blockParser.tryContinue(this) ?: break
             openBlockParser.sourceIndex = index
-            if (blockContinue.isFinalize) {
-                addSourceSpans()
-                closeBlockParsers(openBlockParsers.size - i)
-                return
-            }
-            when {
-                blockContinue.newIndex != -1 -> setNewIndex(blockContinue.newIndex)
-                blockContinue.newColumn != -1 -> setNewColumn(blockContinue.newColumn)
+            when (blockContinue) {
+                is BlockContinue.AtIndex -> setNewIndex(blockContinue.newIndex)
+                is BlockContinue.AtColumn -> setNewColumn(blockContinue.newColumn)
+                BlockContinue.Finished -> {
+                    addSourceSpans()
+                    closeBlockParsers(openBlockParsers.size - i)
+                    return
+                }
             }
             matches++
         }

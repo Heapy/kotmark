@@ -21,14 +21,14 @@ class BlockQuoteParser : AbstractBlockParser() {
     override fun tryContinue(parserState: ParserState): BlockContinue? {
         val nextNonSpace = parserState.nextNonSpaceIndex
         if (!isMarker(parserState, nextNonSpace)) {
-            return BlockContinue.none()
+            return null
         }
 
         var newColumn = parserState.column + parserState.indent + 1
         if (Characters.isSpaceOrTab(parserState.line.content, nextNonSpace + 1)) {
             newColumn++
         }
-        return BlockContinue.atColumn(newColumn)
+        return BlockContinue.AtColumn(newColumn)
     }
 
     class Factory : AbstractBlockParserFactory() {
