@@ -1,4 +1,4 @@
-package io.heapy.kotmark.testutil.example
+package io.heapy.kotmark.testfixtures.example
 
 data class Example(
     private val filename: String,

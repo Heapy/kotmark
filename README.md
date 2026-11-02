@@ -4,7 +4,7 @@
 
 Kotlin Multiplatform port of [commonmark-java](https://github.com/commonmark/commonmark-java) for parsing and rendering CommonMark documents.
 
-The repository contains the core `kotmark` module, shared test utilities, integration tests, and extensions for autolinks, footnotes, GFM alerts, strikethrough, tables, heading anchors, image attributes, insertions, task list items, and YAML front matter.
+The repository contains the core `kotmark` module, shared test fixtures, integration tests, and extensions for autolinks, footnotes, GFM alerts, strikethrough, tables, heading anchors, image attributes, insertions, task list items, and YAML front matter.
 
 The independent `autolink` module ports [autolink-java 0.12.0](UPSTREAM.md).
 The Markdown autolink extension uses its upstream rules, which differ from GFM in some cases.
@@ -26,7 +26,8 @@ generation step. The original bytes and revisions remain pinned in
 [UPSTREAM.md](UPSTREAM.md). JVM integrity tests compare every embedded corpus with
 the original resource and its SHA-256; common tests check the complete corpus counts.
 Only tests of Java-specific APIs and the resource/SHA-256 integrity check remain
-JVM-only. Fixture and test utility modules are test infrastructure, not dependencies
+JVM-only. The `test-fixtures` module also provides the shared example reader used by core,
+extension, and integration suites. It is test infrastructure, not a dependency
 of the production parsing libraries.
 
 After intentionally updating the pinned fixture files and checksums, regenerate

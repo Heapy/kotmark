@@ -1,5 +1,6 @@
 package io.heapy.kotmark.testfixtures
 
+import io.heapy.kotmark.testfixtures.example.ExampleReader
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -19,6 +20,7 @@ class TestFixturesTest {
             val count = TestFixtures.readText(path).lineSequence()
                 .count { it.startsWith("`".repeat(32) + " example") }
             assertEquals(expected, count, path)
+            assertEquals(expected, ExampleReader.readExamples(path).size, "Parsed examples: $path")
         }
     }
 }

@@ -14,8 +14,7 @@ import io.heapy.kotmark.parser.IncludeSourceSpans
 import io.heapy.kotmark.parser.Parser
 import io.heapy.kotmark.renderer.html.HtmlRenderer
 import io.heapy.kotmark.renderer.markdown.MarkdownRenderer
-import io.heapy.kotmark.testutil.TestResources
-import io.heapy.kotmark.testutil.example.ExampleReader
+import io.heapy.kotmark.testfixtures.example.ExampleReader
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.fail
@@ -121,7 +120,7 @@ class IntegrationTest {
                 "---\n---\n" to "",
             )
         val failures = mutableListOf<String>()
-        val examples = ExampleReader.readExamples(TestResources.getSpec())
+        val examples = ExampleReader.readExamples("commonmark-java/spec.txt")
         assertEquals(652, examples.size, "Complete CommonMark corpus must execute with extensions")
         for (example in examples) {
             val expected = overrides[example.source] ?: example.html

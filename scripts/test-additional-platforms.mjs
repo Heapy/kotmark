@@ -27,8 +27,8 @@ function modulesFor(platform) {
       try {
         const yaml = readFileSync(resolve(root, name, 'module.yaml'), 'utf8');
         const supportsPlatform = yaml.match(/platforms:\s*\[([^\]]+)\]/s)?.[1].split(',').map(p => p.trim()).includes(platform);
-        // Shared test utilities have no tests of their own. They are compiled
-        // through the suites that depend on them, not run as empty executables.
+        // Modules without tests are compiled through their dependents rather
+        // than run as empty test executables.
         const hasTests = readdirSync(resolve(root, name), { withFileTypes: true })
           .some(entry => entry.isDirectory() && /^test(?:@.+)?$/.test(entry.name));
         return supportsPlatform && hasTests;

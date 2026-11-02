@@ -13,4 +13,3 @@ modules:
   - ./kotmark-ext-task-list-items
   - ./kotmark-ext-yaml-front-matter
   - ./test-fixtures
-  - ./test-util

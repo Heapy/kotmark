@@ -10,7 +10,7 @@ description: Integration and full-suite compatibility tests for kotmark and all 
 test-dependencies:
   - $kotlin.test
   - ../kotmark
-  - ../test-util
+  - //test-fixtures
   - ../kotmark-ext-autolink
   - ../kotmark-ext-footnotes
   - ../kotmark-ext-gfm-alerts

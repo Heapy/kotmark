@@ -4,8 +4,7 @@ import io.heapy.kotmark.parser.Parser
 import io.heapy.kotmark.renderer.html.HtmlRenderer
 
 /**
- * Base class for tests that parse Markdown and render it to HTML, mirroring commonmark-java's `CoreRenderingTestCase`
- * (and the shared `RenderingTestCase`/`Asserts` behavior).
+ * Base class for Markdown-to-HTML tests, with source context and visible tabs in assertion failures.
  */
 abstract class CoreRenderingTestCase {
     protected fun render(source: String): String = RENDERER.render(PARSER.parse(source))

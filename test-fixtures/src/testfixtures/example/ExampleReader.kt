@@ -1,4 +1,4 @@
-package io.heapy.kotmark.testutil.example
+package io.heapy.kotmark.testfixtures.example
 
 import io.heapy.kotmark.testfixtures.TestFixtures
 
@@ -75,18 +75,9 @@ class ExampleReader private constructor(
             "````````````````````````````````"
 
         fun readExamples(path: String): List<Example> =
-            ExampleReader(
-                TestFixtures.readText(path),
-                path.substringAfterLast('/'),
-            ).read()
+            parseExamples(TestFixtures.readText(path), path.substringAfterLast('/'))
 
-        fun readExamples(path: String, info: String): List<Example> =
-            readExamples(path).filter { info in it.info }
-
-        fun readExampleObjects(path: String, info: String): List<Array<Any>> =
-            readExamples(path, info).map { arrayOf(it) }
-
-        fun readExampleSources(path: String): List<String> =
-            readExamples(path).map(Example::source)
+        internal fun parseExamples(input: String, filename: String): List<Example> =
+            ExampleReader(input, filename).read()
     }
 }
