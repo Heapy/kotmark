@@ -14,6 +14,13 @@ class HeadingAnchorTest {
             .build()
 
     @Test
+    fun supplementaryLettersDigitsAndMarksArePreserved() {
+        val text = "\uD840\uDC00\uD835\uDFCE\uD834\uDD65"
+        assertHtml("# $text", "<h1 id=\"$text\">$text</h1>\n")
+        assertEquals("id", IdGenerator.builder().build().generateId("\uD83D\uDE00"))
+    }
+
+    @Test
     fun headingIds() {
         assertHtml("# Heading here\n", "<h1 id=\"heading-here\">Heading here</h1>\n")
         assertHtml(

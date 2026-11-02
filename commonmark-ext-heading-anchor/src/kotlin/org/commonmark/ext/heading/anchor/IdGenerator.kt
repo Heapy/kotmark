@@ -1,5 +1,6 @@
 package org.commonmark.ext.heading.anchor
 
+import org.commonmark.internal.util.UnicodeCategories
 import kotlin.jvm.JvmStatic
 
 class IdGenerator private constructor(builder: Builder) {
@@ -25,15 +26,23 @@ class IdGenerator private constructor(builder: Builder) {
 
     private fun normalizeText(text: String): String =
         buildString {
-            for (character in text.lowercase().replace(' ', '-')) {
-                if (
-                    character == '-' ||
-                    character == '_' ||
-                    character.isLetterOrDigit() ||
-                    character.category in ALLOWED_CATEGORIES
-                ) {
-                    append(character)
+            val normalized = text.lowercase().replace(' ', '-')
+            var index = 0
+            while (index < normalized.length) {
+                val first = normalized[index]
+                val paired = first.isHighSurrogate() && index + 1 < normalized.length &&
+                    normalized[index + 1].isLowSurrogate()
+                val length = if (paired) 2 else 1
+                val codePoint = if (paired) {
+                    0x10000 + ((first.code - 0xD800) shl 10) + normalized[index + 1].code - 0xDC00
+                } else {
+                    first.code
                 }
+                val category = UnicodeCategories.category(codePoint)
+                if (first == '-' || category in ALLOWED_CATEGORIES) {
+                    append(normalized, index, index + length)
+                }
+                index += length
             }
         }
 
@@ -58,13 +67,13 @@ class IdGenerator private constructor(builder: Builder) {
     }
 
     companion object {
-        private val ALLOWED_CATEGORIES =
-            setOf(
-                CharCategory.NON_SPACING_MARK,
-                CharCategory.COMBINING_SPACING_MARK,
-                CharCategory.ENCLOSING_MARK,
-                CharCategory.CONNECTOR_PUNCTUATION,
-            )
+        private val ALLOWED_CATEGORIES = setOf(
+            CharCategory.UPPERCASE_LETTER, CharCategory.LOWERCASE_LETTER,
+            CharCategory.TITLECASE_LETTER, CharCategory.MODIFIER_LETTER,
+            CharCategory.OTHER_LETTER, CharCategory.DECIMAL_DIGIT_NUMBER,
+            CharCategory.NON_SPACING_MARK, CharCategory.COMBINING_SPACING_MARK,
+            CharCategory.ENCLOSING_MARK, CharCategory.CONNECTOR_PUNCTUATION,
+        )
 
         @JvmStatic
         fun builder(): Builder = Builder()
