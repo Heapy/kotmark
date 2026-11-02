@@ -70,8 +70,8 @@ object Characters {
             CharacterCategory.MODIFIER_SYMBOL,
             CharacterCategory.OTHER_SYMBOL -> return true
         }
-        when (codePoint.toChar()) {
-            '$', '+', '<', '=', '>', '^', '`', '|', '~' -> return true
+        when (codePoint) {
+            '$'.code, '+'.code, '<'.code, '='.code, '>'.code, '^'.code, '`'.code, '|'.code, '~'.code -> return true
         }
         return false
     }
@@ -82,8 +82,8 @@ object Characters {
      * @see <a href="https://spec.commonmark.org/0.31.2/#unicode-whitespace-character">Unicode whitespace character</a>
      */
     fun isWhitespaceCodePoint(codePoint: Int): Boolean {
-        when (codePoint.toChar()) {
-            ' ', '\t', '\n', '\u000C' /* \f */, '\r' -> return true
+        when (codePoint) {
+            ' '.code, '\t'.code, '\n'.code, '\u000C'.code /* \f */, '\r'.code -> return true
         }
         return getType(codePoint) == CharacterCategory.SPACE_SEPARATOR
     }

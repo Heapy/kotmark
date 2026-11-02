@@ -1,5 +1,7 @@
 package org.commonmark.text
 
+import org.commonmark.internal.util.UnicodeCategories
+
 private const val MIN_HIGH_SURROGATE = 0xD800
 private const val MAX_HIGH_SURROGATE = 0xDBFF
 private const val MIN_LOW_SURROGATE = 0xDC00
@@ -17,17 +19,11 @@ internal actual fun codePointAt(s: CharSequence, index: Int): Int {
     return c.code
 }
 
-internal actual fun isLetter(codePoint: Int): Boolean {
-    val str = codePointToString(codePoint)
-    if (str.isEmpty()) return false
-    return str.all { it.isLetter() }
-}
+internal actual fun isLetter(codePoint: Int): Boolean =
+    UnicodeCategories.isLetter(codePoint)
 
-internal actual fun getType(codePoint: Int): Int {
-    val str = codePointToString(codePoint)
-    if (str.isEmpty()) return 0
-    return str[0].category.toCharacterCategoryType()
-}
+internal actual fun getType(codePoint: Int): Int =
+    UnicodeCategories.category(codePoint).toCharacterCategoryType()
 
 internal actual fun toChars(codePoint: Int): String = codePointToString(codePoint)
 
