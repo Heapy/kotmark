@@ -19,5 +19,7 @@ test-dependencies:
   - ../kotmark-ext-heading-anchor
   - ../kotmark-ext-image-attributes
   - ../kotmark-ext-ins
+  - //kotmark-ext-highlight
+  - //kotmark-ext-math
   - ../kotmark-ext-task-list-items
   - ../kotmark-ext-yaml-front-matter

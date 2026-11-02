@@ -1,0 +1,12 @@
+apply:
+  - //common.module-template.yaml
+
+product:
+  type: kmp/lib
+  platforms: [jvm, android, js, wasmJs, wasmWasi, linuxX64, linuxArm64, macosArm64, tvosArm64, tvosSimulatorArm64, iosArm64, iosSimulatorArm64, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, mingwX64]
+
+dependencies:
+  - //kotmark
+
+test-dependencies:
+  - $kotlin.test

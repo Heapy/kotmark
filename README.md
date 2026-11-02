@@ -4,7 +4,13 @@
 
 Kotlin Multiplatform port of [commonmark-java](https://github.com/commonmark/commonmark-java) for parsing and rendering CommonMark documents.
 
-The repository contains the core `kotmark` module, shared test fixtures, integration tests, and extensions for autolinks, footnotes, GFM alerts, strikethrough, tables, heading anchors, image attributes, insertions, task list items, and YAML front matter.
+The repository contains the core `kotmark` module, shared test fixtures, integration tests, and extensions for autolinks, footnotes, GFM alerts, strikethrough, tables, heading anchors, highlights, image attributes, insertions, math, task list items, and YAML front matter.
+
+Independent opt-in modules include [highlight](kotmark-ext-highlight/README.md)
+(`==text==` → `<mark>`) and [math](kotmark-ext-math/README.md) (`$…$` inline and
+standalone `$$` block fences). Their module READMEs define the exact syntax and
+renderer integration contracts. Math preserves formula source and does not depend
+on KaTeX, MathJax, Compose, or a TeX engine.
 
 The independent `autolink` module ports [autolink-java 0.12.0](UPSTREAM.md).
 The Markdown autolink extension uses its upstream rules, which differ from GFM in some cases.

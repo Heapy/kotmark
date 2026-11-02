@@ -28,6 +28,20 @@ adaptations, test coverage and known GFM differences are documented in
 
 ## Test fixtures
 
+### JetBrains Markdown reference
+
+The math and highlight extension design was checked against
+[JetBrains Markdown at a8564bfb1123b5edd0fc2569d65e3efe11d9e802](https://github.com/JetBrains/markdown/tree/a8564bfb1123b5edd0fc2569d65e3efe11d9e802)
+in the local `projects/markdown` checkout (Apache-2.0). Reference files are
+`MathParser.kt`, `HighlightDelimiterParser.kt`, and
+`src/fileBasedTest/resources/data/parser/{math,highlight}.md`.
+The new tests include adapted syntax examples, including the escaped dollar in
+`\sqrt{\$4}`. No JetBrains parser code or full fixture files are bundled.
+Kotmark's math grammar differs intentionally; see
+[the delimiter contract](kotmark-ext-math/README.md).
+
+### Bundled CommonMark corpora
+
 The six files below are bundled byte for byte under
 `test-fixtures/resources/upstream/`.
 [SHA256SUMS](test-fixtures/resources/upstream/SHA256SUMS) pins their bytes.

@@ -7,8 +7,10 @@ import io.heapy.kotmark.ext.front.matter.YamlFrontMatterExtension
 import io.heapy.kotmark.ext.gfm.alerts.AlertsExtension
 import io.heapy.kotmark.ext.gfm.strikethrough.StrikethroughExtension
 import io.heapy.kotmark.ext.gfm.tables.TablesExtension
+import io.heapy.kotmark.ext.highlight.HighlightExtension
 import io.heapy.kotmark.ext.image.attributes.ImageAttributesExtension
 import io.heapy.kotmark.ext.ins.InsExtension
+import io.heapy.kotmark.ext.math.MathExtension
 import io.heapy.kotmark.ext.task.list.items.TaskListItemsExtension
 import io.heapy.kotmark.parser.IncludeSourceSpans
 import io.heapy.kotmark.parser.Parser
@@ -27,6 +29,8 @@ class IntegrationTest {
             FootnotesExtension.create(),
             ImageAttributesExtension.create(),
             InsExtension.create(),
+            HighlightExtension.create(),
+            MathExtension.create(),
             AlertsExtension.create(),
             StrikethroughExtension.create(),
             TablesExtension.create(),
@@ -45,6 +49,10 @@ class IntegrationTest {
 
     @Test
     fun extensionsWorkTogether() {
+        assertEquals(
+            "<p><mark><span class=\"math math-inline\">x &lt; y</span> and <ins>new</ins> <del>old</del></mark></p>\n",
+            html.render(parser.parse("==\$x < y$ and ++new++ ~~old~~==")),
+        )
         assertEquals(
             """<p><img src="/url.png" alt="text" height="5" width="6" /></p>""" + "\n",
             html.render(parser.parse("![text](/url.png){height=5 width=6}")),
@@ -85,6 +93,16 @@ class IntegrationTest {
     @Test
     fun allExtensionsPreserveTheCoreSpec() {
         assertSpec(parser { extensions(extensions) })
+    }
+
+    @Test
+    fun mathAndHighlightTruncatedInputs() {
+        val source = "==[\$x < y$](/url)== and ++new++\n\n> $$\n> \\frac{a}{b}\n> $$\n"
+        val renderer = markdownRenderer { extensions(extensions) }
+        for (end in 0..source.length) {
+            val document = parser.parse(source.take(end))
+            assertEquals(html.render(document), html.render(parser.parse(renderer.render(document))), "prefix $end")
+        }
     }
 
     @Test
