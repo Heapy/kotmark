@@ -62,7 +62,7 @@ class TableBlockParser private constructor(
         head.appendChild(headerRow)
         val headerCells = split(rowLines[0])
         val headerColumnCount = headerCells.size
-        for ((index, cell) in headerCells.withIndex()) {
+        for ([index, cell] in headerCells.withIndex()) {
             headerRow.appendChild(
                 parseCell(cell, index, inlineParser).apply { isHeader = true },
             )

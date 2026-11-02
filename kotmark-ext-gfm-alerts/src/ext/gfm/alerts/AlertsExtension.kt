@@ -63,7 +63,7 @@ class AlertsExtension private constructor(configuration: Configuration) :
         var allowedTypes: Map<String, String> = STANDARD_TYPES.toMap()
             set(value) {
                 require(value.isNotEmpty()) { "allowedTypes must not be empty" }
-                for ((type, title) in value) {
+                for ([type, title] in value) {
                     validateTypeAndTitle(type, title)
                 }
                 field = value.toMap()

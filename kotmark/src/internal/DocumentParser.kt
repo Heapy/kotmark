@@ -393,7 +393,7 @@ class DocumentParser(
     }
 
     private fun prepareActiveBlockParserForReplacement(blockParser: BlockParser): List<SourceSpan> {
-        deactivateBlockParser()
+        val _ = deactivateBlockParser()
         blockParser.closeBlock()
         blockParser.block.unlink()
         return blockParser.block.getSourceSpans()

@@ -11,7 +11,7 @@ class TestFixturesIntegrityTest {
         val checksums = resource("SHA256SUMS").decodeToString().lineSequence()
             .filter { it.isNotBlank() }
             .associate { line ->
-                val (checksum, path) = line.split("  ", limit = 2)
+                val [checksum, path] = line.split("  ", limit = 2)
                 path to checksum
             }
         assertEquals(
@@ -20,7 +20,7 @@ class TestFixturesIntegrityTest {
                 "commonmark-java/alerts-spec.txt", "commonmark-spec/spec.txt"),
             checksums.keys,
         )
-        for ((path, expected) in checksums) {
+        for ([path, expected] in checksums) {
             val original = resource(path)
             assertEquals(expected, MessageDigest.getInstance("SHA-256").digest(original).toHexString(), path)
             assertContentEquals(original, TestFixtures.readText(path).encodeToByteArray(), path)

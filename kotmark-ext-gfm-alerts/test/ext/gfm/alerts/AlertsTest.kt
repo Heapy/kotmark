@@ -55,7 +55,7 @@ class AlertsTest {
                 "WARNING" to "Warning",
                 "CAUTION" to "Caution",
             )
-        for ((type, title) in cases) {
+        for ([type, title] in cases) {
             assertHtml(
                 "> [!$type]\n> This is content",
                 alertHtml(type.lowercase(), title, "<p>This is content</p>\n"),

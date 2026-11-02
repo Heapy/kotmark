@@ -94,6 +94,8 @@ class Scanner(
         return true
     }
 
+    /** Consumes consecutive occurrences of [c], returning the number consumed. */
+    @IgnorableReturnValue
     fun matchMultiple(c: Char): Int {
         var count = 0
         while (peek() == c) {
@@ -103,6 +105,8 @@ class Scanner(
         return count
     }
 
+    /** Consumes matching characters, returning the number consumed. */
+    @IgnorableReturnValue
     fun match(matcher: CharMatcher): Int {
         var count = 0
         while (matcher.matches(peek())) {
@@ -112,6 +116,8 @@ class Scanner(
         return count
     }
 
+    /** Consumes whitespace, returning the number of characters consumed. */
+    @IgnorableReturnValue
     fun whitespace(): Int {
         var count = 0
         while (peek() in WHITESPACE) {

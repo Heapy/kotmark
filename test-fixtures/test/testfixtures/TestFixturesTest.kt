@@ -16,7 +16,7 @@ class TestFixturesTest {
 
     @Test
     fun bundledCorporaRetainEveryExample() {
-        for ((path, expected) in exampleCounts) {
+        for ([path, expected] in exampleCounts) {
             val count = TestFixtures.readText(path).lineSequence()
                 .count { it.startsWith("`".repeat(32) + " example") }
             assertEquals(expected, count, path)

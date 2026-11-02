@@ -53,17 +53,18 @@ abstract class Node {
     }
 
     fun unlink() {
-        val p = prevField
-        if (p != null) {
-            p.nextField = nextField
-        } else if (parentField != null) {
-            parentField!!.firstChildField = nextField
+        val prev = prevField
+        val parent = parentField
+        if (prev != null) {
+            prev.nextField = nextField
+        } else if (parent != null) {
+            parent.firstChildField = nextField
         }
-        val n = nextField
-        if (n != null) {
-            n.prevField = prevField
-        } else if (parentField != null) {
-            parentField!!.lastChildField = prevField
+        val next = nextField
+        if (next != null) {
+            next.prevField = prevField
+        } else if (parent != null) {
+            parent.lastChildField = prevField
         }
         parentField = null
         nextField = null

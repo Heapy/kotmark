@@ -110,7 +110,8 @@ class HtmlInlineParser : InlineContentParser {
                 }
             }
 
-            scanner.next('/')
+            // A self-closing slash is optional.
+            val _ = scanner.next('/')
             return scanner.next('>')
         }
 

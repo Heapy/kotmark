@@ -111,7 +111,7 @@ class CoreMarkdownNodeRenderer(
         writer.writePrefix("    ")
         writer.pushPrefix("    ")
         val lines = getLines(indentedCodeBlock.literal.orEmpty())
-        for ((index, line) in lines.withIndex()) {
+        for ([index, line] in lines.withIndex()) {
             writer.raw(line)
             if (index != lines.lastIndex) {
                 writer.line()
@@ -156,7 +156,7 @@ class CoreMarkdownNodeRenderer(
 
     override fun visit(htmlBlock: HtmlBlock) {
         val lines = getLines(htmlBlock.literal.orEmpty())
-        for ((index, line) in lines.withIndex()) {
+        for ([index, line] in lines.withIndex()) {
             writer.raw(line)
             if (index != lines.lastIndex) {
                 writer.line()

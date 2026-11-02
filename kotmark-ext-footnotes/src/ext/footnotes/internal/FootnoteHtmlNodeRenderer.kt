@@ -91,7 +91,7 @@ class FootnoteHtmlNodeRenderer(
             )
         }
 
-        for ((definition, referencedDefinition) in referencedDefinitions) {
+        for ([definition, referencedDefinition] in referencedDefinitions) {
             renderDefinition(definition, referencedDefinition)
         }
         html.tag("/ol")
@@ -207,7 +207,7 @@ class FootnoteHtmlNodeRenderer(
         definition: Node,
         referencedDefinition: ReferencedDefinition,
     ) {
-        for ((index, reference) in referencedDefinition.references.withIndex()) {
+        for ([index, reference] in referencedDefinition.references.withIndex()) {
             val referenceNumber = index + 1
             val backlinkIndex =
                 referencedDefinition.definitionNumber.toString() +

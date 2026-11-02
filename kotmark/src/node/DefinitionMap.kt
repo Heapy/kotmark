@@ -27,6 +27,7 @@ class DefinitionMap<D : Any>(
      * Store a new definition unless one is already in the map. Returns null if added, otherwise returns the existing
      * definition. The label is normalized before storing.
      */
+    @IgnorableReturnValue
     fun putIfAbsent(label: String, definition: D): D? {
         val normalizedLabel = Escaping.normalizeLabelContent(label)
         // spec: When there are multiple matching link reference definitions, the first is used

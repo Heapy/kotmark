@@ -41,7 +41,8 @@ class Parser private constructor(configuration: Configuration) {
                 linkMarkers,
                 Definitions(),
             )
-        inlineParserFactory.create(context)
+        // Validate the inline parser configuration eagerly; parsing creates fresh state.
+        val _ = inlineParserFactory.create(context)
     }
 
     /**

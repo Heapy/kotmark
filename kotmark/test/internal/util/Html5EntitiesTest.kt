@@ -142,7 +142,7 @@ class Html5EntitiesTest {
             "&Zscr;" to "\uD835\uDCB5",
             "&zscr;" to "\uD835\uDCCF",
         )
-        for ((entity, expected) in entities) {
+        for ([entity, expected] in entities) {
             assertEquals(expected, Html5Entities.entityToString(entity), entity)
         }
     }

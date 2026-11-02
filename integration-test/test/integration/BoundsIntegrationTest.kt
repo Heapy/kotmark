@@ -26,7 +26,8 @@ class BoundsIntegrationTest {
 
     private fun parse(input: String) {
         try {
-            parser.parse(input)
+            // This regression check only requires parsing to complete without throwing.
+            val _ = parser.parse(input)
         } catch (exception: Exception) {
             fail("Parsing failed for truncated input:\n$input", exception)
         }

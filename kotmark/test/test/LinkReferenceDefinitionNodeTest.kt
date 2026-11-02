@@ -117,6 +117,7 @@ class LinkReferenceDefinitionNodeTest {
 
     private fun parse(input: String): Node = parser().parse(input)
 
+    @IgnorableReturnValue
     private fun assertDef(node: Node, label: String): LinkReferenceDefinition {
         val def = assertIs<LinkReferenceDefinition>(node)
         assertEquals(label, def.label)
