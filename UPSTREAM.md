@@ -2,9 +2,13 @@
 
 Kotmark ports commonmark-java to Kotlin Multiplatform and includes an independent
 autolink-java port. The revisions below identify the sources used, not the latest
-upstream releases. This document retains the applicable third-party notices.
-When distributing derived code or data, supply this document with the distribution;
-it can accompany binary artifacts as a separate document.
+upstream releases. Original Kotmark code and modifications are licensed under the
+[Apache License 2.0](LICENSE). That license does not replace the licenses or
+notices of the third-party material listed below.
+
+When distributing derived code or data, retain the applicable third-party notices.
+They may be supplied in this document or incorporated into the distribution's
+own license documentation; the filename and unrelated notices need not be retained.
 
 ## Code
 
@@ -46,7 +50,7 @@ is by **GitHub**, based on CommonMark. Both are licensed under
 The original metadata and license notices remain in the unmodified corpus files.
 
 The 11 GFM autolink examples in
-`commonmark-ext-autolink/test/kotlin/org/commonmark/ext/autolink/GfmAutolinkExamples.kt`
+`commonmark-ext-autolink/test/ext/autolink/GfmAutolinkExamples.kt`
 are extracted from the pinned GFM corpus under the same CC-BY-SA-4.0 license.
 Their original inputs and GFM outputs are retained; separate commonmark-java
 reference outputs and Kotlin test scaffolding have been added.
@@ -70,7 +74,7 @@ corpus versions distinct. Run `./kotlin test --platform jvm` to verify the suite
 ## Unicode data
 
 The supplementary category ranges in
-`kotmark/src/kotlin/org/commonmark/internal/util/UnicodeCategories.kt` are generated
+`kotmark/src/internal/util/UnicodeCategories.kt` are generated
 from [UnicodeData.txt 16.0.0](https://www.unicode.org/Public/16.0.0/ucd/UnicodeData.txt).
 Input SHA-256: `ff58e5823bd095166564a006e47d111130813dcf8bf234ef79fa51a870edb48f`.
 The applicable Unicode notice is retained below.

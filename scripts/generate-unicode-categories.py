@@ -38,7 +38,7 @@ def main():
         else:
             ranges.append((start, point, category))
         first = None
-    path = Path(__file__).resolve().parents[1] / "kotmark/src/kotlin/org/commonmark/internal/util/UnicodeCategories.kt"
+    path = Path(__file__).resolve().parents[1] / "kotmark/src/internal/util/UnicodeCategories.kt"
     marker = "    private val SUPPLEMENTARY_RANGES = intArrayOf(\n"
     prefix = path.read_text().split(marker)[0] + marker
     rows = [f"0x{start:X}, 0x{end:X}, {CATEGORIES[category]}," for start, end, category in ranges]

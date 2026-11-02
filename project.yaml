@@ -12,5 +12,5 @@ modules:
   - ./commonmark-ext-yaml-front-matter
   - ./integration-test
   - ./kotmark
-  - ./test-util
   - ./test-fixtures
+  - ./test-util

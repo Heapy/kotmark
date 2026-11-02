@@ -4,6 +4,9 @@ Upstream revisions and license notices are recorded in [UPSTREAM.md](../UPSTREAM
 
 ## API adaptation
 
+The extractor API is in `io.heapy.kotmark.autolink`; upstream package names are not
+retained. CommonMark APIs and extensions are under `io.heapy.kotmark`.
+
 UTF-16 begin/end indices retain the upstream inclusive/exclusive semantics. Extraction is lazy, iterables are reusable, and iterators keep independent state. Configuration copies the caller’s link-type set; an empty set disables extraction. The default email domain must contain a dot. Character classification uses the explicit upstream ASCII and UTF-16 rules, independent of backend Unicode tables.
 
 Java getters become Kotlin properties (with equivalent JVM getters); nullable inputs are excluded by Kotlin types. Builders retain the upstream options and `builder()` is exposed with `@JvmStatic`. Kotlin read-only `Iterator` omits `remove`; the generated JVM implementation still throws `UnsupportedOperationException`. Internal implementation classes are Kotlin `internal`. Deprecated `Autolink.renderLinks` and `LinkRenderer` are retained. Java module descriptors and package-info documentation are not KMP runtime components.

@@ -11,18 +11,6 @@ The Markdown autolink extension uses its upstream rules, which differ from GFM i
 
 ## Development
 
-The project pins Kotlin Toolchain 0.13.0 in both wrappers and Kotlin 2.4.21 in
-`common.module-template.yaml`. Run the JVM test suite with the project-local wrapper:
-
-```shell
-./kotlin test --platform jvm
-```
-
-All test inputs and expected outputs are stored in the repository. Shared JVM
-fixtures are packaged by `test-fixtures`; their exact upstream revisions,
-checksums, and licenses are recorded in [UPSTREAM.md](UPSTREAM.md).
-Tests do not download upstream source repositories or require `projects/`.
-
 JVM artifacts target Java 17, and JVM tests run on JDK 17. Kotlin Toolchain
 provisions a matching JDK when needed. The shared template also configures the
 larger test thread stack required by deeply nested Markdown fixtures.
@@ -59,8 +47,6 @@ node scripts/test-additional-platforms.mjs watchosSimulatorArm64
 
 ### CI coverage
 
-GitHub Actions uses `Heapy/setup-ktc` for the pinned wrapper and shared/Native caches,
-and `Heapy/ktc-check` for built-in tests and their available JUnit reports.
 All declared targets are covered by the matrix:
 
 | Targets | Runner | Verification |
@@ -76,21 +62,8 @@ All declared targets are covered by the matrix:
 | `tvosSimulatorArm64`, `watchosSimulatorArm64` | macOS ARM64 | Custom simulator runner |
 | `iosArm64`, `tvosArm64`, `watchosArm64`, `watchosDeviceArm64` | macOS ARM64 | Compilation only; execution requires devices |
 
-KTC 0.13 has no built-in JS or WASI runner, and its generic Native runner does not
-launch tvOS/watchOS simulators. The custom runners fill those gaps and fail if no
-tests execute. Device jobs compile production and test sources to klibs without
-linking executables. The legacy `watchosArm32` (`armv7k`) and Intel iOS simulator
-(`iosX64`) targets are not supported; Apple simulator coverage uses ARM64.
-Device compilation is not runtime test coverage. The full upstream
-fixture/integration suite remains JVM-only; other targets execute the common tests.
+## License
 
-Linux ARM64 binaries are cross-compiled on x64 because Kotlin/Native does not
-provide a Linux ARM64 compiler host. CI transfers them as an artifact and executes
-them on an ARM64 runner. Apple jobs use the macOS 26 ARM64 image.
-
-Supplementary Unicode character categories are generated from Unicode 16.0.0.
-To regenerate the checked-in ranges (requires Python 3 and network access):
-
-```shell
-python3 scripts/generate-unicode-categories.py
-```
+Original Kotmark code and modifications are licensed under the
+[Apache License 2.0](LICENSE). Third-party code, data and test fixtures retain
+their applicable licenses and notices, listed in [UPSTREAM.md](UPSTREAM.md).
