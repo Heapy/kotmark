@@ -1,0 +1,49 @@
+public final class io/heapy/kotmark/ext/ins/Ins : io/heapy/kotmark/node/CustomNode, io/heapy/kotmark/node/Delimited {
+	public fun <init> ()V
+	public fun getClosingDelimiter ()Ljava/lang/String;
+	public fun getOpeningDelimiter ()Ljava/lang/String;
+}
+
+public final class io/heapy/kotmark/ext/ins/InsExtension : io/heapy/kotmark/parser/Parser$ParserExtension, io/heapy/kotmark/renderer/html/HtmlRenderer$HtmlRendererExtension, io/heapy/kotmark/renderer/markdown/MarkdownRenderer$MarkdownRendererExtension, io/heapy/kotmark/renderer/text/TextContentRenderer$TextContentRendererExtension {
+	public static final field Companion Lio/heapy/kotmark/ext/ins/InsExtension$Companion;
+	public static final fun create ()Lio/heapy/kotmark/Extension;
+	public fun extend (Lio/heapy/kotmark/parser/Parser$Configuration;)V
+	public fun extend (Lio/heapy/kotmark/renderer/html/HtmlRenderer$Configuration;)V
+	public fun extend (Lio/heapy/kotmark/renderer/markdown/MarkdownRenderer$Configuration;)V
+	public fun extend (Lio/heapy/kotmark/renderer/text/TextContentRenderer$Configuration;)V
+}
+
+public final class io/heapy/kotmark/ext/ins/InsExtension$Companion {
+	public final fun create ()Lio/heapy/kotmark/Extension;
+}
+
+public final class io/heapy/kotmark/ext/ins/internal/InsDelimiterProcessor : io/heapy/kotmark/parser/delimiter/DelimiterProcessor {
+	public fun <init> ()V
+	public fun getClosingCharacter ()C
+	public fun getMinLength ()I
+	public fun getOpeningCharacter ()C
+	public fun process (Lio/heapy/kotmark/parser/delimiter/DelimiterRun;Lio/heapy/kotmark/parser/delimiter/DelimiterRun;)I
+}
+
+public final class io/heapy/kotmark/ext/ins/internal/InsHtmlNodeRenderer : io/heapy/kotmark/ext/ins/internal/InsNodeRenderer {
+	public fun <init> (Lio/heapy/kotmark/renderer/html/HtmlNodeRendererContext;)V
+	public fun render (Lio/heapy/kotmark/node/Node;)V
+}
+
+public final class io/heapy/kotmark/ext/ins/internal/InsMarkdownNodeRenderer : io/heapy/kotmark/ext/ins/internal/InsNodeRenderer {
+	public fun <init> (Lio/heapy/kotmark/renderer/markdown/MarkdownNodeRendererContext;)V
+	public fun render (Lio/heapy/kotmark/node/Node;)V
+}
+
+public abstract class io/heapy/kotmark/ext/ins/internal/InsNodeRenderer : io/heapy/kotmark/renderer/NodeRenderer {
+	public fun <init> ()V
+	public fun afterRoot (Lio/heapy/kotmark/node/Node;)V
+	public fun beforeRoot (Lio/heapy/kotmark/node/Node;)V
+	public final fun getNodeTypes ()Ljava/util/Set;
+}
+
+public final class io/heapy/kotmark/ext/ins/internal/InsTextContentNodeRenderer : io/heapy/kotmark/ext/ins/internal/InsNodeRenderer {
+	public fun <init> (Lio/heapy/kotmark/renderer/text/TextContentNodeRendererContext;)V
+	public fun render (Lio/heapy/kotmark/node/Node;)V
+}
+

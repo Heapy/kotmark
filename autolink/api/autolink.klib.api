@@ -1,0 +1,59 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, js, linuxArm64, linuxX64, macosArm64, mingwX64, tvosArm64, tvosSimulatorArm64, wasmJs, wasmWasi, watchosArm64, watchosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <autolink>
+open annotation class io.heapy.kotmark.autolink/AutolinkDsl : kotlin/Annotation { // io.heapy.kotmark.autolink/AutolinkDsl|null[0]
+    constructor <init>() // io.heapy.kotmark.autolink/AutolinkDsl.<init>|<init>(){}[0]
+}
+
+final enum class io.heapy.kotmark.autolink/LinkType : kotlin/Enum<io.heapy.kotmark.autolink/LinkType> { // io.heapy.kotmark.autolink/LinkType|null[0]
+    enum entry EMAIL // io.heapy.kotmark.autolink/LinkType.EMAIL|null[0]
+    enum entry URL // io.heapy.kotmark.autolink/LinkType.URL|null[0]
+    enum entry WWW // io.heapy.kotmark.autolink/LinkType.WWW|null[0]
+
+    final val entries // io.heapy.kotmark.autolink/LinkType.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<io.heapy.kotmark.autolink/LinkType> // io.heapy.kotmark.autolink/LinkType.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): io.heapy.kotmark.autolink/LinkType // io.heapy.kotmark.autolink/LinkType.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<io.heapy.kotmark.autolink/LinkType> // io.heapy.kotmark.autolink/LinkType.values|values#static(){}[0]
+}
+
+abstract fun interface io.heapy.kotmark.autolink/LinkRenderer { // io.heapy.kotmark.autolink/LinkRenderer|null[0]
+    abstract fun render(io.heapy.kotmark.autolink/LinkSpan, kotlin/CharSequence, kotlin.text/StringBuilder) // io.heapy.kotmark.autolink/LinkRenderer.render|render(io.heapy.kotmark.autolink.LinkSpan;kotlin.CharSequence;kotlin.text.StringBuilder){}[0]
+}
+
+abstract interface io.heapy.kotmark.autolink/LinkSpan : io.heapy.kotmark.autolink/Span { // io.heapy.kotmark.autolink/LinkSpan|null[0]
+    abstract val type // io.heapy.kotmark.autolink/LinkSpan.type|{}type[0]
+        abstract fun <get-type>(): io.heapy.kotmark.autolink/LinkType // io.heapy.kotmark.autolink/LinkSpan.type.<get-type>|<get-type>(){}[0]
+}
+
+abstract interface io.heapy.kotmark.autolink/Span { // io.heapy.kotmark.autolink/Span|null[0]
+    abstract val beginIndex // io.heapy.kotmark.autolink/Span.beginIndex|{}beginIndex[0]
+        abstract fun <get-beginIndex>(): kotlin/Int // io.heapy.kotmark.autolink/Span.beginIndex.<get-beginIndex>|<get-beginIndex>(){}[0]
+    abstract val endIndex // io.heapy.kotmark.autolink/Span.endIndex|{}endIndex[0]
+        abstract fun <get-endIndex>(): kotlin/Int // io.heapy.kotmark.autolink/Span.endIndex.<get-endIndex>|<get-endIndex>(){}[0]
+}
+
+final class io.heapy.kotmark.autolink/LinkExtractor { // io.heapy.kotmark.autolink/LinkExtractor|null[0]
+    final fun extractLinks(kotlin/CharSequence): kotlin.collections/Iterable<io.heapy.kotmark.autolink/LinkSpan> // io.heapy.kotmark.autolink/LinkExtractor.extractLinks|extractLinks(kotlin.CharSequence){}[0]
+    final fun extractSpans(kotlin/CharSequence): kotlin.collections/Iterable<io.heapy.kotmark.autolink/Span> // io.heapy.kotmark.autolink/LinkExtractor.extractSpans|extractSpans(kotlin.CharSequence){}[0]
+
+    final class Configuration { // io.heapy.kotmark.autolink/LinkExtractor.Configuration|null[0]
+        final var emailDomainMustHaveDot // io.heapy.kotmark.autolink/LinkExtractor.Configuration.emailDomainMustHaveDot|{}emailDomainMustHaveDot[0]
+            final fun <get-emailDomainMustHaveDot>(): kotlin/Boolean // io.heapy.kotmark.autolink/LinkExtractor.Configuration.emailDomainMustHaveDot.<get-emailDomainMustHaveDot>|<get-emailDomainMustHaveDot>(){}[0]
+            final fun <set-emailDomainMustHaveDot>(kotlin/Boolean) // io.heapy.kotmark.autolink/LinkExtractor.Configuration.emailDomainMustHaveDot.<set-emailDomainMustHaveDot>|<set-emailDomainMustHaveDot>(kotlin.Boolean){}[0]
+        final var linkTypes // io.heapy.kotmark.autolink/LinkExtractor.Configuration.linkTypes|{}linkTypes[0]
+            final fun <get-linkTypes>(): kotlin.collections/Set<io.heapy.kotmark.autolink/LinkType> // io.heapy.kotmark.autolink/LinkExtractor.Configuration.linkTypes.<get-linkTypes>|<get-linkTypes>(){}[0]
+            final fun <set-linkTypes>(kotlin.collections/Set<io.heapy.kotmark.autolink/LinkType>) // io.heapy.kotmark.autolink/LinkExtractor.Configuration.linkTypes.<set-linkTypes>|<set-linkTypes>(kotlin.collections.Set<io.heapy.kotmark.autolink.LinkType>){}[0]
+    }
+}
+
+final object io.heapy.kotmark.autolink/Autolink { // io.heapy.kotmark.autolink/Autolink|null[0]
+    final fun renderLinks(kotlin/CharSequence, kotlin.collections/Iterable<io.heapy.kotmark.autolink/LinkSpan>, io.heapy.kotmark.autolink/LinkRenderer): kotlin/String // io.heapy.kotmark.autolink/Autolink.renderLinks|renderLinks(kotlin.CharSequence;kotlin.collections.Iterable<io.heapy.kotmark.autolink.LinkSpan>;io.heapy.kotmark.autolink.LinkRenderer){}[0]
+}
+
+final fun io.heapy.kotmark.autolink/linkExtractor(kotlin/Function1<io.heapy.kotmark.autolink/LinkExtractor.Configuration, kotlin/Unit> = ...): io.heapy.kotmark.autolink/LinkExtractor // io.heapy.kotmark.autolink/linkExtractor|linkExtractor(kotlin.Function1<io.heapy.kotmark.autolink.LinkExtractor.Configuration,kotlin.Unit>){}[0]

@@ -1,0 +1,92 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, js, linuxArm64, linuxX64, macosArm64, mingwX64, tvosArm64, tvosSimulatorArm64, wasmJs, wasmWasi, watchosArm64, watchosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <kotmark-ext-gfm-alerts>
+abstract class io.heapy.kotmark.ext.gfm.alerts.internal/AlertNodeRenderer : io.heapy.kotmark.renderer/NodeRenderer { // io.heapy.kotmark.ext.gfm.alerts.internal/AlertNodeRenderer|null[0]
+    constructor <init>() // io.heapy.kotmark.ext.gfm.alerts.internal/AlertNodeRenderer.<init>|<init>(){}[0]
+
+    open val nodeTypes // io.heapy.kotmark.ext.gfm.alerts.internal/AlertNodeRenderer.nodeTypes|{}nodeTypes[0]
+        open fun <get-nodeTypes>(): kotlin.collections/Set<kotlin.reflect/KClass<out io.heapy.kotmark.node/Node>> // io.heapy.kotmark.ext.gfm.alerts.internal/AlertNodeRenderer.nodeTypes.<get-nodeTypes>|<get-nodeTypes>(){}[0]
+
+    abstract fun renderAlert(io.heapy.kotmark.ext.gfm.alerts/Alert) // io.heapy.kotmark.ext.gfm.alerts.internal/AlertNodeRenderer.renderAlert|renderAlert(io.heapy.kotmark.ext.gfm.alerts.Alert){}[0]
+    abstract fun renderNode(io.heapy.kotmark.node/Node) // io.heapy.kotmark.ext.gfm.alerts.internal/AlertNodeRenderer.renderNode|renderNode(io.heapy.kotmark.node.Node){}[0]
+    final fun render(io.heapy.kotmark.node/Node) // io.heapy.kotmark.ext.gfm.alerts.internal/AlertNodeRenderer.render|render(io.heapy.kotmark.node.Node){}[0]
+    final fun renderChildren(io.heapy.kotmark.node/Node) // io.heapy.kotmark.ext.gfm.alerts.internal/AlertNodeRenderer.renderChildren|renderChildren(io.heapy.kotmark.node.Node){}[0]
+}
+
+final class io.heapy.kotmark.ext.gfm.alerts.internal/AlertBlockParser : io.heapy.kotmark.parser.block/AbstractBlockParser { // io.heapy.kotmark.ext.gfm.alerts.internal/AlertBlockParser|null[0]
+    final val block // io.heapy.kotmark.ext.gfm.alerts.internal/AlertBlockParser.block|{}block[0]
+        final fun <get-block>(): io.heapy.kotmark.node/Block // io.heapy.kotmark.ext.gfm.alerts.internal/AlertBlockParser.block.<get-block>|<get-block>(){}[0]
+
+    final fun canContain(io.heapy.kotmark.node/Block): kotlin/Boolean // io.heapy.kotmark.ext.gfm.alerts.internal/AlertBlockParser.canContain|canContain(io.heapy.kotmark.node.Block){}[0]
+    final fun isContainer(): kotlin/Boolean // io.heapy.kotmark.ext.gfm.alerts.internal/AlertBlockParser.isContainer|isContainer(){}[0]
+    final fun parseInlines(io.heapy.kotmark.parser/InlineParser) // io.heapy.kotmark.ext.gfm.alerts.internal/AlertBlockParser.parseInlines|parseInlines(io.heapy.kotmark.parser.InlineParser){}[0]
+    final fun tryContinue(io.heapy.kotmark.parser.block/ParserState): io.heapy.kotmark.parser.block/BlockContinue? // io.heapy.kotmark.ext.gfm.alerts.internal/AlertBlockParser.tryContinue|tryContinue(io.heapy.kotmark.parser.block.ParserState){}[0]
+
+    final class Factory : io.heapy.kotmark.parser.block/AbstractBlockParserFactory { // io.heapy.kotmark.ext.gfm.alerts.internal/AlertBlockParser.Factory|null[0]
+        constructor <init>(kotlin.collections/Set<kotlin/String>, kotlin/Boolean, kotlin/Boolean) // io.heapy.kotmark.ext.gfm.alerts.internal/AlertBlockParser.Factory.<init>|<init>(kotlin.collections.Set<kotlin.String>;kotlin.Boolean;kotlin.Boolean){}[0]
+
+        final fun tryStart(io.heapy.kotmark.parser.block/ParserState, io.heapy.kotmark.parser.block/MatchedBlockParser): io.heapy.kotmark.parser.block/BlockStart? // io.heapy.kotmark.ext.gfm.alerts.internal/AlertBlockParser.Factory.tryStart|tryStart(io.heapy.kotmark.parser.block.ParserState;io.heapy.kotmark.parser.block.MatchedBlockParser){}[0]
+    }
+
+    final object Companion // io.heapy.kotmark.ext.gfm.alerts.internal/AlertBlockParser.Companion|null[0]
+}
+
+final class io.heapy.kotmark.ext.gfm.alerts.internal/AlertHtmlNodeRenderer : io.heapy.kotmark.ext.gfm.alerts.internal/AlertNodeRenderer { // io.heapy.kotmark.ext.gfm.alerts.internal/AlertHtmlNodeRenderer|null[0]
+    constructor <init>(io.heapy.kotmark.renderer.html/HtmlNodeRendererContext, kotlin.collections/Map<kotlin/String, kotlin/String>) // io.heapy.kotmark.ext.gfm.alerts.internal/AlertHtmlNodeRenderer.<init>|<init>(io.heapy.kotmark.renderer.html.HtmlNodeRendererContext;kotlin.collections.Map<kotlin.String,kotlin.String>){}[0]
+}
+
+final class io.heapy.kotmark.ext.gfm.alerts.internal/AlertMarkdownNodeRenderer : io.heapy.kotmark.ext.gfm.alerts.internal/AlertNodeRenderer { // io.heapy.kotmark.ext.gfm.alerts.internal/AlertMarkdownNodeRenderer|null[0]
+    constructor <init>(io.heapy.kotmark.renderer.markdown/MarkdownNodeRendererContext) // io.heapy.kotmark.ext.gfm.alerts.internal/AlertMarkdownNodeRenderer.<init>|<init>(io.heapy.kotmark.renderer.markdown.MarkdownNodeRendererContext){}[0]
+}
+
+final class io.heapy.kotmark.ext.gfm.alerts.internal/AlertTextContentNodeRenderer : io.heapy.kotmark.ext.gfm.alerts.internal/AlertNodeRenderer { // io.heapy.kotmark.ext.gfm.alerts.internal/AlertTextContentNodeRenderer|null[0]
+    constructor <init>(io.heapy.kotmark.renderer.text/TextContentNodeRendererContext, kotlin.collections/Map<kotlin/String, kotlin/String>) // io.heapy.kotmark.ext.gfm.alerts.internal/AlertTextContentNodeRenderer.<init>|<init>(io.heapy.kotmark.renderer.text.TextContentNodeRendererContext;kotlin.collections.Map<kotlin.String,kotlin.String>){}[0]
+}
+
+final class io.heapy.kotmark.ext.gfm.alerts/Alert : io.heapy.kotmark.node/CustomBlock { // io.heapy.kotmark.ext.gfm.alerts/Alert|null[0]
+    constructor <init>(kotlin/String) // io.heapy.kotmark.ext.gfm.alerts/Alert.<init>|<init>(kotlin.String){}[0]
+
+    final val type // io.heapy.kotmark.ext.gfm.alerts/Alert.type|{}type[0]
+        final fun <get-type>(): kotlin/String // io.heapy.kotmark.ext.gfm.alerts/Alert.type.<get-type>|<get-type>(){}[0]
+
+    final fun hasBody(): kotlin/Boolean // io.heapy.kotmark.ext.gfm.alerts/Alert.hasBody|hasBody(){}[0]
+}
+
+final class io.heapy.kotmark.ext.gfm.alerts/AlertTitle : io.heapy.kotmark.node/CustomNode { // io.heapy.kotmark.ext.gfm.alerts/AlertTitle|null[0]
+    constructor <init>() // io.heapy.kotmark.ext.gfm.alerts/AlertTitle.<init>|<init>(){}[0]
+}
+
+final class io.heapy.kotmark.ext.gfm.alerts/AlertsExtension : io.heapy.kotmark.parser/Parser.ParserExtension, io.heapy.kotmark.renderer.html/HtmlRenderer.HtmlRendererExtension, io.heapy.kotmark.renderer.markdown/MarkdownRenderer.MarkdownRendererExtension, io.heapy.kotmark.renderer.text/TextContentRenderer.TextContentRendererExtension { // io.heapy.kotmark.ext.gfm.alerts/AlertsExtension|null[0]
+    final fun extend(io.heapy.kotmark.parser/Parser.Configuration) // io.heapy.kotmark.ext.gfm.alerts/AlertsExtension.extend|extend(io.heapy.kotmark.parser.Parser.Configuration){}[0]
+    final fun extend(io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration) // io.heapy.kotmark.ext.gfm.alerts/AlertsExtension.extend|extend(io.heapy.kotmark.renderer.html.HtmlRenderer.Configuration){}[0]
+    final fun extend(io.heapy.kotmark.renderer.markdown/MarkdownRenderer.Configuration) // io.heapy.kotmark.ext.gfm.alerts/AlertsExtension.extend|extend(io.heapy.kotmark.renderer.markdown.MarkdownRenderer.Configuration){}[0]
+    final fun extend(io.heapy.kotmark.renderer.text/TextContentRenderer.Configuration) // io.heapy.kotmark.ext.gfm.alerts/AlertsExtension.extend|extend(io.heapy.kotmark.renderer.text.TextContentRenderer.Configuration){}[0]
+
+    final class Configuration { // io.heapy.kotmark.ext.gfm.alerts/AlertsExtension.Configuration|null[0]
+        final var allowedTypes // io.heapy.kotmark.ext.gfm.alerts/AlertsExtension.Configuration.allowedTypes|{}allowedTypes[0]
+            final fun <get-allowedTypes>(): kotlin.collections/Map<kotlin/String, kotlin/String> // io.heapy.kotmark.ext.gfm.alerts/AlertsExtension.Configuration.allowedTypes.<get-allowedTypes>|<get-allowedTypes>(){}[0]
+            final fun <set-allowedTypes>(kotlin.collections/Map<kotlin/String, kotlin/String>) // io.heapy.kotmark.ext.gfm.alerts/AlertsExtension.Configuration.allowedTypes.<set-allowedTypes>|<set-allowedTypes>(kotlin.collections.Map<kotlin.String,kotlin.String>){}[0]
+        final var customTitlesAllowed // io.heapy.kotmark.ext.gfm.alerts/AlertsExtension.Configuration.customTitlesAllowed|{}customTitlesAllowed[0]
+            final fun <get-customTitlesAllowed>(): kotlin/Boolean // io.heapy.kotmark.ext.gfm.alerts/AlertsExtension.Configuration.customTitlesAllowed.<get-customTitlesAllowed>|<get-customTitlesAllowed>(){}[0]
+            final fun <set-customTitlesAllowed>(kotlin/Boolean) // io.heapy.kotmark.ext.gfm.alerts/AlertsExtension.Configuration.customTitlesAllowed.<set-customTitlesAllowed>|<set-customTitlesAllowed>(kotlin.Boolean){}[0]
+        final var nestedAlertsAllowed // io.heapy.kotmark.ext.gfm.alerts/AlertsExtension.Configuration.nestedAlertsAllowed|{}nestedAlertsAllowed[0]
+            final fun <get-nestedAlertsAllowed>(): kotlin/Boolean // io.heapy.kotmark.ext.gfm.alerts/AlertsExtension.Configuration.nestedAlertsAllowed.<get-nestedAlertsAllowed>|<get-nestedAlertsAllowed>(){}[0]
+            final fun <set-nestedAlertsAllowed>(kotlin/Boolean) // io.heapy.kotmark.ext.gfm.alerts/AlertsExtension.Configuration.nestedAlertsAllowed.<set-nestedAlertsAllowed>|<set-nestedAlertsAllowed>(kotlin.Boolean){}[0]
+
+        final fun addCustomType(kotlin/String, kotlin/String) // io.heapy.kotmark.ext.gfm.alerts/AlertsExtension.Configuration.addCustomType|addCustomType(kotlin.String;kotlin.String){}[0]
+    }
+
+    final object Companion { // io.heapy.kotmark.ext.gfm.alerts/AlertsExtension.Companion|null[0]
+        final val STANDARD_TYPES // io.heapy.kotmark.ext.gfm.alerts/AlertsExtension.Companion.STANDARD_TYPES|{}STANDARD_TYPES[0]
+            final fun <get-STANDARD_TYPES>(): kotlin.collections/Map<kotlin/String, kotlin/String> // io.heapy.kotmark.ext.gfm.alerts/AlertsExtension.Companion.STANDARD_TYPES.<get-STANDARD_TYPES>|<get-STANDARD_TYPES>(){}[0]
+
+        final fun create(): io.heapy.kotmark/Extension // io.heapy.kotmark.ext.gfm.alerts/AlertsExtension.Companion.create|create(){}[0]
+    }
+}
+
+final fun io.heapy.kotmark.ext.gfm.alerts/alertsExtension(kotlin/Function1<io.heapy.kotmark.ext.gfm.alerts/AlertsExtension.Configuration, kotlin/Unit> = ...): io.heapy.kotmark.ext.gfm.alerts/AlertsExtension // io.heapy.kotmark.ext.gfm.alerts/alertsExtension|alertsExtension(kotlin.Function1<io.heapy.kotmark.ext.gfm.alerts.AlertsExtension.Configuration,kotlin.Unit>){}[0]

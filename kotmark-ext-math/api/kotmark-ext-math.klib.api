@@ -1,0 +1,39 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, js, linuxArm64, linuxX64, macosArm64, mingwX64, tvosArm64, tvosSimulatorArm64, wasmJs, wasmWasi, watchosArm64, watchosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <kotmark-ext-math>
+final class io.heapy.kotmark.ext.math/InlineMath : io.heapy.kotmark.node/CustomNode, io.heapy.kotmark.node/Delimited { // io.heapy.kotmark.ext.math/InlineMath|null[0]
+    constructor <init>(kotlin/String = ...) // io.heapy.kotmark.ext.math/InlineMath.<init>|<init>(kotlin.String){}[0]
+
+    final val closingDelimiter // io.heapy.kotmark.ext.math/InlineMath.closingDelimiter|{}closingDelimiter[0]
+        final fun <get-closingDelimiter>(): kotlin/String // io.heapy.kotmark.ext.math/InlineMath.closingDelimiter.<get-closingDelimiter>|<get-closingDelimiter>(){}[0]
+    final val openingDelimiter // io.heapy.kotmark.ext.math/InlineMath.openingDelimiter|{}openingDelimiter[0]
+        final fun <get-openingDelimiter>(): kotlin/String // io.heapy.kotmark.ext.math/InlineMath.openingDelimiter.<get-openingDelimiter>|<get-openingDelimiter>(){}[0]
+
+    final var literal // io.heapy.kotmark.ext.math/InlineMath.literal|{}literal[0]
+        final fun <get-literal>(): kotlin/String // io.heapy.kotmark.ext.math/InlineMath.literal.<get-literal>|<get-literal>(){}[0]
+        final fun <set-literal>(kotlin/String) // io.heapy.kotmark.ext.math/InlineMath.literal.<set-literal>|<set-literal>(kotlin.String){}[0]
+}
+
+final class io.heapy.kotmark.ext.math/MathBlock : io.heapy.kotmark.node/CustomBlock { // io.heapy.kotmark.ext.math/MathBlock|null[0]
+    constructor <init>(kotlin/String = ...) // io.heapy.kotmark.ext.math/MathBlock.<init>|<init>(kotlin.String){}[0]
+
+    final var literal // io.heapy.kotmark.ext.math/MathBlock.literal|{}literal[0]
+        final fun <get-literal>(): kotlin/String // io.heapy.kotmark.ext.math/MathBlock.literal.<get-literal>|<get-literal>(){}[0]
+        final fun <set-literal>(kotlin/String) // io.heapy.kotmark.ext.math/MathBlock.literal.<set-literal>|<set-literal>(kotlin.String){}[0]
+}
+
+final class io.heapy.kotmark.ext.math/MathExtension : io.heapy.kotmark.parser/Parser.ParserExtension, io.heapy.kotmark.renderer.html/HtmlRenderer.HtmlRendererExtension, io.heapy.kotmark.renderer.markdown/MarkdownRenderer.MarkdownRendererExtension, io.heapy.kotmark.renderer.text/TextContentRenderer.TextContentRendererExtension { // io.heapy.kotmark.ext.math/MathExtension|null[0]
+    final fun extend(io.heapy.kotmark.parser/Parser.Configuration) // io.heapy.kotmark.ext.math/MathExtension.extend|extend(io.heapy.kotmark.parser.Parser.Configuration){}[0]
+    final fun extend(io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration) // io.heapy.kotmark.ext.math/MathExtension.extend|extend(io.heapy.kotmark.renderer.html.HtmlRenderer.Configuration){}[0]
+    final fun extend(io.heapy.kotmark.renderer.markdown/MarkdownRenderer.Configuration) // io.heapy.kotmark.ext.math/MathExtension.extend|extend(io.heapy.kotmark.renderer.markdown.MarkdownRenderer.Configuration){}[0]
+    final fun extend(io.heapy.kotmark.renderer.text/TextContentRenderer.Configuration) // io.heapy.kotmark.ext.math/MathExtension.extend|extend(io.heapy.kotmark.renderer.text.TextContentRenderer.Configuration){}[0]
+
+    final object Companion { // io.heapy.kotmark.ext.math/MathExtension.Companion|null[0]
+        final fun create(): io.heapy.kotmark/Extension // io.heapy.kotmark.ext.math/MathExtension.Companion.create|create(){}[0]
+    }
+}

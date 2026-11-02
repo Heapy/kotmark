@@ -1,0 +1,14 @@
+apply:
+  - //benchmark-runner.module-template.yaml
+
+product:
+  type: linux/app
+  platforms: [linuxX64]
+
+settings:
+  native:
+    entryPoint: io.heapy.kotmark.benchmarks.runner.main
+
+plugins:
+  benchmark:
+    platform: linuxX64

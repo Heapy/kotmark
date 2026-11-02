@@ -1,0 +1,65 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, js, linuxArm64, linuxX64, macosArm64, mingwX64, tvosArm64, tvosSimulatorArm64, wasmJs, wasmWasi, watchosArm64, watchosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <kotmark-ext-highlight>
+abstract class io.heapy.kotmark.ext.highlight.internal/HighlightNodeRenderer : io.heapy.kotmark.renderer/NodeRenderer { // io.heapy.kotmark.ext.highlight.internal/HighlightNodeRenderer|null[0]
+    constructor <init>() // io.heapy.kotmark.ext.highlight.internal/HighlightNodeRenderer.<init>|<init>(){}[0]
+
+    final val nodeTypes // io.heapy.kotmark.ext.highlight.internal/HighlightNodeRenderer.nodeTypes|{}nodeTypes[0]
+        final fun <get-nodeTypes>(): kotlin.collections/Set<kotlin.reflect/KClass<out io.heapy.kotmark.node/Node>> // io.heapy.kotmark.ext.highlight.internal/HighlightNodeRenderer.nodeTypes.<get-nodeTypes>|<get-nodeTypes>(){}[0]
+}
+
+final class io.heapy.kotmark.ext.highlight.internal/HighlightDelimiterProcessor : io.heapy.kotmark.parser.delimiter/DelimiterProcessor { // io.heapy.kotmark.ext.highlight.internal/HighlightDelimiterProcessor|null[0]
+    constructor <init>() // io.heapy.kotmark.ext.highlight.internal/HighlightDelimiterProcessor.<init>|<init>(){}[0]
+
+    final val closingCharacter // io.heapy.kotmark.ext.highlight.internal/HighlightDelimiterProcessor.closingCharacter|{}closingCharacter[0]
+        final fun <get-closingCharacter>(): kotlin/Char // io.heapy.kotmark.ext.highlight.internal/HighlightDelimiterProcessor.closingCharacter.<get-closingCharacter>|<get-closingCharacter>(){}[0]
+    final val minLength // io.heapy.kotmark.ext.highlight.internal/HighlightDelimiterProcessor.minLength|{}minLength[0]
+        final fun <get-minLength>(): kotlin/Int // io.heapy.kotmark.ext.highlight.internal/HighlightDelimiterProcessor.minLength.<get-minLength>|<get-minLength>(){}[0]
+    final val openingCharacter // io.heapy.kotmark.ext.highlight.internal/HighlightDelimiterProcessor.openingCharacter|{}openingCharacter[0]
+        final fun <get-openingCharacter>(): kotlin/Char // io.heapy.kotmark.ext.highlight.internal/HighlightDelimiterProcessor.openingCharacter.<get-openingCharacter>|<get-openingCharacter>(){}[0]
+
+    final fun process(io.heapy.kotmark.parser.delimiter/DelimiterRun, io.heapy.kotmark.parser.delimiter/DelimiterRun): kotlin/Int // io.heapy.kotmark.ext.highlight.internal/HighlightDelimiterProcessor.process|process(io.heapy.kotmark.parser.delimiter.DelimiterRun;io.heapy.kotmark.parser.delimiter.DelimiterRun){}[0]
+}
+
+final class io.heapy.kotmark.ext.highlight.internal/HighlightHtmlNodeRenderer : io.heapy.kotmark.ext.highlight.internal/HighlightNodeRenderer { // io.heapy.kotmark.ext.highlight.internal/HighlightHtmlNodeRenderer|null[0]
+    constructor <init>(io.heapy.kotmark.renderer.html/HtmlNodeRendererContext) // io.heapy.kotmark.ext.highlight.internal/HighlightHtmlNodeRenderer.<init>|<init>(io.heapy.kotmark.renderer.html.HtmlNodeRendererContext){}[0]
+
+    final fun render(io.heapy.kotmark.node/Node) // io.heapy.kotmark.ext.highlight.internal/HighlightHtmlNodeRenderer.render|render(io.heapy.kotmark.node.Node){}[0]
+}
+
+final class io.heapy.kotmark.ext.highlight.internal/HighlightMarkdownNodeRenderer : io.heapy.kotmark.ext.highlight.internal/HighlightNodeRenderer { // io.heapy.kotmark.ext.highlight.internal/HighlightMarkdownNodeRenderer|null[0]
+    constructor <init>(io.heapy.kotmark.renderer.markdown/MarkdownNodeRendererContext) // io.heapy.kotmark.ext.highlight.internal/HighlightMarkdownNodeRenderer.<init>|<init>(io.heapy.kotmark.renderer.markdown.MarkdownNodeRendererContext){}[0]
+
+    final fun render(io.heapy.kotmark.node/Node) // io.heapy.kotmark.ext.highlight.internal/HighlightMarkdownNodeRenderer.render|render(io.heapy.kotmark.node.Node){}[0]
+}
+
+final class io.heapy.kotmark.ext.highlight.internal/HighlightTextContentNodeRenderer : io.heapy.kotmark.ext.highlight.internal/HighlightNodeRenderer { // io.heapy.kotmark.ext.highlight.internal/HighlightTextContentNodeRenderer|null[0]
+    constructor <init>(io.heapy.kotmark.renderer.text/TextContentNodeRendererContext) // io.heapy.kotmark.ext.highlight.internal/HighlightTextContentNodeRenderer.<init>|<init>(io.heapy.kotmark.renderer.text.TextContentNodeRendererContext){}[0]
+
+    final fun render(io.heapy.kotmark.node/Node) // io.heapy.kotmark.ext.highlight.internal/HighlightTextContentNodeRenderer.render|render(io.heapy.kotmark.node.Node){}[0]
+}
+
+final class io.heapy.kotmark.ext.highlight/Highlight : io.heapy.kotmark.node/CustomNode, io.heapy.kotmark.node/Delimited { // io.heapy.kotmark.ext.highlight/Highlight|null[0]
+    constructor <init>() // io.heapy.kotmark.ext.highlight/Highlight.<init>|<init>(){}[0]
+
+    final val closingDelimiter // io.heapy.kotmark.ext.highlight/Highlight.closingDelimiter|{}closingDelimiter[0]
+        final fun <get-closingDelimiter>(): kotlin/String // io.heapy.kotmark.ext.highlight/Highlight.closingDelimiter.<get-closingDelimiter>|<get-closingDelimiter>(){}[0]
+    final val openingDelimiter // io.heapy.kotmark.ext.highlight/Highlight.openingDelimiter|{}openingDelimiter[0]
+        final fun <get-openingDelimiter>(): kotlin/String // io.heapy.kotmark.ext.highlight/Highlight.openingDelimiter.<get-openingDelimiter>|<get-openingDelimiter>(){}[0]
+}
+
+final class io.heapy.kotmark.ext.highlight/HighlightExtension : io.heapy.kotmark.parser/Parser.ParserExtension, io.heapy.kotmark.renderer.html/HtmlRenderer.HtmlRendererExtension, io.heapy.kotmark.renderer.markdown/MarkdownRenderer.MarkdownRendererExtension, io.heapy.kotmark.renderer.text/TextContentRenderer.TextContentRendererExtension { // io.heapy.kotmark.ext.highlight/HighlightExtension|null[0]
+    final fun extend(io.heapy.kotmark.parser/Parser.Configuration) // io.heapy.kotmark.ext.highlight/HighlightExtension.extend|extend(io.heapy.kotmark.parser.Parser.Configuration){}[0]
+    final fun extend(io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration) // io.heapy.kotmark.ext.highlight/HighlightExtension.extend|extend(io.heapy.kotmark.renderer.html.HtmlRenderer.Configuration){}[0]
+    final fun extend(io.heapy.kotmark.renderer.markdown/MarkdownRenderer.Configuration) // io.heapy.kotmark.ext.highlight/HighlightExtension.extend|extend(io.heapy.kotmark.renderer.markdown.MarkdownRenderer.Configuration){}[0]
+    final fun extend(io.heapy.kotmark.renderer.text/TextContentRenderer.Configuration) // io.heapy.kotmark.ext.highlight/HighlightExtension.extend|extend(io.heapy.kotmark.renderer.text.TextContentRenderer.Configuration){}[0]
+
+    final object Companion { // io.heapy.kotmark.ext.highlight/HighlightExtension.Companion|null[0]
+        final fun create(): io.heapy.kotmark/Extension // io.heapy.kotmark.ext.highlight/HighlightExtension.Companion.create|create(){}[0]
+    }
+}

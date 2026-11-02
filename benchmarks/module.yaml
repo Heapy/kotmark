@@ -1,0 +1,19 @@
+apply:
+  - //common.module-template.yaml
+  - //plugins/benchmark/benchmark.module-template.yaml
+
+product:
+  type: kmp/lib
+  platforms: [jvm, macosArm64, linuxX64, mingwX64, js, wasmJs, wasmWasi]
+
+dependencies:
+  - //kotmark
+  - //autolink
+
+settings:
+  jvm:
+    # The downloaded KSP processor is built for JDK 25. Library bytecode stays 17.
+    jdk:
+      version: 25
+
+description: Parsing, rendering, and autolink performance benchmarks.

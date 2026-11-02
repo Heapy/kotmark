@@ -1,0 +1,88 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, js, linuxArm64, linuxX64, macosArm64, mingwX64, tvosArm64, tvosSimulatorArm64, wasmJs, wasmWasi, watchosArm64, watchosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <kotmark-ext-footnotes>
+final class io.heapy.kotmark.ext.footnotes.internal/FootnoteBlockParser : io.heapy.kotmark.parser.block/AbstractBlockParser { // io.heapy.kotmark.ext.footnotes.internal/FootnoteBlockParser|null[0]
+    constructor <init>(kotlin/String) // io.heapy.kotmark.ext.footnotes.internal/FootnoteBlockParser.<init>|<init>(kotlin.String){}[0]
+
+    final val block // io.heapy.kotmark.ext.footnotes.internal/FootnoteBlockParser.block|{}block[0]
+        final fun <get-block>(): io.heapy.kotmark.node/Block // io.heapy.kotmark.ext.footnotes.internal/FootnoteBlockParser.block.<get-block>|<get-block>(){}[0]
+    final val definitions // io.heapy.kotmark.ext.footnotes.internal/FootnoteBlockParser.definitions|{}definitions[0]
+        final fun <get-definitions>(): kotlin.collections/List<io.heapy.kotmark.node/DefinitionMap<*>> // io.heapy.kotmark.ext.footnotes.internal/FootnoteBlockParser.definitions.<get-definitions>|<get-definitions>(){}[0]
+
+    final fun canContain(io.heapy.kotmark.node/Block): kotlin/Boolean // io.heapy.kotmark.ext.footnotes.internal/FootnoteBlockParser.canContain|canContain(io.heapy.kotmark.node.Block){}[0]
+    final fun isContainer(): kotlin/Boolean // io.heapy.kotmark.ext.footnotes.internal/FootnoteBlockParser.isContainer|isContainer(){}[0]
+    final fun tryContinue(io.heapy.kotmark.parser.block/ParserState): io.heapy.kotmark.parser.block/BlockContinue? // io.heapy.kotmark.ext.footnotes.internal/FootnoteBlockParser.tryContinue|tryContinue(io.heapy.kotmark.parser.block.ParserState){}[0]
+
+    final class Factory : io.heapy.kotmark.parser.block/BlockParserFactory { // io.heapy.kotmark.ext.footnotes.internal/FootnoteBlockParser.Factory|null[0]
+        constructor <init>() // io.heapy.kotmark.ext.footnotes.internal/FootnoteBlockParser.Factory.<init>|<init>(){}[0]
+
+        final fun tryStart(io.heapy.kotmark.parser.block/ParserState, io.heapy.kotmark.parser.block/MatchedBlockParser): io.heapy.kotmark.parser.block/BlockStart? // io.heapy.kotmark.ext.footnotes.internal/FootnoteBlockParser.Factory.tryStart|tryStart(io.heapy.kotmark.parser.block.ParserState;io.heapy.kotmark.parser.block.MatchedBlockParser){}[0]
+    }
+}
+
+final class io.heapy.kotmark.ext.footnotes.internal/FootnoteHtmlNodeRenderer : io.heapy.kotmark.renderer/NodeRenderer { // io.heapy.kotmark.ext.footnotes.internal/FootnoteHtmlNodeRenderer|null[0]
+    constructor <init>(io.heapy.kotmark.renderer.html/HtmlNodeRendererContext) // io.heapy.kotmark.ext.footnotes.internal/FootnoteHtmlNodeRenderer.<init>|<init>(io.heapy.kotmark.renderer.html.HtmlNodeRendererContext){}[0]
+
+    final val nodeTypes // io.heapy.kotmark.ext.footnotes.internal/FootnoteHtmlNodeRenderer.nodeTypes|{}nodeTypes[0]
+        final fun <get-nodeTypes>(): kotlin.collections/Set<kotlin.reflect/KClass<out io.heapy.kotmark.node/Node>> // io.heapy.kotmark.ext.footnotes.internal/FootnoteHtmlNodeRenderer.nodeTypes.<get-nodeTypes>|<get-nodeTypes>(){}[0]
+
+    final fun afterRoot(io.heapy.kotmark.node/Node) // io.heapy.kotmark.ext.footnotes.internal/FootnoteHtmlNodeRenderer.afterRoot|afterRoot(io.heapy.kotmark.node.Node){}[0]
+    final fun beforeRoot(io.heapy.kotmark.node/Node) // io.heapy.kotmark.ext.footnotes.internal/FootnoteHtmlNodeRenderer.beforeRoot|beforeRoot(io.heapy.kotmark.node.Node){}[0]
+    final fun render(io.heapy.kotmark.node/Node) // io.heapy.kotmark.ext.footnotes.internal/FootnoteHtmlNodeRenderer.render|render(io.heapy.kotmark.node.Node){}[0]
+}
+
+final class io.heapy.kotmark.ext.footnotes.internal/FootnoteLinkProcessor : io.heapy.kotmark.parser.beta/LinkProcessor { // io.heapy.kotmark.ext.footnotes.internal/FootnoteLinkProcessor|null[0]
+    constructor <init>() // io.heapy.kotmark.ext.footnotes.internal/FootnoteLinkProcessor.<init>|<init>(){}[0]
+
+    final fun process(io.heapy.kotmark.parser.beta/LinkInfo, io.heapy.kotmark.parser.beta/Scanner, io.heapy.kotmark.parser/InlineParserContext): io.heapy.kotmark.parser.beta/LinkResult? // io.heapy.kotmark.ext.footnotes.internal/FootnoteLinkProcessor.process|process(io.heapy.kotmark.parser.beta.LinkInfo;io.heapy.kotmark.parser.beta.Scanner;io.heapy.kotmark.parser.InlineParserContext){}[0]
+}
+
+final class io.heapy.kotmark.ext.footnotes.internal/FootnoteMarkdownNodeRenderer : io.heapy.kotmark.renderer/NodeRenderer { // io.heapy.kotmark.ext.footnotes.internal/FootnoteMarkdownNodeRenderer|null[0]
+    constructor <init>(io.heapy.kotmark.renderer.markdown/MarkdownNodeRendererContext) // io.heapy.kotmark.ext.footnotes.internal/FootnoteMarkdownNodeRenderer.<init>|<init>(io.heapy.kotmark.renderer.markdown.MarkdownNodeRendererContext){}[0]
+
+    final val nodeTypes // io.heapy.kotmark.ext.footnotes.internal/FootnoteMarkdownNodeRenderer.nodeTypes|{}nodeTypes[0]
+        final fun <get-nodeTypes>(): kotlin.collections/Set<kotlin.reflect/KClass<out io.heapy.kotmark.node/Node>> // io.heapy.kotmark.ext.footnotes.internal/FootnoteMarkdownNodeRenderer.nodeTypes.<get-nodeTypes>|<get-nodeTypes>(){}[0]
+
+    final fun render(io.heapy.kotmark.node/Node) // io.heapy.kotmark.ext.footnotes.internal/FootnoteMarkdownNodeRenderer.render|render(io.heapy.kotmark.node.Node){}[0]
+}
+
+final class io.heapy.kotmark.ext.footnotes/FootnoteDefinition : io.heapy.kotmark.node/CustomBlock { // io.heapy.kotmark.ext.footnotes/FootnoteDefinition|null[0]
+    constructor <init>(kotlin/String) // io.heapy.kotmark.ext.footnotes/FootnoteDefinition.<init>|<init>(kotlin.String){}[0]
+
+    final val label // io.heapy.kotmark.ext.footnotes/FootnoteDefinition.label|{}label[0]
+        final fun <get-label>(): kotlin/String // io.heapy.kotmark.ext.footnotes/FootnoteDefinition.label.<get-label>|<get-label>(){}[0]
+}
+
+final class io.heapy.kotmark.ext.footnotes/FootnoteReference : io.heapy.kotmark.node/CustomNode { // io.heapy.kotmark.ext.footnotes/FootnoteReference|null[0]
+    constructor <init>(kotlin/String) // io.heapy.kotmark.ext.footnotes/FootnoteReference.<init>|<init>(kotlin.String){}[0]
+
+    final val label // io.heapy.kotmark.ext.footnotes/FootnoteReference.label|{}label[0]
+        final fun <get-label>(): kotlin/String // io.heapy.kotmark.ext.footnotes/FootnoteReference.label.<get-label>|<get-label>(){}[0]
+}
+
+final class io.heapy.kotmark.ext.footnotes/FootnotesExtension : io.heapy.kotmark.parser/Parser.ParserExtension, io.heapy.kotmark.renderer.html/HtmlRenderer.HtmlRendererExtension, io.heapy.kotmark.renderer.markdown/MarkdownRenderer.MarkdownRendererExtension { // io.heapy.kotmark.ext.footnotes/FootnotesExtension|null[0]
+    final fun extend(io.heapy.kotmark.parser/Parser.Configuration) // io.heapy.kotmark.ext.footnotes/FootnotesExtension.extend|extend(io.heapy.kotmark.parser.Parser.Configuration){}[0]
+    final fun extend(io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration) // io.heapy.kotmark.ext.footnotes/FootnotesExtension.extend|extend(io.heapy.kotmark.renderer.html.HtmlRenderer.Configuration){}[0]
+    final fun extend(io.heapy.kotmark.renderer.markdown/MarkdownRenderer.Configuration) // io.heapy.kotmark.ext.footnotes/FootnotesExtension.extend|extend(io.heapy.kotmark.renderer.markdown.MarkdownRenderer.Configuration){}[0]
+
+    final class Configuration { // io.heapy.kotmark.ext.footnotes/FootnotesExtension.Configuration|null[0]
+        final var inlineFootnotes // io.heapy.kotmark.ext.footnotes/FootnotesExtension.Configuration.inlineFootnotes|{}inlineFootnotes[0]
+            final fun <get-inlineFootnotes>(): kotlin/Boolean // io.heapy.kotmark.ext.footnotes/FootnotesExtension.Configuration.inlineFootnotes.<get-inlineFootnotes>|<get-inlineFootnotes>(){}[0]
+            final fun <set-inlineFootnotes>(kotlin/Boolean) // io.heapy.kotmark.ext.footnotes/FootnotesExtension.Configuration.inlineFootnotes.<set-inlineFootnotes>|<set-inlineFootnotes>(kotlin.Boolean){}[0]
+    }
+
+    final object Companion { // io.heapy.kotmark.ext.footnotes/FootnotesExtension.Companion|null[0]
+        final fun create(): io.heapy.kotmark/Extension // io.heapy.kotmark.ext.footnotes/FootnotesExtension.Companion.create|create(){}[0]
+    }
+}
+
+final class io.heapy.kotmark.ext.footnotes/InlineFootnote : io.heapy.kotmark.node/CustomNode { // io.heapy.kotmark.ext.footnotes/InlineFootnote|null[0]
+    constructor <init>() // io.heapy.kotmark.ext.footnotes/InlineFootnote.<init>|<init>(){}[0]
+}
+
+final fun io.heapy.kotmark.ext.footnotes/footnotesExtension(kotlin/Function1<io.heapy.kotmark.ext.footnotes/FootnotesExtension.Configuration, kotlin/Unit> = ...): io.heapy.kotmark.ext.footnotes/FootnotesExtension // io.heapy.kotmark.ext.footnotes/footnotesExtension|footnotesExtension(kotlin.Function1<io.heapy.kotmark.ext.footnotes.FootnotesExtension.Configuration,kotlin.Unit>){}[0]

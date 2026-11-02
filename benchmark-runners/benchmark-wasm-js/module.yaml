@@ -1,0 +1,8 @@
+apply:
+  - //benchmark-runner.module-template.yaml
+
+product: wasm-js/app
+
+plugins:
+  benchmark:
+    platform: wasmJs

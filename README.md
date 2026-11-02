@@ -115,6 +115,18 @@ only its own coordinate; `Finished` has no coordinate or Boolean flag.
 
 ## Development
 
+Restore the pinned build plugins after cloning, before invoking Kotlin Toolchain:
+
+```shell
+./ktc-plugins sync
+./ktc-plugins verify
+```
+
+The release launchers verify the installer binary. `ktc-plugins.yaml` selects plugin
+releases, and `ktc-plugins.lock.yaml` pins their exact source commits and hashes.
+Plugins use **downloaded** mode: their sources and licenses are restored under
+ignored `plugins/` directories, never vendored. CI restores and verifies the same lock.
+
 Run the complete JVM suite with `./kotlin test --platform jvm`.
 
 ### Property tests and fuzzing
@@ -228,6 +240,90 @@ On Apple Silicon with the corresponding Xcode simulator runtimes installed:
 node scripts/test-additional-platforms.mjs tvosSimulatorArm64
 node scripts/test-additional-platforms.mjs watchosSimulatorArm64
 ```
+
+### Library tooling
+
+Production libraries apply `library.module-template.yaml`; test infrastructure and
+benchmarks use the common template without API, documentation, or coverage policy.
+The library template supplies `io.heapy.kotmark:…:0.1.0-SNAPSHOT` metadata for Dokka's
+KMP model. This is a development version; no remote publishing repository is enabled.
+
+**API review:** BCV checks committed JVM and KLib snapshots. Run checks before and
+after changing public declarations; update snapshots only after reviewing the change:
+
+```shell
+node scripts/library-tools.mjs api-check
+node scripts/library-tools.mjs api-dump kotmark
+```
+
+The optional module arguments select production libraries; omitting them selects
+all libraries. The helper runs modules sequentially because these plugins launch
+nested builds. `jvm-api-check`, `jvm-api-dump`, `klib-api-check`, and `klib-api-dump`
+select one snapshot format. Compatible additions also require baseline review.
+KLib checks select web targets and the current host's Native family. Run on macOS,
+Linux, and Windows for complete supported-target coverage; updates preserve other
+targets already in the baseline. BCV 0.2.1 excludes Android and `watchosDeviceArm64`;
+their existing platform builds/tests remain enabled. Swift/TypeScript exports and
+behavioral compatibility are not checked.
+
+For this pure-Kotlin project, macOS can also refresh all 13 supported KLib targets
+by temporarily setting `plugins.bcv.includeCrossTargets: true` in the library
+template before `api-dump`. This compiles each target's KLib. Remove the override
+afterwards so routine checks select the host's targets again.
+
+**Coverage:** on macOS or Linux, with JDK 25 and Kotlin 2.4.21+ providing `kotlinr` on PATH, run:
+
+```shell
+kotlinr plugins/kover/coverage.main.kts
+./kotlin test --platform jvm -m test-fixtures -m integration-test
+```
+
+The first command executes each library's JVM tests once with instrumentation and
+produces `build/tasks/*_koverReport@kover/html/index.html` and `coverage.xml` reports.
+Add `-m kotmark` to inspect one library. The initial minimum is zero so reports can
+guide a later threshold; empty coverage or zero tests still fails. Reports are per
+module: tests in `integration-test` do not add to core's coverage. Native, Android,
+and web coverage are outside this adapter's scope. CI uses this runner instead of
+repeating ordinary library JVM tests. An unfiltered `./kotlin check` also runs
+standalone Kover checks and therefore executes those tests again.
+
+**API documentation:** generate one KMP site per library on a host with the required
+Native SDKs (macOS with Xcode for this project):
+
+```shell
+node scripts/library-tools.mjs docs
+```
+
+Open `build/documentation/tasks/_<module>_dokkaHtml@dokka/html/index.html`. The helper
+creates a disposable source/model copy under `build/documentation-project`, omitting
+Android and mapping shared JVM/Android sources to JVM. It also fixes a Dokka 0.2.0
+validator bug in the disposable plugin copy: package directories such as
+`io.heapy.kotmark.renderer.html` must not be read as HTML files. The helper guards
+the patch against source changes on upgrade. Production targets and the original
+locked plugin installation remain unchanged and verifiable.
+Sites include public and protected API; they are not aggregated or deployed. The manual CI workflow run
+uploads them as `api-documentation`. External documentation links are disabled by
+the adapter's default offline mode.
+
+**Performance:** benchmarks separate parsing, rendering a prepared AST, combined
+parse/render, fully consumed autolink extraction, and pathological input scaling.
+Input preparation is outside measurement. Run a smoke check or actual measurements:
+
+```shell
+./kotlin do benchmarkSmoke -m benchmark-jvm
+./kotlin do benchmark -m benchmark-jvm
+```
+
+Other runners are `benchmark-macos`, `benchmark-linux`, `benchmark-windows`,
+`benchmark-js`, `benchmark-wasm-js`, and `benchmark-wasm-wasi`. Native runners need
+matching hosts; web runners need Node.js 24. The benchmark library uses JDK 25 to
+load the plugin's KSP processor, while JVM benchmark execution remains on JDK 17.
+Results and run metadata are under
+`build/tasks/_<runner>_benchmark@benchmark/` (or `benchmarkSmoke@benchmark`). Copy
+reports before rerunning: each command replaces its previous report. Smoke checks
+validate integration, not performance. Compare measurements on controlled hardware;
+there is no automatic regression threshold. Benchmark classes live under
+`benchmarks/src` and never enter production library dependencies.
 
 ### CI coverage
 

@@ -1,0 +1,1653 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, js, linuxArm64, linuxX64, macosArm64, mingwX64, tvosArm64, tvosSimulatorArm64, wasmJs, wasmWasi, watchosArm64, watchosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <kotmark>
+open annotation class io.heapy.kotmark/KotmarkDsl : kotlin/Annotation { // io.heapy.kotmark/KotmarkDsl|null[0]
+    constructor <init>() // io.heapy.kotmark/KotmarkDsl.<init>|<init>(){}[0]
+}
+
+final enum class io.heapy.kotmark.parser/IncludeSourceSpans : kotlin/Enum<io.heapy.kotmark.parser/IncludeSourceSpans> { // io.heapy.kotmark.parser/IncludeSourceSpans|null[0]
+    enum entry BLOCKS // io.heapy.kotmark.parser/IncludeSourceSpans.BLOCKS|null[0]
+    enum entry BLOCKS_AND_INLINES // io.heapy.kotmark.parser/IncludeSourceSpans.BLOCKS_AND_INLINES|null[0]
+    enum entry NONE // io.heapy.kotmark.parser/IncludeSourceSpans.NONE|null[0]
+
+    final val entries // io.heapy.kotmark.parser/IncludeSourceSpans.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<io.heapy.kotmark.parser/IncludeSourceSpans> // io.heapy.kotmark.parser/IncludeSourceSpans.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): io.heapy.kotmark.parser/IncludeSourceSpans // io.heapy.kotmark.parser/IncludeSourceSpans.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<io.heapy.kotmark.parser/IncludeSourceSpans> // io.heapy.kotmark.parser/IncludeSourceSpans.values|values#static(){}[0]
+}
+
+final enum class io.heapy.kotmark.renderer.text/LineBreakRendering : kotlin/Enum<io.heapy.kotmark.renderer.text/LineBreakRendering> { // io.heapy.kotmark.renderer.text/LineBreakRendering|null[0]
+    enum entry COMPACT // io.heapy.kotmark.renderer.text/LineBreakRendering.COMPACT|null[0]
+    enum entry SEPARATE_BLOCKS // io.heapy.kotmark.renderer.text/LineBreakRendering.SEPARATE_BLOCKS|null[0]
+    enum entry STRIP // io.heapy.kotmark.renderer.text/LineBreakRendering.STRIP|null[0]
+
+    final val entries // io.heapy.kotmark.renderer.text/LineBreakRendering.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<io.heapy.kotmark.renderer.text/LineBreakRendering> // io.heapy.kotmark.renderer.text/LineBreakRendering.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): io.heapy.kotmark.renderer.text/LineBreakRendering // io.heapy.kotmark.renderer.text/LineBreakRendering.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<io.heapy.kotmark.renderer.text/LineBreakRendering> // io.heapy.kotmark.renderer.text/LineBreakRendering.values|values#static(){}[0]
+}
+
+abstract fun interface io.heapy.kotmark.parser.beta/InlineContentParser { // io.heapy.kotmark.parser.beta/InlineContentParser|null[0]
+    abstract fun tryParse(io.heapy.kotmark.parser.beta/InlineParserState): io.heapy.kotmark.parser.beta/ParsedInline? // io.heapy.kotmark.parser.beta/InlineContentParser.tryParse|tryParse(io.heapy.kotmark.parser.beta.InlineParserState){}[0]
+}
+
+abstract fun interface io.heapy.kotmark.parser.beta/InlineParserState { // io.heapy.kotmark.parser.beta/InlineParserState|null[0]
+    abstract fun scanner(): io.heapy.kotmark.parser.beta/Scanner // io.heapy.kotmark.parser.beta/InlineParserState.scanner|scanner(){}[0]
+}
+
+abstract fun interface io.heapy.kotmark.parser.beta/LinkProcessor { // io.heapy.kotmark.parser.beta/LinkProcessor|null[0]
+    abstract fun process(io.heapy.kotmark.parser.beta/LinkInfo, io.heapy.kotmark.parser.beta/Scanner, io.heapy.kotmark.parser/InlineParserContext): io.heapy.kotmark.parser.beta/LinkResult? // io.heapy.kotmark.parser.beta/LinkProcessor.process|process(io.heapy.kotmark.parser.beta.LinkInfo;io.heapy.kotmark.parser.beta.Scanner;io.heapy.kotmark.parser.InlineParserContext){}[0]
+}
+
+abstract fun interface io.heapy.kotmark.parser.block/BlockParserFactory { // io.heapy.kotmark.parser.block/BlockParserFactory|null[0]
+    abstract fun tryStart(io.heapy.kotmark.parser.block/ParserState, io.heapy.kotmark.parser.block/MatchedBlockParser): io.heapy.kotmark.parser.block/BlockStart? // io.heapy.kotmark.parser.block/BlockParserFactory.tryStart|tryStart(io.heapy.kotmark.parser.block.ParserState;io.heapy.kotmark.parser.block.MatchedBlockParser){}[0]
+}
+
+abstract fun interface io.heapy.kotmark.parser/InlineParser { // io.heapy.kotmark.parser/InlineParser|null[0]
+    abstract fun parse(io.heapy.kotmark.parser/SourceLines, io.heapy.kotmark.node/Node) // io.heapy.kotmark.parser/InlineParser.parse|parse(io.heapy.kotmark.parser.SourceLines;io.heapy.kotmark.node.Node){}[0]
+}
+
+abstract fun interface io.heapy.kotmark.parser/InlineParserFactory { // io.heapy.kotmark.parser/InlineParserFactory|null[0]
+    abstract fun create(io.heapy.kotmark.parser/InlineParserContext): io.heapy.kotmark.parser/InlineParser // io.heapy.kotmark.parser/InlineParserFactory.create|create(io.heapy.kotmark.parser.InlineParserContext){}[0]
+}
+
+abstract fun interface io.heapy.kotmark.parser/PostProcessor { // io.heapy.kotmark.parser/PostProcessor|null[0]
+    abstract fun process(io.heapy.kotmark.node/Node): io.heapy.kotmark.node/Node // io.heapy.kotmark.parser/PostProcessor.process|process(io.heapy.kotmark.node.Node){}[0]
+}
+
+abstract fun interface io.heapy.kotmark.renderer.html/AttributeProvider { // io.heapy.kotmark.renderer.html/AttributeProvider|null[0]
+    abstract fun setAttributes(io.heapy.kotmark.node/Node, kotlin/String, kotlin.collections/MutableMap<kotlin/String, kotlin/String?>) // io.heapy.kotmark.renderer.html/AttributeProvider.setAttributes|setAttributes(io.heapy.kotmark.node.Node;kotlin.String;kotlin.collections.MutableMap<kotlin.String,kotlin.String?>){}[0]
+}
+
+abstract fun interface io.heapy.kotmark.renderer.html/AttributeProviderFactory { // io.heapy.kotmark.renderer.html/AttributeProviderFactory|null[0]
+    abstract fun create(io.heapy.kotmark.renderer.html/AttributeProviderContext): io.heapy.kotmark.renderer.html/AttributeProvider // io.heapy.kotmark.renderer.html/AttributeProviderFactory.create|create(io.heapy.kotmark.renderer.html.AttributeProviderContext){}[0]
+}
+
+abstract fun interface io.heapy.kotmark.renderer.html/HtmlNodeRendererFactory { // io.heapy.kotmark.renderer.html/HtmlNodeRendererFactory|null[0]
+    abstract fun create(io.heapy.kotmark.renderer.html/HtmlNodeRendererContext): io.heapy.kotmark.renderer/NodeRenderer // io.heapy.kotmark.renderer.html/HtmlNodeRendererFactory.create|create(io.heapy.kotmark.renderer.html.HtmlNodeRendererContext){}[0]
+}
+
+abstract fun interface io.heapy.kotmark.renderer.text/TextContentNodeRendererFactory { // io.heapy.kotmark.renderer.text/TextContentNodeRendererFactory|null[0]
+    abstract fun create(io.heapy.kotmark.renderer.text/TextContentNodeRendererContext): io.heapy.kotmark.renderer/NodeRenderer // io.heapy.kotmark.renderer.text/TextContentNodeRendererFactory.create|create(io.heapy.kotmark.renderer.text.TextContentNodeRendererContext){}[0]
+}
+
+abstract fun interface io.heapy.kotmark.text/CharMatcher { // io.heapy.kotmark.text/CharMatcher|null[0]
+    abstract fun matches(kotlin/Char): kotlin/Boolean // io.heapy.kotmark.text/CharMatcher.matches|matches(kotlin.Char){}[0]
+}
+
+abstract interface io.heapy.kotmark.node/Delimited { // io.heapy.kotmark.node/Delimited|null[0]
+    abstract val closingDelimiter // io.heapy.kotmark.node/Delimited.closingDelimiter|{}closingDelimiter[0]
+        abstract fun <get-closingDelimiter>(): kotlin/String? // io.heapy.kotmark.node/Delimited.closingDelimiter.<get-closingDelimiter>|<get-closingDelimiter>(){}[0]
+    abstract val openingDelimiter // io.heapy.kotmark.node/Delimited.openingDelimiter|{}openingDelimiter[0]
+        abstract fun <get-openingDelimiter>(): kotlin/String? // io.heapy.kotmark.node/Delimited.openingDelimiter.<get-openingDelimiter>|<get-openingDelimiter>(){}[0]
+}
+
+abstract interface io.heapy.kotmark.node/Visitor { // io.heapy.kotmark.node/Visitor|null[0]
+    abstract fun visit(io.heapy.kotmark.node/BlockQuote) // io.heapy.kotmark.node/Visitor.visit|visit(io.heapy.kotmark.node.BlockQuote){}[0]
+    abstract fun visit(io.heapy.kotmark.node/BulletList) // io.heapy.kotmark.node/Visitor.visit|visit(io.heapy.kotmark.node.BulletList){}[0]
+    abstract fun visit(io.heapy.kotmark.node/Code) // io.heapy.kotmark.node/Visitor.visit|visit(io.heapy.kotmark.node.Code){}[0]
+    abstract fun visit(io.heapy.kotmark.node/CustomBlock) // io.heapy.kotmark.node/Visitor.visit|visit(io.heapy.kotmark.node.CustomBlock){}[0]
+    abstract fun visit(io.heapy.kotmark.node/CustomNode) // io.heapy.kotmark.node/Visitor.visit|visit(io.heapy.kotmark.node.CustomNode){}[0]
+    abstract fun visit(io.heapy.kotmark.node/Document) // io.heapy.kotmark.node/Visitor.visit|visit(io.heapy.kotmark.node.Document){}[0]
+    abstract fun visit(io.heapy.kotmark.node/Emphasis) // io.heapy.kotmark.node/Visitor.visit|visit(io.heapy.kotmark.node.Emphasis){}[0]
+    abstract fun visit(io.heapy.kotmark.node/FencedCodeBlock) // io.heapy.kotmark.node/Visitor.visit|visit(io.heapy.kotmark.node.FencedCodeBlock){}[0]
+    abstract fun visit(io.heapy.kotmark.node/HardLineBreak) // io.heapy.kotmark.node/Visitor.visit|visit(io.heapy.kotmark.node.HardLineBreak){}[0]
+    abstract fun visit(io.heapy.kotmark.node/Heading) // io.heapy.kotmark.node/Visitor.visit|visit(io.heapy.kotmark.node.Heading){}[0]
+    abstract fun visit(io.heapy.kotmark.node/HtmlBlock) // io.heapy.kotmark.node/Visitor.visit|visit(io.heapy.kotmark.node.HtmlBlock){}[0]
+    abstract fun visit(io.heapy.kotmark.node/HtmlInline) // io.heapy.kotmark.node/Visitor.visit|visit(io.heapy.kotmark.node.HtmlInline){}[0]
+    abstract fun visit(io.heapy.kotmark.node/Image) // io.heapy.kotmark.node/Visitor.visit|visit(io.heapy.kotmark.node.Image){}[0]
+    abstract fun visit(io.heapy.kotmark.node/IndentedCodeBlock) // io.heapy.kotmark.node/Visitor.visit|visit(io.heapy.kotmark.node.IndentedCodeBlock){}[0]
+    abstract fun visit(io.heapy.kotmark.node/Link) // io.heapy.kotmark.node/Visitor.visit|visit(io.heapy.kotmark.node.Link){}[0]
+    abstract fun visit(io.heapy.kotmark.node/LinkReferenceDefinition) // io.heapy.kotmark.node/Visitor.visit|visit(io.heapy.kotmark.node.LinkReferenceDefinition){}[0]
+    abstract fun visit(io.heapy.kotmark.node/ListItem) // io.heapy.kotmark.node/Visitor.visit|visit(io.heapy.kotmark.node.ListItem){}[0]
+    abstract fun visit(io.heapy.kotmark.node/OrderedList) // io.heapy.kotmark.node/Visitor.visit|visit(io.heapy.kotmark.node.OrderedList){}[0]
+    abstract fun visit(io.heapy.kotmark.node/Paragraph) // io.heapy.kotmark.node/Visitor.visit|visit(io.heapy.kotmark.node.Paragraph){}[0]
+    abstract fun visit(io.heapy.kotmark.node/SoftLineBreak) // io.heapy.kotmark.node/Visitor.visit|visit(io.heapy.kotmark.node.SoftLineBreak){}[0]
+    abstract fun visit(io.heapy.kotmark.node/StrongEmphasis) // io.heapy.kotmark.node/Visitor.visit|visit(io.heapy.kotmark.node.StrongEmphasis){}[0]
+    abstract fun visit(io.heapy.kotmark.node/Text) // io.heapy.kotmark.node/Visitor.visit|visit(io.heapy.kotmark.node.Text){}[0]
+    abstract fun visit(io.heapy.kotmark.node/ThematicBreak) // io.heapy.kotmark.node/Visitor.visit|visit(io.heapy.kotmark.node.ThematicBreak){}[0]
+}
+
+abstract interface io.heapy.kotmark.parser.beta/InlineContentParserFactory { // io.heapy.kotmark.parser.beta/InlineContentParserFactory|null[0]
+    abstract val triggerCharacters // io.heapy.kotmark.parser.beta/InlineContentParserFactory.triggerCharacters|{}triggerCharacters[0]
+        abstract fun <get-triggerCharacters>(): kotlin.collections/Set<kotlin/Char> // io.heapy.kotmark.parser.beta/InlineContentParserFactory.triggerCharacters.<get-triggerCharacters>|<get-triggerCharacters>(){}[0]
+
+    abstract fun create(): io.heapy.kotmark.parser.beta/InlineContentParser // io.heapy.kotmark.parser.beta/InlineContentParserFactory.create|create(){}[0]
+}
+
+abstract interface io.heapy.kotmark.parser.beta/LinkInfo { // io.heapy.kotmark.parser.beta/LinkInfo|null[0]
+    abstract fun afterTextBracket(): io.heapy.kotmark.parser.beta/Position // io.heapy.kotmark.parser.beta/LinkInfo.afterTextBracket|afterTextBracket(){}[0]
+    abstract fun destination(): kotlin/String? // io.heapy.kotmark.parser.beta/LinkInfo.destination|destination(){}[0]
+    abstract fun label(): kotlin/String? // io.heapy.kotmark.parser.beta/LinkInfo.label|label(){}[0]
+    abstract fun marker(): io.heapy.kotmark.node/Text? // io.heapy.kotmark.parser.beta/LinkInfo.marker|marker(){}[0]
+    abstract fun openingBracket(): io.heapy.kotmark.node/Text // io.heapy.kotmark.parser.beta/LinkInfo.openingBracket|openingBracket(){}[0]
+    abstract fun text(): kotlin/String // io.heapy.kotmark.parser.beta/LinkInfo.text|text(){}[0]
+    abstract fun title(): kotlin/String? // io.heapy.kotmark.parser.beta/LinkInfo.title|title(){}[0]
+}
+
+abstract interface io.heapy.kotmark.parser.beta/LinkResult { // io.heapy.kotmark.parser.beta/LinkResult|null[0]
+    abstract fun includeMarker(): io.heapy.kotmark.parser.beta/LinkResult // io.heapy.kotmark.parser.beta/LinkResult.includeMarker|includeMarker(){}[0]
+
+    final object Companion { // io.heapy.kotmark.parser.beta/LinkResult.Companion|null[0]
+        final fun none(): io.heapy.kotmark.parser.beta/LinkResult? // io.heapy.kotmark.parser.beta/LinkResult.Companion.none|none(){}[0]
+        final fun replaceWith(io.heapy.kotmark.node/Node, io.heapy.kotmark.parser.beta/Position): io.heapy.kotmark.parser.beta/LinkResult // io.heapy.kotmark.parser.beta/LinkResult.Companion.replaceWith|replaceWith(io.heapy.kotmark.node.Node;io.heapy.kotmark.parser.beta.Position){}[0]
+        final fun wrapTextIn(io.heapy.kotmark.node/Node, io.heapy.kotmark.parser.beta/Position): io.heapy.kotmark.parser.beta/LinkResult // io.heapy.kotmark.parser.beta/LinkResult.Companion.wrapTextIn|wrapTextIn(io.heapy.kotmark.node.Node;io.heapy.kotmark.parser.beta.Position){}[0]
+    }
+}
+
+abstract interface io.heapy.kotmark.parser.beta/ParsedInline { // io.heapy.kotmark.parser.beta/ParsedInline|null[0]
+    final object Companion { // io.heapy.kotmark.parser.beta/ParsedInline.Companion|null[0]
+        final fun none(): io.heapy.kotmark.parser.beta/ParsedInline? // io.heapy.kotmark.parser.beta/ParsedInline.Companion.none|none(){}[0]
+        final fun of(io.heapy.kotmark.node/Node, io.heapy.kotmark.parser.beta/Position): io.heapy.kotmark.parser.beta/ParsedInline // io.heapy.kotmark.parser.beta/ParsedInline.Companion.of|of(io.heapy.kotmark.node.Node;io.heapy.kotmark.parser.beta.Position){}[0]
+    }
+}
+
+abstract interface io.heapy.kotmark.parser.block/BlockParser { // io.heapy.kotmark.parser.block/BlockParser|null[0]
+    abstract val block // io.heapy.kotmark.parser.block/BlockParser.block|{}block[0]
+        abstract fun <get-block>(): io.heapy.kotmark.node/Block // io.heapy.kotmark.parser.block/BlockParser.block.<get-block>|<get-block>(){}[0]
+    abstract val definitions // io.heapy.kotmark.parser.block/BlockParser.definitions|{}definitions[0]
+        abstract fun <get-definitions>(): kotlin.collections/List<io.heapy.kotmark.node/DefinitionMap<*>> // io.heapy.kotmark.parser.block/BlockParser.definitions.<get-definitions>|<get-definitions>(){}[0]
+
+    abstract fun addLine(io.heapy.kotmark.parser/SourceLine) // io.heapy.kotmark.parser.block/BlockParser.addLine|addLine(io.heapy.kotmark.parser.SourceLine){}[0]
+    abstract fun addSourceSpan(io.heapy.kotmark.node/SourceSpan) // io.heapy.kotmark.parser.block/BlockParser.addSourceSpan|addSourceSpan(io.heapy.kotmark.node.SourceSpan){}[0]
+    abstract fun canContain(io.heapy.kotmark.node/Block): kotlin/Boolean // io.heapy.kotmark.parser.block/BlockParser.canContain|canContain(io.heapy.kotmark.node.Block){}[0]
+    abstract fun canHaveLazyContinuationLines(): kotlin/Boolean // io.heapy.kotmark.parser.block/BlockParser.canHaveLazyContinuationLines|canHaveLazyContinuationLines(){}[0]
+    abstract fun closeBlock() // io.heapy.kotmark.parser.block/BlockParser.closeBlock|closeBlock(){}[0]
+    abstract fun isContainer(): kotlin/Boolean // io.heapy.kotmark.parser.block/BlockParser.isContainer|isContainer(){}[0]
+    abstract fun parseInlines(io.heapy.kotmark.parser/InlineParser) // io.heapy.kotmark.parser.block/BlockParser.parseInlines|parseInlines(io.heapy.kotmark.parser.InlineParser){}[0]
+    abstract fun tryContinue(io.heapy.kotmark.parser.block/ParserState): io.heapy.kotmark.parser.block/BlockContinue? // io.heapy.kotmark.parser.block/BlockParser.tryContinue|tryContinue(io.heapy.kotmark.parser.block.ParserState){}[0]
+}
+
+abstract interface io.heapy.kotmark.parser.block/MatchedBlockParser { // io.heapy.kotmark.parser.block/MatchedBlockParser|null[0]
+    abstract val matchedBlockParser // io.heapy.kotmark.parser.block/MatchedBlockParser.matchedBlockParser|{}matchedBlockParser[0]
+        abstract fun <get-matchedBlockParser>(): io.heapy.kotmark.parser.block/BlockParser // io.heapy.kotmark.parser.block/MatchedBlockParser.matchedBlockParser.<get-matchedBlockParser>|<get-matchedBlockParser>(){}[0]
+    abstract val paragraphLines // io.heapy.kotmark.parser.block/MatchedBlockParser.paragraphLines|{}paragraphLines[0]
+        abstract fun <get-paragraphLines>(): io.heapy.kotmark.parser/SourceLines // io.heapy.kotmark.parser.block/MatchedBlockParser.paragraphLines.<get-paragraphLines>|<get-paragraphLines>(){}[0]
+}
+
+abstract interface io.heapy.kotmark.parser.block/ParserState { // io.heapy.kotmark.parser.block/ParserState|null[0]
+    abstract val activeBlockParser // io.heapy.kotmark.parser.block/ParserState.activeBlockParser|{}activeBlockParser[0]
+        abstract fun <get-activeBlockParser>(): io.heapy.kotmark.parser.block/BlockParser // io.heapy.kotmark.parser.block/ParserState.activeBlockParser.<get-activeBlockParser>|<get-activeBlockParser>(){}[0]
+    abstract val column // io.heapy.kotmark.parser.block/ParserState.column|{}column[0]
+        abstract fun <get-column>(): kotlin/Int // io.heapy.kotmark.parser.block/ParserState.column.<get-column>|<get-column>(){}[0]
+    abstract val indent // io.heapy.kotmark.parser.block/ParserState.indent|{}indent[0]
+        abstract fun <get-indent>(): kotlin/Int // io.heapy.kotmark.parser.block/ParserState.indent.<get-indent>|<get-indent>(){}[0]
+    abstract val index // io.heapy.kotmark.parser.block/ParserState.index|{}index[0]
+        abstract fun <get-index>(): kotlin/Int // io.heapy.kotmark.parser.block/ParserState.index.<get-index>|<get-index>(){}[0]
+    abstract val isBlank // io.heapy.kotmark.parser.block/ParserState.isBlank|{}isBlank[0]
+        abstract fun <get-isBlank>(): kotlin/Boolean // io.heapy.kotmark.parser.block/ParserState.isBlank.<get-isBlank>|<get-isBlank>(){}[0]
+    abstract val line // io.heapy.kotmark.parser.block/ParserState.line|{}line[0]
+        abstract fun <get-line>(): io.heapy.kotmark.parser/SourceLine // io.heapy.kotmark.parser.block/ParserState.line.<get-line>|<get-line>(){}[0]
+    abstract val nextNonSpaceIndex // io.heapy.kotmark.parser.block/ParserState.nextNonSpaceIndex|{}nextNonSpaceIndex[0]
+        abstract fun <get-nextNonSpaceIndex>(): kotlin/Int // io.heapy.kotmark.parser.block/ParserState.nextNonSpaceIndex.<get-nextNonSpaceIndex>|<get-nextNonSpaceIndex>(){}[0]
+}
+
+abstract interface io.heapy.kotmark.parser.delimiter/DelimiterProcessor { // io.heapy.kotmark.parser.delimiter/DelimiterProcessor|null[0]
+    abstract val closingCharacter // io.heapy.kotmark.parser.delimiter/DelimiterProcessor.closingCharacter|{}closingCharacter[0]
+        abstract fun <get-closingCharacter>(): kotlin/Char // io.heapy.kotmark.parser.delimiter/DelimiterProcessor.closingCharacter.<get-closingCharacter>|<get-closingCharacter>(){}[0]
+    abstract val minLength // io.heapy.kotmark.parser.delimiter/DelimiterProcessor.minLength|{}minLength[0]
+        abstract fun <get-minLength>(): kotlin/Int // io.heapy.kotmark.parser.delimiter/DelimiterProcessor.minLength.<get-minLength>|<get-minLength>(){}[0]
+    abstract val openingCharacter // io.heapy.kotmark.parser.delimiter/DelimiterProcessor.openingCharacter|{}openingCharacter[0]
+        abstract fun <get-openingCharacter>(): kotlin/Char // io.heapy.kotmark.parser.delimiter/DelimiterProcessor.openingCharacter.<get-openingCharacter>|<get-openingCharacter>(){}[0]
+
+    abstract fun process(io.heapy.kotmark.parser.delimiter/DelimiterRun, io.heapy.kotmark.parser.delimiter/DelimiterRun): kotlin/Int // io.heapy.kotmark.parser.delimiter/DelimiterProcessor.process|process(io.heapy.kotmark.parser.delimiter.DelimiterRun;io.heapy.kotmark.parser.delimiter.DelimiterRun){}[0]
+}
+
+abstract interface io.heapy.kotmark.parser.delimiter/DelimiterRun { // io.heapy.kotmark.parser.delimiter/DelimiterRun|null[0]
+    abstract val closer // io.heapy.kotmark.parser.delimiter/DelimiterRun.closer|{}closer[0]
+        abstract fun <get-closer>(): io.heapy.kotmark.node/Text // io.heapy.kotmark.parser.delimiter/DelimiterRun.closer.<get-closer>|<get-closer>(){}[0]
+    abstract val opener // io.heapy.kotmark.parser.delimiter/DelimiterRun.opener|{}opener[0]
+        abstract fun <get-opener>(): io.heapy.kotmark.node/Text // io.heapy.kotmark.parser.delimiter/DelimiterRun.opener.<get-opener>|<get-opener>(){}[0]
+
+    abstract fun canClose(): kotlin/Boolean // io.heapy.kotmark.parser.delimiter/DelimiterRun.canClose|canClose(){}[0]
+    abstract fun canOpen(): kotlin/Boolean // io.heapy.kotmark.parser.delimiter/DelimiterRun.canOpen|canOpen(){}[0]
+    abstract fun getClosers(kotlin/Int): kotlin.collections/Iterable<io.heapy.kotmark.node/Text> // io.heapy.kotmark.parser.delimiter/DelimiterRun.getClosers|getClosers(kotlin.Int){}[0]
+    abstract fun getOpeners(kotlin/Int): kotlin.collections/Iterable<io.heapy.kotmark.node/Text> // io.heapy.kotmark.parser.delimiter/DelimiterRun.getOpeners|getOpeners(kotlin.Int){}[0]
+    abstract fun length(): kotlin/Int // io.heapy.kotmark.parser.delimiter/DelimiterRun.length|length(){}[0]
+    abstract fun originalLength(): kotlin/Int // io.heapy.kotmark.parser.delimiter/DelimiterRun.originalLength|originalLength(){}[0]
+}
+
+abstract interface io.heapy.kotmark.parser/InlineParserContext { // io.heapy.kotmark.parser/InlineParserContext|null[0]
+    abstract val customDelimiterProcessors // io.heapy.kotmark.parser/InlineParserContext.customDelimiterProcessors|{}customDelimiterProcessors[0]
+        abstract fun <get-customDelimiterProcessors>(): kotlin.collections/List<io.heapy.kotmark.parser.delimiter/DelimiterProcessor> // io.heapy.kotmark.parser/InlineParserContext.customDelimiterProcessors.<get-customDelimiterProcessors>|<get-customDelimiterProcessors>(){}[0]
+    abstract val customInlineContentParserFactories // io.heapy.kotmark.parser/InlineParserContext.customInlineContentParserFactories|{}customInlineContentParserFactories[0]
+        abstract fun <get-customInlineContentParserFactories>(): kotlin.collections/List<io.heapy.kotmark.parser.beta/InlineContentParserFactory> // io.heapy.kotmark.parser/InlineParserContext.customInlineContentParserFactories.<get-customInlineContentParserFactories>|<get-customInlineContentParserFactories>(){}[0]
+    abstract val customLinkMarkers // io.heapy.kotmark.parser/InlineParserContext.customLinkMarkers|{}customLinkMarkers[0]
+        abstract fun <get-customLinkMarkers>(): kotlin.collections/Set<kotlin/Char> // io.heapy.kotmark.parser/InlineParserContext.customLinkMarkers.<get-customLinkMarkers>|<get-customLinkMarkers>(){}[0]
+    abstract val customLinkProcessors // io.heapy.kotmark.parser/InlineParserContext.customLinkProcessors|{}customLinkProcessors[0]
+        abstract fun <get-customLinkProcessors>(): kotlin.collections/List<io.heapy.kotmark.parser.beta/LinkProcessor> // io.heapy.kotmark.parser/InlineParserContext.customLinkProcessors.<get-customLinkProcessors>|<get-customLinkProcessors>(){}[0]
+
+    abstract fun <#A1: kotlin/Any> getDefinition(kotlin.reflect/KClass<#A1>, kotlin/String): #A1? // io.heapy.kotmark.parser/InlineParserContext.getDefinition|getDefinition(kotlin.reflect.KClass<0:0>;kotlin.String){0§<kotlin.Any>}[0]
+    open fun getLinkReferenceDefinition(kotlin/String): io.heapy.kotmark.node/LinkReferenceDefinition? // io.heapy.kotmark.parser/InlineParserContext.getLinkReferenceDefinition|getLinkReferenceDefinition(kotlin.String){}[0]
+}
+
+abstract interface io.heapy.kotmark.renderer.html/AttributeProviderContext // io.heapy.kotmark.renderer.html/AttributeProviderContext|null[0]
+
+abstract interface io.heapy.kotmark.renderer.html/HtmlNodeRendererContext { // io.heapy.kotmark.renderer.html/HtmlNodeRendererContext|null[0]
+    abstract val shouldEscapeHtml // io.heapy.kotmark.renderer.html/HtmlNodeRendererContext.shouldEscapeHtml|{}shouldEscapeHtml[0]
+        abstract fun <get-shouldEscapeHtml>(): kotlin/Boolean // io.heapy.kotmark.renderer.html/HtmlNodeRendererContext.shouldEscapeHtml.<get-shouldEscapeHtml>|<get-shouldEscapeHtml>(){}[0]
+    abstract val shouldOmitSingleParagraphP // io.heapy.kotmark.renderer.html/HtmlNodeRendererContext.shouldOmitSingleParagraphP|{}shouldOmitSingleParagraphP[0]
+        abstract fun <get-shouldOmitSingleParagraphP>(): kotlin/Boolean // io.heapy.kotmark.renderer.html/HtmlNodeRendererContext.shouldOmitSingleParagraphP.<get-shouldOmitSingleParagraphP>|<get-shouldOmitSingleParagraphP>(){}[0]
+    abstract val shouldSanitizeUrls // io.heapy.kotmark.renderer.html/HtmlNodeRendererContext.shouldSanitizeUrls|{}shouldSanitizeUrls[0]
+        abstract fun <get-shouldSanitizeUrls>(): kotlin/Boolean // io.heapy.kotmark.renderer.html/HtmlNodeRendererContext.shouldSanitizeUrls.<get-shouldSanitizeUrls>|<get-shouldSanitizeUrls>(){}[0]
+    abstract val softbreak // io.heapy.kotmark.renderer.html/HtmlNodeRendererContext.softbreak|{}softbreak[0]
+        abstract fun <get-softbreak>(): kotlin/String // io.heapy.kotmark.renderer.html/HtmlNodeRendererContext.softbreak.<get-softbreak>|<get-softbreak>(){}[0]
+    abstract val urlSanitizer // io.heapy.kotmark.renderer.html/HtmlNodeRendererContext.urlSanitizer|{}urlSanitizer[0]
+        abstract fun <get-urlSanitizer>(): io.heapy.kotmark.renderer.html/UrlSanitizer // io.heapy.kotmark.renderer.html/HtmlNodeRendererContext.urlSanitizer.<get-urlSanitizer>|<get-urlSanitizer>(){}[0]
+    abstract val writer // io.heapy.kotmark.renderer.html/HtmlNodeRendererContext.writer|{}writer[0]
+        abstract fun <get-writer>(): io.heapy.kotmark.renderer.html/HtmlWriter // io.heapy.kotmark.renderer.html/HtmlNodeRendererContext.writer.<get-writer>|<get-writer>(){}[0]
+
+    abstract fun encodeUrl(kotlin/String): kotlin/String // io.heapy.kotmark.renderer.html/HtmlNodeRendererContext.encodeUrl|encodeUrl(kotlin.String){}[0]
+    abstract fun extendAttributes(io.heapy.kotmark.node/Node, kotlin/String, kotlin.collections/Map<kotlin/String, kotlin/String?>): kotlin.collections/Map<kotlin/String, kotlin/String?> // io.heapy.kotmark.renderer.html/HtmlNodeRendererContext.extendAttributes|extendAttributes(io.heapy.kotmark.node.Node;kotlin.String;kotlin.collections.Map<kotlin.String,kotlin.String?>){}[0]
+    abstract fun render(io.heapy.kotmark.node/Node) // io.heapy.kotmark.renderer.html/HtmlNodeRendererContext.render|render(io.heapy.kotmark.node.Node){}[0]
+}
+
+abstract interface io.heapy.kotmark.renderer.html/UrlSanitizer { // io.heapy.kotmark.renderer.html/UrlSanitizer|null[0]
+    abstract fun sanitizeImageUrl(kotlin/String): kotlin/String // io.heapy.kotmark.renderer.html/UrlSanitizer.sanitizeImageUrl|sanitizeImageUrl(kotlin.String){}[0]
+    abstract fun sanitizeLinkUrl(kotlin/String): kotlin/String // io.heapy.kotmark.renderer.html/UrlSanitizer.sanitizeLinkUrl|sanitizeLinkUrl(kotlin.String){}[0]
+}
+
+abstract interface io.heapy.kotmark.renderer.markdown/MarkdownNodeRendererContext { // io.heapy.kotmark.renderer.markdown/MarkdownNodeRendererContext|null[0]
+    abstract val specialCharacters // io.heapy.kotmark.renderer.markdown/MarkdownNodeRendererContext.specialCharacters|{}specialCharacters[0]
+        abstract fun <get-specialCharacters>(): kotlin.collections/Set<kotlin/Char> // io.heapy.kotmark.renderer.markdown/MarkdownNodeRendererContext.specialCharacters.<get-specialCharacters>|<get-specialCharacters>(){}[0]
+    abstract val writer // io.heapy.kotmark.renderer.markdown/MarkdownNodeRendererContext.writer|{}writer[0]
+        abstract fun <get-writer>(): io.heapy.kotmark.renderer.markdown/MarkdownWriter // io.heapy.kotmark.renderer.markdown/MarkdownNodeRendererContext.writer.<get-writer>|<get-writer>(){}[0]
+
+    abstract fun render(io.heapy.kotmark.node/Node) // io.heapy.kotmark.renderer.markdown/MarkdownNodeRendererContext.render|render(io.heapy.kotmark.node.Node){}[0]
+}
+
+abstract interface io.heapy.kotmark.renderer.markdown/MarkdownNodeRendererFactory { // io.heapy.kotmark.renderer.markdown/MarkdownNodeRendererFactory|null[0]
+    abstract val specialCharacters // io.heapy.kotmark.renderer.markdown/MarkdownNodeRendererFactory.specialCharacters|{}specialCharacters[0]
+        abstract fun <get-specialCharacters>(): kotlin.collections/Set<kotlin/Char> // io.heapy.kotmark.renderer.markdown/MarkdownNodeRendererFactory.specialCharacters.<get-specialCharacters>|<get-specialCharacters>(){}[0]
+
+    abstract fun create(io.heapy.kotmark.renderer.markdown/MarkdownNodeRendererContext): io.heapy.kotmark.renderer/NodeRenderer // io.heapy.kotmark.renderer.markdown/MarkdownNodeRendererFactory.create|create(io.heapy.kotmark.renderer.markdown.MarkdownNodeRendererContext){}[0]
+}
+
+abstract interface io.heapy.kotmark.renderer.text/TextContentNodeRendererContext { // io.heapy.kotmark.renderer.text/TextContentNodeRendererContext|null[0]
+    abstract val lineBreakRendering // io.heapy.kotmark.renderer.text/TextContentNodeRendererContext.lineBreakRendering|{}lineBreakRendering[0]
+        abstract fun <get-lineBreakRendering>(): io.heapy.kotmark.renderer.text/LineBreakRendering // io.heapy.kotmark.renderer.text/TextContentNodeRendererContext.lineBreakRendering.<get-lineBreakRendering>|<get-lineBreakRendering>(){}[0]
+    abstract val writer // io.heapy.kotmark.renderer.text/TextContentNodeRendererContext.writer|{}writer[0]
+        abstract fun <get-writer>(): io.heapy.kotmark.renderer.text/TextContentWriter // io.heapy.kotmark.renderer.text/TextContentNodeRendererContext.writer.<get-writer>|<get-writer>(){}[0]
+    open val stripNewlines // io.heapy.kotmark.renderer.text/TextContentNodeRendererContext.stripNewlines|{}stripNewlines[0]
+        open fun <get-stripNewlines>(): kotlin/Boolean // io.heapy.kotmark.renderer.text/TextContentNodeRendererContext.stripNewlines.<get-stripNewlines>|<get-stripNewlines>(){}[0]
+
+    abstract fun render(io.heapy.kotmark.node/Node) // io.heapy.kotmark.renderer.text/TextContentNodeRendererContext.render|render(io.heapy.kotmark.node.Node){}[0]
+}
+
+abstract interface io.heapy.kotmark.renderer/NodeRenderer { // io.heapy.kotmark.renderer/NodeRenderer|null[0]
+    abstract val nodeTypes // io.heapy.kotmark.renderer/NodeRenderer.nodeTypes|{}nodeTypes[0]
+        abstract fun <get-nodeTypes>(): kotlin.collections/Set<kotlin.reflect/KClass<out io.heapy.kotmark.node/Node>> // io.heapy.kotmark.renderer/NodeRenderer.nodeTypes.<get-nodeTypes>|<get-nodeTypes>(){}[0]
+
+    abstract fun render(io.heapy.kotmark.node/Node) // io.heapy.kotmark.renderer/NodeRenderer.render|render(io.heapy.kotmark.node.Node){}[0]
+    open fun afterRoot(io.heapy.kotmark.node/Node) // io.heapy.kotmark.renderer/NodeRenderer.afterRoot|afterRoot(io.heapy.kotmark.node.Node){}[0]
+    open fun beforeRoot(io.heapy.kotmark.node/Node) // io.heapy.kotmark.renderer/NodeRenderer.beforeRoot|beforeRoot(io.heapy.kotmark.node.Node){}[0]
+}
+
+abstract interface io.heapy.kotmark.renderer/Renderer { // io.heapy.kotmark.renderer/Renderer|null[0]
+    abstract fun render(io.heapy.kotmark.node/Node): kotlin/String // io.heapy.kotmark.renderer/Renderer.render|render(io.heapy.kotmark.node.Node){}[0]
+    abstract fun render(io.heapy.kotmark.node/Node, kotlin.text/Appendable) // io.heapy.kotmark.renderer/Renderer.render|render(io.heapy.kotmark.node.Node;kotlin.text.Appendable){}[0]
+}
+
+abstract interface io.heapy.kotmark/Extension // io.heapy.kotmark/Extension|null[0]
+
+abstract class io.heapy.kotmark.internal.inline/EmphasisDelimiterProcessor : io.heapy.kotmark.parser.delimiter/DelimiterProcessor { // io.heapy.kotmark.internal.inline/EmphasisDelimiterProcessor|null[0]
+    constructor <init>(kotlin/Char) // io.heapy.kotmark.internal.inline/EmphasisDelimiterProcessor.<init>|<init>(kotlin.Char){}[0]
+
+    open val closingCharacter // io.heapy.kotmark.internal.inline/EmphasisDelimiterProcessor.closingCharacter|{}closingCharacter[0]
+        open fun <get-closingCharacter>(): kotlin/Char // io.heapy.kotmark.internal.inline/EmphasisDelimiterProcessor.closingCharacter.<get-closingCharacter>|<get-closingCharacter>(){}[0]
+    open val minLength // io.heapy.kotmark.internal.inline/EmphasisDelimiterProcessor.minLength|{}minLength[0]
+        open fun <get-minLength>(): kotlin/Int // io.heapy.kotmark.internal.inline/EmphasisDelimiterProcessor.minLength.<get-minLength>|<get-minLength>(){}[0]
+    open val openingCharacter // io.heapy.kotmark.internal.inline/EmphasisDelimiterProcessor.openingCharacter|{}openingCharacter[0]
+        open fun <get-openingCharacter>(): kotlin/Char // io.heapy.kotmark.internal.inline/EmphasisDelimiterProcessor.openingCharacter.<get-openingCharacter>|<get-openingCharacter>(){}[0]
+
+    open fun process(io.heapy.kotmark.parser.delimiter/DelimiterRun, io.heapy.kotmark.parser.delimiter/DelimiterRun): kotlin/Int // io.heapy.kotmark.internal.inline/EmphasisDelimiterProcessor.process|process(io.heapy.kotmark.parser.delimiter.DelimiterRun;io.heapy.kotmark.parser.delimiter.DelimiterRun){}[0]
+}
+
+abstract class io.heapy.kotmark.node/AbstractVisitor : io.heapy.kotmark.node/Visitor { // io.heapy.kotmark.node/AbstractVisitor|null[0]
+    constructor <init>() // io.heapy.kotmark.node/AbstractVisitor.<init>|<init>(){}[0]
+
+    open fun visit(io.heapy.kotmark.node/BlockQuote) // io.heapy.kotmark.node/AbstractVisitor.visit|visit(io.heapy.kotmark.node.BlockQuote){}[0]
+    open fun visit(io.heapy.kotmark.node/BulletList) // io.heapy.kotmark.node/AbstractVisitor.visit|visit(io.heapy.kotmark.node.BulletList){}[0]
+    open fun visit(io.heapy.kotmark.node/Code) // io.heapy.kotmark.node/AbstractVisitor.visit|visit(io.heapy.kotmark.node.Code){}[0]
+    open fun visit(io.heapy.kotmark.node/CustomBlock) // io.heapy.kotmark.node/AbstractVisitor.visit|visit(io.heapy.kotmark.node.CustomBlock){}[0]
+    open fun visit(io.heapy.kotmark.node/CustomNode) // io.heapy.kotmark.node/AbstractVisitor.visit|visit(io.heapy.kotmark.node.CustomNode){}[0]
+    open fun visit(io.heapy.kotmark.node/Document) // io.heapy.kotmark.node/AbstractVisitor.visit|visit(io.heapy.kotmark.node.Document){}[0]
+    open fun visit(io.heapy.kotmark.node/Emphasis) // io.heapy.kotmark.node/AbstractVisitor.visit|visit(io.heapy.kotmark.node.Emphasis){}[0]
+    open fun visit(io.heapy.kotmark.node/FencedCodeBlock) // io.heapy.kotmark.node/AbstractVisitor.visit|visit(io.heapy.kotmark.node.FencedCodeBlock){}[0]
+    open fun visit(io.heapy.kotmark.node/HardLineBreak) // io.heapy.kotmark.node/AbstractVisitor.visit|visit(io.heapy.kotmark.node.HardLineBreak){}[0]
+    open fun visit(io.heapy.kotmark.node/Heading) // io.heapy.kotmark.node/AbstractVisitor.visit|visit(io.heapy.kotmark.node.Heading){}[0]
+    open fun visit(io.heapy.kotmark.node/HtmlBlock) // io.heapy.kotmark.node/AbstractVisitor.visit|visit(io.heapy.kotmark.node.HtmlBlock){}[0]
+    open fun visit(io.heapy.kotmark.node/HtmlInline) // io.heapy.kotmark.node/AbstractVisitor.visit|visit(io.heapy.kotmark.node.HtmlInline){}[0]
+    open fun visit(io.heapy.kotmark.node/Image) // io.heapy.kotmark.node/AbstractVisitor.visit|visit(io.heapy.kotmark.node.Image){}[0]
+    open fun visit(io.heapy.kotmark.node/IndentedCodeBlock) // io.heapy.kotmark.node/AbstractVisitor.visit|visit(io.heapy.kotmark.node.IndentedCodeBlock){}[0]
+    open fun visit(io.heapy.kotmark.node/Link) // io.heapy.kotmark.node/AbstractVisitor.visit|visit(io.heapy.kotmark.node.Link){}[0]
+    open fun visit(io.heapy.kotmark.node/LinkReferenceDefinition) // io.heapy.kotmark.node/AbstractVisitor.visit|visit(io.heapy.kotmark.node.LinkReferenceDefinition){}[0]
+    open fun visit(io.heapy.kotmark.node/ListItem) // io.heapy.kotmark.node/AbstractVisitor.visit|visit(io.heapy.kotmark.node.ListItem){}[0]
+    open fun visit(io.heapy.kotmark.node/OrderedList) // io.heapy.kotmark.node/AbstractVisitor.visit|visit(io.heapy.kotmark.node.OrderedList){}[0]
+    open fun visit(io.heapy.kotmark.node/Paragraph) // io.heapy.kotmark.node/AbstractVisitor.visit|visit(io.heapy.kotmark.node.Paragraph){}[0]
+    open fun visit(io.heapy.kotmark.node/SoftLineBreak) // io.heapy.kotmark.node/AbstractVisitor.visit|visit(io.heapy.kotmark.node.SoftLineBreak){}[0]
+    open fun visit(io.heapy.kotmark.node/StrongEmphasis) // io.heapy.kotmark.node/AbstractVisitor.visit|visit(io.heapy.kotmark.node.StrongEmphasis){}[0]
+    open fun visit(io.heapy.kotmark.node/Text) // io.heapy.kotmark.node/AbstractVisitor.visit|visit(io.heapy.kotmark.node.Text){}[0]
+    open fun visit(io.heapy.kotmark.node/ThematicBreak) // io.heapy.kotmark.node/AbstractVisitor.visit|visit(io.heapy.kotmark.node.ThematicBreak){}[0]
+    open fun visitChildren(io.heapy.kotmark.node/Node) // io.heapy.kotmark.node/AbstractVisitor.visitChildren|visitChildren(io.heapy.kotmark.node.Node){}[0]
+}
+
+abstract class io.heapy.kotmark.node/Block : io.heapy.kotmark.node/Node { // io.heapy.kotmark.node/Block|null[0]
+    constructor <init>() // io.heapy.kotmark.node/Block.<init>|<init>(){}[0]
+
+    open fun setParent(io.heapy.kotmark.node/Node?) // io.heapy.kotmark.node/Block.setParent|setParent(io.heapy.kotmark.node.Node?){}[0]
+}
+
+abstract class io.heapy.kotmark.node/CustomBlock : io.heapy.kotmark.node/Block { // io.heapy.kotmark.node/CustomBlock|null[0]
+    constructor <init>() // io.heapy.kotmark.node/CustomBlock.<init>|<init>(){}[0]
+
+    open fun accept(io.heapy.kotmark.node/Visitor) // io.heapy.kotmark.node/CustomBlock.accept|accept(io.heapy.kotmark.node.Visitor){}[0]
+}
+
+abstract class io.heapy.kotmark.node/CustomNode : io.heapy.kotmark.node/Node { // io.heapy.kotmark.node/CustomNode|null[0]
+    constructor <init>() // io.heapy.kotmark.node/CustomNode.<init>|<init>(){}[0]
+
+    open fun accept(io.heapy.kotmark.node/Visitor) // io.heapy.kotmark.node/CustomNode.accept|accept(io.heapy.kotmark.node.Visitor){}[0]
+}
+
+abstract class io.heapy.kotmark.node/ListBlock : io.heapy.kotmark.node/Block { // io.heapy.kotmark.node/ListBlock|null[0]
+    constructor <init>() // io.heapy.kotmark.node/ListBlock.<init>|<init>(){}[0]
+
+    final var isTight // io.heapy.kotmark.node/ListBlock.isTight|{}isTight[0]
+        final fun <get-isTight>(): kotlin/Boolean // io.heapy.kotmark.node/ListBlock.isTight.<get-isTight>|<get-isTight>(){}[0]
+        final fun <set-isTight>(kotlin/Boolean) // io.heapy.kotmark.node/ListBlock.isTight.<set-isTight>|<set-isTight>(kotlin.Boolean){}[0]
+}
+
+abstract class io.heapy.kotmark.node/Node { // io.heapy.kotmark.node/Node|null[0]
+    constructor <init>() // io.heapy.kotmark.node/Node.<init>|<init>(){}[0]
+
+    final val firstChild // io.heapy.kotmark.node/Node.firstChild|{}firstChild[0]
+        final fun <get-firstChild>(): io.heapy.kotmark.node/Node? // io.heapy.kotmark.node/Node.firstChild.<get-firstChild>|<get-firstChild>(){}[0]
+    final val lastChild // io.heapy.kotmark.node/Node.lastChild|{}lastChild[0]
+        final fun <get-lastChild>(): io.heapy.kotmark.node/Node? // io.heapy.kotmark.node/Node.lastChild.<get-lastChild>|<get-lastChild>(){}[0]
+    final val next // io.heapy.kotmark.node/Node.next|{}next[0]
+        final fun <get-next>(): io.heapy.kotmark.node/Node? // io.heapy.kotmark.node/Node.next.<get-next>|<get-next>(){}[0]
+    final val parent // io.heapy.kotmark.node/Node.parent|{}parent[0]
+        final fun <get-parent>(): io.heapy.kotmark.node/Node? // io.heapy.kotmark.node/Node.parent.<get-parent>|<get-parent>(){}[0]
+    final val previous // io.heapy.kotmark.node/Node.previous|{}previous[0]
+        final fun <get-previous>(): io.heapy.kotmark.node/Node? // io.heapy.kotmark.node/Node.previous.<get-previous>|<get-previous>(){}[0]
+
+    abstract fun accept(io.heapy.kotmark.node/Visitor) // io.heapy.kotmark.node/Node.accept|accept(io.heapy.kotmark.node.Visitor){}[0]
+    final fun addSourceSpan(io.heapy.kotmark.node/SourceSpan) // io.heapy.kotmark.node/Node.addSourceSpan|addSourceSpan(io.heapy.kotmark.node.SourceSpan){}[0]
+    final fun appendChild(io.heapy.kotmark.node/Node) // io.heapy.kotmark.node/Node.appendChild|appendChild(io.heapy.kotmark.node.Node){}[0]
+    final fun insertAfter(io.heapy.kotmark.node/Node) // io.heapy.kotmark.node/Node.insertAfter|insertAfter(io.heapy.kotmark.node.Node){}[0]
+    final fun insertBefore(io.heapy.kotmark.node/Node) // io.heapy.kotmark.node/Node.insertBefore|insertBefore(io.heapy.kotmark.node.Node){}[0]
+    final fun prependChild(io.heapy.kotmark.node/Node) // io.heapy.kotmark.node/Node.prependChild|prependChild(io.heapy.kotmark.node.Node){}[0]
+    final fun setSourceSpans(kotlin.collections/List<io.heapy.kotmark.node/SourceSpan>) // io.heapy.kotmark.node/Node.setSourceSpans|setSourceSpans(kotlin.collections.List<io.heapy.kotmark.node.SourceSpan>){}[0]
+    final fun unlink() // io.heapy.kotmark.node/Node.unlink|unlink(){}[0]
+    open fun getSourceSpans(): kotlin.collections/List<io.heapy.kotmark.node/SourceSpan> // io.heapy.kotmark.node/Node.getSourceSpans|getSourceSpans(){}[0]
+    open fun setParent(io.heapy.kotmark.node/Node?) // io.heapy.kotmark.node/Node.setParent|setParent(io.heapy.kotmark.node.Node?){}[0]
+    open fun toString(): kotlin/String // io.heapy.kotmark.node/Node.toString|toString(){}[0]
+    open fun toStringAttributes(): kotlin/String // io.heapy.kotmark.node/Node.toStringAttributes|toStringAttributes(){}[0]
+}
+
+abstract class io.heapy.kotmark.parser.block/AbstractBlockParser : io.heapy.kotmark.parser.block/BlockParser { // io.heapy.kotmark.parser.block/AbstractBlockParser|null[0]
+    constructor <init>() // io.heapy.kotmark.parser.block/AbstractBlockParser.<init>|<init>(){}[0]
+
+    open val definitions // io.heapy.kotmark.parser.block/AbstractBlockParser.definitions|{}definitions[0]
+        open fun <get-definitions>(): kotlin.collections/List<io.heapy.kotmark.node/DefinitionMap<*>> // io.heapy.kotmark.parser.block/AbstractBlockParser.definitions.<get-definitions>|<get-definitions>(){}[0]
+
+    open fun addLine(io.heapy.kotmark.parser/SourceLine) // io.heapy.kotmark.parser.block/AbstractBlockParser.addLine|addLine(io.heapy.kotmark.parser.SourceLine){}[0]
+    open fun addSourceSpan(io.heapy.kotmark.node/SourceSpan) // io.heapy.kotmark.parser.block/AbstractBlockParser.addSourceSpan|addSourceSpan(io.heapy.kotmark.node.SourceSpan){}[0]
+    open fun canContain(io.heapy.kotmark.node/Block): kotlin/Boolean // io.heapy.kotmark.parser.block/AbstractBlockParser.canContain|canContain(io.heapy.kotmark.node.Block){}[0]
+    open fun canHaveLazyContinuationLines(): kotlin/Boolean // io.heapy.kotmark.parser.block/AbstractBlockParser.canHaveLazyContinuationLines|canHaveLazyContinuationLines(){}[0]
+    open fun closeBlock() // io.heapy.kotmark.parser.block/AbstractBlockParser.closeBlock|closeBlock(){}[0]
+    open fun isContainer(): kotlin/Boolean // io.heapy.kotmark.parser.block/AbstractBlockParser.isContainer|isContainer(){}[0]
+    open fun parseInlines(io.heapy.kotmark.parser/InlineParser) // io.heapy.kotmark.parser.block/AbstractBlockParser.parseInlines|parseInlines(io.heapy.kotmark.parser.InlineParser){}[0]
+}
+
+abstract class io.heapy.kotmark.parser.block/AbstractBlockParserFactory : io.heapy.kotmark.parser.block/BlockParserFactory { // io.heapy.kotmark.parser.block/AbstractBlockParserFactory|null[0]
+    constructor <init>() // io.heapy.kotmark.parser.block/AbstractBlockParserFactory.<init>|<init>(){}[0]
+}
+
+abstract class io.heapy.kotmark.parser.block/BlockStart { // io.heapy.kotmark.parser.block/BlockStart|null[0]
+    constructor <init>() // io.heapy.kotmark.parser.block/BlockStart.<init>|<init>(){}[0]
+
+    abstract fun atColumn(kotlin/Int): io.heapy.kotmark.parser.block/BlockStart // io.heapy.kotmark.parser.block/BlockStart.atColumn|atColumn(kotlin.Int){}[0]
+    abstract fun atIndex(kotlin/Int): io.heapy.kotmark.parser.block/BlockStart // io.heapy.kotmark.parser.block/BlockStart.atIndex|atIndex(kotlin.Int){}[0]
+    abstract fun replaceActiveBlockParser(): io.heapy.kotmark.parser.block/BlockStart // io.heapy.kotmark.parser.block/BlockStart.replaceActiveBlockParser|replaceActiveBlockParser(){}[0]
+    abstract fun replaceParagraphLines(kotlin/Int): io.heapy.kotmark.parser.block/BlockStart // io.heapy.kotmark.parser.block/BlockStart.replaceParagraphLines|replaceParagraphLines(kotlin.Int){}[0]
+
+    final object Companion { // io.heapy.kotmark.parser.block/BlockStart.Companion|null[0]
+        final fun none(): io.heapy.kotmark.parser.block/BlockStart? // io.heapy.kotmark.parser.block/BlockStart.Companion.none|none(){}[0]
+        final fun of(kotlin/Array<out io.heapy.kotmark.parser.block/BlockParser>...): io.heapy.kotmark.parser.block/BlockStart // io.heapy.kotmark.parser.block/BlockStart.Companion.of|of(kotlin.Array<out|io.heapy.kotmark.parser.block.BlockParser>...){}[0]
+    }
+}
+
+final class <#A: kotlin/Any> io.heapy.kotmark.node/DefinitionMap { // io.heapy.kotmark.node/DefinitionMap|null[0]
+    constructor <init>(kotlin.reflect/KClass<#A>) // io.heapy.kotmark.node/DefinitionMap.<init>|<init>(kotlin.reflect.KClass<1:0>){}[0]
+
+    final val type // io.heapy.kotmark.node/DefinitionMap.type|{}type[0]
+        final fun <get-type>(): kotlin.reflect/KClass<#A> // io.heapy.kotmark.node/DefinitionMap.type.<get-type>|<get-type>(){}[0]
+
+    final fun addAll(io.heapy.kotmark.node/DefinitionMap<#A>) // io.heapy.kotmark.node/DefinitionMap.addAll|addAll(io.heapy.kotmark.node.DefinitionMap<1:0>){}[0]
+    final fun get(kotlin/String): #A? // io.heapy.kotmark.node/DefinitionMap.get|get(kotlin.String){}[0]
+    final fun keySet(): kotlin.collections/Set<kotlin/String> // io.heapy.kotmark.node/DefinitionMap.keySet|keySet(){}[0]
+    final fun putIfAbsent(kotlin/String, #A): #A? // io.heapy.kotmark.node/DefinitionMap.putIfAbsent|putIfAbsent(kotlin.String;1:0){}[0]
+    final fun values(): kotlin.collections/Collection<#A> // io.heapy.kotmark.node/DefinitionMap.values|values(){}[0]
+}
+
+final class io.heapy.kotmark.internal.inline/AsteriskDelimiterProcessor : io.heapy.kotmark.internal.inline/EmphasisDelimiterProcessor { // io.heapy.kotmark.internal.inline/AsteriskDelimiterProcessor|null[0]
+    constructor <init>() // io.heapy.kotmark.internal.inline/AsteriskDelimiterProcessor.<init>|<init>(){}[0]
+}
+
+final class io.heapy.kotmark.internal.inline/AutolinkInlineParser : io.heapy.kotmark.parser.beta/InlineContentParser { // io.heapy.kotmark.internal.inline/AutolinkInlineParser|null[0]
+    constructor <init>() // io.heapy.kotmark.internal.inline/AutolinkInlineParser.<init>|<init>(){}[0]
+
+    final fun tryParse(io.heapy.kotmark.parser.beta/InlineParserState): io.heapy.kotmark.parser.beta/ParsedInline? // io.heapy.kotmark.internal.inline/AutolinkInlineParser.tryParse|tryParse(io.heapy.kotmark.parser.beta.InlineParserState){}[0]
+
+    final class Factory : io.heapy.kotmark.parser.beta/InlineContentParserFactory { // io.heapy.kotmark.internal.inline/AutolinkInlineParser.Factory|null[0]
+        constructor <init>() // io.heapy.kotmark.internal.inline/AutolinkInlineParser.Factory.<init>|<init>(){}[0]
+
+        final val triggerCharacters // io.heapy.kotmark.internal.inline/AutolinkInlineParser.Factory.triggerCharacters|{}triggerCharacters[0]
+            final fun <get-triggerCharacters>(): kotlin.collections/Set<kotlin/Char> // io.heapy.kotmark.internal.inline/AutolinkInlineParser.Factory.triggerCharacters.<get-triggerCharacters>|<get-triggerCharacters>(){}[0]
+
+        final fun create(): io.heapy.kotmark.parser.beta/InlineContentParser // io.heapy.kotmark.internal.inline/AutolinkInlineParser.Factory.create|create(){}[0]
+    }
+
+    final object Companion // io.heapy.kotmark.internal.inline/AutolinkInlineParser.Companion|null[0]
+}
+
+final class io.heapy.kotmark.internal.inline/BackslashInlineParser : io.heapy.kotmark.parser.beta/InlineContentParser { // io.heapy.kotmark.internal.inline/BackslashInlineParser|null[0]
+    constructor <init>() // io.heapy.kotmark.internal.inline/BackslashInlineParser.<init>|<init>(){}[0]
+
+    final fun tryParse(io.heapy.kotmark.parser.beta/InlineParserState): io.heapy.kotmark.parser.beta/ParsedInline // io.heapy.kotmark.internal.inline/BackslashInlineParser.tryParse|tryParse(io.heapy.kotmark.parser.beta.InlineParserState){}[0]
+
+    final class Factory : io.heapy.kotmark.parser.beta/InlineContentParserFactory { // io.heapy.kotmark.internal.inline/BackslashInlineParser.Factory|null[0]
+        constructor <init>() // io.heapy.kotmark.internal.inline/BackslashInlineParser.Factory.<init>|<init>(){}[0]
+
+        final val triggerCharacters // io.heapy.kotmark.internal.inline/BackslashInlineParser.Factory.triggerCharacters|{}triggerCharacters[0]
+            final fun <get-triggerCharacters>(): kotlin.collections/Set<kotlin/Char> // io.heapy.kotmark.internal.inline/BackslashInlineParser.Factory.triggerCharacters.<get-triggerCharacters>|<get-triggerCharacters>(){}[0]
+
+        final fun create(): io.heapy.kotmark.parser.beta/InlineContentParser // io.heapy.kotmark.internal.inline/BackslashInlineParser.Factory.create|create(){}[0]
+    }
+
+    final object Companion // io.heapy.kotmark.internal.inline/BackslashInlineParser.Companion|null[0]
+}
+
+final class io.heapy.kotmark.internal.inline/BackticksInlineParser : io.heapy.kotmark.parser.beta/InlineContentParser { // io.heapy.kotmark.internal.inline/BackticksInlineParser|null[0]
+    constructor <init>() // io.heapy.kotmark.internal.inline/BackticksInlineParser.<init>|<init>(){}[0]
+
+    final fun tryParse(io.heapy.kotmark.parser.beta/InlineParserState): io.heapy.kotmark.parser.beta/ParsedInline // io.heapy.kotmark.internal.inline/BackticksInlineParser.tryParse|tryParse(io.heapy.kotmark.parser.beta.InlineParserState){}[0]
+
+    final class Factory : io.heapy.kotmark.parser.beta/InlineContentParserFactory { // io.heapy.kotmark.internal.inline/BackticksInlineParser.Factory|null[0]
+        constructor <init>() // io.heapy.kotmark.internal.inline/BackticksInlineParser.Factory.<init>|<init>(){}[0]
+
+        final val triggerCharacters // io.heapy.kotmark.internal.inline/BackticksInlineParser.Factory.triggerCharacters|{}triggerCharacters[0]
+            final fun <get-triggerCharacters>(): kotlin.collections/Set<kotlin/Char> // io.heapy.kotmark.internal.inline/BackticksInlineParser.Factory.triggerCharacters.<get-triggerCharacters>|<get-triggerCharacters>(){}[0]
+
+        final fun create(): io.heapy.kotmark.parser.beta/InlineContentParser // io.heapy.kotmark.internal.inline/BackticksInlineParser.Factory.create|create(){}[0]
+    }
+}
+
+final class io.heapy.kotmark.internal.inline/CoreLinkProcessor : io.heapy.kotmark.parser.beta/LinkProcessor { // io.heapy.kotmark.internal.inline/CoreLinkProcessor|null[0]
+    constructor <init>() // io.heapy.kotmark.internal.inline/CoreLinkProcessor.<init>|<init>(){}[0]
+
+    final fun process(io.heapy.kotmark.parser.beta/LinkInfo, io.heapy.kotmark.parser.beta/Scanner, io.heapy.kotmark.parser/InlineParserContext): io.heapy.kotmark.parser.beta/LinkResult? // io.heapy.kotmark.internal.inline/CoreLinkProcessor.process|process(io.heapy.kotmark.parser.beta.LinkInfo;io.heapy.kotmark.parser.beta.Scanner;io.heapy.kotmark.parser.InlineParserContext){}[0]
+}
+
+final class io.heapy.kotmark.internal.inline/EntityInlineParser : io.heapy.kotmark.parser.beta/InlineContentParser { // io.heapy.kotmark.internal.inline/EntityInlineParser|null[0]
+    constructor <init>() // io.heapy.kotmark.internal.inline/EntityInlineParser.<init>|<init>(){}[0]
+
+    final fun tryParse(io.heapy.kotmark.parser.beta/InlineParserState): io.heapy.kotmark.parser.beta/ParsedInline? // io.heapy.kotmark.internal.inline/EntityInlineParser.tryParse|tryParse(io.heapy.kotmark.parser.beta.InlineParserState){}[0]
+
+    final class Factory : io.heapy.kotmark.parser.beta/InlineContentParserFactory { // io.heapy.kotmark.internal.inline/EntityInlineParser.Factory|null[0]
+        constructor <init>() // io.heapy.kotmark.internal.inline/EntityInlineParser.Factory.<init>|<init>(){}[0]
+
+        final val triggerCharacters // io.heapy.kotmark.internal.inline/EntityInlineParser.Factory.triggerCharacters|{}triggerCharacters[0]
+            final fun <get-triggerCharacters>(): kotlin.collections/Set<kotlin/Char> // io.heapy.kotmark.internal.inline/EntityInlineParser.Factory.triggerCharacters.<get-triggerCharacters>|<get-triggerCharacters>(){}[0]
+
+        final fun create(): io.heapy.kotmark.parser.beta/InlineContentParser // io.heapy.kotmark.internal.inline/EntityInlineParser.Factory.create|create(){}[0]
+    }
+
+    final object Companion // io.heapy.kotmark.internal.inline/EntityInlineParser.Companion|null[0]
+}
+
+final class io.heapy.kotmark.internal.inline/HtmlInlineParser : io.heapy.kotmark.parser.beta/InlineContentParser { // io.heapy.kotmark.internal.inline/HtmlInlineParser|null[0]
+    constructor <init>() // io.heapy.kotmark.internal.inline/HtmlInlineParser.<init>|<init>(){}[0]
+
+    final fun tryParse(io.heapy.kotmark.parser.beta/InlineParserState): io.heapy.kotmark.parser.beta/ParsedInline? // io.heapy.kotmark.internal.inline/HtmlInlineParser.tryParse|tryParse(io.heapy.kotmark.parser.beta.InlineParserState){}[0]
+
+    final class Factory : io.heapy.kotmark.parser.beta/InlineContentParserFactory { // io.heapy.kotmark.internal.inline/HtmlInlineParser.Factory|null[0]
+        constructor <init>() // io.heapy.kotmark.internal.inline/HtmlInlineParser.Factory.<init>|<init>(){}[0]
+
+        final val triggerCharacters // io.heapy.kotmark.internal.inline/HtmlInlineParser.Factory.triggerCharacters|{}triggerCharacters[0]
+            final fun <get-triggerCharacters>(): kotlin.collections/Set<kotlin/Char> // io.heapy.kotmark.internal.inline/HtmlInlineParser.Factory.triggerCharacters.<get-triggerCharacters>|<get-triggerCharacters>(){}[0]
+
+        final fun create(): io.heapy.kotmark.parser.beta/InlineContentParser // io.heapy.kotmark.internal.inline/HtmlInlineParser.Factory.create|create(){}[0]
+    }
+
+    final object Companion // io.heapy.kotmark.internal.inline/HtmlInlineParser.Companion|null[0]
+}
+
+final class io.heapy.kotmark.internal.inline/LinkResultImpl : io.heapy.kotmark.parser.beta/LinkResult { // io.heapy.kotmark.internal.inline/LinkResultImpl|null[0]
+    constructor <init>(io.heapy.kotmark.internal.inline/LinkResultImpl.Type, io.heapy.kotmark.node/Node, io.heapy.kotmark.parser.beta/Position) // io.heapy.kotmark.internal.inline/LinkResultImpl.<init>|<init>(io.heapy.kotmark.internal.inline.LinkResultImpl.Type;io.heapy.kotmark.node.Node;io.heapy.kotmark.parser.beta.Position){}[0]
+
+    final val node // io.heapy.kotmark.internal.inline/LinkResultImpl.node|{}node[0]
+        final fun <get-node>(): io.heapy.kotmark.node/Node // io.heapy.kotmark.internal.inline/LinkResultImpl.node.<get-node>|<get-node>(){}[0]
+    final val position // io.heapy.kotmark.internal.inline/LinkResultImpl.position|{}position[0]
+        final fun <get-position>(): io.heapy.kotmark.parser.beta/Position // io.heapy.kotmark.internal.inline/LinkResultImpl.position.<get-position>|<get-position>(){}[0]
+    final val type // io.heapy.kotmark.internal.inline/LinkResultImpl.type|{}type[0]
+        final fun <get-type>(): io.heapy.kotmark.internal.inline/LinkResultImpl.Type // io.heapy.kotmark.internal.inline/LinkResultImpl.type.<get-type>|<get-type>(){}[0]
+
+    final var isIncludeMarker // io.heapy.kotmark.internal.inline/LinkResultImpl.isIncludeMarker|{}isIncludeMarker[0]
+        final fun <get-isIncludeMarker>(): kotlin/Boolean // io.heapy.kotmark.internal.inline/LinkResultImpl.isIncludeMarker.<get-isIncludeMarker>|<get-isIncludeMarker>(){}[0]
+
+    final fun includeMarker(): io.heapy.kotmark.parser.beta/LinkResult // io.heapy.kotmark.internal.inline/LinkResultImpl.includeMarker|includeMarker(){}[0]
+
+    final enum class Type : kotlin/Enum<io.heapy.kotmark.internal.inline/LinkResultImpl.Type> { // io.heapy.kotmark.internal.inline/LinkResultImpl.Type|null[0]
+        enum entry REPLACE // io.heapy.kotmark.internal.inline/LinkResultImpl.Type.REPLACE|null[0]
+        enum entry WRAP // io.heapy.kotmark.internal.inline/LinkResultImpl.Type.WRAP|null[0]
+
+        final val entries // io.heapy.kotmark.internal.inline/LinkResultImpl.Type.entries|#static{}entries[0]
+            final fun <get-entries>(): kotlin.enums/EnumEntries<io.heapy.kotmark.internal.inline/LinkResultImpl.Type> // io.heapy.kotmark.internal.inline/LinkResultImpl.Type.entries.<get-entries>|<get-entries>#static(){}[0]
+
+        final fun valueOf(kotlin/String): io.heapy.kotmark.internal.inline/LinkResultImpl.Type // io.heapy.kotmark.internal.inline/LinkResultImpl.Type.valueOf|valueOf#static(kotlin.String){}[0]
+        final fun values(): kotlin/Array<io.heapy.kotmark.internal.inline/LinkResultImpl.Type> // io.heapy.kotmark.internal.inline/LinkResultImpl.Type.values|values#static(){}[0]
+    }
+}
+
+final class io.heapy.kotmark.internal.inline/ParsedInlineImpl : io.heapy.kotmark.parser.beta/ParsedInline { // io.heapy.kotmark.internal.inline/ParsedInlineImpl|null[0]
+    constructor <init>(io.heapy.kotmark.node/Node, io.heapy.kotmark.parser.beta/Position) // io.heapy.kotmark.internal.inline/ParsedInlineImpl.<init>|<init>(io.heapy.kotmark.node.Node;io.heapy.kotmark.parser.beta.Position){}[0]
+
+    final val node // io.heapy.kotmark.internal.inline/ParsedInlineImpl.node|{}node[0]
+        final fun <get-node>(): io.heapy.kotmark.node/Node // io.heapy.kotmark.internal.inline/ParsedInlineImpl.node.<get-node>|<get-node>(){}[0]
+    final val position // io.heapy.kotmark.internal.inline/ParsedInlineImpl.position|{}position[0]
+        final fun <get-position>(): io.heapy.kotmark.parser.beta/Position // io.heapy.kotmark.internal.inline/ParsedInlineImpl.position.<get-position>|<get-position>(){}[0]
+}
+
+final class io.heapy.kotmark.internal.inline/UnderscoreDelimiterProcessor : io.heapy.kotmark.internal.inline/EmphasisDelimiterProcessor { // io.heapy.kotmark.internal.inline/UnderscoreDelimiterProcessor|null[0]
+    constructor <init>() // io.heapy.kotmark.internal.inline/UnderscoreDelimiterProcessor.<init>|<init>(){}[0]
+}
+
+final class io.heapy.kotmark.internal.renderer/NodeRendererMap { // io.heapy.kotmark.internal.renderer/NodeRendererMap|null[0]
+    constructor <init>() // io.heapy.kotmark.internal.renderer/NodeRendererMap.<init>|<init>(){}[0]
+
+    final fun add(io.heapy.kotmark.renderer/NodeRenderer) // io.heapy.kotmark.internal.renderer/NodeRendererMap.add|add(io.heapy.kotmark.renderer.NodeRenderer){}[0]
+    final fun afterRoot(io.heapy.kotmark.node/Node) // io.heapy.kotmark.internal.renderer/NodeRendererMap.afterRoot|afterRoot(io.heapy.kotmark.node.Node){}[0]
+    final fun beforeRoot(io.heapy.kotmark.node/Node) // io.heapy.kotmark.internal.renderer/NodeRendererMap.beforeRoot|beforeRoot(io.heapy.kotmark.node.Node){}[0]
+    final fun render(io.heapy.kotmark.node/Node) // io.heapy.kotmark.internal.renderer/NodeRendererMap.render|render(io.heapy.kotmark.node.Node){}[0]
+}
+
+final class io.heapy.kotmark.internal/BlockQuoteParser : io.heapy.kotmark.parser.block/AbstractBlockParser { // io.heapy.kotmark.internal/BlockQuoteParser|null[0]
+    constructor <init>() // io.heapy.kotmark.internal/BlockQuoteParser.<init>|<init>(){}[0]
+
+    final val block // io.heapy.kotmark.internal/BlockQuoteParser.block|{}block[0]
+        final fun <get-block>(): io.heapy.kotmark.node/BlockQuote // io.heapy.kotmark.internal/BlockQuoteParser.block.<get-block>|<get-block>(){}[0]
+
+    final fun canContain(io.heapy.kotmark.node/Block): kotlin/Boolean // io.heapy.kotmark.internal/BlockQuoteParser.canContain|canContain(io.heapy.kotmark.node.Block){}[0]
+    final fun isContainer(): kotlin/Boolean // io.heapy.kotmark.internal/BlockQuoteParser.isContainer|isContainer(){}[0]
+    final fun tryContinue(io.heapy.kotmark.parser.block/ParserState): io.heapy.kotmark.parser.block/BlockContinue? // io.heapy.kotmark.internal/BlockQuoteParser.tryContinue|tryContinue(io.heapy.kotmark.parser.block.ParserState){}[0]
+
+    final class Factory : io.heapy.kotmark.parser.block/AbstractBlockParserFactory { // io.heapy.kotmark.internal/BlockQuoteParser.Factory|null[0]
+        constructor <init>() // io.heapy.kotmark.internal/BlockQuoteParser.Factory.<init>|<init>(){}[0]
+
+        final fun tryStart(io.heapy.kotmark.parser.block/ParserState, io.heapy.kotmark.parser.block/MatchedBlockParser): io.heapy.kotmark.parser.block/BlockStart? // io.heapy.kotmark.internal/BlockQuoteParser.Factory.tryStart|tryStart(io.heapy.kotmark.parser.block.ParserState;io.heapy.kotmark.parser.block.MatchedBlockParser){}[0]
+    }
+
+    final object Companion // io.heapy.kotmark.internal/BlockQuoteParser.Companion|null[0]
+}
+
+final class io.heapy.kotmark.internal/BlockStartImpl : io.heapy.kotmark.parser.block/BlockStart { // io.heapy.kotmark.internal/BlockStartImpl|null[0]
+    constructor <init>(kotlin/Array<out io.heapy.kotmark.parser.block/BlockParser>) // io.heapy.kotmark.internal/BlockStartImpl.<init>|<init>(kotlin.Array<out|io.heapy.kotmark.parser.block.BlockParser>){}[0]
+
+    final val blockParsers // io.heapy.kotmark.internal/BlockStartImpl.blockParsers|{}blockParsers[0]
+        final fun <get-blockParsers>(): kotlin/Array<out io.heapy.kotmark.parser.block/BlockParser> // io.heapy.kotmark.internal/BlockStartImpl.blockParsers.<get-blockParsers>|<get-blockParsers>(){}[0]
+
+    final var isReplaceActiveBlockParser // io.heapy.kotmark.internal/BlockStartImpl.isReplaceActiveBlockParser|{}isReplaceActiveBlockParser[0]
+        final fun <get-isReplaceActiveBlockParser>(): kotlin/Boolean // io.heapy.kotmark.internal/BlockStartImpl.isReplaceActiveBlockParser.<get-isReplaceActiveBlockParser>|<get-isReplaceActiveBlockParser>(){}[0]
+    final var newColumn // io.heapy.kotmark.internal/BlockStartImpl.newColumn|{}newColumn[0]
+        final fun <get-newColumn>(): kotlin/Int // io.heapy.kotmark.internal/BlockStartImpl.newColumn.<get-newColumn>|<get-newColumn>(){}[0]
+    final var newIndex // io.heapy.kotmark.internal/BlockStartImpl.newIndex|{}newIndex[0]
+        final fun <get-newIndex>(): kotlin/Int // io.heapy.kotmark.internal/BlockStartImpl.newIndex.<get-newIndex>|<get-newIndex>(){}[0]
+    final var replaceParagraphLines // io.heapy.kotmark.internal/BlockStartImpl.replaceParagraphLines|{}replaceParagraphLines[0]
+        final fun <get-replaceParagraphLines>(): kotlin/Int // io.heapy.kotmark.internal/BlockStartImpl.replaceParagraphLines.<get-replaceParagraphLines>|<get-replaceParagraphLines>(){}[0]
+
+    final fun atColumn(kotlin/Int): io.heapy.kotmark.parser.block/BlockStart // io.heapy.kotmark.internal/BlockStartImpl.atColumn|atColumn(kotlin.Int){}[0]
+    final fun atIndex(kotlin/Int): io.heapy.kotmark.parser.block/BlockStart // io.heapy.kotmark.internal/BlockStartImpl.atIndex|atIndex(kotlin.Int){}[0]
+    final fun replaceActiveBlockParser(): io.heapy.kotmark.parser.block/BlockStart // io.heapy.kotmark.internal/BlockStartImpl.replaceActiveBlockParser|replaceActiveBlockParser(){}[0]
+    final fun replaceParagraphLines(kotlin/Int): io.heapy.kotmark.parser.block/BlockStart // io.heapy.kotmark.internal/BlockStartImpl.replaceParagraphLines|replaceParagraphLines(kotlin.Int){}[0]
+}
+
+final class io.heapy.kotmark.internal/Bracket { // io.heapy.kotmark.internal/Bracket|null[0]
+    final val bracketNode // io.heapy.kotmark.internal/Bracket.bracketNode|{}bracketNode[0]
+        final fun <get-bracketNode>(): io.heapy.kotmark.node/Text // io.heapy.kotmark.internal/Bracket.bracketNode.<get-bracketNode>|<get-bracketNode>(){}[0]
+    final val bracketPosition // io.heapy.kotmark.internal/Bracket.bracketPosition|{}bracketPosition[0]
+        final fun <get-bracketPosition>(): io.heapy.kotmark.parser.beta/Position // io.heapy.kotmark.internal/Bracket.bracketPosition.<get-bracketPosition>|<get-bracketPosition>(){}[0]
+    final val contentPosition // io.heapy.kotmark.internal/Bracket.contentPosition|{}contentPosition[0]
+        final fun <get-contentPosition>(): io.heapy.kotmark.parser.beta/Position // io.heapy.kotmark.internal/Bracket.contentPosition.<get-contentPosition>|<get-contentPosition>(){}[0]
+    final val markerNode // io.heapy.kotmark.internal/Bracket.markerNode|{}markerNode[0]
+        final fun <get-markerNode>(): io.heapy.kotmark.node/Text? // io.heapy.kotmark.internal/Bracket.markerNode.<get-markerNode>|<get-markerNode>(){}[0]
+    final val markerPosition // io.heapy.kotmark.internal/Bracket.markerPosition|{}markerPosition[0]
+        final fun <get-markerPosition>(): io.heapy.kotmark.parser.beta/Position? // io.heapy.kotmark.internal/Bracket.markerPosition.<get-markerPosition>|<get-markerPosition>(){}[0]
+    final val previous // io.heapy.kotmark.internal/Bracket.previous|{}previous[0]
+        final fun <get-previous>(): io.heapy.kotmark.internal/Bracket? // io.heapy.kotmark.internal/Bracket.previous.<get-previous>|<get-previous>(){}[0]
+    final val previousDelimiter // io.heapy.kotmark.internal/Bracket.previousDelimiter|{}previousDelimiter[0]
+        final fun <get-previousDelimiter>(): io.heapy.kotmark.internal/Delimiter? // io.heapy.kotmark.internal/Bracket.previousDelimiter.<get-previousDelimiter>|<get-previousDelimiter>(){}[0]
+
+    final var allowed // io.heapy.kotmark.internal/Bracket.allowed|{}allowed[0]
+        final fun <get-allowed>(): kotlin/Boolean // io.heapy.kotmark.internal/Bracket.allowed.<get-allowed>|<get-allowed>(){}[0]
+        final fun <set-allowed>(kotlin/Boolean) // io.heapy.kotmark.internal/Bracket.allowed.<set-allowed>|<set-allowed>(kotlin.Boolean){}[0]
+    final var bracketAfter // io.heapy.kotmark.internal/Bracket.bracketAfter|{}bracketAfter[0]
+        final fun <get-bracketAfter>(): kotlin/Boolean // io.heapy.kotmark.internal/Bracket.bracketAfter.<get-bracketAfter>|<get-bracketAfter>(){}[0]
+        final fun <set-bracketAfter>(kotlin/Boolean) // io.heapy.kotmark.internal/Bracket.bracketAfter.<set-bracketAfter>|<set-bracketAfter>(kotlin.Boolean){}[0]
+
+    final object Companion { // io.heapy.kotmark.internal/Bracket.Companion|null[0]
+        final fun link(io.heapy.kotmark.node/Text, io.heapy.kotmark.parser.beta/Position, io.heapy.kotmark.parser.beta/Position, io.heapy.kotmark.internal/Bracket?, io.heapy.kotmark.internal/Delimiter?): io.heapy.kotmark.internal/Bracket // io.heapy.kotmark.internal/Bracket.Companion.link|link(io.heapy.kotmark.node.Text;io.heapy.kotmark.parser.beta.Position;io.heapy.kotmark.parser.beta.Position;io.heapy.kotmark.internal.Bracket?;io.heapy.kotmark.internal.Delimiter?){}[0]
+        final fun withMarker(io.heapy.kotmark.node/Text, io.heapy.kotmark.parser.beta/Position, io.heapy.kotmark.node/Text, io.heapy.kotmark.parser.beta/Position, io.heapy.kotmark.parser.beta/Position, io.heapy.kotmark.internal/Bracket?, io.heapy.kotmark.internal/Delimiter?): io.heapy.kotmark.internal/Bracket // io.heapy.kotmark.internal/Bracket.Companion.withMarker|withMarker(io.heapy.kotmark.node.Text;io.heapy.kotmark.parser.beta.Position;io.heapy.kotmark.node.Text;io.heapy.kotmark.parser.beta.Position;io.heapy.kotmark.parser.beta.Position;io.heapy.kotmark.internal.Bracket?;io.heapy.kotmark.internal.Delimiter?){}[0]
+    }
+}
+
+final class io.heapy.kotmark.internal/Definitions { // io.heapy.kotmark.internal/Definitions|null[0]
+    constructor <init>() // io.heapy.kotmark.internal/Definitions.<init>|<init>(){}[0]
+
+    final fun <#A1: kotlin/Any> addDefinitions(io.heapy.kotmark.node/DefinitionMap<#A1>) // io.heapy.kotmark.internal/Definitions.addDefinitions|addDefinitions(io.heapy.kotmark.node.DefinitionMap<0:0>){0§<kotlin.Any>}[0]
+    final fun <#A1: kotlin/Any> getDefinition(kotlin.reflect/KClass<#A1>, kotlin/String): #A1? // io.heapy.kotmark.internal/Definitions.getDefinition|getDefinition(kotlin.reflect.KClass<0:0>;kotlin.String){0§<kotlin.Any>}[0]
+}
+
+final class io.heapy.kotmark.internal/Delimiter : io.heapy.kotmark.parser.delimiter/DelimiterRun { // io.heapy.kotmark.internal/Delimiter|null[0]
+    constructor <init>(kotlin.collections/MutableList<io.heapy.kotmark.node/Text>, kotlin/Char, kotlin/Boolean, kotlin/Boolean, io.heapy.kotmark.internal/Delimiter?) // io.heapy.kotmark.internal/Delimiter.<init>|<init>(kotlin.collections.MutableList<io.heapy.kotmark.node.Text>;kotlin.Char;kotlin.Boolean;kotlin.Boolean;io.heapy.kotmark.internal.Delimiter?){}[0]
+
+    final val characters // io.heapy.kotmark.internal/Delimiter.characters|{}characters[0]
+        final fun <get-characters>(): kotlin.collections/MutableList<io.heapy.kotmark.node/Text> // io.heapy.kotmark.internal/Delimiter.characters.<get-characters>|<get-characters>(){}[0]
+    final val closer // io.heapy.kotmark.internal/Delimiter.closer|{}closer[0]
+        final fun <get-closer>(): io.heapy.kotmark.node/Text // io.heapy.kotmark.internal/Delimiter.closer.<get-closer>|<get-closer>(){}[0]
+    final val delimiterChar // io.heapy.kotmark.internal/Delimiter.delimiterChar|{}delimiterChar[0]
+        final fun <get-delimiterChar>(): kotlin/Char // io.heapy.kotmark.internal/Delimiter.delimiterChar.<get-delimiterChar>|<get-delimiterChar>(){}[0]
+    final val opener // io.heapy.kotmark.internal/Delimiter.opener|{}opener[0]
+        final fun <get-opener>(): io.heapy.kotmark.node/Text // io.heapy.kotmark.internal/Delimiter.opener.<get-opener>|<get-opener>(){}[0]
+
+    final var next // io.heapy.kotmark.internal/Delimiter.next|{}next[0]
+        final fun <get-next>(): io.heapy.kotmark.internal/Delimiter? // io.heapy.kotmark.internal/Delimiter.next.<get-next>|<get-next>(){}[0]
+        final fun <set-next>(io.heapy.kotmark.internal/Delimiter?) // io.heapy.kotmark.internal/Delimiter.next.<set-next>|<set-next>(io.heapy.kotmark.internal.Delimiter?){}[0]
+    final var previous // io.heapy.kotmark.internal/Delimiter.previous|{}previous[0]
+        final fun <get-previous>(): io.heapy.kotmark.internal/Delimiter? // io.heapy.kotmark.internal/Delimiter.previous.<get-previous>|<get-previous>(){}[0]
+        final fun <set-previous>(io.heapy.kotmark.internal/Delimiter?) // io.heapy.kotmark.internal/Delimiter.previous.<set-previous>|<set-previous>(io.heapy.kotmark.internal.Delimiter?){}[0]
+
+    final fun canClose(): kotlin/Boolean // io.heapy.kotmark.internal/Delimiter.canClose|canClose(){}[0]
+    final fun canOpen(): kotlin/Boolean // io.heapy.kotmark.internal/Delimiter.canOpen|canOpen(){}[0]
+    final fun getClosers(kotlin/Int): kotlin.collections/Iterable<io.heapy.kotmark.node/Text> // io.heapy.kotmark.internal/Delimiter.getClosers|getClosers(kotlin.Int){}[0]
+    final fun getOpeners(kotlin/Int): kotlin.collections/Iterable<io.heapy.kotmark.node/Text> // io.heapy.kotmark.internal/Delimiter.getOpeners|getOpeners(kotlin.Int){}[0]
+    final fun length(): kotlin/Int // io.heapy.kotmark.internal/Delimiter.length|length(){}[0]
+    final fun originalLength(): kotlin/Int // io.heapy.kotmark.internal/Delimiter.originalLength|originalLength(){}[0]
+}
+
+final class io.heapy.kotmark.internal/DocumentBlockParser : io.heapy.kotmark.parser.block/AbstractBlockParser { // io.heapy.kotmark.internal/DocumentBlockParser|null[0]
+    constructor <init>() // io.heapy.kotmark.internal/DocumentBlockParser.<init>|<init>(){}[0]
+
+    final val block // io.heapy.kotmark.internal/DocumentBlockParser.block|{}block[0]
+        final fun <get-block>(): io.heapy.kotmark.node/Document // io.heapy.kotmark.internal/DocumentBlockParser.block.<get-block>|<get-block>(){}[0]
+
+    final fun canContain(io.heapy.kotmark.node/Block): kotlin/Boolean // io.heapy.kotmark.internal/DocumentBlockParser.canContain|canContain(io.heapy.kotmark.node.Block){}[0]
+    final fun isContainer(): kotlin/Boolean // io.heapy.kotmark.internal/DocumentBlockParser.isContainer|isContainer(){}[0]
+    final fun tryContinue(io.heapy.kotmark.parser.block/ParserState): io.heapy.kotmark.parser.block/BlockContinue // io.heapy.kotmark.internal/DocumentBlockParser.tryContinue|tryContinue(io.heapy.kotmark.parser.block.ParserState){}[0]
+}
+
+final class io.heapy.kotmark.internal/DocumentParser : io.heapy.kotmark.parser.block/ParserState { // io.heapy.kotmark.internal/DocumentParser|null[0]
+    constructor <init>(kotlin.collections/List<io.heapy.kotmark.parser.block/BlockParserFactory>, io.heapy.kotmark.parser/InlineParserFactory, kotlin.collections/List<io.heapy.kotmark.parser.beta/InlineContentParserFactory>, kotlin.collections/List<io.heapy.kotmark.parser.delimiter/DelimiterProcessor>, kotlin.collections/List<io.heapy.kotmark.parser.beta/LinkProcessor>, kotlin.collections/Set<kotlin/Char>, io.heapy.kotmark.parser/IncludeSourceSpans, kotlin/Int) // io.heapy.kotmark.internal/DocumentParser.<init>|<init>(kotlin.collections.List<io.heapy.kotmark.parser.block.BlockParserFactory>;io.heapy.kotmark.parser.InlineParserFactory;kotlin.collections.List<io.heapy.kotmark.parser.beta.InlineContentParserFactory>;kotlin.collections.List<io.heapy.kotmark.parser.delimiter.DelimiterProcessor>;kotlin.collections.List<io.heapy.kotmark.parser.beta.LinkProcessor>;kotlin.collections.Set<kotlin.Char>;io.heapy.kotmark.parser.IncludeSourceSpans;kotlin.Int){}[0]
+
+    final val activeBlockParser // io.heapy.kotmark.internal/DocumentParser.activeBlockParser|{}activeBlockParser[0]
+        final fun <get-activeBlockParser>(): io.heapy.kotmark.parser.block/BlockParser // io.heapy.kotmark.internal/DocumentParser.activeBlockParser.<get-activeBlockParser>|<get-activeBlockParser>(){}[0]
+    final val column // io.heapy.kotmark.internal/DocumentParser.column|{}column[0]
+        final fun <get-column>(): kotlin/Int // io.heapy.kotmark.internal/DocumentParser.column.<get-column>|<get-column>(){}[0]
+    final val indent // io.heapy.kotmark.internal/DocumentParser.indent|{}indent[0]
+        final fun <get-indent>(): kotlin/Int // io.heapy.kotmark.internal/DocumentParser.indent.<get-indent>|<get-indent>(){}[0]
+    final val index // io.heapy.kotmark.internal/DocumentParser.index|{}index[0]
+        final fun <get-index>(): kotlin/Int // io.heapy.kotmark.internal/DocumentParser.index.<get-index>|<get-index>(){}[0]
+    final val isBlank // io.heapy.kotmark.internal/DocumentParser.isBlank|{}isBlank[0]
+        final fun <get-isBlank>(): kotlin/Boolean // io.heapy.kotmark.internal/DocumentParser.isBlank.<get-isBlank>|<get-isBlank>(){}[0]
+    final val line // io.heapy.kotmark.internal/DocumentParser.line|{}line[0]
+        final fun <get-line>(): io.heapy.kotmark.parser/SourceLine // io.heapy.kotmark.internal/DocumentParser.line.<get-line>|<get-line>(){}[0]
+    final val nextNonSpaceIndex // io.heapy.kotmark.internal/DocumentParser.nextNonSpaceIndex|{}nextNonSpaceIndex[0]
+        final fun <get-nextNonSpaceIndex>(): kotlin/Int // io.heapy.kotmark.internal/DocumentParser.nextNonSpaceIndex.<get-nextNonSpaceIndex>|<get-nextNonSpaceIndex>(){}[0]
+
+    final fun parse(kotlin/String): io.heapy.kotmark.node/Document // io.heapy.kotmark.internal/DocumentParser.parse|parse(kotlin.String){}[0]
+
+    final object Companion { // io.heapy.kotmark.internal/DocumentParser.Companion|null[0]
+        final fun calculateBlockParserFactories(kotlin.collections/List<io.heapy.kotmark.parser.block/BlockParserFactory>, kotlin.collections/Set<kotlin.reflect/KClass<out io.heapy.kotmark.node/Block>>): kotlin.collections/List<io.heapy.kotmark.parser.block/BlockParserFactory> // io.heapy.kotmark.internal/DocumentParser.Companion.calculateBlockParserFactories|calculateBlockParserFactories(kotlin.collections.List<io.heapy.kotmark.parser.block.BlockParserFactory>;kotlin.collections.Set<kotlin.reflect.KClass<out|io.heapy.kotmark.node.Block>>){}[0]
+        final fun checkEnabledBlockTypes(kotlin.collections/Set<kotlin.reflect/KClass<out io.heapy.kotmark.node/Block>>) // io.heapy.kotmark.internal/DocumentParser.Companion.checkEnabledBlockTypes|checkEnabledBlockTypes(kotlin.collections.Set<kotlin.reflect.KClass<out|io.heapy.kotmark.node.Block>>){}[0]
+        final fun getDefaultBlockParserTypes(): kotlin.collections/Set<kotlin.reflect/KClass<out io.heapy.kotmark.node/Block>> // io.heapy.kotmark.internal/DocumentParser.Companion.getDefaultBlockParserTypes|getDefaultBlockParserTypes(){}[0]
+    }
+}
+
+final class io.heapy.kotmark.internal/FencedCodeBlockParser : io.heapy.kotmark.parser.block/AbstractBlockParser { // io.heapy.kotmark.internal/FencedCodeBlockParser|null[0]
+    constructor <init>(kotlin/Char, kotlin/Int, kotlin/Int) // io.heapy.kotmark.internal/FencedCodeBlockParser.<init>|<init>(kotlin.Char;kotlin.Int;kotlin.Int){}[0]
+
+    final val block // io.heapy.kotmark.internal/FencedCodeBlockParser.block|{}block[0]
+        final fun <get-block>(): io.heapy.kotmark.node/FencedCodeBlock // io.heapy.kotmark.internal/FencedCodeBlockParser.block.<get-block>|<get-block>(){}[0]
+
+    final fun addLine(io.heapy.kotmark.parser/SourceLine) // io.heapy.kotmark.internal/FencedCodeBlockParser.addLine|addLine(io.heapy.kotmark.parser.SourceLine){}[0]
+    final fun closeBlock() // io.heapy.kotmark.internal/FencedCodeBlockParser.closeBlock|closeBlock(){}[0]
+    final fun tryContinue(io.heapy.kotmark.parser.block/ParserState): io.heapy.kotmark.parser.block/BlockContinue // io.heapy.kotmark.internal/FencedCodeBlockParser.tryContinue|tryContinue(io.heapy.kotmark.parser.block.ParserState){}[0]
+
+    final class Factory : io.heapy.kotmark.parser.block/AbstractBlockParserFactory { // io.heapy.kotmark.internal/FencedCodeBlockParser.Factory|null[0]
+        constructor <init>() // io.heapy.kotmark.internal/FencedCodeBlockParser.Factory.<init>|<init>(){}[0]
+
+        final fun tryStart(io.heapy.kotmark.parser.block/ParserState, io.heapy.kotmark.parser.block/MatchedBlockParser): io.heapy.kotmark.parser.block/BlockStart? // io.heapy.kotmark.internal/FencedCodeBlockParser.Factory.tryStart|tryStart(io.heapy.kotmark.parser.block.ParserState;io.heapy.kotmark.parser.block.MatchedBlockParser){}[0]
+    }
+
+    final object Companion // io.heapy.kotmark.internal/FencedCodeBlockParser.Companion|null[0]
+}
+
+final class io.heapy.kotmark.internal/HeadingParser : io.heapy.kotmark.parser.block/AbstractBlockParser { // io.heapy.kotmark.internal/HeadingParser|null[0]
+    constructor <init>(kotlin/Int, io.heapy.kotmark.parser/SourceLines) // io.heapy.kotmark.internal/HeadingParser.<init>|<init>(kotlin.Int;io.heapy.kotmark.parser.SourceLines){}[0]
+
+    final val block // io.heapy.kotmark.internal/HeadingParser.block|{}block[0]
+        final fun <get-block>(): io.heapy.kotmark.node/Heading // io.heapy.kotmark.internal/HeadingParser.block.<get-block>|<get-block>(){}[0]
+
+    final fun parseInlines(io.heapy.kotmark.parser/InlineParser) // io.heapy.kotmark.internal/HeadingParser.parseInlines|parseInlines(io.heapy.kotmark.parser.InlineParser){}[0]
+    final fun tryContinue(io.heapy.kotmark.parser.block/ParserState): io.heapy.kotmark.parser.block/BlockContinue? // io.heapy.kotmark.internal/HeadingParser.tryContinue|tryContinue(io.heapy.kotmark.parser.block.ParserState){}[0]
+
+    final class Factory : io.heapy.kotmark.parser.block/AbstractBlockParserFactory { // io.heapy.kotmark.internal/HeadingParser.Factory|null[0]
+        constructor <init>() // io.heapy.kotmark.internal/HeadingParser.Factory.<init>|<init>(){}[0]
+
+        final fun tryStart(io.heapy.kotmark.parser.block/ParserState, io.heapy.kotmark.parser.block/MatchedBlockParser): io.heapy.kotmark.parser.block/BlockStart? // io.heapy.kotmark.internal/HeadingParser.Factory.tryStart|tryStart(io.heapy.kotmark.parser.block.ParserState;io.heapy.kotmark.parser.block.MatchedBlockParser){}[0]
+    }
+
+    final object Companion // io.heapy.kotmark.internal/HeadingParser.Companion|null[0]
+}
+
+final class io.heapy.kotmark.internal/HtmlBlockParser : io.heapy.kotmark.parser.block/AbstractBlockParser { // io.heapy.kotmark.internal/HtmlBlockParser|null[0]
+    final val block // io.heapy.kotmark.internal/HtmlBlockParser.block|{}block[0]
+        final fun <get-block>(): io.heapy.kotmark.node/HtmlBlock // io.heapy.kotmark.internal/HtmlBlockParser.block.<get-block>|<get-block>(){}[0]
+
+    final fun addLine(io.heapy.kotmark.parser/SourceLine) // io.heapy.kotmark.internal/HtmlBlockParser.addLine|addLine(io.heapy.kotmark.parser.SourceLine){}[0]
+    final fun closeBlock() // io.heapy.kotmark.internal/HtmlBlockParser.closeBlock|closeBlock(){}[0]
+    final fun tryContinue(io.heapy.kotmark.parser.block/ParserState): io.heapy.kotmark.parser.block/BlockContinue? // io.heapy.kotmark.internal/HtmlBlockParser.tryContinue|tryContinue(io.heapy.kotmark.parser.block.ParserState){}[0]
+
+    final class Factory : io.heapy.kotmark.parser.block/AbstractBlockParserFactory { // io.heapy.kotmark.internal/HtmlBlockParser.Factory|null[0]
+        constructor <init>() // io.heapy.kotmark.internal/HtmlBlockParser.Factory.<init>|<init>(){}[0]
+
+        final fun tryStart(io.heapy.kotmark.parser.block/ParserState, io.heapy.kotmark.parser.block/MatchedBlockParser): io.heapy.kotmark.parser.block/BlockStart? // io.heapy.kotmark.internal/HtmlBlockParser.Factory.tryStart|tryStart(io.heapy.kotmark.parser.block.ParserState;io.heapy.kotmark.parser.block.MatchedBlockParser){}[0]
+    }
+
+    final object Companion // io.heapy.kotmark.internal/HtmlBlockParser.Companion|null[0]
+}
+
+final class io.heapy.kotmark.internal/IndentedCodeBlockParser : io.heapy.kotmark.parser.block/AbstractBlockParser { // io.heapy.kotmark.internal/IndentedCodeBlockParser|null[0]
+    constructor <init>() // io.heapy.kotmark.internal/IndentedCodeBlockParser.<init>|<init>(){}[0]
+
+    final val block // io.heapy.kotmark.internal/IndentedCodeBlockParser.block|{}block[0]
+        final fun <get-block>(): io.heapy.kotmark.node/IndentedCodeBlock // io.heapy.kotmark.internal/IndentedCodeBlockParser.block.<get-block>|<get-block>(){}[0]
+
+    final fun addLine(io.heapy.kotmark.parser/SourceLine) // io.heapy.kotmark.internal/IndentedCodeBlockParser.addLine|addLine(io.heapy.kotmark.parser.SourceLine){}[0]
+    final fun closeBlock() // io.heapy.kotmark.internal/IndentedCodeBlockParser.closeBlock|closeBlock(){}[0]
+    final fun tryContinue(io.heapy.kotmark.parser.block/ParserState): io.heapy.kotmark.parser.block/BlockContinue? // io.heapy.kotmark.internal/IndentedCodeBlockParser.tryContinue|tryContinue(io.heapy.kotmark.parser.block.ParserState){}[0]
+
+    final class Factory : io.heapy.kotmark.parser.block/AbstractBlockParserFactory { // io.heapy.kotmark.internal/IndentedCodeBlockParser.Factory|null[0]
+        constructor <init>() // io.heapy.kotmark.internal/IndentedCodeBlockParser.Factory.<init>|<init>(){}[0]
+
+        final fun tryStart(io.heapy.kotmark.parser.block/ParserState, io.heapy.kotmark.parser.block/MatchedBlockParser): io.heapy.kotmark.parser.block/BlockStart? // io.heapy.kotmark.internal/IndentedCodeBlockParser.Factory.tryStart|tryStart(io.heapy.kotmark.parser.block.ParserState;io.heapy.kotmark.parser.block.MatchedBlockParser){}[0]
+    }
+}
+
+final class io.heapy.kotmark.internal/InlineParserContextImpl : io.heapy.kotmark.parser/InlineParserContext { // io.heapy.kotmark.internal/InlineParserContextImpl|null[0]
+    constructor <init>(kotlin.collections/List<io.heapy.kotmark.parser.beta/InlineContentParserFactory>, kotlin.collections/List<io.heapy.kotmark.parser.delimiter/DelimiterProcessor>, kotlin.collections/List<io.heapy.kotmark.parser.beta/LinkProcessor>, kotlin.collections/Set<kotlin/Char>, io.heapy.kotmark.internal/Definitions) // io.heapy.kotmark.internal/InlineParserContextImpl.<init>|<init>(kotlin.collections.List<io.heapy.kotmark.parser.beta.InlineContentParserFactory>;kotlin.collections.List<io.heapy.kotmark.parser.delimiter.DelimiterProcessor>;kotlin.collections.List<io.heapy.kotmark.parser.beta.LinkProcessor>;kotlin.collections.Set<kotlin.Char>;io.heapy.kotmark.internal.Definitions){}[0]
+
+    final val customDelimiterProcessors // io.heapy.kotmark.internal/InlineParserContextImpl.customDelimiterProcessors|{}customDelimiterProcessors[0]
+        final fun <get-customDelimiterProcessors>(): kotlin.collections/List<io.heapy.kotmark.parser.delimiter/DelimiterProcessor> // io.heapy.kotmark.internal/InlineParserContextImpl.customDelimiterProcessors.<get-customDelimiterProcessors>|<get-customDelimiterProcessors>(){}[0]
+    final val customInlineContentParserFactories // io.heapy.kotmark.internal/InlineParserContextImpl.customInlineContentParserFactories|{}customInlineContentParserFactories[0]
+        final fun <get-customInlineContentParserFactories>(): kotlin.collections/List<io.heapy.kotmark.parser.beta/InlineContentParserFactory> // io.heapy.kotmark.internal/InlineParserContextImpl.customInlineContentParserFactories.<get-customInlineContentParserFactories>|<get-customInlineContentParserFactories>(){}[0]
+    final val customLinkMarkers // io.heapy.kotmark.internal/InlineParserContextImpl.customLinkMarkers|{}customLinkMarkers[0]
+        final fun <get-customLinkMarkers>(): kotlin.collections/Set<kotlin/Char> // io.heapy.kotmark.internal/InlineParserContextImpl.customLinkMarkers.<get-customLinkMarkers>|<get-customLinkMarkers>(){}[0]
+    final val customLinkProcessors // io.heapy.kotmark.internal/InlineParserContextImpl.customLinkProcessors|{}customLinkProcessors[0]
+        final fun <get-customLinkProcessors>(): kotlin.collections/List<io.heapy.kotmark.parser.beta/LinkProcessor> // io.heapy.kotmark.internal/InlineParserContextImpl.customLinkProcessors.<get-customLinkProcessors>|<get-customLinkProcessors>(){}[0]
+
+    final fun <#A1: kotlin/Any> getDefinition(kotlin.reflect/KClass<#A1>, kotlin/String): #A1? // io.heapy.kotmark.internal/InlineParserContextImpl.getDefinition|getDefinition(kotlin.reflect.KClass<0:0>;kotlin.String){0§<kotlin.Any>}[0]
+}
+
+final class io.heapy.kotmark.internal/InlineParserImpl : io.heapy.kotmark.parser.beta/InlineParserState, io.heapy.kotmark.parser/InlineParser { // io.heapy.kotmark.internal/InlineParserImpl|null[0]
+    constructor <init>(io.heapy.kotmark.parser/InlineParserContext) // io.heapy.kotmark.internal/InlineParserImpl.<init>|<init>(io.heapy.kotmark.parser.InlineParserContext){}[0]
+
+    final fun parse(io.heapy.kotmark.parser/SourceLines, io.heapy.kotmark.node/Node) // io.heapy.kotmark.internal/InlineParserImpl.parse|parse(io.heapy.kotmark.parser.SourceLines;io.heapy.kotmark.node.Node){}[0]
+    final fun scanner(): io.heapy.kotmark.parser.beta/Scanner // io.heapy.kotmark.internal/InlineParserImpl.scanner|scanner(){}[0]
+
+    final object Companion // io.heapy.kotmark.internal/InlineParserImpl.Companion|null[0]
+}
+
+final class io.heapy.kotmark.internal/LinkReferenceDefinitionParser { // io.heapy.kotmark.internal/LinkReferenceDefinitionParser|null[0]
+    constructor <init>() // io.heapy.kotmark.internal/LinkReferenceDefinitionParser.<init>|<init>(){}[0]
+
+    final val definitions // io.heapy.kotmark.internal/LinkReferenceDefinitionParser.definitions|{}definitions[0]
+        final fun <get-definitions>(): kotlin.collections/List<io.heapy.kotmark.node/LinkReferenceDefinition> // io.heapy.kotmark.internal/LinkReferenceDefinitionParser.definitions.<get-definitions>|<get-definitions>(){}[0]
+    final val paragraphLines // io.heapy.kotmark.internal/LinkReferenceDefinitionParser.paragraphLines|{}paragraphLines[0]
+        final fun <get-paragraphLines>(): io.heapy.kotmark.parser/SourceLines // io.heapy.kotmark.internal/LinkReferenceDefinitionParser.paragraphLines.<get-paragraphLines>|<get-paragraphLines>(){}[0]
+    final val paragraphSourceSpans // io.heapy.kotmark.internal/LinkReferenceDefinitionParser.paragraphSourceSpans|{}paragraphSourceSpans[0]
+        final fun <get-paragraphSourceSpans>(): kotlin.collections/List<io.heapy.kotmark.node/SourceSpan> // io.heapy.kotmark.internal/LinkReferenceDefinitionParser.paragraphSourceSpans.<get-paragraphSourceSpans>|<get-paragraphSourceSpans>(){}[0]
+
+    final var state // io.heapy.kotmark.internal/LinkReferenceDefinitionParser.state|{}state[0]
+        final fun <get-state>(): io.heapy.kotmark.internal/LinkReferenceDefinitionParser.State // io.heapy.kotmark.internal/LinkReferenceDefinitionParser.state.<get-state>|<get-state>(){}[0]
+
+    final fun addSourceSpan(io.heapy.kotmark.node/SourceSpan) // io.heapy.kotmark.internal/LinkReferenceDefinitionParser.addSourceSpan|addSourceSpan(io.heapy.kotmark.node.SourceSpan){}[0]
+    final fun parse(io.heapy.kotmark.parser/SourceLine) // io.heapy.kotmark.internal/LinkReferenceDefinitionParser.parse|parse(io.heapy.kotmark.parser.SourceLine){}[0]
+    final fun removeLines(kotlin/Int): kotlin.collections/List<io.heapy.kotmark.node/SourceSpan> // io.heapy.kotmark.internal/LinkReferenceDefinitionParser.removeLines|removeLines(kotlin.Int){}[0]
+
+    final enum class State : kotlin/Enum<io.heapy.kotmark.internal/LinkReferenceDefinitionParser.State> { // io.heapy.kotmark.internal/LinkReferenceDefinitionParser.State|null[0]
+        enum entry DESTINATION // io.heapy.kotmark.internal/LinkReferenceDefinitionParser.State.DESTINATION|null[0]
+        enum entry LABEL // io.heapy.kotmark.internal/LinkReferenceDefinitionParser.State.LABEL|null[0]
+        enum entry PARAGRAPH // io.heapy.kotmark.internal/LinkReferenceDefinitionParser.State.PARAGRAPH|null[0]
+        enum entry START_DEFINITION // io.heapy.kotmark.internal/LinkReferenceDefinitionParser.State.START_DEFINITION|null[0]
+        enum entry START_TITLE // io.heapy.kotmark.internal/LinkReferenceDefinitionParser.State.START_TITLE|null[0]
+        enum entry TITLE // io.heapy.kotmark.internal/LinkReferenceDefinitionParser.State.TITLE|null[0]
+
+        final val entries // io.heapy.kotmark.internal/LinkReferenceDefinitionParser.State.entries|#static{}entries[0]
+            final fun <get-entries>(): kotlin.enums/EnumEntries<io.heapy.kotmark.internal/LinkReferenceDefinitionParser.State> // io.heapy.kotmark.internal/LinkReferenceDefinitionParser.State.entries.<get-entries>|<get-entries>#static(){}[0]
+
+        final fun valueOf(kotlin/String): io.heapy.kotmark.internal/LinkReferenceDefinitionParser.State // io.heapy.kotmark.internal/LinkReferenceDefinitionParser.State.valueOf|valueOf#static(kotlin.String){}[0]
+        final fun values(): kotlin/Array<io.heapy.kotmark.internal/LinkReferenceDefinitionParser.State> // io.heapy.kotmark.internal/LinkReferenceDefinitionParser.State.values|values#static(){}[0]
+    }
+
+    final object Companion // io.heapy.kotmark.internal/LinkReferenceDefinitionParser.Companion|null[0]
+}
+
+final class io.heapy.kotmark.internal/ListBlockParser : io.heapy.kotmark.parser.block/AbstractBlockParser { // io.heapy.kotmark.internal/ListBlockParser|null[0]
+    constructor <init>(io.heapy.kotmark.node/ListBlock) // io.heapy.kotmark.internal/ListBlockParser.<init>|<init>(io.heapy.kotmark.node.ListBlock){}[0]
+
+    final val block // io.heapy.kotmark.internal/ListBlockParser.block|{}block[0]
+        final fun <get-block>(): io.heapy.kotmark.node/ListBlock // io.heapy.kotmark.internal/ListBlockParser.block.<get-block>|<get-block>(){}[0]
+
+    final fun canContain(io.heapy.kotmark.node/Block): kotlin/Boolean // io.heapy.kotmark.internal/ListBlockParser.canContain|canContain(io.heapy.kotmark.node.Block){}[0]
+    final fun isContainer(): kotlin/Boolean // io.heapy.kotmark.internal/ListBlockParser.isContainer|isContainer(){}[0]
+    final fun tryContinue(io.heapy.kotmark.parser.block/ParserState): io.heapy.kotmark.parser.block/BlockContinue // io.heapy.kotmark.internal/ListBlockParser.tryContinue|tryContinue(io.heapy.kotmark.parser.block.ParserState){}[0]
+
+    final class Factory : io.heapy.kotmark.parser.block/AbstractBlockParserFactory { // io.heapy.kotmark.internal/ListBlockParser.Factory|null[0]
+        constructor <init>() // io.heapy.kotmark.internal/ListBlockParser.Factory.<init>|<init>(){}[0]
+
+        final fun tryStart(io.heapy.kotmark.parser.block/ParserState, io.heapy.kotmark.parser.block/MatchedBlockParser): io.heapy.kotmark.parser.block/BlockStart? // io.heapy.kotmark.internal/ListBlockParser.Factory.tryStart|tryStart(io.heapy.kotmark.parser.block.ParserState;io.heapy.kotmark.parser.block.MatchedBlockParser){}[0]
+    }
+
+    final object Companion // io.heapy.kotmark.internal/ListBlockParser.Companion|null[0]
+}
+
+final class io.heapy.kotmark.internal/ListItemParser : io.heapy.kotmark.parser.block/AbstractBlockParser { // io.heapy.kotmark.internal/ListItemParser|null[0]
+    constructor <init>(kotlin/Int, kotlin/Int) // io.heapy.kotmark.internal/ListItemParser.<init>|<init>(kotlin.Int;kotlin.Int){}[0]
+
+    final val block // io.heapy.kotmark.internal/ListItemParser.block|{}block[0]
+        final fun <get-block>(): io.heapy.kotmark.node/ListItem // io.heapy.kotmark.internal/ListItemParser.block.<get-block>|<get-block>(){}[0]
+
+    final fun canContain(io.heapy.kotmark.node/Block): kotlin/Boolean // io.heapy.kotmark.internal/ListItemParser.canContain|canContain(io.heapy.kotmark.node.Block){}[0]
+    final fun isContainer(): kotlin/Boolean // io.heapy.kotmark.internal/ListItemParser.isContainer|isContainer(){}[0]
+    final fun tryContinue(io.heapy.kotmark.parser.block/ParserState): io.heapy.kotmark.parser.block/BlockContinue? // io.heapy.kotmark.internal/ListItemParser.tryContinue|tryContinue(io.heapy.kotmark.parser.block.ParserState){}[0]
+}
+
+final class io.heapy.kotmark.internal/ParagraphParser : io.heapy.kotmark.parser.block/AbstractBlockParser { // io.heapy.kotmark.internal/ParagraphParser|null[0]
+    constructor <init>() // io.heapy.kotmark.internal/ParagraphParser.<init>|<init>(){}[0]
+
+    final val block // io.heapy.kotmark.internal/ParagraphParser.block|{}block[0]
+        final fun <get-block>(): io.heapy.kotmark.node/Paragraph // io.heapy.kotmark.internal/ParagraphParser.block.<get-block>|<get-block>(){}[0]
+    final val definitions // io.heapy.kotmark.internal/ParagraphParser.definitions|{}definitions[0]
+        final fun <get-definitions>(): kotlin.collections/List<io.heapy.kotmark.node/DefinitionMap<*>> // io.heapy.kotmark.internal/ParagraphParser.definitions.<get-definitions>|<get-definitions>(){}[0]
+    final val paragraphLines // io.heapy.kotmark.internal/ParagraphParser.paragraphLines|{}paragraphLines[0]
+        final fun <get-paragraphLines>(): io.heapy.kotmark.parser/SourceLines // io.heapy.kotmark.internal/ParagraphParser.paragraphLines.<get-paragraphLines>|<get-paragraphLines>(){}[0]
+
+    final fun addLine(io.heapy.kotmark.parser/SourceLine) // io.heapy.kotmark.internal/ParagraphParser.addLine|addLine(io.heapy.kotmark.parser.SourceLine){}[0]
+    final fun addSourceSpan(io.heapy.kotmark.node/SourceSpan) // io.heapy.kotmark.internal/ParagraphParser.addSourceSpan|addSourceSpan(io.heapy.kotmark.node.SourceSpan){}[0]
+    final fun canHaveLazyContinuationLines(): kotlin/Boolean // io.heapy.kotmark.internal/ParagraphParser.canHaveLazyContinuationLines|canHaveLazyContinuationLines(){}[0]
+    final fun closeBlock() // io.heapy.kotmark.internal/ParagraphParser.closeBlock|closeBlock(){}[0]
+    final fun parseInlines(io.heapy.kotmark.parser/InlineParser) // io.heapy.kotmark.internal/ParagraphParser.parseInlines|parseInlines(io.heapy.kotmark.parser.InlineParser){}[0]
+    final fun removeLines(kotlin/Int): kotlin.collections/List<io.heapy.kotmark.node/SourceSpan> // io.heapy.kotmark.internal/ParagraphParser.removeLines|removeLines(kotlin.Int){}[0]
+    final fun tryContinue(io.heapy.kotmark.parser.block/ParserState): io.heapy.kotmark.parser.block/BlockContinue? // io.heapy.kotmark.internal/ParagraphParser.tryContinue|tryContinue(io.heapy.kotmark.parser.block.ParserState){}[0]
+}
+
+final class io.heapy.kotmark.internal/ThematicBreakParser : io.heapy.kotmark.parser.block/AbstractBlockParser { // io.heapy.kotmark.internal/ThematicBreakParser|null[0]
+    constructor <init>(kotlin/String) // io.heapy.kotmark.internal/ThematicBreakParser.<init>|<init>(kotlin.String){}[0]
+
+    final val block // io.heapy.kotmark.internal/ThematicBreakParser.block|{}block[0]
+        final fun <get-block>(): io.heapy.kotmark.node/ThematicBreak // io.heapy.kotmark.internal/ThematicBreakParser.block.<get-block>|<get-block>(){}[0]
+
+    final fun tryContinue(io.heapy.kotmark.parser.block/ParserState): io.heapy.kotmark.parser.block/BlockContinue? // io.heapy.kotmark.internal/ThematicBreakParser.tryContinue|tryContinue(io.heapy.kotmark.parser.block.ParserState){}[0]
+
+    final class Factory : io.heapy.kotmark.parser.block/AbstractBlockParserFactory { // io.heapy.kotmark.internal/ThematicBreakParser.Factory|null[0]
+        constructor <init>() // io.heapy.kotmark.internal/ThematicBreakParser.Factory.<init>|<init>(){}[0]
+
+        final fun tryStart(io.heapy.kotmark.parser.block/ParserState, io.heapy.kotmark.parser.block/MatchedBlockParser): io.heapy.kotmark.parser.block/BlockStart? // io.heapy.kotmark.internal/ThematicBreakParser.Factory.tryStart|tryStart(io.heapy.kotmark.parser.block.ParserState;io.heapy.kotmark.parser.block.MatchedBlockParser){}[0]
+    }
+
+    final object Companion // io.heapy.kotmark.internal/ThematicBreakParser.Companion|null[0]
+}
+
+final class io.heapy.kotmark.node/BlockQuote : io.heapy.kotmark.node/Block { // io.heapy.kotmark.node/BlockQuote|null[0]
+    constructor <init>() // io.heapy.kotmark.node/BlockQuote.<init>|<init>(){}[0]
+
+    final fun accept(io.heapy.kotmark.node/Visitor) // io.heapy.kotmark.node/BlockQuote.accept|accept(io.heapy.kotmark.node.Visitor){}[0]
+}
+
+final class io.heapy.kotmark.node/BulletList : io.heapy.kotmark.node/ListBlock { // io.heapy.kotmark.node/BulletList|null[0]
+    constructor <init>() // io.heapy.kotmark.node/BulletList.<init>|<init>(){}[0]
+
+    final val bulletMarker // io.heapy.kotmark.node/BulletList.bulletMarker|{}bulletMarker[0]
+        final fun <get-bulletMarker>(): kotlin/Char // io.heapy.kotmark.node/BulletList.bulletMarker.<get-bulletMarker>|<get-bulletMarker>(){}[0]
+
+    final var marker // io.heapy.kotmark.node/BulletList.marker|{}marker[0]
+        final fun <get-marker>(): kotlin/String? // io.heapy.kotmark.node/BulletList.marker.<get-marker>|<get-marker>(){}[0]
+        final fun <set-marker>(kotlin/String?) // io.heapy.kotmark.node/BulletList.marker.<set-marker>|<set-marker>(kotlin.String?){}[0]
+
+    final fun accept(io.heapy.kotmark.node/Visitor) // io.heapy.kotmark.node/BulletList.accept|accept(io.heapy.kotmark.node.Visitor){}[0]
+    final fun setBulletMarker(kotlin/Char) // io.heapy.kotmark.node/BulletList.setBulletMarker|setBulletMarker(kotlin.Char){}[0]
+}
+
+final class io.heapy.kotmark.node/Code : io.heapy.kotmark.node/Node { // io.heapy.kotmark.node/Code|null[0]
+    constructor <init>(kotlin/String? = ...) // io.heapy.kotmark.node/Code.<init>|<init>(kotlin.String?){}[0]
+
+    final var literal // io.heapy.kotmark.node/Code.literal|{}literal[0]
+        final fun <get-literal>(): kotlin/String? // io.heapy.kotmark.node/Code.literal.<get-literal>|<get-literal>(){}[0]
+        final fun <set-literal>(kotlin/String?) // io.heapy.kotmark.node/Code.literal.<set-literal>|<set-literal>(kotlin.String?){}[0]
+
+    final fun accept(io.heapy.kotmark.node/Visitor) // io.heapy.kotmark.node/Code.accept|accept(io.heapy.kotmark.node.Visitor){}[0]
+}
+
+final class io.heapy.kotmark.node/Document : io.heapy.kotmark.node/Block { // io.heapy.kotmark.node/Document|null[0]
+    constructor <init>() // io.heapy.kotmark.node/Document.<init>|<init>(){}[0]
+
+    final fun accept(io.heapy.kotmark.node/Visitor) // io.heapy.kotmark.node/Document.accept|accept(io.heapy.kotmark.node.Visitor){}[0]
+}
+
+final class io.heapy.kotmark.node/Emphasis : io.heapy.kotmark.node/Delimited, io.heapy.kotmark.node/Node { // io.heapy.kotmark.node/Emphasis|null[0]
+    constructor <init>() // io.heapy.kotmark.node/Emphasis.<init>|<init>(){}[0]
+    constructor <init>(kotlin/String) // io.heapy.kotmark.node/Emphasis.<init>|<init>(kotlin.String){}[0]
+
+    final val closingDelimiter // io.heapy.kotmark.node/Emphasis.closingDelimiter|{}closingDelimiter[0]
+        final fun <get-closingDelimiter>(): kotlin/String? // io.heapy.kotmark.node/Emphasis.closingDelimiter.<get-closingDelimiter>|<get-closingDelimiter>(){}[0]
+    final val openingDelimiter // io.heapy.kotmark.node/Emphasis.openingDelimiter|{}openingDelimiter[0]
+        final fun <get-openingDelimiter>(): kotlin/String? // io.heapy.kotmark.node/Emphasis.openingDelimiter.<get-openingDelimiter>|<get-openingDelimiter>(){}[0]
+
+    final var delimiter // io.heapy.kotmark.node/Emphasis.delimiter|{}delimiter[0]
+        final fun <get-delimiter>(): kotlin/String? // io.heapy.kotmark.node/Emphasis.delimiter.<get-delimiter>|<get-delimiter>(){}[0]
+        final fun <set-delimiter>(kotlin/String?) // io.heapy.kotmark.node/Emphasis.delimiter.<set-delimiter>|<set-delimiter>(kotlin.String?){}[0]
+
+    final fun accept(io.heapy.kotmark.node/Visitor) // io.heapy.kotmark.node/Emphasis.accept|accept(io.heapy.kotmark.node.Visitor){}[0]
+}
+
+final class io.heapy.kotmark.node/FencedCodeBlock : io.heapy.kotmark.node/Block { // io.heapy.kotmark.node/FencedCodeBlock|null[0]
+    constructor <init>() // io.heapy.kotmark.node/FencedCodeBlock.<init>|<init>(){}[0]
+
+    final val fenceChar // io.heapy.kotmark.node/FencedCodeBlock.fenceChar|{}fenceChar[0]
+        final fun <get-fenceChar>(): kotlin/Char // io.heapy.kotmark.node/FencedCodeBlock.fenceChar.<get-fenceChar>|<get-fenceChar>(){}[0]
+    final val fenceLength // io.heapy.kotmark.node/FencedCodeBlock.fenceLength|{}fenceLength[0]
+        final fun <get-fenceLength>(): kotlin/Int // io.heapy.kotmark.node/FencedCodeBlock.fenceLength.<get-fenceLength>|<get-fenceLength>(){}[0]
+
+    final var closingFenceLength // io.heapy.kotmark.node/FencedCodeBlock.closingFenceLength|{}closingFenceLength[0]
+        final fun <get-closingFenceLength>(): kotlin/Int? // io.heapy.kotmark.node/FencedCodeBlock.closingFenceLength.<get-closingFenceLength>|<get-closingFenceLength>(){}[0]
+        final fun <set-closingFenceLength>(kotlin/Int?) // io.heapy.kotmark.node/FencedCodeBlock.closingFenceLength.<set-closingFenceLength>|<set-closingFenceLength>(kotlin.Int?){}[0]
+    final var fenceCharacter // io.heapy.kotmark.node/FencedCodeBlock.fenceCharacter|{}fenceCharacter[0]
+        final fun <get-fenceCharacter>(): kotlin/String? // io.heapy.kotmark.node/FencedCodeBlock.fenceCharacter.<get-fenceCharacter>|<get-fenceCharacter>(){}[0]
+        final fun <set-fenceCharacter>(kotlin/String?) // io.heapy.kotmark.node/FencedCodeBlock.fenceCharacter.<set-fenceCharacter>|<set-fenceCharacter>(kotlin.String?){}[0]
+    final var fenceIndent // io.heapy.kotmark.node/FencedCodeBlock.fenceIndent|{}fenceIndent[0]
+        final fun <get-fenceIndent>(): kotlin/Int // io.heapy.kotmark.node/FencedCodeBlock.fenceIndent.<get-fenceIndent>|<get-fenceIndent>(){}[0]
+        final fun <set-fenceIndent>(kotlin/Int) // io.heapy.kotmark.node/FencedCodeBlock.fenceIndent.<set-fenceIndent>|<set-fenceIndent>(kotlin.Int){}[0]
+    final var info // io.heapy.kotmark.node/FencedCodeBlock.info|{}info[0]
+        final fun <get-info>(): kotlin/String? // io.heapy.kotmark.node/FencedCodeBlock.info.<get-info>|<get-info>(){}[0]
+        final fun <set-info>(kotlin/String?) // io.heapy.kotmark.node/FencedCodeBlock.info.<set-info>|<set-info>(kotlin.String?){}[0]
+    final var literal // io.heapy.kotmark.node/FencedCodeBlock.literal|{}literal[0]
+        final fun <get-literal>(): kotlin/String? // io.heapy.kotmark.node/FencedCodeBlock.literal.<get-literal>|<get-literal>(){}[0]
+        final fun <set-literal>(kotlin/String?) // io.heapy.kotmark.node/FencedCodeBlock.literal.<set-literal>|<set-literal>(kotlin.String?){}[0]
+    final var openingFenceLength // io.heapy.kotmark.node/FencedCodeBlock.openingFenceLength|{}openingFenceLength[0]
+        final fun <get-openingFenceLength>(): kotlin/Int? // io.heapy.kotmark.node/FencedCodeBlock.openingFenceLength.<get-openingFenceLength>|<get-openingFenceLength>(){}[0]
+        final fun <set-openingFenceLength>(kotlin/Int?) // io.heapy.kotmark.node/FencedCodeBlock.openingFenceLength.<set-openingFenceLength>|<set-openingFenceLength>(kotlin.Int?){}[0]
+
+    final fun accept(io.heapy.kotmark.node/Visitor) // io.heapy.kotmark.node/FencedCodeBlock.accept|accept(io.heapy.kotmark.node.Visitor){}[0]
+    final fun setFenceChar(kotlin/Char) // io.heapy.kotmark.node/FencedCodeBlock.setFenceChar|setFenceChar(kotlin.Char){}[0]
+    final fun setFenceLength(kotlin/Int) // io.heapy.kotmark.node/FencedCodeBlock.setFenceLength|setFenceLength(kotlin.Int){}[0]
+
+    final object Companion // io.heapy.kotmark.node/FencedCodeBlock.Companion|null[0]
+}
+
+final class io.heapy.kotmark.node/HardLineBreak : io.heapy.kotmark.node/Node { // io.heapy.kotmark.node/HardLineBreak|null[0]
+    constructor <init>() // io.heapy.kotmark.node/HardLineBreak.<init>|<init>(){}[0]
+
+    final fun accept(io.heapy.kotmark.node/Visitor) // io.heapy.kotmark.node/HardLineBreak.accept|accept(io.heapy.kotmark.node.Visitor){}[0]
+}
+
+final class io.heapy.kotmark.node/Heading : io.heapy.kotmark.node/Block { // io.heapy.kotmark.node/Heading|null[0]
+    constructor <init>() // io.heapy.kotmark.node/Heading.<init>|<init>(){}[0]
+
+    final var level // io.heapy.kotmark.node/Heading.level|{}level[0]
+        final fun <get-level>(): kotlin/Int // io.heapy.kotmark.node/Heading.level.<get-level>|<get-level>(){}[0]
+        final fun <set-level>(kotlin/Int) // io.heapy.kotmark.node/Heading.level.<set-level>|<set-level>(kotlin.Int){}[0]
+
+    final fun accept(io.heapy.kotmark.node/Visitor) // io.heapy.kotmark.node/Heading.accept|accept(io.heapy.kotmark.node.Visitor){}[0]
+}
+
+final class io.heapy.kotmark.node/HtmlBlock : io.heapy.kotmark.node/Block { // io.heapy.kotmark.node/HtmlBlock|null[0]
+    constructor <init>() // io.heapy.kotmark.node/HtmlBlock.<init>|<init>(){}[0]
+
+    final var literal // io.heapy.kotmark.node/HtmlBlock.literal|{}literal[0]
+        final fun <get-literal>(): kotlin/String? // io.heapy.kotmark.node/HtmlBlock.literal.<get-literal>|<get-literal>(){}[0]
+        final fun <set-literal>(kotlin/String?) // io.heapy.kotmark.node/HtmlBlock.literal.<set-literal>|<set-literal>(kotlin.String?){}[0]
+
+    final fun accept(io.heapy.kotmark.node/Visitor) // io.heapy.kotmark.node/HtmlBlock.accept|accept(io.heapy.kotmark.node.Visitor){}[0]
+}
+
+final class io.heapy.kotmark.node/HtmlInline : io.heapy.kotmark.node/Node { // io.heapy.kotmark.node/HtmlInline|null[0]
+    constructor <init>() // io.heapy.kotmark.node/HtmlInline.<init>|<init>(){}[0]
+
+    final var literal // io.heapy.kotmark.node/HtmlInline.literal|{}literal[0]
+        final fun <get-literal>(): kotlin/String? // io.heapy.kotmark.node/HtmlInline.literal.<get-literal>|<get-literal>(){}[0]
+        final fun <set-literal>(kotlin/String?) // io.heapy.kotmark.node/HtmlInline.literal.<set-literal>|<set-literal>(kotlin.String?){}[0]
+
+    final fun accept(io.heapy.kotmark.node/Visitor) // io.heapy.kotmark.node/HtmlInline.accept|accept(io.heapy.kotmark.node.Visitor){}[0]
+}
+
+final class io.heapy.kotmark.node/Image : io.heapy.kotmark.node/Node { // io.heapy.kotmark.node/Image|null[0]
+    constructor <init>() // io.heapy.kotmark.node/Image.<init>|<init>(){}[0]
+    constructor <init>(kotlin/String?, kotlin/String?) // io.heapy.kotmark.node/Image.<init>|<init>(kotlin.String?;kotlin.String?){}[0]
+
+    final var destination // io.heapy.kotmark.node/Image.destination|{}destination[0]
+        final fun <get-destination>(): kotlin/String? // io.heapy.kotmark.node/Image.destination.<get-destination>|<get-destination>(){}[0]
+        final fun <set-destination>(kotlin/String?) // io.heapy.kotmark.node/Image.destination.<set-destination>|<set-destination>(kotlin.String?){}[0]
+    final var title // io.heapy.kotmark.node/Image.title|{}title[0]
+        final fun <get-title>(): kotlin/String? // io.heapy.kotmark.node/Image.title.<get-title>|<get-title>(){}[0]
+        final fun <set-title>(kotlin/String?) // io.heapy.kotmark.node/Image.title.<set-title>|<set-title>(kotlin.String?){}[0]
+
+    final fun accept(io.heapy.kotmark.node/Visitor) // io.heapy.kotmark.node/Image.accept|accept(io.heapy.kotmark.node.Visitor){}[0]
+}
+
+final class io.heapy.kotmark.node/IndentedCodeBlock : io.heapy.kotmark.node/Block { // io.heapy.kotmark.node/IndentedCodeBlock|null[0]
+    constructor <init>() // io.heapy.kotmark.node/IndentedCodeBlock.<init>|<init>(){}[0]
+
+    final var literal // io.heapy.kotmark.node/IndentedCodeBlock.literal|{}literal[0]
+        final fun <get-literal>(): kotlin/String? // io.heapy.kotmark.node/IndentedCodeBlock.literal.<get-literal>|<get-literal>(){}[0]
+        final fun <set-literal>(kotlin/String?) // io.heapy.kotmark.node/IndentedCodeBlock.literal.<set-literal>|<set-literal>(kotlin.String?){}[0]
+
+    final fun accept(io.heapy.kotmark.node/Visitor) // io.heapy.kotmark.node/IndentedCodeBlock.accept|accept(io.heapy.kotmark.node.Visitor){}[0]
+}
+
+final class io.heapy.kotmark.node/Link : io.heapy.kotmark.node/Node { // io.heapy.kotmark.node/Link|null[0]
+    constructor <init>() // io.heapy.kotmark.node/Link.<init>|<init>(){}[0]
+    constructor <init>(kotlin/String?, kotlin/String?) // io.heapy.kotmark.node/Link.<init>|<init>(kotlin.String?;kotlin.String?){}[0]
+
+    final var destination // io.heapy.kotmark.node/Link.destination|{}destination[0]
+        final fun <get-destination>(): kotlin/String? // io.heapy.kotmark.node/Link.destination.<get-destination>|<get-destination>(){}[0]
+        final fun <set-destination>(kotlin/String?) // io.heapy.kotmark.node/Link.destination.<set-destination>|<set-destination>(kotlin.String?){}[0]
+    final var title // io.heapy.kotmark.node/Link.title|{}title[0]
+        final fun <get-title>(): kotlin/String? // io.heapy.kotmark.node/Link.title.<get-title>|<get-title>(){}[0]
+        final fun <set-title>(kotlin/String?) // io.heapy.kotmark.node/Link.title.<set-title>|<set-title>(kotlin.String?){}[0]
+
+    final fun accept(io.heapy.kotmark.node/Visitor) // io.heapy.kotmark.node/Link.accept|accept(io.heapy.kotmark.node.Visitor){}[0]
+}
+
+final class io.heapy.kotmark.node/LinkReferenceDefinition : io.heapy.kotmark.node/Block { // io.heapy.kotmark.node/LinkReferenceDefinition|null[0]
+    constructor <init>() // io.heapy.kotmark.node/LinkReferenceDefinition.<init>|<init>(){}[0]
+    constructor <init>(kotlin/String?, kotlin/String?, kotlin/String?) // io.heapy.kotmark.node/LinkReferenceDefinition.<init>|<init>(kotlin.String?;kotlin.String?;kotlin.String?){}[0]
+
+    final var destination // io.heapy.kotmark.node/LinkReferenceDefinition.destination|{}destination[0]
+        final fun <get-destination>(): kotlin/String? // io.heapy.kotmark.node/LinkReferenceDefinition.destination.<get-destination>|<get-destination>(){}[0]
+        final fun <set-destination>(kotlin/String?) // io.heapy.kotmark.node/LinkReferenceDefinition.destination.<set-destination>|<set-destination>(kotlin.String?){}[0]
+    final var label // io.heapy.kotmark.node/LinkReferenceDefinition.label|{}label[0]
+        final fun <get-label>(): kotlin/String? // io.heapy.kotmark.node/LinkReferenceDefinition.label.<get-label>|<get-label>(){}[0]
+        final fun <set-label>(kotlin/String?) // io.heapy.kotmark.node/LinkReferenceDefinition.label.<set-label>|<set-label>(kotlin.String?){}[0]
+    final var title // io.heapy.kotmark.node/LinkReferenceDefinition.title|{}title[0]
+        final fun <get-title>(): kotlin/String? // io.heapy.kotmark.node/LinkReferenceDefinition.title.<get-title>|<get-title>(){}[0]
+        final fun <set-title>(kotlin/String?) // io.heapy.kotmark.node/LinkReferenceDefinition.title.<set-title>|<set-title>(kotlin.String?){}[0]
+
+    final fun accept(io.heapy.kotmark.node/Visitor) // io.heapy.kotmark.node/LinkReferenceDefinition.accept|accept(io.heapy.kotmark.node.Visitor){}[0]
+}
+
+final class io.heapy.kotmark.node/ListItem : io.heapy.kotmark.node/Block { // io.heapy.kotmark.node/ListItem|null[0]
+    constructor <init>() // io.heapy.kotmark.node/ListItem.<init>|<init>(){}[0]
+
+    final var contentIndent // io.heapy.kotmark.node/ListItem.contentIndent|{}contentIndent[0]
+        final fun <get-contentIndent>(): kotlin/Int? // io.heapy.kotmark.node/ListItem.contentIndent.<get-contentIndent>|<get-contentIndent>(){}[0]
+        final fun <set-contentIndent>(kotlin/Int?) // io.heapy.kotmark.node/ListItem.contentIndent.<set-contentIndent>|<set-contentIndent>(kotlin.Int?){}[0]
+    final var markerIndent // io.heapy.kotmark.node/ListItem.markerIndent|{}markerIndent[0]
+        final fun <get-markerIndent>(): kotlin/Int? // io.heapy.kotmark.node/ListItem.markerIndent.<get-markerIndent>|<get-markerIndent>(){}[0]
+        final fun <set-markerIndent>(kotlin/Int?) // io.heapy.kotmark.node/ListItem.markerIndent.<set-markerIndent>|<set-markerIndent>(kotlin.Int?){}[0]
+
+    final fun accept(io.heapy.kotmark.node/Visitor) // io.heapy.kotmark.node/ListItem.accept|accept(io.heapy.kotmark.node.Visitor){}[0]
+    final fun appendChildBlock(io.heapy.kotmark.node/Block) // io.heapy.kotmark.node/ListItem.appendChildBlock|appendChildBlock(io.heapy.kotmark.node.Block){}[0]
+}
+
+final class io.heapy.kotmark.node/OrderedList : io.heapy.kotmark.node/ListBlock { // io.heapy.kotmark.node/OrderedList|null[0]
+    constructor <init>() // io.heapy.kotmark.node/OrderedList.<init>|<init>(){}[0]
+
+    final val delimiter // io.heapy.kotmark.node/OrderedList.delimiter|{}delimiter[0]
+        final fun <get-delimiter>(): kotlin/Char // io.heapy.kotmark.node/OrderedList.delimiter.<get-delimiter>|<get-delimiter>(){}[0]
+    final val startNumber // io.heapy.kotmark.node/OrderedList.startNumber|{}startNumber[0]
+        final fun <get-startNumber>(): kotlin/Int // io.heapy.kotmark.node/OrderedList.startNumber.<get-startNumber>|<get-startNumber>(){}[0]
+
+    final var markerDelimiter // io.heapy.kotmark.node/OrderedList.markerDelimiter|{}markerDelimiter[0]
+        final fun <get-markerDelimiter>(): kotlin/String? // io.heapy.kotmark.node/OrderedList.markerDelimiter.<get-markerDelimiter>|<get-markerDelimiter>(){}[0]
+        final fun <set-markerDelimiter>(kotlin/String?) // io.heapy.kotmark.node/OrderedList.markerDelimiter.<set-markerDelimiter>|<set-markerDelimiter>(kotlin.String?){}[0]
+    final var markerStartNumber // io.heapy.kotmark.node/OrderedList.markerStartNumber|{}markerStartNumber[0]
+        final fun <get-markerStartNumber>(): kotlin/Int? // io.heapy.kotmark.node/OrderedList.markerStartNumber.<get-markerStartNumber>|<get-markerStartNumber>(){}[0]
+        final fun <set-markerStartNumber>(kotlin/Int?) // io.heapy.kotmark.node/OrderedList.markerStartNumber.<set-markerStartNumber>|<set-markerStartNumber>(kotlin.Int?){}[0]
+
+    final fun accept(io.heapy.kotmark.node/Visitor) // io.heapy.kotmark.node/OrderedList.accept|accept(io.heapy.kotmark.node.Visitor){}[0]
+    final fun setDelimiter(kotlin/Char) // io.heapy.kotmark.node/OrderedList.setDelimiter|setDelimiter(kotlin.Char){}[0]
+    final fun setStartNumber(kotlin/Int) // io.heapy.kotmark.node/OrderedList.setStartNumber|setStartNumber(kotlin.Int){}[0]
+}
+
+final class io.heapy.kotmark.node/Paragraph : io.heapy.kotmark.node/Block { // io.heapy.kotmark.node/Paragraph|null[0]
+    constructor <init>() // io.heapy.kotmark.node/Paragraph.<init>|<init>(){}[0]
+
+    final fun accept(io.heapy.kotmark.node/Visitor) // io.heapy.kotmark.node/Paragraph.accept|accept(io.heapy.kotmark.node.Visitor){}[0]
+}
+
+final class io.heapy.kotmark.node/SoftLineBreak : io.heapy.kotmark.node/Node { // io.heapy.kotmark.node/SoftLineBreak|null[0]
+    constructor <init>() // io.heapy.kotmark.node/SoftLineBreak.<init>|<init>(){}[0]
+
+    final fun accept(io.heapy.kotmark.node/Visitor) // io.heapy.kotmark.node/SoftLineBreak.accept|accept(io.heapy.kotmark.node.Visitor){}[0]
+}
+
+final class io.heapy.kotmark.node/SourceSpan { // io.heapy.kotmark.node/SourceSpan|null[0]
+    final val columnIndex // io.heapy.kotmark.node/SourceSpan.columnIndex|{}columnIndex[0]
+        final fun <get-columnIndex>(): kotlin/Int // io.heapy.kotmark.node/SourceSpan.columnIndex.<get-columnIndex>|<get-columnIndex>(){}[0]
+    final val inputIndex // io.heapy.kotmark.node/SourceSpan.inputIndex|{}inputIndex[0]
+        final fun <get-inputIndex>(): kotlin/Int // io.heapy.kotmark.node/SourceSpan.inputIndex.<get-inputIndex>|<get-inputIndex>(){}[0]
+    final val length // io.heapy.kotmark.node/SourceSpan.length|{}length[0]
+        final fun <get-length>(): kotlin/Int // io.heapy.kotmark.node/SourceSpan.length.<get-length>|<get-length>(){}[0]
+    final val lineIndex // io.heapy.kotmark.node/SourceSpan.lineIndex|{}lineIndex[0]
+        final fun <get-lineIndex>(): kotlin/Int // io.heapy.kotmark.node/SourceSpan.lineIndex.<get-lineIndex>|<get-lineIndex>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.heapy.kotmark.node/SourceSpan.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.heapy.kotmark.node/SourceSpan.hashCode|hashCode(){}[0]
+    final fun subSpan(kotlin/Int): io.heapy.kotmark.node/SourceSpan // io.heapy.kotmark.node/SourceSpan.subSpan|subSpan(kotlin.Int){}[0]
+    final fun subSpan(kotlin/Int, kotlin/Int): io.heapy.kotmark.node/SourceSpan // io.heapy.kotmark.node/SourceSpan.subSpan|subSpan(kotlin.Int;kotlin.Int){}[0]
+    final fun toString(): kotlin/String // io.heapy.kotmark.node/SourceSpan.toString|toString(){}[0]
+
+    final object Companion { // io.heapy.kotmark.node/SourceSpan.Companion|null[0]
+        final fun of(kotlin/Int, kotlin/Int, kotlin/Int): io.heapy.kotmark.node/SourceSpan // io.heapy.kotmark.node/SourceSpan.Companion.of|of(kotlin.Int;kotlin.Int;kotlin.Int){}[0]
+        final fun of(kotlin/Int, kotlin/Int, kotlin/Int, kotlin/Int): io.heapy.kotmark.node/SourceSpan // io.heapy.kotmark.node/SourceSpan.Companion.of|of(kotlin.Int;kotlin.Int;kotlin.Int;kotlin.Int){}[0]
+    }
+}
+
+final class io.heapy.kotmark.node/SourceSpans { // io.heapy.kotmark.node/SourceSpans|null[0]
+    final fun addAll(kotlin.collections/List<io.heapy.kotmark.node/SourceSpan>) // io.heapy.kotmark.node/SourceSpans.addAll|addAll(kotlin.collections.List<io.heapy.kotmark.node.SourceSpan>){}[0]
+    final fun addAllFrom(kotlin.collections/Iterable<io.heapy.kotmark.node/Node>) // io.heapy.kotmark.node/SourceSpans.addAllFrom|addAllFrom(kotlin.collections.Iterable<io.heapy.kotmark.node.Node>){}[0]
+    final fun getSourceSpans(): kotlin.collections/List<io.heapy.kotmark.node/SourceSpan> // io.heapy.kotmark.node/SourceSpans.getSourceSpans|getSourceSpans(){}[0]
+
+    final object Companion { // io.heapy.kotmark.node/SourceSpans.Companion|null[0]
+        final fun empty(): io.heapy.kotmark.node/SourceSpans // io.heapy.kotmark.node/SourceSpans.Companion.empty|empty(){}[0]
+    }
+}
+
+final class io.heapy.kotmark.node/StrongEmphasis : io.heapy.kotmark.node/Delimited, io.heapy.kotmark.node/Node { // io.heapy.kotmark.node/StrongEmphasis|null[0]
+    constructor <init>() // io.heapy.kotmark.node/StrongEmphasis.<init>|<init>(){}[0]
+    constructor <init>(kotlin/String) // io.heapy.kotmark.node/StrongEmphasis.<init>|<init>(kotlin.String){}[0]
+
+    final val closingDelimiter // io.heapy.kotmark.node/StrongEmphasis.closingDelimiter|{}closingDelimiter[0]
+        final fun <get-closingDelimiter>(): kotlin/String? // io.heapy.kotmark.node/StrongEmphasis.closingDelimiter.<get-closingDelimiter>|<get-closingDelimiter>(){}[0]
+    final val openingDelimiter // io.heapy.kotmark.node/StrongEmphasis.openingDelimiter|{}openingDelimiter[0]
+        final fun <get-openingDelimiter>(): kotlin/String? // io.heapy.kotmark.node/StrongEmphasis.openingDelimiter.<get-openingDelimiter>|<get-openingDelimiter>(){}[0]
+
+    final var delimiter // io.heapy.kotmark.node/StrongEmphasis.delimiter|{}delimiter[0]
+        final fun <get-delimiter>(): kotlin/String? // io.heapy.kotmark.node/StrongEmphasis.delimiter.<get-delimiter>|<get-delimiter>(){}[0]
+        final fun <set-delimiter>(kotlin/String?) // io.heapy.kotmark.node/StrongEmphasis.delimiter.<set-delimiter>|<set-delimiter>(kotlin.String?){}[0]
+
+    final fun accept(io.heapy.kotmark.node/Visitor) // io.heapy.kotmark.node/StrongEmphasis.accept|accept(io.heapy.kotmark.node.Visitor){}[0]
+}
+
+final class io.heapy.kotmark.node/Text : io.heapy.kotmark.node/Node { // io.heapy.kotmark.node/Text|null[0]
+    constructor <init>() // io.heapy.kotmark.node/Text.<init>|<init>(){}[0]
+    constructor <init>(kotlin/String) // io.heapy.kotmark.node/Text.<init>|<init>(kotlin.String){}[0]
+
+    final var literal // io.heapy.kotmark.node/Text.literal|{}literal[0]
+        final fun <get-literal>(): kotlin/String? // io.heapy.kotmark.node/Text.literal.<get-literal>|<get-literal>(){}[0]
+        final fun <set-literal>(kotlin/String?) // io.heapy.kotmark.node/Text.literal.<set-literal>|<set-literal>(kotlin.String?){}[0]
+
+    final fun accept(io.heapy.kotmark.node/Visitor) // io.heapy.kotmark.node/Text.accept|accept(io.heapy.kotmark.node.Visitor){}[0]
+}
+
+final class io.heapy.kotmark.node/ThematicBreak : io.heapy.kotmark.node/Block { // io.heapy.kotmark.node/ThematicBreak|null[0]
+    constructor <init>() // io.heapy.kotmark.node/ThematicBreak.<init>|<init>(){}[0]
+
+    final var literal // io.heapy.kotmark.node/ThematicBreak.literal|{}literal[0]
+        final fun <get-literal>(): kotlin/String? // io.heapy.kotmark.node/ThematicBreak.literal.<get-literal>|<get-literal>(){}[0]
+        final fun <set-literal>(kotlin/String?) // io.heapy.kotmark.node/ThematicBreak.literal.<set-literal>|<set-literal>(kotlin.String?){}[0]
+
+    final fun accept(io.heapy.kotmark.node/Visitor) // io.heapy.kotmark.node/ThematicBreak.accept|accept(io.heapy.kotmark.node.Visitor){}[0]
+}
+
+final class io.heapy.kotmark.parser.beta/Position // io.heapy.kotmark.parser.beta/Position|null[0]
+
+final class io.heapy.kotmark.parser.beta/Scanner { // io.heapy.kotmark.parser.beta/Scanner|null[0]
+    constructor <init>(kotlin.collections/List<io.heapy.kotmark.parser/SourceLine>, kotlin/Int, kotlin/Int) // io.heapy.kotmark.parser.beta/Scanner.<init>|<init>(kotlin.collections.List<io.heapy.kotmark.parser.SourceLine>;kotlin.Int;kotlin.Int){}[0]
+
+    final fun find(io.heapy.kotmark.text/CharMatcher): kotlin/Int // io.heapy.kotmark.parser.beta/Scanner.find|find(io.heapy.kotmark.text.CharMatcher){}[0]
+    final fun find(kotlin/Char): kotlin/Int // io.heapy.kotmark.parser.beta/Scanner.find|find(kotlin.Char){}[0]
+    final fun getSource(io.heapy.kotmark.parser.beta/Position, io.heapy.kotmark.parser.beta/Position): io.heapy.kotmark.parser/SourceLines // io.heapy.kotmark.parser.beta/Scanner.getSource|getSource(io.heapy.kotmark.parser.beta.Position;io.heapy.kotmark.parser.beta.Position){}[0]
+    final fun hasNext(): kotlin/Boolean // io.heapy.kotmark.parser.beta/Scanner.hasNext|hasNext(){}[0]
+    final fun match(io.heapy.kotmark.text/CharMatcher): kotlin/Int // io.heapy.kotmark.parser.beta/Scanner.match|match(io.heapy.kotmark.text.CharMatcher){}[0]
+    final fun matchMultiple(kotlin/Char): kotlin/Int // io.heapy.kotmark.parser.beta/Scanner.matchMultiple|matchMultiple(kotlin.Char){}[0]
+    final fun next() // io.heapy.kotmark.parser.beta/Scanner.next|next(){}[0]
+    final fun next(kotlin/Char): kotlin/Boolean // io.heapy.kotmark.parser.beta/Scanner.next|next(kotlin.Char){}[0]
+    final fun next(kotlin/String): kotlin/Boolean // io.heapy.kotmark.parser.beta/Scanner.next|next(kotlin.String){}[0]
+    final fun peek(): kotlin/Char // io.heapy.kotmark.parser.beta/Scanner.peek|peek(){}[0]
+    final fun peekCodePoint(): kotlin/Int // io.heapy.kotmark.parser.beta/Scanner.peekCodePoint|peekCodePoint(){}[0]
+    final fun peekPreviousCodePoint(): kotlin/Int // io.heapy.kotmark.parser.beta/Scanner.peekPreviousCodePoint|peekPreviousCodePoint(){}[0]
+    final fun position(): io.heapy.kotmark.parser.beta/Position // io.heapy.kotmark.parser.beta/Scanner.position|position(){}[0]
+    final fun setPosition(io.heapy.kotmark.parser.beta/Position) // io.heapy.kotmark.parser.beta/Scanner.setPosition|setPosition(io.heapy.kotmark.parser.beta.Position){}[0]
+    final fun whitespace(): kotlin/Int // io.heapy.kotmark.parser.beta/Scanner.whitespace|whitespace(){}[0]
+
+    final object Companion { // io.heapy.kotmark.parser.beta/Scanner.Companion|null[0]
+        final const val END // io.heapy.kotmark.parser.beta/Scanner.Companion.END|{}END[0]
+            final fun <get-END>(): kotlin/Char // io.heapy.kotmark.parser.beta/Scanner.Companion.END.<get-END>|<get-END>(){}[0]
+
+        final fun of(io.heapy.kotmark.parser/SourceLines): io.heapy.kotmark.parser.beta/Scanner // io.heapy.kotmark.parser.beta/Scanner.Companion.of|of(io.heapy.kotmark.parser.SourceLines){}[0]
+    }
+}
+
+final class io.heapy.kotmark.parser/Parser { // io.heapy.kotmark.parser/Parser|null[0]
+    final fun parse(kotlin/String): io.heapy.kotmark.node/Node // io.heapy.kotmark.parser/Parser.parse|parse(kotlin.String){}[0]
+
+    abstract fun interface ParserExtension : io.heapy.kotmark/Extension { // io.heapy.kotmark.parser/Parser.ParserExtension|null[0]
+        abstract fun extend(io.heapy.kotmark.parser/Parser.Configuration) // io.heapy.kotmark.parser/Parser.ParserExtension.extend|extend(io.heapy.kotmark.parser.Parser.Configuration){}[0]
+    }
+
+    final class Configuration { // io.heapy.kotmark.parser/Parser.Configuration|null[0]
+        final var enabledBlockTypes // io.heapy.kotmark.parser/Parser.Configuration.enabledBlockTypes|{}enabledBlockTypes[0]
+            final fun <get-enabledBlockTypes>(): kotlin.collections/Set<kotlin.reflect/KClass<out io.heapy.kotmark.node/Block>> // io.heapy.kotmark.parser/Parser.Configuration.enabledBlockTypes.<get-enabledBlockTypes>|<get-enabledBlockTypes>(){}[0]
+            final fun <set-enabledBlockTypes>(kotlin.collections/Set<kotlin.reflect/KClass<out io.heapy.kotmark.node/Block>>) // io.heapy.kotmark.parser/Parser.Configuration.enabledBlockTypes.<set-enabledBlockTypes>|<set-enabledBlockTypes>(kotlin.collections.Set<kotlin.reflect.KClass<out|io.heapy.kotmark.node.Block>>){}[0]
+        final var includeSourceSpans // io.heapy.kotmark.parser/Parser.Configuration.includeSourceSpans|{}includeSourceSpans[0]
+            final fun <get-includeSourceSpans>(): io.heapy.kotmark.parser/IncludeSourceSpans // io.heapy.kotmark.parser/Parser.Configuration.includeSourceSpans.<get-includeSourceSpans>|<get-includeSourceSpans>(){}[0]
+            final fun <set-includeSourceSpans>(io.heapy.kotmark.parser/IncludeSourceSpans) // io.heapy.kotmark.parser/Parser.Configuration.includeSourceSpans.<set-includeSourceSpans>|<set-includeSourceSpans>(io.heapy.kotmark.parser.IncludeSourceSpans){}[0]
+        final var inlineParserFactory // io.heapy.kotmark.parser/Parser.Configuration.inlineParserFactory|{}inlineParserFactory[0]
+            final fun <get-inlineParserFactory>(): io.heapy.kotmark.parser/InlineParserFactory? // io.heapy.kotmark.parser/Parser.Configuration.inlineParserFactory.<get-inlineParserFactory>|<get-inlineParserFactory>(){}[0]
+            final fun <set-inlineParserFactory>(io.heapy.kotmark.parser/InlineParserFactory?) // io.heapy.kotmark.parser/Parser.Configuration.inlineParserFactory.<set-inlineParserFactory>|<set-inlineParserFactory>(io.heapy.kotmark.parser.InlineParserFactory?){}[0]
+        final var maxOpenBlockParsers // io.heapy.kotmark.parser/Parser.Configuration.maxOpenBlockParsers|{}maxOpenBlockParsers[0]
+            final fun <get-maxOpenBlockParsers>(): kotlin/Int // io.heapy.kotmark.parser/Parser.Configuration.maxOpenBlockParsers.<get-maxOpenBlockParsers>|<get-maxOpenBlockParsers>(){}[0]
+            final fun <set-maxOpenBlockParsers>(kotlin/Int) // io.heapy.kotmark.parser/Parser.Configuration.maxOpenBlockParsers.<set-maxOpenBlockParsers>|<set-maxOpenBlockParsers>(kotlin.Int){}[0]
+
+        final fun customBlockParserFactory(io.heapy.kotmark.parser.block/BlockParserFactory) // io.heapy.kotmark.parser/Parser.Configuration.customBlockParserFactory|customBlockParserFactory(io.heapy.kotmark.parser.block.BlockParserFactory){}[0]
+        final fun customDelimiterProcessor(io.heapy.kotmark.parser.delimiter/DelimiterProcessor) // io.heapy.kotmark.parser/Parser.Configuration.customDelimiterProcessor|customDelimiterProcessor(io.heapy.kotmark.parser.delimiter.DelimiterProcessor){}[0]
+        final fun customInlineContentParserFactory(io.heapy.kotmark.parser.beta/InlineContentParserFactory) // io.heapy.kotmark.parser/Parser.Configuration.customInlineContentParserFactory|customInlineContentParserFactory(io.heapy.kotmark.parser.beta.InlineContentParserFactory){}[0]
+        final fun extensions(kotlin.collections/Iterable<io.heapy.kotmark/Extension>) // io.heapy.kotmark.parser/Parser.Configuration.extensions|extensions(kotlin.collections.Iterable<io.heapy.kotmark.Extension>){}[0]
+        final fun linkMarker(kotlin/Char) // io.heapy.kotmark.parser/Parser.Configuration.linkMarker|linkMarker(kotlin.Char){}[0]
+        final fun linkProcessor(io.heapy.kotmark.parser.beta/LinkProcessor) // io.heapy.kotmark.parser/Parser.Configuration.linkProcessor|linkProcessor(io.heapy.kotmark.parser.beta.LinkProcessor){}[0]
+        final fun postProcessor(io.heapy.kotmark.parser/PostProcessor) // io.heapy.kotmark.parser/Parser.Configuration.postProcessor|postProcessor(io.heapy.kotmark.parser.PostProcessor){}[0]
+    }
+}
+
+final class io.heapy.kotmark.parser/SourceLine { // io.heapy.kotmark.parser/SourceLine|null[0]
+    final val content // io.heapy.kotmark.parser/SourceLine.content|{}content[0]
+        final fun <get-content>(): kotlin/CharSequence // io.heapy.kotmark.parser/SourceLine.content.<get-content>|<get-content>(){}[0]
+    final val sourceSpan // io.heapy.kotmark.parser/SourceLine.sourceSpan|{}sourceSpan[0]
+        final fun <get-sourceSpan>(): io.heapy.kotmark.node/SourceSpan? // io.heapy.kotmark.parser/SourceLine.sourceSpan.<get-sourceSpan>|<get-sourceSpan>(){}[0]
+
+    final fun substring(kotlin/Int, kotlin/Int): io.heapy.kotmark.parser/SourceLine // io.heapy.kotmark.parser/SourceLine.substring|substring(kotlin.Int;kotlin.Int){}[0]
+
+    final object Companion { // io.heapy.kotmark.parser/SourceLine.Companion|null[0]
+        final fun of(kotlin/CharSequence, io.heapy.kotmark.node/SourceSpan?): io.heapy.kotmark.parser/SourceLine // io.heapy.kotmark.parser/SourceLine.Companion.of|of(kotlin.CharSequence;io.heapy.kotmark.node.SourceSpan?){}[0]
+    }
+}
+
+final class io.heapy.kotmark.parser/SourceLines { // io.heapy.kotmark.parser/SourceLines|null[0]
+    constructor <init>() // io.heapy.kotmark.parser/SourceLines.<init>|<init>(){}[0]
+
+    final val content // io.heapy.kotmark.parser/SourceLines.content|{}content[0]
+        final fun <get-content>(): kotlin/String // io.heapy.kotmark.parser/SourceLines.content.<get-content>|<get-content>(){}[0]
+    final val lines // io.heapy.kotmark.parser/SourceLines.lines|{}lines[0]
+        final fun <get-lines>(): kotlin.collections/MutableList<io.heapy.kotmark.parser/SourceLine> // io.heapy.kotmark.parser/SourceLines.lines.<get-lines>|<get-lines>(){}[0]
+    final val sourceSpans // io.heapy.kotmark.parser/SourceLines.sourceSpans|{}sourceSpans[0]
+        final fun <get-sourceSpans>(): kotlin.collections/List<io.heapy.kotmark.node/SourceSpan> // io.heapy.kotmark.parser/SourceLines.sourceSpans.<get-sourceSpans>|<get-sourceSpans>(){}[0]
+
+    final fun addLine(io.heapy.kotmark.parser/SourceLine) // io.heapy.kotmark.parser/SourceLines.addLine|addLine(io.heapy.kotmark.parser.SourceLine){}[0]
+    final fun isEmpty(): kotlin/Boolean // io.heapy.kotmark.parser/SourceLines.isEmpty|isEmpty(){}[0]
+
+    final object Companion { // io.heapy.kotmark.parser/SourceLines.Companion|null[0]
+        final fun empty(): io.heapy.kotmark.parser/SourceLines // io.heapy.kotmark.parser/SourceLines.Companion.empty|empty(){}[0]
+        final fun of(io.heapy.kotmark.parser/SourceLine): io.heapy.kotmark.parser/SourceLines // io.heapy.kotmark.parser/SourceLines.Companion.of|of(io.heapy.kotmark.parser.SourceLine){}[0]
+        final fun of(kotlin.collections/List<io.heapy.kotmark.parser/SourceLine>): io.heapy.kotmark.parser/SourceLines // io.heapy.kotmark.parser/SourceLines.Companion.of|of(kotlin.collections.List<io.heapy.kotmark.parser.SourceLine>){}[0]
+    }
+}
+
+final class io.heapy.kotmark.renderer.html/CoreHtmlNodeRenderer : io.heapy.kotmark.node/AbstractVisitor, io.heapy.kotmark.renderer/NodeRenderer { // io.heapy.kotmark.renderer.html/CoreHtmlNodeRenderer|null[0]
+    constructor <init>(io.heapy.kotmark.renderer.html/HtmlNodeRendererContext) // io.heapy.kotmark.renderer.html/CoreHtmlNodeRenderer.<init>|<init>(io.heapy.kotmark.renderer.html.HtmlNodeRendererContext){}[0]
+
+    final val nodeTypes // io.heapy.kotmark.renderer.html/CoreHtmlNodeRenderer.nodeTypes|{}nodeTypes[0]
+        final fun <get-nodeTypes>(): kotlin.collections/Set<kotlin.reflect/KClass<out io.heapy.kotmark.node/Node>> // io.heapy.kotmark.renderer.html/CoreHtmlNodeRenderer.nodeTypes.<get-nodeTypes>|<get-nodeTypes>(){}[0]
+
+    final fun render(io.heapy.kotmark.node/Node) // io.heapy.kotmark.renderer.html/CoreHtmlNodeRenderer.render|render(io.heapy.kotmark.node.Node){}[0]
+    final fun visit(io.heapy.kotmark.node/BlockQuote) // io.heapy.kotmark.renderer.html/CoreHtmlNodeRenderer.visit|visit(io.heapy.kotmark.node.BlockQuote){}[0]
+    final fun visit(io.heapy.kotmark.node/BulletList) // io.heapy.kotmark.renderer.html/CoreHtmlNodeRenderer.visit|visit(io.heapy.kotmark.node.BulletList){}[0]
+    final fun visit(io.heapy.kotmark.node/Code) // io.heapy.kotmark.renderer.html/CoreHtmlNodeRenderer.visit|visit(io.heapy.kotmark.node.Code){}[0]
+    final fun visit(io.heapy.kotmark.node/Document) // io.heapy.kotmark.renderer.html/CoreHtmlNodeRenderer.visit|visit(io.heapy.kotmark.node.Document){}[0]
+    final fun visit(io.heapy.kotmark.node/Emphasis) // io.heapy.kotmark.renderer.html/CoreHtmlNodeRenderer.visit|visit(io.heapy.kotmark.node.Emphasis){}[0]
+    final fun visit(io.heapy.kotmark.node/FencedCodeBlock) // io.heapy.kotmark.renderer.html/CoreHtmlNodeRenderer.visit|visit(io.heapy.kotmark.node.FencedCodeBlock){}[0]
+    final fun visit(io.heapy.kotmark.node/HardLineBreak) // io.heapy.kotmark.renderer.html/CoreHtmlNodeRenderer.visit|visit(io.heapy.kotmark.node.HardLineBreak){}[0]
+    final fun visit(io.heapy.kotmark.node/Heading) // io.heapy.kotmark.renderer.html/CoreHtmlNodeRenderer.visit|visit(io.heapy.kotmark.node.Heading){}[0]
+    final fun visit(io.heapy.kotmark.node/HtmlBlock) // io.heapy.kotmark.renderer.html/CoreHtmlNodeRenderer.visit|visit(io.heapy.kotmark.node.HtmlBlock){}[0]
+    final fun visit(io.heapy.kotmark.node/HtmlInline) // io.heapy.kotmark.renderer.html/CoreHtmlNodeRenderer.visit|visit(io.heapy.kotmark.node.HtmlInline){}[0]
+    final fun visit(io.heapy.kotmark.node/Image) // io.heapy.kotmark.renderer.html/CoreHtmlNodeRenderer.visit|visit(io.heapy.kotmark.node.Image){}[0]
+    final fun visit(io.heapy.kotmark.node/IndentedCodeBlock) // io.heapy.kotmark.renderer.html/CoreHtmlNodeRenderer.visit|visit(io.heapy.kotmark.node.IndentedCodeBlock){}[0]
+    final fun visit(io.heapy.kotmark.node/Link) // io.heapy.kotmark.renderer.html/CoreHtmlNodeRenderer.visit|visit(io.heapy.kotmark.node.Link){}[0]
+    final fun visit(io.heapy.kotmark.node/ListItem) // io.heapy.kotmark.renderer.html/CoreHtmlNodeRenderer.visit|visit(io.heapy.kotmark.node.ListItem){}[0]
+    final fun visit(io.heapy.kotmark.node/OrderedList) // io.heapy.kotmark.renderer.html/CoreHtmlNodeRenderer.visit|visit(io.heapy.kotmark.node.OrderedList){}[0]
+    final fun visit(io.heapy.kotmark.node/Paragraph) // io.heapy.kotmark.renderer.html/CoreHtmlNodeRenderer.visit|visit(io.heapy.kotmark.node.Paragraph){}[0]
+    final fun visit(io.heapy.kotmark.node/SoftLineBreak) // io.heapy.kotmark.renderer.html/CoreHtmlNodeRenderer.visit|visit(io.heapy.kotmark.node.SoftLineBreak){}[0]
+    final fun visit(io.heapy.kotmark.node/StrongEmphasis) // io.heapy.kotmark.renderer.html/CoreHtmlNodeRenderer.visit|visit(io.heapy.kotmark.node.StrongEmphasis){}[0]
+    final fun visit(io.heapy.kotmark.node/Text) // io.heapy.kotmark.renderer.html/CoreHtmlNodeRenderer.visit|visit(io.heapy.kotmark.node.Text){}[0]
+    final fun visit(io.heapy.kotmark.node/ThematicBreak) // io.heapy.kotmark.renderer.html/CoreHtmlNodeRenderer.visit|visit(io.heapy.kotmark.node.ThematicBreak){}[0]
+}
+
+final class io.heapy.kotmark.renderer.html/DefaultUrlSanitizer : io.heapy.kotmark.renderer.html/UrlSanitizer { // io.heapy.kotmark.renderer.html/DefaultUrlSanitizer|null[0]
+    constructor <init>(kotlin.collections/Collection<kotlin/String> = ...) // io.heapy.kotmark.renderer.html/DefaultUrlSanitizer.<init>|<init>(kotlin.collections.Collection<kotlin.String>){}[0]
+
+    final fun sanitizeImageUrl(kotlin/String): kotlin/String // io.heapy.kotmark.renderer.html/DefaultUrlSanitizer.sanitizeImageUrl|sanitizeImageUrl(kotlin.String){}[0]
+    final fun sanitizeLinkUrl(kotlin/String): kotlin/String // io.heapy.kotmark.renderer.html/DefaultUrlSanitizer.sanitizeLinkUrl|sanitizeLinkUrl(kotlin.String){}[0]
+
+    final object Companion // io.heapy.kotmark.renderer.html/DefaultUrlSanitizer.Companion|null[0]
+}
+
+final class io.heapy.kotmark.renderer.html/HtmlRenderer : io.heapy.kotmark.renderer/Renderer { // io.heapy.kotmark.renderer.html/HtmlRenderer|null[0]
+    final fun render(io.heapy.kotmark.node/Node): kotlin/String // io.heapy.kotmark.renderer.html/HtmlRenderer.render|render(io.heapy.kotmark.node.Node){}[0]
+    final fun render(io.heapy.kotmark.node/Node, kotlin.text/Appendable) // io.heapy.kotmark.renderer.html/HtmlRenderer.render|render(io.heapy.kotmark.node.Node;kotlin.text.Appendable){}[0]
+
+    abstract fun interface HtmlRendererExtension : io.heapy.kotmark/Extension { // io.heapy.kotmark.renderer.html/HtmlRenderer.HtmlRendererExtension|null[0]
+        abstract fun extend(io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration) // io.heapy.kotmark.renderer.html/HtmlRenderer.HtmlRendererExtension.extend|extend(io.heapy.kotmark.renderer.html.HtmlRenderer.Configuration){}[0]
+    }
+
+    final class Configuration { // io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration|null[0]
+        final var escapeHtml // io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration.escapeHtml|{}escapeHtml[0]
+            final fun <get-escapeHtml>(): kotlin/Boolean // io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration.escapeHtml.<get-escapeHtml>|<get-escapeHtml>(){}[0]
+            final fun <set-escapeHtml>(kotlin/Boolean) // io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration.escapeHtml.<set-escapeHtml>|<set-escapeHtml>(kotlin.Boolean){}[0]
+        final var omitSingleParagraphP // io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration.omitSingleParagraphP|{}omitSingleParagraphP[0]
+            final fun <get-omitSingleParagraphP>(): kotlin/Boolean // io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration.omitSingleParagraphP.<get-omitSingleParagraphP>|<get-omitSingleParagraphP>(){}[0]
+            final fun <set-omitSingleParagraphP>(kotlin/Boolean) // io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration.omitSingleParagraphP.<set-omitSingleParagraphP>|<set-omitSingleParagraphP>(kotlin.Boolean){}[0]
+        final var percentEncodeUrls // io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration.percentEncodeUrls|{}percentEncodeUrls[0]
+            final fun <get-percentEncodeUrls>(): kotlin/Boolean // io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration.percentEncodeUrls.<get-percentEncodeUrls>|<get-percentEncodeUrls>(){}[0]
+            final fun <set-percentEncodeUrls>(kotlin/Boolean) // io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration.percentEncodeUrls.<set-percentEncodeUrls>|<set-percentEncodeUrls>(kotlin.Boolean){}[0]
+        final var sanitizeUrls // io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration.sanitizeUrls|{}sanitizeUrls[0]
+            final fun <get-sanitizeUrls>(): kotlin/Boolean // io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration.sanitizeUrls.<get-sanitizeUrls>|<get-sanitizeUrls>(){}[0]
+            final fun <set-sanitizeUrls>(kotlin/Boolean) // io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration.sanitizeUrls.<set-sanitizeUrls>|<set-sanitizeUrls>(kotlin.Boolean){}[0]
+        final var softbreak // io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration.softbreak|{}softbreak[0]
+            final fun <get-softbreak>(): kotlin/String // io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration.softbreak.<get-softbreak>|<get-softbreak>(){}[0]
+            final fun <set-softbreak>(kotlin/String) // io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration.softbreak.<set-softbreak>|<set-softbreak>(kotlin.String){}[0]
+        final var urlSanitizer // io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration.urlSanitizer|{}urlSanitizer[0]
+            final fun <get-urlSanitizer>(): io.heapy.kotmark.renderer.html/UrlSanitizer // io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration.urlSanitizer.<get-urlSanitizer>|<get-urlSanitizer>(){}[0]
+            final fun <set-urlSanitizer>(io.heapy.kotmark.renderer.html/UrlSanitizer) // io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration.urlSanitizer.<set-urlSanitizer>|<set-urlSanitizer>(io.heapy.kotmark.renderer.html.UrlSanitizer){}[0]
+
+        final fun attributeProviderFactory(io.heapy.kotmark.renderer.html/AttributeProviderFactory) // io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration.attributeProviderFactory|attributeProviderFactory(io.heapy.kotmark.renderer.html.AttributeProviderFactory){}[0]
+        final fun extensions(kotlin.collections/Iterable<io.heapy.kotmark/Extension>) // io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration.extensions|extensions(kotlin.collections.Iterable<io.heapy.kotmark.Extension>){}[0]
+        final fun nodeRendererFactory(io.heapy.kotmark.renderer.html/HtmlNodeRendererFactory) // io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration.nodeRendererFactory|nodeRendererFactory(io.heapy.kotmark.renderer.html.HtmlNodeRendererFactory){}[0]
+    }
+}
+
+final class io.heapy.kotmark.renderer.html/HtmlWriter { // io.heapy.kotmark.renderer.html/HtmlWriter|null[0]
+    constructor <init>(kotlin.text/Appendable) // io.heapy.kotmark.renderer.html/HtmlWriter.<init>|<init>(kotlin.text.Appendable){}[0]
+
+    final fun line() // io.heapy.kotmark.renderer.html/HtmlWriter.line|line(){}[0]
+    final fun raw(kotlin/String) // io.heapy.kotmark.renderer.html/HtmlWriter.raw|raw(kotlin.String){}[0]
+    final fun tag(kotlin/String) // io.heapy.kotmark.renderer.html/HtmlWriter.tag|tag(kotlin.String){}[0]
+    final fun tag(kotlin/String, kotlin.collections/Map<kotlin/String, kotlin/String?>, kotlin/Boolean = ...) // io.heapy.kotmark.renderer.html/HtmlWriter.tag|tag(kotlin.String;kotlin.collections.Map<kotlin.String,kotlin.String?>;kotlin.Boolean){}[0]
+    final fun text(kotlin/String) // io.heapy.kotmark.renderer.html/HtmlWriter.text|text(kotlin.String){}[0]
+}
+
+final class io.heapy.kotmark.renderer.markdown/CoreMarkdownNodeRenderer : io.heapy.kotmark.node/AbstractVisitor, io.heapy.kotmark.renderer/NodeRenderer { // io.heapy.kotmark.renderer.markdown/CoreMarkdownNodeRenderer|null[0]
+    constructor <init>(io.heapy.kotmark.renderer.markdown/MarkdownNodeRendererContext) // io.heapy.kotmark.renderer.markdown/CoreMarkdownNodeRenderer.<init>|<init>(io.heapy.kotmark.renderer.markdown.MarkdownNodeRendererContext){}[0]
+
+    final val nodeTypes // io.heapy.kotmark.renderer.markdown/CoreMarkdownNodeRenderer.nodeTypes|{}nodeTypes[0]
+        final fun <get-nodeTypes>(): kotlin.collections/Set<kotlin.reflect/KClass<out io.heapy.kotmark.node/Node>> // io.heapy.kotmark.renderer.markdown/CoreMarkdownNodeRenderer.nodeTypes.<get-nodeTypes>|<get-nodeTypes>(){}[0]
+
+    final fun render(io.heapy.kotmark.node/Node) // io.heapy.kotmark.renderer.markdown/CoreMarkdownNodeRenderer.render|render(io.heapy.kotmark.node.Node){}[0]
+    final fun visit(io.heapy.kotmark.node/BlockQuote) // io.heapy.kotmark.renderer.markdown/CoreMarkdownNodeRenderer.visit|visit(io.heapy.kotmark.node.BlockQuote){}[0]
+    final fun visit(io.heapy.kotmark.node/BulletList) // io.heapy.kotmark.renderer.markdown/CoreMarkdownNodeRenderer.visit|visit(io.heapy.kotmark.node.BulletList){}[0]
+    final fun visit(io.heapy.kotmark.node/Code) // io.heapy.kotmark.renderer.markdown/CoreMarkdownNodeRenderer.visit|visit(io.heapy.kotmark.node.Code){}[0]
+    final fun visit(io.heapy.kotmark.node/Document) // io.heapy.kotmark.renderer.markdown/CoreMarkdownNodeRenderer.visit|visit(io.heapy.kotmark.node.Document){}[0]
+    final fun visit(io.heapy.kotmark.node/Emphasis) // io.heapy.kotmark.renderer.markdown/CoreMarkdownNodeRenderer.visit|visit(io.heapy.kotmark.node.Emphasis){}[0]
+    final fun visit(io.heapy.kotmark.node/FencedCodeBlock) // io.heapy.kotmark.renderer.markdown/CoreMarkdownNodeRenderer.visit|visit(io.heapy.kotmark.node.FencedCodeBlock){}[0]
+    final fun visit(io.heapy.kotmark.node/HardLineBreak) // io.heapy.kotmark.renderer.markdown/CoreMarkdownNodeRenderer.visit|visit(io.heapy.kotmark.node.HardLineBreak){}[0]
+    final fun visit(io.heapy.kotmark.node/Heading) // io.heapy.kotmark.renderer.markdown/CoreMarkdownNodeRenderer.visit|visit(io.heapy.kotmark.node.Heading){}[0]
+    final fun visit(io.heapy.kotmark.node/HtmlBlock) // io.heapy.kotmark.renderer.markdown/CoreMarkdownNodeRenderer.visit|visit(io.heapy.kotmark.node.HtmlBlock){}[0]
+    final fun visit(io.heapy.kotmark.node/HtmlInline) // io.heapy.kotmark.renderer.markdown/CoreMarkdownNodeRenderer.visit|visit(io.heapy.kotmark.node.HtmlInline){}[0]
+    final fun visit(io.heapy.kotmark.node/Image) // io.heapy.kotmark.renderer.markdown/CoreMarkdownNodeRenderer.visit|visit(io.heapy.kotmark.node.Image){}[0]
+    final fun visit(io.heapy.kotmark.node/IndentedCodeBlock) // io.heapy.kotmark.renderer.markdown/CoreMarkdownNodeRenderer.visit|visit(io.heapy.kotmark.node.IndentedCodeBlock){}[0]
+    final fun visit(io.heapy.kotmark.node/Link) // io.heapy.kotmark.renderer.markdown/CoreMarkdownNodeRenderer.visit|visit(io.heapy.kotmark.node.Link){}[0]
+    final fun visit(io.heapy.kotmark.node/ListItem) // io.heapy.kotmark.renderer.markdown/CoreMarkdownNodeRenderer.visit|visit(io.heapy.kotmark.node.ListItem){}[0]
+    final fun visit(io.heapy.kotmark.node/OrderedList) // io.heapy.kotmark.renderer.markdown/CoreMarkdownNodeRenderer.visit|visit(io.heapy.kotmark.node.OrderedList){}[0]
+    final fun visit(io.heapy.kotmark.node/Paragraph) // io.heapy.kotmark.renderer.markdown/CoreMarkdownNodeRenderer.visit|visit(io.heapy.kotmark.node.Paragraph){}[0]
+    final fun visit(io.heapy.kotmark.node/SoftLineBreak) // io.heapy.kotmark.renderer.markdown/CoreMarkdownNodeRenderer.visit|visit(io.heapy.kotmark.node.SoftLineBreak){}[0]
+    final fun visit(io.heapy.kotmark.node/StrongEmphasis) // io.heapy.kotmark.renderer.markdown/CoreMarkdownNodeRenderer.visit|visit(io.heapy.kotmark.node.StrongEmphasis){}[0]
+    final fun visit(io.heapy.kotmark.node/Text) // io.heapy.kotmark.renderer.markdown/CoreMarkdownNodeRenderer.visit|visit(io.heapy.kotmark.node.Text){}[0]
+    final fun visit(io.heapy.kotmark.node/ThematicBreak) // io.heapy.kotmark.renderer.markdown/CoreMarkdownNodeRenderer.visit|visit(io.heapy.kotmark.node.ThematicBreak){}[0]
+
+    final object Companion // io.heapy.kotmark.renderer.markdown/CoreMarkdownNodeRenderer.Companion|null[0]
+}
+
+final class io.heapy.kotmark.renderer.markdown/MarkdownRenderer : io.heapy.kotmark.renderer/Renderer { // io.heapy.kotmark.renderer.markdown/MarkdownRenderer|null[0]
+    final fun render(io.heapy.kotmark.node/Node): kotlin/String // io.heapy.kotmark.renderer.markdown/MarkdownRenderer.render|render(io.heapy.kotmark.node.Node){}[0]
+    final fun render(io.heapy.kotmark.node/Node, kotlin.text/Appendable) // io.heapy.kotmark.renderer.markdown/MarkdownRenderer.render|render(io.heapy.kotmark.node.Node;kotlin.text.Appendable){}[0]
+
+    abstract fun interface MarkdownRendererExtension : io.heapy.kotmark/Extension { // io.heapy.kotmark.renderer.markdown/MarkdownRenderer.MarkdownRendererExtension|null[0]
+        abstract fun extend(io.heapy.kotmark.renderer.markdown/MarkdownRenderer.Configuration) // io.heapy.kotmark.renderer.markdown/MarkdownRenderer.MarkdownRendererExtension.extend|extend(io.heapy.kotmark.renderer.markdown.MarkdownRenderer.Configuration){}[0]
+    }
+
+    final class Configuration { // io.heapy.kotmark.renderer.markdown/MarkdownRenderer.Configuration|null[0]
+        final fun extensions(kotlin.collections/Iterable<io.heapy.kotmark/Extension>) // io.heapy.kotmark.renderer.markdown/MarkdownRenderer.Configuration.extensions|extensions(kotlin.collections.Iterable<io.heapy.kotmark.Extension>){}[0]
+        final fun nodeRendererFactory(io.heapy.kotmark.renderer.markdown/MarkdownNodeRendererFactory) // io.heapy.kotmark.renderer.markdown/MarkdownRenderer.Configuration.nodeRendererFactory|nodeRendererFactory(io.heapy.kotmark.renderer.markdown.MarkdownNodeRendererFactory){}[0]
+    }
+}
+
+final class io.heapy.kotmark.renderer.markdown/MarkdownWriter { // io.heapy.kotmark.renderer.markdown/MarkdownWriter|null[0]
+    constructor <init>(kotlin.text/Appendable) // io.heapy.kotmark.renderer.markdown/MarkdownWriter.<init>|<init>(kotlin.text.Appendable){}[0]
+
+    final var isAtLineStart // io.heapy.kotmark.renderer.markdown/MarkdownWriter.isAtLineStart|{}isAtLineStart[0]
+        final fun <get-isAtLineStart>(): kotlin/Boolean // io.heapy.kotmark.renderer.markdown/MarkdownWriter.isAtLineStart.<get-isAtLineStart>|<get-isAtLineStart>(){}[0]
+    final var lastChar // io.heapy.kotmark.renderer.markdown/MarkdownWriter.lastChar|{}lastChar[0]
+        final fun <get-lastChar>(): kotlin/Char // io.heapy.kotmark.renderer.markdown/MarkdownWriter.lastChar.<get-lastChar>|<get-lastChar>(){}[0]
+
+    final fun block() // io.heapy.kotmark.renderer.markdown/MarkdownWriter.block|block(){}[0]
+    final fun line() // io.heapy.kotmark.renderer.markdown/MarkdownWriter.line|line(){}[0]
+    final fun popPrefix() // io.heapy.kotmark.renderer.markdown/MarkdownWriter.popPrefix|popPrefix(){}[0]
+    final fun popRawEscape() // io.heapy.kotmark.renderer.markdown/MarkdownWriter.popRawEscape|popRawEscape(){}[0]
+    final fun popTight() // io.heapy.kotmark.renderer.markdown/MarkdownWriter.popTight|popTight(){}[0]
+    final fun pushPrefix(kotlin/String) // io.heapy.kotmark.renderer.markdown/MarkdownWriter.pushPrefix|pushPrefix(kotlin.String){}[0]
+    final fun pushRawEscape(io.heapy.kotmark.text/CharMatcher) // io.heapy.kotmark.renderer.markdown/MarkdownWriter.pushRawEscape|pushRawEscape(io.heapy.kotmark.text.CharMatcher){}[0]
+    final fun pushTight(kotlin/Boolean) // io.heapy.kotmark.renderer.markdown/MarkdownWriter.pushTight|pushTight(kotlin.Boolean){}[0]
+    final fun raw(kotlin/Char) // io.heapy.kotmark.renderer.markdown/MarkdownWriter.raw|raw(kotlin.Char){}[0]
+    final fun raw(kotlin/String) // io.heapy.kotmark.renderer.markdown/MarkdownWriter.raw|raw(kotlin.String){}[0]
+    final fun text(kotlin/String, io.heapy.kotmark.text/CharMatcher) // io.heapy.kotmark.renderer.markdown/MarkdownWriter.text|text(kotlin.String;io.heapy.kotmark.text.CharMatcher){}[0]
+    final fun writePrefix(kotlin/String) // io.heapy.kotmark.renderer.markdown/MarkdownWriter.writePrefix|writePrefix(kotlin.String){}[0]
+}
+
+final class io.heapy.kotmark.renderer.text/CoreTextContentNodeRenderer : io.heapy.kotmark.node/AbstractVisitor, io.heapy.kotmark.renderer/NodeRenderer { // io.heapy.kotmark.renderer.text/CoreTextContentNodeRenderer|null[0]
+    constructor <init>(io.heapy.kotmark.renderer.text/TextContentNodeRendererContext) // io.heapy.kotmark.renderer.text/CoreTextContentNodeRenderer.<init>|<init>(io.heapy.kotmark.renderer.text.TextContentNodeRendererContext){}[0]
+
+    final val nodeTypes // io.heapy.kotmark.renderer.text/CoreTextContentNodeRenderer.nodeTypes|{}nodeTypes[0]
+        final fun <get-nodeTypes>(): kotlin.collections/Set<kotlin.reflect/KClass<out io.heapy.kotmark.node/Node>> // io.heapy.kotmark.renderer.text/CoreTextContentNodeRenderer.nodeTypes.<get-nodeTypes>|<get-nodeTypes>(){}[0]
+
+    final fun render(io.heapy.kotmark.node/Node) // io.heapy.kotmark.renderer.text/CoreTextContentNodeRenderer.render|render(io.heapy.kotmark.node.Node){}[0]
+    final fun visit(io.heapy.kotmark.node/BlockQuote) // io.heapy.kotmark.renderer.text/CoreTextContentNodeRenderer.visit|visit(io.heapy.kotmark.node.BlockQuote){}[0]
+    final fun visit(io.heapy.kotmark.node/BulletList) // io.heapy.kotmark.renderer.text/CoreTextContentNodeRenderer.visit|visit(io.heapy.kotmark.node.BulletList){}[0]
+    final fun visit(io.heapy.kotmark.node/Code) // io.heapy.kotmark.renderer.text/CoreTextContentNodeRenderer.visit|visit(io.heapy.kotmark.node.Code){}[0]
+    final fun visit(io.heapy.kotmark.node/Document) // io.heapy.kotmark.renderer.text/CoreTextContentNodeRenderer.visit|visit(io.heapy.kotmark.node.Document){}[0]
+    final fun visit(io.heapy.kotmark.node/FencedCodeBlock) // io.heapy.kotmark.renderer.text/CoreTextContentNodeRenderer.visit|visit(io.heapy.kotmark.node.FencedCodeBlock){}[0]
+    final fun visit(io.heapy.kotmark.node/HardLineBreak) // io.heapy.kotmark.renderer.text/CoreTextContentNodeRenderer.visit|visit(io.heapy.kotmark.node.HardLineBreak){}[0]
+    final fun visit(io.heapy.kotmark.node/Heading) // io.heapy.kotmark.renderer.text/CoreTextContentNodeRenderer.visit|visit(io.heapy.kotmark.node.Heading){}[0]
+    final fun visit(io.heapy.kotmark.node/HtmlBlock) // io.heapy.kotmark.renderer.text/CoreTextContentNodeRenderer.visit|visit(io.heapy.kotmark.node.HtmlBlock){}[0]
+    final fun visit(io.heapy.kotmark.node/HtmlInline) // io.heapy.kotmark.renderer.text/CoreTextContentNodeRenderer.visit|visit(io.heapy.kotmark.node.HtmlInline){}[0]
+    final fun visit(io.heapy.kotmark.node/Image) // io.heapy.kotmark.renderer.text/CoreTextContentNodeRenderer.visit|visit(io.heapy.kotmark.node.Image){}[0]
+    final fun visit(io.heapy.kotmark.node/IndentedCodeBlock) // io.heapy.kotmark.renderer.text/CoreTextContentNodeRenderer.visit|visit(io.heapy.kotmark.node.IndentedCodeBlock){}[0]
+    final fun visit(io.heapy.kotmark.node/Link) // io.heapy.kotmark.renderer.text/CoreTextContentNodeRenderer.visit|visit(io.heapy.kotmark.node.Link){}[0]
+    final fun visit(io.heapy.kotmark.node/ListItem) // io.heapy.kotmark.renderer.text/CoreTextContentNodeRenderer.visit|visit(io.heapy.kotmark.node.ListItem){}[0]
+    final fun visit(io.heapy.kotmark.node/OrderedList) // io.heapy.kotmark.renderer.text/CoreTextContentNodeRenderer.visit|visit(io.heapy.kotmark.node.OrderedList){}[0]
+    final fun visit(io.heapy.kotmark.node/Paragraph) // io.heapy.kotmark.renderer.text/CoreTextContentNodeRenderer.visit|visit(io.heapy.kotmark.node.Paragraph){}[0]
+    final fun visit(io.heapy.kotmark.node/SoftLineBreak) // io.heapy.kotmark.renderer.text/CoreTextContentNodeRenderer.visit|visit(io.heapy.kotmark.node.SoftLineBreak){}[0]
+    final fun visit(io.heapy.kotmark.node/Text) // io.heapy.kotmark.renderer.text/CoreTextContentNodeRenderer.visit|visit(io.heapy.kotmark.node.Text){}[0]
+    final fun visit(io.heapy.kotmark.node/ThematicBreak) // io.heapy.kotmark.renderer.text/CoreTextContentNodeRenderer.visit|visit(io.heapy.kotmark.node.ThematicBreak){}[0]
+}
+
+final class io.heapy.kotmark.renderer.text/TextContentRenderer : io.heapy.kotmark.renderer/Renderer { // io.heapy.kotmark.renderer.text/TextContentRenderer|null[0]
+    final fun render(io.heapy.kotmark.node/Node): kotlin/String // io.heapy.kotmark.renderer.text/TextContentRenderer.render|render(io.heapy.kotmark.node.Node){}[0]
+    final fun render(io.heapy.kotmark.node/Node, kotlin.text/Appendable) // io.heapy.kotmark.renderer.text/TextContentRenderer.render|render(io.heapy.kotmark.node.Node;kotlin.text.Appendable){}[0]
+
+    abstract fun interface TextContentRendererExtension : io.heapy.kotmark/Extension { // io.heapy.kotmark.renderer.text/TextContentRenderer.TextContentRendererExtension|null[0]
+        abstract fun extend(io.heapy.kotmark.renderer.text/TextContentRenderer.Configuration) // io.heapy.kotmark.renderer.text/TextContentRenderer.TextContentRendererExtension.extend|extend(io.heapy.kotmark.renderer.text.TextContentRenderer.Configuration){}[0]
+    }
+
+    final class Configuration { // io.heapy.kotmark.renderer.text/TextContentRenderer.Configuration|null[0]
+        final var lineBreakRendering // io.heapy.kotmark.renderer.text/TextContentRenderer.Configuration.lineBreakRendering|{}lineBreakRendering[0]
+            final fun <get-lineBreakRendering>(): io.heapy.kotmark.renderer.text/LineBreakRendering // io.heapy.kotmark.renderer.text/TextContentRenderer.Configuration.lineBreakRendering.<get-lineBreakRendering>|<get-lineBreakRendering>(){}[0]
+            final fun <set-lineBreakRendering>(io.heapy.kotmark.renderer.text/LineBreakRendering) // io.heapy.kotmark.renderer.text/TextContentRenderer.Configuration.lineBreakRendering.<set-lineBreakRendering>|<set-lineBreakRendering>(io.heapy.kotmark.renderer.text.LineBreakRendering){}[0]
+
+        final fun extensions(kotlin.collections/Iterable<io.heapy.kotmark/Extension>) // io.heapy.kotmark.renderer.text/TextContentRenderer.Configuration.extensions|extensions(kotlin.collections.Iterable<io.heapy.kotmark.Extension>){}[0]
+        final fun nodeRendererFactory(io.heapy.kotmark.renderer.text/TextContentNodeRendererFactory) // io.heapy.kotmark.renderer.text/TextContentRenderer.Configuration.nodeRendererFactory|nodeRendererFactory(io.heapy.kotmark.renderer.text.TextContentNodeRendererFactory){}[0]
+    }
+}
+
+final class io.heapy.kotmark.renderer.text/TextContentWriter { // io.heapy.kotmark.renderer.text/TextContentWriter|null[0]
+    constructor <init>(kotlin.text/Appendable, io.heapy.kotmark.renderer.text/LineBreakRendering = ...) // io.heapy.kotmark.renderer.text/TextContentWriter.<init>|<init>(kotlin.text.Appendable;io.heapy.kotmark.renderer.text.LineBreakRendering){}[0]
+
+    final fun block() // io.heapy.kotmark.renderer.text/TextContentWriter.block|block(){}[0]
+    final fun colon() // io.heapy.kotmark.renderer.text/TextContentWriter.colon|colon(){}[0]
+    final fun line() // io.heapy.kotmark.renderer.text/TextContentWriter.line|line(){}[0]
+    final fun popPrefix() // io.heapy.kotmark.renderer.text/TextContentWriter.popPrefix|popPrefix(){}[0]
+    final fun popTight() // io.heapy.kotmark.renderer.text/TextContentWriter.popTight|popTight(){}[0]
+    final fun pushPrefix(kotlin/String) // io.heapy.kotmark.renderer.text/TextContentWriter.pushPrefix|pushPrefix(kotlin.String){}[0]
+    final fun pushTight(kotlin/Boolean) // io.heapy.kotmark.renderer.text/TextContentWriter.pushTight|pushTight(kotlin.Boolean){}[0]
+    final fun resetBlock() // io.heapy.kotmark.renderer.text/TextContentWriter.resetBlock|resetBlock(){}[0]
+    final fun whitespace() // io.heapy.kotmark.renderer.text/TextContentWriter.whitespace|whitespace(){}[0]
+    final fun write(kotlin/Char) // io.heapy.kotmark.renderer.text/TextContentWriter.write|write(kotlin.Char){}[0]
+    final fun write(kotlin/String) // io.heapy.kotmark.renderer.text/TextContentWriter.write|write(kotlin.String){}[0]
+    final fun writePrefix(kotlin/String) // io.heapy.kotmark.renderer.text/TextContentWriter.writePrefix|writePrefix(kotlin.String){}[0]
+    final fun writeStripped(kotlin/String) // io.heapy.kotmark.renderer.text/TextContentWriter.writeStripped|writeStripped(kotlin.String){}[0]
+
+    final object Companion // io.heapy.kotmark.renderer.text/TextContentWriter.Companion|null[0]
+}
+
+final class io.heapy.kotmark.text/AsciiMatcher : io.heapy.kotmark.text/CharMatcher { // io.heapy.kotmark.text/AsciiMatcher|null[0]
+    final fun matches(kotlin/Char): kotlin/Boolean // io.heapy.kotmark.text/AsciiMatcher.matches|matches(kotlin.Char){}[0]
+
+    final class Configuration { // io.heapy.kotmark.text/AsciiMatcher.Configuration|null[0]
+        final fun anyOf(kotlin.collections/Collection<kotlin/Char>) // io.heapy.kotmark.text/AsciiMatcher.Configuration.anyOf|anyOf(kotlin.collections.Collection<kotlin.Char>){}[0]
+        final fun anyOf(kotlin/String) // io.heapy.kotmark.text/AsciiMatcher.Configuration.anyOf|anyOf(kotlin.String){}[0]
+        final fun c(kotlin/Char) // io.heapy.kotmark.text/AsciiMatcher.Configuration.c|c(kotlin.Char){}[0]
+        final fun range(kotlin/Char, kotlin/Char) // io.heapy.kotmark.text/AsciiMatcher.Configuration.range|range(kotlin.Char;kotlin.Char){}[0]
+    }
+}
+
+sealed class io.heapy.kotmark.parser.block/BlockContinue { // io.heapy.kotmark.parser.block/BlockContinue|null[0]
+    final class AtColumn : io.heapy.kotmark.parser.block/BlockContinue { // io.heapy.kotmark.parser.block/BlockContinue.AtColumn|null[0]
+        constructor <init>(kotlin/Int) // io.heapy.kotmark.parser.block/BlockContinue.AtColumn.<init>|<init>(kotlin.Int){}[0]
+
+        final val newColumn // io.heapy.kotmark.parser.block/BlockContinue.AtColumn.newColumn|{}newColumn[0]
+            final fun <get-newColumn>(): kotlin/Int // io.heapy.kotmark.parser.block/BlockContinue.AtColumn.newColumn.<get-newColumn>|<get-newColumn>(){}[0]
+
+        final fun component1(): kotlin/Int // io.heapy.kotmark.parser.block/BlockContinue.AtColumn.component1|component1(){}[0]
+        final fun copy(kotlin/Int = ...): io.heapy.kotmark.parser.block/BlockContinue.AtColumn // io.heapy.kotmark.parser.block/BlockContinue.AtColumn.copy|copy(kotlin.Int){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.heapy.kotmark.parser.block/BlockContinue.AtColumn.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.heapy.kotmark.parser.block/BlockContinue.AtColumn.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.heapy.kotmark.parser.block/BlockContinue.AtColumn.toString|toString(){}[0]
+    }
+
+    final class AtIndex : io.heapy.kotmark.parser.block/BlockContinue { // io.heapy.kotmark.parser.block/BlockContinue.AtIndex|null[0]
+        constructor <init>(kotlin/Int) // io.heapy.kotmark.parser.block/BlockContinue.AtIndex.<init>|<init>(kotlin.Int){}[0]
+
+        final val newIndex // io.heapy.kotmark.parser.block/BlockContinue.AtIndex.newIndex|{}newIndex[0]
+            final fun <get-newIndex>(): kotlin/Int // io.heapy.kotmark.parser.block/BlockContinue.AtIndex.newIndex.<get-newIndex>|<get-newIndex>(){}[0]
+
+        final fun component1(): kotlin/Int // io.heapy.kotmark.parser.block/BlockContinue.AtIndex.component1|component1(){}[0]
+        final fun copy(kotlin/Int = ...): io.heapy.kotmark.parser.block/BlockContinue.AtIndex // io.heapy.kotmark.parser.block/BlockContinue.AtIndex.copy|copy(kotlin.Int){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.heapy.kotmark.parser.block/BlockContinue.AtIndex.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.heapy.kotmark.parser.block/BlockContinue.AtIndex.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.heapy.kotmark.parser.block/BlockContinue.AtIndex.toString|toString(){}[0]
+    }
+
+    final object Companion { // io.heapy.kotmark.parser.block/BlockContinue.Companion|null[0]
+        final fun atColumn(kotlin/Int): io.heapy.kotmark.parser.block/BlockContinue // io.heapy.kotmark.parser.block/BlockContinue.Companion.atColumn|atColumn(kotlin.Int){}[0]
+        final fun atIndex(kotlin/Int): io.heapy.kotmark.parser.block/BlockContinue // io.heapy.kotmark.parser.block/BlockContinue.Companion.atIndex|atIndex(kotlin.Int){}[0]
+        final fun finished(): io.heapy.kotmark.parser.block/BlockContinue // io.heapy.kotmark.parser.block/BlockContinue.Companion.finished|finished(){}[0]
+        final fun none(): io.heapy.kotmark.parser.block/BlockContinue? // io.heapy.kotmark.parser.block/BlockContinue.Companion.none|none(){}[0]
+    }
+
+    final object Finished : io.heapy.kotmark.parser.block/BlockContinue { // io.heapy.kotmark.parser.block/BlockContinue.Finished|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.heapy.kotmark.parser.block/BlockContinue.Finished.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.heapy.kotmark.parser.block/BlockContinue.Finished.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.heapy.kotmark.parser.block/BlockContinue.Finished.toString|toString(){}[0]
+    }
+}
+
+final object io.heapy.kotmark.internal.util/Escaping { // io.heapy.kotmark.internal.util/Escaping|null[0]
+    final const val ENTITY // io.heapy.kotmark.internal.util/Escaping.ENTITY|{}ENTITY[0]
+        final fun <get-ENTITY>(): kotlin/String // io.heapy.kotmark.internal.util/Escaping.ENTITY.<get-ENTITY>|<get-ENTITY>(){}[0]
+    final const val ESCAPABLE // io.heapy.kotmark.internal.util/Escaping.ESCAPABLE|{}ESCAPABLE[0]
+        final fun <get-ESCAPABLE>(): kotlin/String // io.heapy.kotmark.internal.util/Escaping.ESCAPABLE.<get-ESCAPABLE>|<get-ESCAPABLE>(){}[0]
+
+    final fun escapeHtml(kotlin/String): kotlin/String // io.heapy.kotmark.internal.util/Escaping.escapeHtml|escapeHtml(kotlin.String){}[0]
+    final fun normalizeLabelContent(kotlin/String): kotlin/String // io.heapy.kotmark.internal.util/Escaping.normalizeLabelContent|normalizeLabelContent(kotlin.String){}[0]
+    final fun percentEncodeUrl(kotlin/String): kotlin/String // io.heapy.kotmark.internal.util/Escaping.percentEncodeUrl|percentEncodeUrl(kotlin.String){}[0]
+    final fun unescapeString(kotlin/String): kotlin/String // io.heapy.kotmark.internal.util/Escaping.unescapeString|unescapeString(kotlin.String){}[0]
+}
+
+final object io.heapy.kotmark.internal.util/LinkScanner { // io.heapy.kotmark.internal.util/LinkScanner|null[0]
+    final fun scanLinkDestination(io.heapy.kotmark.parser.beta/Scanner): kotlin/Boolean // io.heapy.kotmark.internal.util/LinkScanner.scanLinkDestination|scanLinkDestination(io.heapy.kotmark.parser.beta.Scanner){}[0]
+    final fun scanLinkLabelContent(io.heapy.kotmark.parser.beta/Scanner): kotlin/Boolean // io.heapy.kotmark.internal.util/LinkScanner.scanLinkLabelContent|scanLinkLabelContent(io.heapy.kotmark.parser.beta.Scanner){}[0]
+    final fun scanLinkTitle(io.heapy.kotmark.parser.beta/Scanner): kotlin/Boolean // io.heapy.kotmark.internal.util/LinkScanner.scanLinkTitle|scanLinkTitle(io.heapy.kotmark.parser.beta.Scanner){}[0]
+    final fun scanLinkTitleContent(io.heapy.kotmark.parser.beta/Scanner, kotlin/Char): kotlin/Boolean // io.heapy.kotmark.internal.util/LinkScanner.scanLinkTitleContent|scanLinkTitleContent(io.heapy.kotmark.parser.beta.Scanner;kotlin.Char){}[0]
+}
+
+final object io.heapy.kotmark.internal.util/Parsing { // io.heapy.kotmark.internal.util/Parsing|null[0]
+    final const val CODE_BLOCK_INDENT // io.heapy.kotmark.internal.util/Parsing.CODE_BLOCK_INDENT|{}CODE_BLOCK_INDENT[0]
+        final fun <get-CODE_BLOCK_INDENT>(): kotlin/Int // io.heapy.kotmark.internal.util/Parsing.CODE_BLOCK_INDENT.<get-CODE_BLOCK_INDENT>|<get-CODE_BLOCK_INDENT>(){}[0]
+
+    final fun columnsToNextTabStop(kotlin/Int): kotlin/Int // io.heapy.kotmark.internal.util/Parsing.columnsToNextTabStop|columnsToNextTabStop(kotlin.Int){}[0]
+}
+
+final object io.heapy.kotmark.internal.util/UnicodeCategories { // io.heapy.kotmark.internal.util/UnicodeCategories|null[0]
+    final fun category(kotlin/Int): kotlin.text/CharCategory // io.heapy.kotmark.internal.util/UnicodeCategories.category|category(kotlin.Int){}[0]
+    final fun isLetter(kotlin/Int): kotlin/Boolean // io.heapy.kotmark.internal.util/UnicodeCategories.isLetter|isLetter(kotlin.Int){}[0]
+}
+
+final object io.heapy.kotmark.node/Nodes { // io.heapy.kotmark.node/Nodes|null[0]
+    final fun between(io.heapy.kotmark.node/Node, io.heapy.kotmark.node/Node?): kotlin.collections/Iterable<io.heapy.kotmark.node/Node> // io.heapy.kotmark.node/Nodes.between|between(io.heapy.kotmark.node.Node;io.heapy.kotmark.node.Node?){}[0]
+}
+
+final object io.heapy.kotmark.text/CharacterCategory { // io.heapy.kotmark.text/CharacterCategory|null[0]
+    final const val CONNECTOR_PUNCTUATION // io.heapy.kotmark.text/CharacterCategory.CONNECTOR_PUNCTUATION|{}CONNECTOR_PUNCTUATION[0]
+        final fun <get-CONNECTOR_PUNCTUATION>(): kotlin/Int // io.heapy.kotmark.text/CharacterCategory.CONNECTOR_PUNCTUATION.<get-CONNECTOR_PUNCTUATION>|<get-CONNECTOR_PUNCTUATION>(){}[0]
+    final const val CURRENCY_SYMBOL // io.heapy.kotmark.text/CharacterCategory.CURRENCY_SYMBOL|{}CURRENCY_SYMBOL[0]
+        final fun <get-CURRENCY_SYMBOL>(): kotlin/Int // io.heapy.kotmark.text/CharacterCategory.CURRENCY_SYMBOL.<get-CURRENCY_SYMBOL>|<get-CURRENCY_SYMBOL>(){}[0]
+    final const val DASH_PUNCTUATION // io.heapy.kotmark.text/CharacterCategory.DASH_PUNCTUATION|{}DASH_PUNCTUATION[0]
+        final fun <get-DASH_PUNCTUATION>(): kotlin/Int // io.heapy.kotmark.text/CharacterCategory.DASH_PUNCTUATION.<get-DASH_PUNCTUATION>|<get-DASH_PUNCTUATION>(){}[0]
+    final const val END_PUNCTUATION // io.heapy.kotmark.text/CharacterCategory.END_PUNCTUATION|{}END_PUNCTUATION[0]
+        final fun <get-END_PUNCTUATION>(): kotlin/Int // io.heapy.kotmark.text/CharacterCategory.END_PUNCTUATION.<get-END_PUNCTUATION>|<get-END_PUNCTUATION>(){}[0]
+    final const val FINAL_QUOTE_PUNCTUATION // io.heapy.kotmark.text/CharacterCategory.FINAL_QUOTE_PUNCTUATION|{}FINAL_QUOTE_PUNCTUATION[0]
+        final fun <get-FINAL_QUOTE_PUNCTUATION>(): kotlin/Int // io.heapy.kotmark.text/CharacterCategory.FINAL_QUOTE_PUNCTUATION.<get-FINAL_QUOTE_PUNCTUATION>|<get-FINAL_QUOTE_PUNCTUATION>(){}[0]
+    final const val INITIAL_QUOTE_PUNCTUATION // io.heapy.kotmark.text/CharacterCategory.INITIAL_QUOTE_PUNCTUATION|{}INITIAL_QUOTE_PUNCTUATION[0]
+        final fun <get-INITIAL_QUOTE_PUNCTUATION>(): kotlin/Int // io.heapy.kotmark.text/CharacterCategory.INITIAL_QUOTE_PUNCTUATION.<get-INITIAL_QUOTE_PUNCTUATION>|<get-INITIAL_QUOTE_PUNCTUATION>(){}[0]
+    final const val MATH_SYMBOL // io.heapy.kotmark.text/CharacterCategory.MATH_SYMBOL|{}MATH_SYMBOL[0]
+        final fun <get-MATH_SYMBOL>(): kotlin/Int // io.heapy.kotmark.text/CharacterCategory.MATH_SYMBOL.<get-MATH_SYMBOL>|<get-MATH_SYMBOL>(){}[0]
+    final const val MODIFIER_SYMBOL // io.heapy.kotmark.text/CharacterCategory.MODIFIER_SYMBOL|{}MODIFIER_SYMBOL[0]
+        final fun <get-MODIFIER_SYMBOL>(): kotlin/Int // io.heapy.kotmark.text/CharacterCategory.MODIFIER_SYMBOL.<get-MODIFIER_SYMBOL>|<get-MODIFIER_SYMBOL>(){}[0]
+    final const val OTHER_PUNCTUATION // io.heapy.kotmark.text/CharacterCategory.OTHER_PUNCTUATION|{}OTHER_PUNCTUATION[0]
+        final fun <get-OTHER_PUNCTUATION>(): kotlin/Int // io.heapy.kotmark.text/CharacterCategory.OTHER_PUNCTUATION.<get-OTHER_PUNCTUATION>|<get-OTHER_PUNCTUATION>(){}[0]
+    final const val OTHER_SYMBOL // io.heapy.kotmark.text/CharacterCategory.OTHER_SYMBOL|{}OTHER_SYMBOL[0]
+        final fun <get-OTHER_SYMBOL>(): kotlin/Int // io.heapy.kotmark.text/CharacterCategory.OTHER_SYMBOL.<get-OTHER_SYMBOL>|<get-OTHER_SYMBOL>(){}[0]
+    final const val SPACE_SEPARATOR // io.heapy.kotmark.text/CharacterCategory.SPACE_SEPARATOR|{}SPACE_SEPARATOR[0]
+        final fun <get-SPACE_SEPARATOR>(): kotlin/Int // io.heapy.kotmark.text/CharacterCategory.SPACE_SEPARATOR.<get-SPACE_SEPARATOR>|<get-SPACE_SEPARATOR>(){}[0]
+    final const val START_PUNCTUATION // io.heapy.kotmark.text/CharacterCategory.START_PUNCTUATION|{}START_PUNCTUATION[0]
+        final fun <get-START_PUNCTUATION>(): kotlin/Int // io.heapy.kotmark.text/CharacterCategory.START_PUNCTUATION.<get-START_PUNCTUATION>|<get-START_PUNCTUATION>(){}[0]
+}
+
+final object io.heapy.kotmark.text/Characters { // io.heapy.kotmark.text/Characters|null[0]
+    final fun find(kotlin/Char, kotlin/CharSequence, kotlin/Int): kotlin/Int // io.heapy.kotmark.text/Characters.find|find(kotlin.Char;kotlin.CharSequence;kotlin.Int){}[0]
+    final fun findLineBreak(kotlin/CharSequence, kotlin/Int): kotlin/Int // io.heapy.kotmark.text/Characters.findLineBreak|findLineBreak(kotlin.CharSequence;kotlin.Int){}[0]
+    final fun hasNonSpace(kotlin/CharSequence): kotlin/Boolean // io.heapy.kotmark.text/Characters.hasNonSpace|hasNonSpace(kotlin.CharSequence){}[0]
+    final fun isBlank(kotlin/CharSequence): kotlin/Boolean // io.heapy.kotmark.text/Characters.isBlank|isBlank(kotlin.CharSequence){}[0]
+    final fun isLetter(kotlin/CharSequence, kotlin/Int): kotlin/Boolean // io.heapy.kotmark.text/Characters.isLetter|isLetter(kotlin.CharSequence;kotlin.Int){}[0]
+    final fun isPunctuationCodePoint(kotlin/Int): kotlin/Boolean // io.heapy.kotmark.text/Characters.isPunctuationCodePoint|isPunctuationCodePoint(kotlin.Int){}[0]
+    final fun isSpaceOrTab(kotlin/CharSequence, kotlin/Int): kotlin/Boolean // io.heapy.kotmark.text/Characters.isSpaceOrTab|isSpaceOrTab(kotlin.CharSequence;kotlin.Int){}[0]
+    final fun isWhitespaceCodePoint(kotlin/Int): kotlin/Boolean // io.heapy.kotmark.text/Characters.isWhitespaceCodePoint|isWhitespaceCodePoint(kotlin.Int){}[0]
+    final fun skip(kotlin/Char, kotlin/CharSequence, kotlin/Int, kotlin/Int): kotlin/Int // io.heapy.kotmark.text/Characters.skip|skip(kotlin.Char;kotlin.CharSequence;kotlin.Int;kotlin.Int){}[0]
+    final fun skipBackwards(kotlin/Char, kotlin/CharSequence, kotlin/Int, kotlin/Int): kotlin/Int // io.heapy.kotmark.text/Characters.skipBackwards|skipBackwards(kotlin.Char;kotlin.CharSequence;kotlin.Int;kotlin.Int){}[0]
+    final fun skipSpaceTab(kotlin/CharSequence, kotlin/Int, kotlin/Int): kotlin/Int // io.heapy.kotmark.text/Characters.skipSpaceTab|skipSpaceTab(kotlin.CharSequence;kotlin.Int;kotlin.Int){}[0]
+    final fun skipSpaceTabBackwards(kotlin/CharSequence, kotlin/Int, kotlin/Int): kotlin/Int // io.heapy.kotmark.text/Characters.skipSpaceTabBackwards|skipSpaceTabBackwards(kotlin.CharSequence;kotlin.Int;kotlin.Int){}[0]
+}
+
+final fun io.heapy.kotmark.parser/parser(kotlin/Function1<io.heapy.kotmark.parser/Parser.Configuration, kotlin/Unit> = ...): io.heapy.kotmark.parser/Parser // io.heapy.kotmark.parser/parser|parser(kotlin.Function1<io.heapy.kotmark.parser.Parser.Configuration,kotlin.Unit>){}[0]
+final fun io.heapy.kotmark.renderer.html/htmlRenderer(kotlin/Function1<io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration, kotlin/Unit> = ...): io.heapy.kotmark.renderer.html/HtmlRenderer // io.heapy.kotmark.renderer.html/htmlRenderer|htmlRenderer(kotlin.Function1<io.heapy.kotmark.renderer.html.HtmlRenderer.Configuration,kotlin.Unit>){}[0]
+final fun io.heapy.kotmark.renderer.markdown/markdownRenderer(kotlin/Function1<io.heapy.kotmark.renderer.markdown/MarkdownRenderer.Configuration, kotlin/Unit> = ...): io.heapy.kotmark.renderer.markdown/MarkdownRenderer // io.heapy.kotmark.renderer.markdown/markdownRenderer|markdownRenderer(kotlin.Function1<io.heapy.kotmark.renderer.markdown.MarkdownRenderer.Configuration,kotlin.Unit>){}[0]
+final fun io.heapy.kotmark.renderer.text/textContentRenderer(kotlin/Function1<io.heapy.kotmark.renderer.text/TextContentRenderer.Configuration, kotlin/Unit> = ...): io.heapy.kotmark.renderer.text/TextContentRenderer // io.heapy.kotmark.renderer.text/textContentRenderer|textContentRenderer(kotlin.Function1<io.heapy.kotmark.renderer.text.TextContentRenderer.Configuration,kotlin.Unit>){}[0]
+final fun io.heapy.kotmark.text/asciiMatcher(io.heapy.kotmark.text/AsciiMatcher? = ..., kotlin/Function1<io.heapy.kotmark.text/AsciiMatcher.Configuration, kotlin/Unit> = ...): io.heapy.kotmark.text/AsciiMatcher // io.heapy.kotmark.text/asciiMatcher|asciiMatcher(io.heapy.kotmark.text.AsciiMatcher?;kotlin.Function1<io.heapy.kotmark.text.AsciiMatcher.Configuration,kotlin.Unit>){}[0]

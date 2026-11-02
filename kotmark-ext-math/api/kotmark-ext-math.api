@@ -1,0 +1,31 @@
+public final class io/heapy/kotmark/ext/math/InlineMath : io/heapy/kotmark/node/CustomNode, io/heapy/kotmark/node/Delimited {
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun getClosingDelimiter ()Ljava/lang/String;
+	public final fun getLiteral ()Ljava/lang/String;
+	public fun getOpeningDelimiter ()Ljava/lang/String;
+	public final fun setLiteral (Ljava/lang/String;)V
+}
+
+public final class io/heapy/kotmark/ext/math/MathBlock : io/heapy/kotmark/node/CustomBlock {
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getLiteral ()Ljava/lang/String;
+	public final fun setLiteral (Ljava/lang/String;)V
+}
+
+public final class io/heapy/kotmark/ext/math/MathExtension : io/heapy/kotmark/parser/Parser$ParserExtension, io/heapy/kotmark/renderer/html/HtmlRenderer$HtmlRendererExtension, io/heapy/kotmark/renderer/markdown/MarkdownRenderer$MarkdownRendererExtension, io/heapy/kotmark/renderer/text/TextContentRenderer$TextContentRendererExtension {
+	public static final field Companion Lio/heapy/kotmark/ext/math/MathExtension$Companion;
+	public static final fun create ()Lio/heapy/kotmark/Extension;
+	public fun extend (Lio/heapy/kotmark/parser/Parser$Configuration;)V
+	public fun extend (Lio/heapy/kotmark/renderer/html/HtmlRenderer$Configuration;)V
+	public fun extend (Lio/heapy/kotmark/renderer/markdown/MarkdownRenderer$Configuration;)V
+	public fun extend (Lio/heapy/kotmark/renderer/text/TextContentRenderer$Configuration;)V
+}
+
+public final class io/heapy/kotmark/ext/math/MathExtension$Companion {
+	public final fun create ()Lio/heapy/kotmark/Extension;
+}
+

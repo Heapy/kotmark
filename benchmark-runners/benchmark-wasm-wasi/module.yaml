@@ -1,0 +1,8 @@
+apply:
+  - //benchmark-runner.module-template.yaml
+
+product: wasm-wasi/app
+
+plugins:
+  benchmark:
+    platform: wasmWasi

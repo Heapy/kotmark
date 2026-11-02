@@ -1,0 +1,10 @@
+apply:
+  - //common.module-template.yaml
+
+dependencies:
+  - //benchmarks
+
+plugins:
+  benchmark:
+    enabled: true
+    jvmArgs: [-Xss4m]

@@ -1,0 +1,12 @@
+apply:
+  - //benchmark-runner.module-template.yaml
+
+product: macos/app
+
+settings:
+  native:
+    entryPoint: io.heapy.kotmark.benchmarks.runner.main
+
+plugins:
+  benchmark:
+    platform: macosArm64

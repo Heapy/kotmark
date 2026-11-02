@@ -1,5 +1,5 @@
 apply:
-  - //common.module-template.yaml
+  - //library.module-template.yaml
 
 product:
   type: kmp/lib

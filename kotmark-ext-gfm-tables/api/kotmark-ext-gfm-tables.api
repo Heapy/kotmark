@@ -1,0 +1,91 @@
+public final class io/heapy/kotmark/ext/gfm/tables/TableBlock : io/heapy/kotmark/node/CustomBlock {
+	public fun <init> ()V
+}
+
+public final class io/heapy/kotmark/ext/gfm/tables/TableBody : io/heapy/kotmark/node/CustomNode {
+	public fun <init> ()V
+}
+
+public final class io/heapy/kotmark/ext/gfm/tables/TableCell : io/heapy/kotmark/node/CustomNode {
+	public fun <init> ()V
+	public final fun getAlignment ()Lio/heapy/kotmark/ext/gfm/tables/TableCell$Alignment;
+	public final fun getWidth ()I
+	public final fun isHeader ()Z
+	public final fun setAlignment (Lio/heapy/kotmark/ext/gfm/tables/TableCell$Alignment;)V
+	public final fun setHeader (Z)V
+	public final fun setWidth (I)V
+}
+
+public final class io/heapy/kotmark/ext/gfm/tables/TableCell$Alignment : java/lang/Enum {
+	public static final field CENTER Lio/heapy/kotmark/ext/gfm/tables/TableCell$Alignment;
+	public static final field LEFT Lio/heapy/kotmark/ext/gfm/tables/TableCell$Alignment;
+	public static final field RIGHT Lio/heapy/kotmark/ext/gfm/tables/TableCell$Alignment;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/heapy/kotmark/ext/gfm/tables/TableCell$Alignment;
+	public static fun values ()[Lio/heapy/kotmark/ext/gfm/tables/TableCell$Alignment;
+}
+
+public final class io/heapy/kotmark/ext/gfm/tables/TableHead : io/heapy/kotmark/node/CustomNode {
+	public fun <init> ()V
+}
+
+public final class io/heapy/kotmark/ext/gfm/tables/TableRow : io/heapy/kotmark/node/CustomNode {
+	public fun <init> ()V
+}
+
+public final class io/heapy/kotmark/ext/gfm/tables/TablesExtension : io/heapy/kotmark/parser/Parser$ParserExtension, io/heapy/kotmark/renderer/html/HtmlRenderer$HtmlRendererExtension, io/heapy/kotmark/renderer/markdown/MarkdownRenderer$MarkdownRendererExtension, io/heapy/kotmark/renderer/text/TextContentRenderer$TextContentRendererExtension {
+	public static final field Companion Lio/heapy/kotmark/ext/gfm/tables/TablesExtension$Companion;
+	public static final fun create ()Lio/heapy/kotmark/Extension;
+	public fun extend (Lio/heapy/kotmark/parser/Parser$Configuration;)V
+	public fun extend (Lio/heapy/kotmark/renderer/html/HtmlRenderer$Configuration;)V
+	public fun extend (Lio/heapy/kotmark/renderer/markdown/MarkdownRenderer$Configuration;)V
+	public fun extend (Lio/heapy/kotmark/renderer/text/TextContentRenderer$Configuration;)V
+}
+
+public final class io/heapy/kotmark/ext/gfm/tables/TablesExtension$Companion {
+	public final fun create ()Lio/heapy/kotmark/Extension;
+}
+
+public final class io/heapy/kotmark/ext/gfm/tables/internal/TableBlockParser : io/heapy/kotmark/parser/block/AbstractBlockParser {
+	public static final field Companion Lio/heapy/kotmark/ext/gfm/tables/internal/TableBlockParser$Companion;
+	public synthetic fun <init> (Ljava/util/List;Lio/heapy/kotmark/parser/SourceLine;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun addLine (Lio/heapy/kotmark/parser/SourceLine;)V
+	public fun canHaveLazyContinuationLines ()Z
+	public fun getBlock ()Lio/heapy/kotmark/node/Block;
+	public fun parseInlines (Lio/heapy/kotmark/parser/InlineParser;)V
+	public fun tryContinue (Lio/heapy/kotmark/parser/block/ParserState;)Lio/heapy/kotmark/parser/block/BlockContinue;
+}
+
+public final class io/heapy/kotmark/ext/gfm/tables/internal/TableBlockParser$Companion {
+}
+
+public final class io/heapy/kotmark/ext/gfm/tables/internal/TableBlockParser$Factory : io/heapy/kotmark/parser/block/AbstractBlockParserFactory {
+	public fun <init> ()V
+	public fun tryStart (Lio/heapy/kotmark/parser/block/ParserState;Lio/heapy/kotmark/parser/block/MatchedBlockParser;)Lio/heapy/kotmark/parser/block/BlockStart;
+}
+
+public final class io/heapy/kotmark/ext/gfm/tables/internal/TableHtmlNodeRenderer : io/heapy/kotmark/ext/gfm/tables/internal/TableNodeRenderer {
+	public fun <init> (Lio/heapy/kotmark/renderer/html/HtmlNodeRendererContext;)V
+}
+
+public final class io/heapy/kotmark/ext/gfm/tables/internal/TableMarkdownNodeRenderer : io/heapy/kotmark/ext/gfm/tables/internal/TableNodeRenderer {
+	public fun <init> (Lio/heapy/kotmark/renderer/markdown/MarkdownNodeRendererContext;)V
+}
+
+public abstract class io/heapy/kotmark/ext/gfm/tables/internal/TableNodeRenderer : io/heapy/kotmark/renderer/NodeRenderer {
+	public fun <init> ()V
+	public fun afterRoot (Lio/heapy/kotmark/node/Node;)V
+	public fun beforeRoot (Lio/heapy/kotmark/node/Node;)V
+	public fun getNodeTypes ()Ljava/util/Set;
+	public final fun render (Lio/heapy/kotmark/node/Node;)V
+	protected abstract fun renderBlock (Lio/heapy/kotmark/ext/gfm/tables/TableBlock;)V
+	protected abstract fun renderBody (Lio/heapy/kotmark/ext/gfm/tables/TableBody;)V
+	protected abstract fun renderCell (Lio/heapy/kotmark/ext/gfm/tables/TableCell;)V
+	protected abstract fun renderHead (Lio/heapy/kotmark/ext/gfm/tables/TableHead;)V
+	protected abstract fun renderRow (Lio/heapy/kotmark/ext/gfm/tables/TableRow;)V
+}
+
+public final class io/heapy/kotmark/ext/gfm/tables/internal/TableTextContentNodeRenderer : io/heapy/kotmark/ext/gfm/tables/internal/TableNodeRenderer {
+	public fun <init> (Lio/heapy/kotmark/renderer/text/TextContentNodeRendererContext;)V
+}
+

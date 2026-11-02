@@ -1,0 +1,22 @@
+schemaVersion: 1
+plugins:
+  'bcv':
+    repository: 'Heapy/ktc-bcv'
+    ref:
+      tag: 'v0.2.1'
+    mode: downloaded
+  'benchmark':
+    repository: 'Heapy/ktc-benchmark'
+    ref:
+      tag: 'v0.1.2'
+    mode: downloaded
+  'dokka':
+    repository: 'Heapy/ktc-dokka'
+    ref:
+      tag: 'v0.2.0'
+    mode: downloaded
+  'kover':
+    repository: 'Heapy/ktc-kover'
+    ref:
+      tag: 'v0.2.1'
+    mode: downloaded

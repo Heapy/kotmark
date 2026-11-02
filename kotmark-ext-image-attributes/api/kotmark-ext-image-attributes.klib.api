@@ -1,0 +1,50 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, js, linuxArm64, linuxX64, macosArm64, mingwX64, tvosArm64, tvosSimulatorArm64, wasmJs, wasmWasi, watchosArm64, watchosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <kotmark-ext-image-attributes>
+final class io.heapy.kotmark.ext.image.attributes.internal/ImageAttributesAttributeProvider : io.heapy.kotmark.renderer.html/AttributeProvider { // io.heapy.kotmark.ext.image.attributes.internal/ImageAttributesAttributeProvider|null[0]
+    final fun setAttributes(io.heapy.kotmark.node/Node, kotlin/String, kotlin.collections/MutableMap<kotlin/String, kotlin/String?>) // io.heapy.kotmark.ext.image.attributes.internal/ImageAttributesAttributeProvider.setAttributes|setAttributes(io.heapy.kotmark.node.Node;kotlin.String;kotlin.collections.MutableMap<kotlin.String,kotlin.String?>){}[0]
+
+    final object Companion { // io.heapy.kotmark.ext.image.attributes.internal/ImageAttributesAttributeProvider.Companion|null[0]
+        final fun create(): io.heapy.kotmark.ext.image.attributes.internal/ImageAttributesAttributeProvider // io.heapy.kotmark.ext.image.attributes.internal/ImageAttributesAttributeProvider.Companion.create|create(){}[0]
+    }
+}
+
+final class io.heapy.kotmark.ext.image.attributes.internal/ImageAttributesDelimiterProcessor : io.heapy.kotmark.parser.delimiter/DelimiterProcessor { // io.heapy.kotmark.ext.image.attributes.internal/ImageAttributesDelimiterProcessor|null[0]
+    constructor <init>() // io.heapy.kotmark.ext.image.attributes.internal/ImageAttributesDelimiterProcessor.<init>|<init>(){}[0]
+
+    final val closingCharacter // io.heapy.kotmark.ext.image.attributes.internal/ImageAttributesDelimiterProcessor.closingCharacter|{}closingCharacter[0]
+        final fun <get-closingCharacter>(): kotlin/Char // io.heapy.kotmark.ext.image.attributes.internal/ImageAttributesDelimiterProcessor.closingCharacter.<get-closingCharacter>|<get-closingCharacter>(){}[0]
+    final val minLength // io.heapy.kotmark.ext.image.attributes.internal/ImageAttributesDelimiterProcessor.minLength|{}minLength[0]
+        final fun <get-minLength>(): kotlin/Int // io.heapy.kotmark.ext.image.attributes.internal/ImageAttributesDelimiterProcessor.minLength.<get-minLength>|<get-minLength>(){}[0]
+    final val openingCharacter // io.heapy.kotmark.ext.image.attributes.internal/ImageAttributesDelimiterProcessor.openingCharacter|{}openingCharacter[0]
+        final fun <get-openingCharacter>(): kotlin/Char // io.heapy.kotmark.ext.image.attributes.internal/ImageAttributesDelimiterProcessor.openingCharacter.<get-openingCharacter>|<get-openingCharacter>(){}[0]
+
+    final fun process(io.heapy.kotmark.parser.delimiter/DelimiterRun, io.heapy.kotmark.parser.delimiter/DelimiterRun): kotlin/Int // io.heapy.kotmark.ext.image.attributes.internal/ImageAttributesDelimiterProcessor.process|process(io.heapy.kotmark.parser.delimiter.DelimiterRun;io.heapy.kotmark.parser.delimiter.DelimiterRun){}[0]
+
+    final object Companion // io.heapy.kotmark.ext.image.attributes.internal/ImageAttributesDelimiterProcessor.Companion|null[0]
+}
+
+final class io.heapy.kotmark.ext.image.attributes/ImageAttributes : io.heapy.kotmark.node/CustomNode, io.heapy.kotmark.node/Delimited { // io.heapy.kotmark.ext.image.attributes/ImageAttributes|null[0]
+    constructor <init>(kotlin.collections/Map<kotlin/String, kotlin/String>) // io.heapy.kotmark.ext.image.attributes/ImageAttributes.<init>|<init>(kotlin.collections.Map<kotlin.String,kotlin.String>){}[0]
+
+    final val attributes // io.heapy.kotmark.ext.image.attributes/ImageAttributes.attributes|{}attributes[0]
+        final fun <get-attributes>(): kotlin.collections/Map<kotlin/String, kotlin/String> // io.heapy.kotmark.ext.image.attributes/ImageAttributes.attributes.<get-attributes>|<get-attributes>(){}[0]
+    final val closingDelimiter // io.heapy.kotmark.ext.image.attributes/ImageAttributes.closingDelimiter|{}closingDelimiter[0]
+        final fun <get-closingDelimiter>(): kotlin/String // io.heapy.kotmark.ext.image.attributes/ImageAttributes.closingDelimiter.<get-closingDelimiter>|<get-closingDelimiter>(){}[0]
+    final val openingDelimiter // io.heapy.kotmark.ext.image.attributes/ImageAttributes.openingDelimiter|{}openingDelimiter[0]
+        final fun <get-openingDelimiter>(): kotlin/String // io.heapy.kotmark.ext.image.attributes/ImageAttributes.openingDelimiter.<get-openingDelimiter>|<get-openingDelimiter>(){}[0]
+}
+
+final class io.heapy.kotmark.ext.image.attributes/ImageAttributesExtension : io.heapy.kotmark.parser/Parser.ParserExtension, io.heapy.kotmark.renderer.html/HtmlRenderer.HtmlRendererExtension { // io.heapy.kotmark.ext.image.attributes/ImageAttributesExtension|null[0]
+    final fun extend(io.heapy.kotmark.parser/Parser.Configuration) // io.heapy.kotmark.ext.image.attributes/ImageAttributesExtension.extend|extend(io.heapy.kotmark.parser.Parser.Configuration){}[0]
+    final fun extend(io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration) // io.heapy.kotmark.ext.image.attributes/ImageAttributesExtension.extend|extend(io.heapy.kotmark.renderer.html.HtmlRenderer.Configuration){}[0]
+
+    final object Companion { // io.heapy.kotmark.ext.image.attributes/ImageAttributesExtension.Companion|null[0]
+        final fun create(): io.heapy.kotmark/Extension // io.heapy.kotmark.ext.image.attributes/ImageAttributesExtension.Companion.create|create(){}[0]
+    }
+}

@@ -1,0 +1,104 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, js, linuxArm64, linuxX64, macosArm64, mingwX64, tvosArm64, tvosSimulatorArm64, wasmJs, wasmWasi, watchosArm64, watchosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <kotmark-ext-gfm-tables>
+abstract class io.heapy.kotmark.ext.gfm.tables.internal/TableNodeRenderer : io.heapy.kotmark.renderer/NodeRenderer { // io.heapy.kotmark.ext.gfm.tables.internal/TableNodeRenderer|null[0]
+    constructor <init>() // io.heapy.kotmark.ext.gfm.tables.internal/TableNodeRenderer.<init>|<init>(){}[0]
+
+    open val nodeTypes // io.heapy.kotmark.ext.gfm.tables.internal/TableNodeRenderer.nodeTypes|{}nodeTypes[0]
+        open fun <get-nodeTypes>(): kotlin.collections/Set<kotlin.reflect/KClass<out io.heapy.kotmark.node/Node>> // io.heapy.kotmark.ext.gfm.tables.internal/TableNodeRenderer.nodeTypes.<get-nodeTypes>|<get-nodeTypes>(){}[0]
+
+    abstract fun renderBlock(io.heapy.kotmark.ext.gfm.tables/TableBlock) // io.heapy.kotmark.ext.gfm.tables.internal/TableNodeRenderer.renderBlock|renderBlock(io.heapy.kotmark.ext.gfm.tables.TableBlock){}[0]
+    abstract fun renderBody(io.heapy.kotmark.ext.gfm.tables/TableBody) // io.heapy.kotmark.ext.gfm.tables.internal/TableNodeRenderer.renderBody|renderBody(io.heapy.kotmark.ext.gfm.tables.TableBody){}[0]
+    abstract fun renderCell(io.heapy.kotmark.ext.gfm.tables/TableCell) // io.heapy.kotmark.ext.gfm.tables.internal/TableNodeRenderer.renderCell|renderCell(io.heapy.kotmark.ext.gfm.tables.TableCell){}[0]
+    abstract fun renderHead(io.heapy.kotmark.ext.gfm.tables/TableHead) // io.heapy.kotmark.ext.gfm.tables.internal/TableNodeRenderer.renderHead|renderHead(io.heapy.kotmark.ext.gfm.tables.TableHead){}[0]
+    abstract fun renderRow(io.heapy.kotmark.ext.gfm.tables/TableRow) // io.heapy.kotmark.ext.gfm.tables.internal/TableNodeRenderer.renderRow|renderRow(io.heapy.kotmark.ext.gfm.tables.TableRow){}[0]
+    final fun render(io.heapy.kotmark.node/Node) // io.heapy.kotmark.ext.gfm.tables.internal/TableNodeRenderer.render|render(io.heapy.kotmark.node.Node){}[0]
+}
+
+final class io.heapy.kotmark.ext.gfm.tables.internal/TableBlockParser : io.heapy.kotmark.parser.block/AbstractBlockParser { // io.heapy.kotmark.ext.gfm.tables.internal/TableBlockParser|null[0]
+    final val block // io.heapy.kotmark.ext.gfm.tables.internal/TableBlockParser.block|{}block[0]
+        final fun <get-block>(): io.heapy.kotmark.node/Block // io.heapy.kotmark.ext.gfm.tables.internal/TableBlockParser.block.<get-block>|<get-block>(){}[0]
+
+    final fun addLine(io.heapy.kotmark.parser/SourceLine) // io.heapy.kotmark.ext.gfm.tables.internal/TableBlockParser.addLine|addLine(io.heapy.kotmark.parser.SourceLine){}[0]
+    final fun canHaveLazyContinuationLines(): kotlin/Boolean // io.heapy.kotmark.ext.gfm.tables.internal/TableBlockParser.canHaveLazyContinuationLines|canHaveLazyContinuationLines(){}[0]
+    final fun parseInlines(io.heapy.kotmark.parser/InlineParser) // io.heapy.kotmark.ext.gfm.tables.internal/TableBlockParser.parseInlines|parseInlines(io.heapy.kotmark.parser.InlineParser){}[0]
+    final fun tryContinue(io.heapy.kotmark.parser.block/ParserState): io.heapy.kotmark.parser.block/BlockContinue? // io.heapy.kotmark.ext.gfm.tables.internal/TableBlockParser.tryContinue|tryContinue(io.heapy.kotmark.parser.block.ParserState){}[0]
+
+    final class Factory : io.heapy.kotmark.parser.block/AbstractBlockParserFactory { // io.heapy.kotmark.ext.gfm.tables.internal/TableBlockParser.Factory|null[0]
+        constructor <init>() // io.heapy.kotmark.ext.gfm.tables.internal/TableBlockParser.Factory.<init>|<init>(){}[0]
+
+        final fun tryStart(io.heapy.kotmark.parser.block/ParserState, io.heapy.kotmark.parser.block/MatchedBlockParser): io.heapy.kotmark.parser.block/BlockStart? // io.heapy.kotmark.ext.gfm.tables.internal/TableBlockParser.Factory.tryStart|tryStart(io.heapy.kotmark.parser.block.ParserState;io.heapy.kotmark.parser.block.MatchedBlockParser){}[0]
+    }
+
+    final object Companion // io.heapy.kotmark.ext.gfm.tables.internal/TableBlockParser.Companion|null[0]
+}
+
+final class io.heapy.kotmark.ext.gfm.tables.internal/TableHtmlNodeRenderer : io.heapy.kotmark.ext.gfm.tables.internal/TableNodeRenderer { // io.heapy.kotmark.ext.gfm.tables.internal/TableHtmlNodeRenderer|null[0]
+    constructor <init>(io.heapy.kotmark.renderer.html/HtmlNodeRendererContext) // io.heapy.kotmark.ext.gfm.tables.internal/TableHtmlNodeRenderer.<init>|<init>(io.heapy.kotmark.renderer.html.HtmlNodeRendererContext){}[0]
+}
+
+final class io.heapy.kotmark.ext.gfm.tables.internal/TableMarkdownNodeRenderer : io.heapy.kotmark.ext.gfm.tables.internal/TableNodeRenderer { // io.heapy.kotmark.ext.gfm.tables.internal/TableMarkdownNodeRenderer|null[0]
+    constructor <init>(io.heapy.kotmark.renderer.markdown/MarkdownNodeRendererContext) // io.heapy.kotmark.ext.gfm.tables.internal/TableMarkdownNodeRenderer.<init>|<init>(io.heapy.kotmark.renderer.markdown.MarkdownNodeRendererContext){}[0]
+}
+
+final class io.heapy.kotmark.ext.gfm.tables.internal/TableTextContentNodeRenderer : io.heapy.kotmark.ext.gfm.tables.internal/TableNodeRenderer { // io.heapy.kotmark.ext.gfm.tables.internal/TableTextContentNodeRenderer|null[0]
+    constructor <init>(io.heapy.kotmark.renderer.text/TextContentNodeRendererContext) // io.heapy.kotmark.ext.gfm.tables.internal/TableTextContentNodeRenderer.<init>|<init>(io.heapy.kotmark.renderer.text.TextContentNodeRendererContext){}[0]
+}
+
+final class io.heapy.kotmark.ext.gfm.tables/TableBlock : io.heapy.kotmark.node/CustomBlock { // io.heapy.kotmark.ext.gfm.tables/TableBlock|null[0]
+    constructor <init>() // io.heapy.kotmark.ext.gfm.tables/TableBlock.<init>|<init>(){}[0]
+}
+
+final class io.heapy.kotmark.ext.gfm.tables/TableBody : io.heapy.kotmark.node/CustomNode { // io.heapy.kotmark.ext.gfm.tables/TableBody|null[0]
+    constructor <init>() // io.heapy.kotmark.ext.gfm.tables/TableBody.<init>|<init>(){}[0]
+}
+
+final class io.heapy.kotmark.ext.gfm.tables/TableCell : io.heapy.kotmark.node/CustomNode { // io.heapy.kotmark.ext.gfm.tables/TableCell|null[0]
+    constructor <init>() // io.heapy.kotmark.ext.gfm.tables/TableCell.<init>|<init>(){}[0]
+
+    final var alignment // io.heapy.kotmark.ext.gfm.tables/TableCell.alignment|{}alignment[0]
+        final fun <get-alignment>(): io.heapy.kotmark.ext.gfm.tables/TableCell.Alignment? // io.heapy.kotmark.ext.gfm.tables/TableCell.alignment.<get-alignment>|<get-alignment>(){}[0]
+        final fun <set-alignment>(io.heapy.kotmark.ext.gfm.tables/TableCell.Alignment?) // io.heapy.kotmark.ext.gfm.tables/TableCell.alignment.<set-alignment>|<set-alignment>(io.heapy.kotmark.ext.gfm.tables.TableCell.Alignment?){}[0]
+    final var isHeader // io.heapy.kotmark.ext.gfm.tables/TableCell.isHeader|{}isHeader[0]
+        final fun <get-isHeader>(): kotlin/Boolean // io.heapy.kotmark.ext.gfm.tables/TableCell.isHeader.<get-isHeader>|<get-isHeader>(){}[0]
+        final fun <set-isHeader>(kotlin/Boolean) // io.heapy.kotmark.ext.gfm.tables/TableCell.isHeader.<set-isHeader>|<set-isHeader>(kotlin.Boolean){}[0]
+    final var width // io.heapy.kotmark.ext.gfm.tables/TableCell.width|{}width[0]
+        final fun <get-width>(): kotlin/Int // io.heapy.kotmark.ext.gfm.tables/TableCell.width.<get-width>|<get-width>(){}[0]
+        final fun <set-width>(kotlin/Int) // io.heapy.kotmark.ext.gfm.tables/TableCell.width.<set-width>|<set-width>(kotlin.Int){}[0]
+
+    final enum class Alignment : kotlin/Enum<io.heapy.kotmark.ext.gfm.tables/TableCell.Alignment> { // io.heapy.kotmark.ext.gfm.tables/TableCell.Alignment|null[0]
+        enum entry CENTER // io.heapy.kotmark.ext.gfm.tables/TableCell.Alignment.CENTER|null[0]
+        enum entry LEFT // io.heapy.kotmark.ext.gfm.tables/TableCell.Alignment.LEFT|null[0]
+        enum entry RIGHT // io.heapy.kotmark.ext.gfm.tables/TableCell.Alignment.RIGHT|null[0]
+
+        final val entries // io.heapy.kotmark.ext.gfm.tables/TableCell.Alignment.entries|#static{}entries[0]
+            final fun <get-entries>(): kotlin.enums/EnumEntries<io.heapy.kotmark.ext.gfm.tables/TableCell.Alignment> // io.heapy.kotmark.ext.gfm.tables/TableCell.Alignment.entries.<get-entries>|<get-entries>#static(){}[0]
+
+        final fun valueOf(kotlin/String): io.heapy.kotmark.ext.gfm.tables/TableCell.Alignment // io.heapy.kotmark.ext.gfm.tables/TableCell.Alignment.valueOf|valueOf#static(kotlin.String){}[0]
+        final fun values(): kotlin/Array<io.heapy.kotmark.ext.gfm.tables/TableCell.Alignment> // io.heapy.kotmark.ext.gfm.tables/TableCell.Alignment.values|values#static(){}[0]
+    }
+}
+
+final class io.heapy.kotmark.ext.gfm.tables/TableHead : io.heapy.kotmark.node/CustomNode { // io.heapy.kotmark.ext.gfm.tables/TableHead|null[0]
+    constructor <init>() // io.heapy.kotmark.ext.gfm.tables/TableHead.<init>|<init>(){}[0]
+}
+
+final class io.heapy.kotmark.ext.gfm.tables/TableRow : io.heapy.kotmark.node/CustomNode { // io.heapy.kotmark.ext.gfm.tables/TableRow|null[0]
+    constructor <init>() // io.heapy.kotmark.ext.gfm.tables/TableRow.<init>|<init>(){}[0]
+}
+
+final class io.heapy.kotmark.ext.gfm.tables/TablesExtension : io.heapy.kotmark.parser/Parser.ParserExtension, io.heapy.kotmark.renderer.html/HtmlRenderer.HtmlRendererExtension, io.heapy.kotmark.renderer.markdown/MarkdownRenderer.MarkdownRendererExtension, io.heapy.kotmark.renderer.text/TextContentRenderer.TextContentRendererExtension { // io.heapy.kotmark.ext.gfm.tables/TablesExtension|null[0]
+    final fun extend(io.heapy.kotmark.parser/Parser.Configuration) // io.heapy.kotmark.ext.gfm.tables/TablesExtension.extend|extend(io.heapy.kotmark.parser.Parser.Configuration){}[0]
+    final fun extend(io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration) // io.heapy.kotmark.ext.gfm.tables/TablesExtension.extend|extend(io.heapy.kotmark.renderer.html.HtmlRenderer.Configuration){}[0]
+    final fun extend(io.heapy.kotmark.renderer.markdown/MarkdownRenderer.Configuration) // io.heapy.kotmark.ext.gfm.tables/TablesExtension.extend|extend(io.heapy.kotmark.renderer.markdown.MarkdownRenderer.Configuration){}[0]
+    final fun extend(io.heapy.kotmark.renderer.text/TextContentRenderer.Configuration) // io.heapy.kotmark.ext.gfm.tables/TablesExtension.extend|extend(io.heapy.kotmark.renderer.text.TextContentRenderer.Configuration){}[0]
+
+    final object Companion { // io.heapy.kotmark.ext.gfm.tables/TablesExtension.Companion|null[0]
+        final fun create(): io.heapy.kotmark/Extension // io.heapy.kotmark.ext.gfm.tables/TablesExtension.Companion.create|create(){}[0]
+    }
+}

@@ -1,0 +1,56 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, js, linuxArm64, linuxX64, macosArm64, mingwX64, tvosArm64, tvosSimulatorArm64, wasmJs, wasmWasi, watchosArm64, watchosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <kotmark-ext-heading-anchor>
+final class io.heapy.kotmark.ext.heading.anchor.internal/HeadingIdAttributeProvider : io.heapy.kotmark.renderer.html/AttributeProvider { // io.heapy.kotmark.ext.heading.anchor.internal/HeadingIdAttributeProvider|null[0]
+    final fun setAttributes(io.heapy.kotmark.node/Node, kotlin/String, kotlin.collections/MutableMap<kotlin/String, kotlin/String?>) // io.heapy.kotmark.ext.heading.anchor.internal/HeadingIdAttributeProvider.setAttributes|setAttributes(io.heapy.kotmark.node.Node;kotlin.String;kotlin.collections.MutableMap<kotlin.String,kotlin.String?>){}[0]
+
+    final object Companion { // io.heapy.kotmark.ext.heading.anchor.internal/HeadingIdAttributeProvider.Companion|null[0]
+        final fun create(kotlin/String, kotlin/String, kotlin/String): io.heapy.kotmark.ext.heading.anchor.internal/HeadingIdAttributeProvider // io.heapy.kotmark.ext.heading.anchor.internal/HeadingIdAttributeProvider.Companion.create|create(kotlin.String;kotlin.String;kotlin.String){}[0]
+    }
+}
+
+final class io.heapy.kotmark.ext.heading.anchor/HeadingAnchorExtension : io.heapy.kotmark.renderer.html/HtmlRenderer.HtmlRendererExtension { // io.heapy.kotmark.ext.heading.anchor/HeadingAnchorExtension|null[0]
+    final fun extend(io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration) // io.heapy.kotmark.ext.heading.anchor/HeadingAnchorExtension.extend|extend(io.heapy.kotmark.renderer.html.HtmlRenderer.Configuration){}[0]
+
+    final class Configuration { // io.heapy.kotmark.ext.heading.anchor/HeadingAnchorExtension.Configuration|null[0]
+        final var defaultId // io.heapy.kotmark.ext.heading.anchor/HeadingAnchorExtension.Configuration.defaultId|{}defaultId[0]
+            final fun <get-defaultId>(): kotlin/String // io.heapy.kotmark.ext.heading.anchor/HeadingAnchorExtension.Configuration.defaultId.<get-defaultId>|<get-defaultId>(){}[0]
+            final fun <set-defaultId>(kotlin/String) // io.heapy.kotmark.ext.heading.anchor/HeadingAnchorExtension.Configuration.defaultId.<set-defaultId>|<set-defaultId>(kotlin.String){}[0]
+        final var idPrefix // io.heapy.kotmark.ext.heading.anchor/HeadingAnchorExtension.Configuration.idPrefix|{}idPrefix[0]
+            final fun <get-idPrefix>(): kotlin/String // io.heapy.kotmark.ext.heading.anchor/HeadingAnchorExtension.Configuration.idPrefix.<get-idPrefix>|<get-idPrefix>(){}[0]
+            final fun <set-idPrefix>(kotlin/String) // io.heapy.kotmark.ext.heading.anchor/HeadingAnchorExtension.Configuration.idPrefix.<set-idPrefix>|<set-idPrefix>(kotlin.String){}[0]
+        final var idSuffix // io.heapy.kotmark.ext.heading.anchor/HeadingAnchorExtension.Configuration.idSuffix|{}idSuffix[0]
+            final fun <get-idSuffix>(): kotlin/String // io.heapy.kotmark.ext.heading.anchor/HeadingAnchorExtension.Configuration.idSuffix.<get-idSuffix>|<get-idSuffix>(){}[0]
+            final fun <set-idSuffix>(kotlin/String) // io.heapy.kotmark.ext.heading.anchor/HeadingAnchorExtension.Configuration.idSuffix.<set-idSuffix>|<set-idSuffix>(kotlin.String){}[0]
+    }
+
+    final object Companion { // io.heapy.kotmark.ext.heading.anchor/HeadingAnchorExtension.Companion|null[0]
+        final fun create(): io.heapy.kotmark/Extension // io.heapy.kotmark.ext.heading.anchor/HeadingAnchorExtension.Companion.create|create(){}[0]
+    }
+}
+
+final class io.heapy.kotmark.ext.heading.anchor/IdGenerator { // io.heapy.kotmark.ext.heading.anchor/IdGenerator|null[0]
+    final fun generateId(kotlin/String?): kotlin/String // io.heapy.kotmark.ext.heading.anchor/IdGenerator.generateId|generateId(kotlin.String?){}[0]
+
+    final class Configuration { // io.heapy.kotmark.ext.heading.anchor/IdGenerator.Configuration|null[0]
+        final var defaultId // io.heapy.kotmark.ext.heading.anchor/IdGenerator.Configuration.defaultId|{}defaultId[0]
+            final fun <get-defaultId>(): kotlin/String // io.heapy.kotmark.ext.heading.anchor/IdGenerator.Configuration.defaultId.<get-defaultId>|<get-defaultId>(){}[0]
+            final fun <set-defaultId>(kotlin/String) // io.heapy.kotmark.ext.heading.anchor/IdGenerator.Configuration.defaultId.<set-defaultId>|<set-defaultId>(kotlin.String){}[0]
+        final var prefix // io.heapy.kotmark.ext.heading.anchor/IdGenerator.Configuration.prefix|{}prefix[0]
+            final fun <get-prefix>(): kotlin/String // io.heapy.kotmark.ext.heading.anchor/IdGenerator.Configuration.prefix.<get-prefix>|<get-prefix>(){}[0]
+            final fun <set-prefix>(kotlin/String) // io.heapy.kotmark.ext.heading.anchor/IdGenerator.Configuration.prefix.<set-prefix>|<set-prefix>(kotlin.String){}[0]
+        final var suffix // io.heapy.kotmark.ext.heading.anchor/IdGenerator.Configuration.suffix|{}suffix[0]
+            final fun <get-suffix>(): kotlin/String // io.heapy.kotmark.ext.heading.anchor/IdGenerator.Configuration.suffix.<get-suffix>|<get-suffix>(){}[0]
+            final fun <set-suffix>(kotlin/String) // io.heapy.kotmark.ext.heading.anchor/IdGenerator.Configuration.suffix.<set-suffix>|<set-suffix>(kotlin.String){}[0]
+    }
+
+    final object Companion // io.heapy.kotmark.ext.heading.anchor/IdGenerator.Companion|null[0]
+}
+
+final fun io.heapy.kotmark.ext.heading.anchor/headingAnchorExtension(kotlin/Function1<io.heapy.kotmark.ext.heading.anchor/HeadingAnchorExtension.Configuration, kotlin/Unit> = ...): io.heapy.kotmark.ext.heading.anchor/HeadingAnchorExtension // io.heapy.kotmark.ext.heading.anchor/headingAnchorExtension|headingAnchorExtension(kotlin.Function1<io.heapy.kotmark.ext.heading.anchor.HeadingAnchorExtension.Configuration,kotlin.Unit>){}[0]
+final fun io.heapy.kotmark.ext.heading.anchor/idGenerator(kotlin/Function1<io.heapy.kotmark.ext.heading.anchor/IdGenerator.Configuration, kotlin/Unit> = ...): io.heapy.kotmark.ext.heading.anchor/IdGenerator // io.heapy.kotmark.ext.heading.anchor/idGenerator|idGenerator(kotlin.Function1<io.heapy.kotmark.ext.heading.anchor.IdGenerator.Configuration,kotlin.Unit>){}[0]

@@ -1,0 +1,81 @@
+public final class io/heapy/kotmark/ext/gfm/alerts/Alert : io/heapy/kotmark/node/CustomBlock {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun getType ()Ljava/lang/String;
+	public final fun hasBody ()Z
+}
+
+public final class io/heapy/kotmark/ext/gfm/alerts/AlertTitle : io/heapy/kotmark/node/CustomNode {
+	public fun <init> ()V
+}
+
+public final class io/heapy/kotmark/ext/gfm/alerts/AlertsExtension : io/heapy/kotmark/parser/Parser$ParserExtension, io/heapy/kotmark/renderer/html/HtmlRenderer$HtmlRendererExtension, io/heapy/kotmark/renderer/markdown/MarkdownRenderer$MarkdownRendererExtension, io/heapy/kotmark/renderer/text/TextContentRenderer$TextContentRendererExtension {
+	public static final field Companion Lio/heapy/kotmark/ext/gfm/alerts/AlertsExtension$Companion;
+	public static final field STANDARD_TYPES Ljava/util/Map;
+	public synthetic fun <init> (Lio/heapy/kotmark/ext/gfm/alerts/AlertsExtension$Configuration;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public static final fun create ()Lio/heapy/kotmark/Extension;
+	public fun extend (Lio/heapy/kotmark/parser/Parser$Configuration;)V
+	public fun extend (Lio/heapy/kotmark/renderer/html/HtmlRenderer$Configuration;)V
+	public fun extend (Lio/heapy/kotmark/renderer/markdown/MarkdownRenderer$Configuration;)V
+	public fun extend (Lio/heapy/kotmark/renderer/text/TextContentRenderer$Configuration;)V
+}
+
+public final class io/heapy/kotmark/ext/gfm/alerts/AlertsExtension$Companion {
+	public final fun create ()Lio/heapy/kotmark/Extension;
+}
+
+public final class io/heapy/kotmark/ext/gfm/alerts/AlertsExtension$Configuration {
+	public final fun addCustomType (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun getAllowedTypes ()Ljava/util/Map;
+	public final fun getCustomTitlesAllowed ()Z
+	public final fun getNestedAlertsAllowed ()Z
+	public final fun setAllowedTypes (Ljava/util/Map;)V
+	public final fun setCustomTitlesAllowed (Z)V
+	public final fun setNestedAlertsAllowed (Z)V
+}
+
+public final class io/heapy/kotmark/ext/gfm/alerts/AlertsExtensionKt {
+	public static final fun alertsExtension (Lkotlin/jvm/functions/Function1;)Lio/heapy/kotmark/ext/gfm/alerts/AlertsExtension;
+	public static synthetic fun alertsExtension$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/heapy/kotmark/ext/gfm/alerts/AlertsExtension;
+}
+
+public final class io/heapy/kotmark/ext/gfm/alerts/internal/AlertBlockParser : io/heapy/kotmark/parser/block/AbstractBlockParser {
+	public static final field Companion Lio/heapy/kotmark/ext/gfm/alerts/internal/AlertBlockParser$Companion;
+	public synthetic fun <init> (Ljava/lang/String;Lio/heapy/kotmark/parser/SourceLine;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun canContain (Lio/heapy/kotmark/node/Block;)Z
+	public fun getBlock ()Lio/heapy/kotmark/node/Block;
+	public fun isContainer ()Z
+	public fun parseInlines (Lio/heapy/kotmark/parser/InlineParser;)V
+	public fun tryContinue (Lio/heapy/kotmark/parser/block/ParserState;)Lio/heapy/kotmark/parser/block/BlockContinue;
+}
+
+public final class io/heapy/kotmark/ext/gfm/alerts/internal/AlertBlockParser$Companion {
+}
+
+public final class io/heapy/kotmark/ext/gfm/alerts/internal/AlertBlockParser$Factory : io/heapy/kotmark/parser/block/AbstractBlockParserFactory {
+	public fun <init> (Ljava/util/Set;ZZ)V
+	public fun tryStart (Lio/heapy/kotmark/parser/block/ParserState;Lio/heapy/kotmark/parser/block/MatchedBlockParser;)Lio/heapy/kotmark/parser/block/BlockStart;
+}
+
+public final class io/heapy/kotmark/ext/gfm/alerts/internal/AlertHtmlNodeRenderer : io/heapy/kotmark/ext/gfm/alerts/internal/AlertNodeRenderer {
+	public fun <init> (Lio/heapy/kotmark/renderer/html/HtmlNodeRendererContext;Ljava/util/Map;)V
+}
+
+public final class io/heapy/kotmark/ext/gfm/alerts/internal/AlertMarkdownNodeRenderer : io/heapy/kotmark/ext/gfm/alerts/internal/AlertNodeRenderer {
+	public fun <init> (Lio/heapy/kotmark/renderer/markdown/MarkdownNodeRendererContext;)V
+}
+
+public abstract class io/heapy/kotmark/ext/gfm/alerts/internal/AlertNodeRenderer : io/heapy/kotmark/renderer/NodeRenderer {
+	public fun <init> ()V
+	public fun afterRoot (Lio/heapy/kotmark/node/Node;)V
+	public fun beforeRoot (Lio/heapy/kotmark/node/Node;)V
+	public fun getNodeTypes ()Ljava/util/Set;
+	public final fun render (Lio/heapy/kotmark/node/Node;)V
+	protected abstract fun renderAlert (Lio/heapy/kotmark/ext/gfm/alerts/Alert;)V
+	protected final fun renderChildren (Lio/heapy/kotmark/node/Node;)V
+	protected abstract fun renderNode (Lio/heapy/kotmark/node/Node;)V
+}
+
+public final class io/heapy/kotmark/ext/gfm/alerts/internal/AlertTextContentNodeRenderer : io/heapy/kotmark/ext/gfm/alerts/internal/AlertNodeRenderer {
+	public fun <init> (Lio/heapy/kotmark/renderer/text/TextContentNodeRendererContext;Ljava/util/Map;)V
+}
+

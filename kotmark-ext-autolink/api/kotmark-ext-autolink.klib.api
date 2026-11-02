@@ -1,0 +1,41 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, js, linuxArm64, linuxX64, macosArm64, mingwX64, tvosArm64, tvosSimulatorArm64, wasmJs, wasmWasi, watchosArm64, watchosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <kotmark-ext-autolink>
+final enum class io.heapy.kotmark.ext.autolink/AutolinkType : kotlin/Enum<io.heapy.kotmark.ext.autolink/AutolinkType> { // io.heapy.kotmark.ext.autolink/AutolinkType|null[0]
+    enum entry EMAIL // io.heapy.kotmark.ext.autolink/AutolinkType.EMAIL|null[0]
+    enum entry URL // io.heapy.kotmark.ext.autolink/AutolinkType.URL|null[0]
+    enum entry WWW // io.heapy.kotmark.ext.autolink/AutolinkType.WWW|null[0]
+
+    final val entries // io.heapy.kotmark.ext.autolink/AutolinkType.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<io.heapy.kotmark.ext.autolink/AutolinkType> // io.heapy.kotmark.ext.autolink/AutolinkType.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): io.heapy.kotmark.ext.autolink/AutolinkType // io.heapy.kotmark.ext.autolink/AutolinkType.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<io.heapy.kotmark.ext.autolink/AutolinkType> // io.heapy.kotmark.ext.autolink/AutolinkType.values|values#static(){}[0]
+}
+
+final class io.heapy.kotmark.ext.autolink.internal/AutolinkPostProcessor : io.heapy.kotmark.parser/PostProcessor { // io.heapy.kotmark.ext.autolink.internal/AutolinkPostProcessor|null[0]
+    constructor <init>(kotlin.collections/Set<io.heapy.kotmark.ext.autolink/AutolinkType>) // io.heapy.kotmark.ext.autolink.internal/AutolinkPostProcessor.<init>|<init>(kotlin.collections.Set<io.heapy.kotmark.ext.autolink.AutolinkType>){}[0]
+
+    final fun process(io.heapy.kotmark.node/Node): io.heapy.kotmark.node/Node // io.heapy.kotmark.ext.autolink.internal/AutolinkPostProcessor.process|process(io.heapy.kotmark.node.Node){}[0]
+}
+
+final class io.heapy.kotmark.ext.autolink/AutolinkExtension : io.heapy.kotmark.parser/Parser.ParserExtension { // io.heapy.kotmark.ext.autolink/AutolinkExtension|null[0]
+    final fun extend(io.heapy.kotmark.parser/Parser.Configuration) // io.heapy.kotmark.ext.autolink/AutolinkExtension.extend|extend(io.heapy.kotmark.parser.Parser.Configuration){}[0]
+
+    final class Configuration { // io.heapy.kotmark.ext.autolink/AutolinkExtension.Configuration|null[0]
+        final var linkTypes // io.heapy.kotmark.ext.autolink/AutolinkExtension.Configuration.linkTypes|{}linkTypes[0]
+            final fun <get-linkTypes>(): kotlin.collections/Set<io.heapy.kotmark.ext.autolink/AutolinkType> // io.heapy.kotmark.ext.autolink/AutolinkExtension.Configuration.linkTypes.<get-linkTypes>|<get-linkTypes>(){}[0]
+            final fun <set-linkTypes>(kotlin.collections/Set<io.heapy.kotmark.ext.autolink/AutolinkType>) // io.heapy.kotmark.ext.autolink/AutolinkExtension.Configuration.linkTypes.<set-linkTypes>|<set-linkTypes>(kotlin.collections.Set<io.heapy.kotmark.ext.autolink.AutolinkType>){}[0]
+    }
+
+    final object Companion { // io.heapy.kotmark.ext.autolink/AutolinkExtension.Companion|null[0]
+        final fun create(): io.heapy.kotmark/Extension // io.heapy.kotmark.ext.autolink/AutolinkExtension.Companion.create|create(){}[0]
+    }
+}
+
+final fun io.heapy.kotmark.ext.autolink/autolinkExtension(kotlin/Function1<io.heapy.kotmark.ext.autolink/AutolinkExtension.Configuration, kotlin/Unit> = ...): io.heapy.kotmark.ext.autolink/AutolinkExtension // io.heapy.kotmark.ext.autolink/autolinkExtension|autolinkExtension(kotlin.Function1<io.heapy.kotmark.ext.autolink.AutolinkExtension.Configuration,kotlin.Unit>){}[0]

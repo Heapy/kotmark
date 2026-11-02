@@ -1,0 +1,8 @@
+apply:
+  - //benchmark-runner.module-template.yaml
+
+product: jvm/app
+
+plugins:
+  benchmark:
+    platform: jvm

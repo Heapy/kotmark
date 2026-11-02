@@ -17,14 +17,15 @@ jobs:
   tests:
     name: ${{ matrix.name }}
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 60
+    # Native API checks compile library artifacts in addition to the platform suite.
+    timeout-minutes: 90
     strategy:
       fail-fast: false
       matrix:
         include:
-          - name: JVM and Android unit tests
+          - name: Android unit tests
             os: ubuntu-24.04
-            platforms: jvm android
+            platforms: android
             mode: ktc
           - name: Linux x64 tests
             os: ubuntu-24.04
@@ -79,6 +80,9 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
+      - name: Restore locked build plugins
+        uses: Heapy/setup-ktc-plugins@5de74f161cb07ad74e72ee28bfad228f4cce3bb4 # v1.0.0
+
       - name: Set up Node.js
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
@@ -101,6 +105,10 @@ jobs:
       - name: Run JavaScript tests
         if: matrix.mode == 'js'
         run: node scripts/test-js.mjs
+
+      - name: Check public API baselines
+        if: matrix.platforms == 'linuxX64' || matrix.platforms == 'mingwX64' || matrix.platforms == 'macosArm64 iosSimulatorArm64'
+        run: node scripts/library-tools.mjs api-check
 
       - name: Run additional platform tests
         if: matrix.mode == 'additional'
@@ -130,6 +138,59 @@ jobs:
         run: |
           read -r -a platforms <<< "$BUILD_PLATFORMS"
           node scripts/test-additional-platforms.mjs --compile-only "${platforms[@]}"
+
+  jvm-quality:
+    name: JVM coverage and benchmark smoke
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: Heapy/setup-ktc-plugins@5de74f161cb07ad74e72ee28bfad228f4cce3bb4 # v1.0.0
+      - uses: Heapy/setup-ktc@cc63216665ce07ce0709fe52ef4a4b0b63aeaddc # v1.1.0
+        with:
+          version: auto
+      - uses: Heapy/setup-main-kts@b0858237748f325b825e752bbac2ec2eb1fb9419 # v1.0.1
+        with:
+          kotlin-version: '2.4.21'
+          java-version: '25'
+      - name: Run library JVM tests with coverage
+        run: kotlinr plugins/kover/coverage.main.kts
+      - name: Run fixture and integration JVM tests
+        run: ./kotlin test --platform jvm -m test-fixtures -m integration-test
+      - name: Check benchmark integration
+        run: ./kotlin 'do' benchmarkSmoke -m benchmark-jvm
+      - name: Upload coverage, tests, and benchmark smoke reports
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: jvm-quality-reports
+          path: |
+            build/reports/
+            build/tasks/*_koverReport@kover/html/
+            build/tasks/*_koverReport@kover/coverage.xml
+            build/tasks/*_koverPrepare@kover/test-results/
+            build/tasks/_benchmark-jvm_benchmarkSmoke@benchmark/*.json
+
+  documentation:
+    name: Generate API documentation
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: macos-26
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: Heapy/setup-ktc-plugins@5de74f161cb07ad74e72ee28bfad228f4cce3bb4 # v1.0.0
+      - uses: Heapy/setup-ktc@cc63216665ce07ce0709fe52ef4a4b0b63aeaddc # v1.1.0
+        with:
+          version: auto
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+      - run: node scripts/library-tools.mjs docs
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: api-documentation
+          path: build/documentation/tasks/*_dokkaHtml@dokka/html/
+          if-no-files-found: error
 
   fuzz:
     name: Coverage-guided fuzz smoke

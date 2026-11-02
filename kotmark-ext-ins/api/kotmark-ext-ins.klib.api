@@ -1,0 +1,65 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, js, linuxArm64, linuxX64, macosArm64, mingwX64, tvosArm64, tvosSimulatorArm64, wasmJs, wasmWasi, watchosArm64, watchosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <kotmark-ext-ins>
+abstract class io.heapy.kotmark.ext.ins.internal/InsNodeRenderer : io.heapy.kotmark.renderer/NodeRenderer { // io.heapy.kotmark.ext.ins.internal/InsNodeRenderer|null[0]
+    constructor <init>() // io.heapy.kotmark.ext.ins.internal/InsNodeRenderer.<init>|<init>(){}[0]
+
+    final val nodeTypes // io.heapy.kotmark.ext.ins.internal/InsNodeRenderer.nodeTypes|{}nodeTypes[0]
+        final fun <get-nodeTypes>(): kotlin.collections/Set<kotlin.reflect/KClass<out io.heapy.kotmark.node/Node>> // io.heapy.kotmark.ext.ins.internal/InsNodeRenderer.nodeTypes.<get-nodeTypes>|<get-nodeTypes>(){}[0]
+}
+
+final class io.heapy.kotmark.ext.ins.internal/InsDelimiterProcessor : io.heapy.kotmark.parser.delimiter/DelimiterProcessor { // io.heapy.kotmark.ext.ins.internal/InsDelimiterProcessor|null[0]
+    constructor <init>() // io.heapy.kotmark.ext.ins.internal/InsDelimiterProcessor.<init>|<init>(){}[0]
+
+    final val closingCharacter // io.heapy.kotmark.ext.ins.internal/InsDelimiterProcessor.closingCharacter|{}closingCharacter[0]
+        final fun <get-closingCharacter>(): kotlin/Char // io.heapy.kotmark.ext.ins.internal/InsDelimiterProcessor.closingCharacter.<get-closingCharacter>|<get-closingCharacter>(){}[0]
+    final val minLength // io.heapy.kotmark.ext.ins.internal/InsDelimiterProcessor.minLength|{}minLength[0]
+        final fun <get-minLength>(): kotlin/Int // io.heapy.kotmark.ext.ins.internal/InsDelimiterProcessor.minLength.<get-minLength>|<get-minLength>(){}[0]
+    final val openingCharacter // io.heapy.kotmark.ext.ins.internal/InsDelimiterProcessor.openingCharacter|{}openingCharacter[0]
+        final fun <get-openingCharacter>(): kotlin/Char // io.heapy.kotmark.ext.ins.internal/InsDelimiterProcessor.openingCharacter.<get-openingCharacter>|<get-openingCharacter>(){}[0]
+
+    final fun process(io.heapy.kotmark.parser.delimiter/DelimiterRun, io.heapy.kotmark.parser.delimiter/DelimiterRun): kotlin/Int // io.heapy.kotmark.ext.ins.internal/InsDelimiterProcessor.process|process(io.heapy.kotmark.parser.delimiter.DelimiterRun;io.heapy.kotmark.parser.delimiter.DelimiterRun){}[0]
+}
+
+final class io.heapy.kotmark.ext.ins.internal/InsHtmlNodeRenderer : io.heapy.kotmark.ext.ins.internal/InsNodeRenderer { // io.heapy.kotmark.ext.ins.internal/InsHtmlNodeRenderer|null[0]
+    constructor <init>(io.heapy.kotmark.renderer.html/HtmlNodeRendererContext) // io.heapy.kotmark.ext.ins.internal/InsHtmlNodeRenderer.<init>|<init>(io.heapy.kotmark.renderer.html.HtmlNodeRendererContext){}[0]
+
+    final fun render(io.heapy.kotmark.node/Node) // io.heapy.kotmark.ext.ins.internal/InsHtmlNodeRenderer.render|render(io.heapy.kotmark.node.Node){}[0]
+}
+
+final class io.heapy.kotmark.ext.ins.internal/InsMarkdownNodeRenderer : io.heapy.kotmark.ext.ins.internal/InsNodeRenderer { // io.heapy.kotmark.ext.ins.internal/InsMarkdownNodeRenderer|null[0]
+    constructor <init>(io.heapy.kotmark.renderer.markdown/MarkdownNodeRendererContext) // io.heapy.kotmark.ext.ins.internal/InsMarkdownNodeRenderer.<init>|<init>(io.heapy.kotmark.renderer.markdown.MarkdownNodeRendererContext){}[0]
+
+    final fun render(io.heapy.kotmark.node/Node) // io.heapy.kotmark.ext.ins.internal/InsMarkdownNodeRenderer.render|render(io.heapy.kotmark.node.Node){}[0]
+}
+
+final class io.heapy.kotmark.ext.ins.internal/InsTextContentNodeRenderer : io.heapy.kotmark.ext.ins.internal/InsNodeRenderer { // io.heapy.kotmark.ext.ins.internal/InsTextContentNodeRenderer|null[0]
+    constructor <init>(io.heapy.kotmark.renderer.text/TextContentNodeRendererContext) // io.heapy.kotmark.ext.ins.internal/InsTextContentNodeRenderer.<init>|<init>(io.heapy.kotmark.renderer.text.TextContentNodeRendererContext){}[0]
+
+    final fun render(io.heapy.kotmark.node/Node) // io.heapy.kotmark.ext.ins.internal/InsTextContentNodeRenderer.render|render(io.heapy.kotmark.node.Node){}[0]
+}
+
+final class io.heapy.kotmark.ext.ins/Ins : io.heapy.kotmark.node/CustomNode, io.heapy.kotmark.node/Delimited { // io.heapy.kotmark.ext.ins/Ins|null[0]
+    constructor <init>() // io.heapy.kotmark.ext.ins/Ins.<init>|<init>(){}[0]
+
+    final val closingDelimiter // io.heapy.kotmark.ext.ins/Ins.closingDelimiter|{}closingDelimiter[0]
+        final fun <get-closingDelimiter>(): kotlin/String // io.heapy.kotmark.ext.ins/Ins.closingDelimiter.<get-closingDelimiter>|<get-closingDelimiter>(){}[0]
+    final val openingDelimiter // io.heapy.kotmark.ext.ins/Ins.openingDelimiter|{}openingDelimiter[0]
+        final fun <get-openingDelimiter>(): kotlin/String // io.heapy.kotmark.ext.ins/Ins.openingDelimiter.<get-openingDelimiter>|<get-openingDelimiter>(){}[0]
+}
+
+final class io.heapy.kotmark.ext.ins/InsExtension : io.heapy.kotmark.parser/Parser.ParserExtension, io.heapy.kotmark.renderer.html/HtmlRenderer.HtmlRendererExtension, io.heapy.kotmark.renderer.markdown/MarkdownRenderer.MarkdownRendererExtension, io.heapy.kotmark.renderer.text/TextContentRenderer.TextContentRendererExtension { // io.heapy.kotmark.ext.ins/InsExtension|null[0]
+    final fun extend(io.heapy.kotmark.parser/Parser.Configuration) // io.heapy.kotmark.ext.ins/InsExtension.extend|extend(io.heapy.kotmark.parser.Parser.Configuration){}[0]
+    final fun extend(io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration) // io.heapy.kotmark.ext.ins/InsExtension.extend|extend(io.heapy.kotmark.renderer.html.HtmlRenderer.Configuration){}[0]
+    final fun extend(io.heapy.kotmark.renderer.markdown/MarkdownRenderer.Configuration) // io.heapy.kotmark.ext.ins/InsExtension.extend|extend(io.heapy.kotmark.renderer.markdown.MarkdownRenderer.Configuration){}[0]
+    final fun extend(io.heapy.kotmark.renderer.text/TextContentRenderer.Configuration) // io.heapy.kotmark.ext.ins/InsExtension.extend|extend(io.heapy.kotmark.renderer.text.TextContentRenderer.Configuration){}[0]
+
+    final object Companion { // io.heapy.kotmark.ext.ins/InsExtension.Companion|null[0]
+        final fun create(): io.heapy.kotmark/Extension // io.heapy.kotmark.ext.ins/InsExtension.Companion.create|create(){}[0]
+    }
+}

@@ -26,6 +26,25 @@ Autolink preserves upstream behavior without an additional GFM mode; API
 adaptations, test coverage and known GFM differences are documented in
 [autolink/README.md](autolink/README.md).
 
+## Build tooling
+
+Build plugins are downloaded dependencies, not vendored sources. The installer
+launchers are from [ktc-plugins v0.3.1](https://github.com/Heapy/ktc-plugins/releases/tag/v0.3.1)
+and contain pinned binary checksums. Plugin source commits and individual file
+hashes are recorded in [ktc-plugins.lock.yaml](ktc-plugins.lock.yaml):
+
+| Plugin | Release | Source commit | License |
+| --- | --- | --- | --- |
+| [BCV](https://github.com/Heapy/ktc-bcv) | v0.2.1 | `ae91324e8618fceb524c919edfdd19a395514fd0` | Apache-2.0 |
+| [Benchmark](https://github.com/Heapy/ktc-benchmark) | v0.1.2 | `83c9aab643c2780f0e8868e694bb63e0b069b9f5` | Apache-2.0; upstream generator attribution in NOTICE |
+| [Dokka](https://github.com/Heapy/ktc-dokka) | v0.2.0 | `d4f78329ca1af863f4f75069db8ec856dfaf372e` | Apache-2.0 |
+| [Kover](https://github.com/Heapy/ktc-kover) | v0.2.1 | `39305c2b699f6980776dd2dbc554e4b2648d170a` | Apache-2.0 |
+
+`./ktc-plugins sync` restores the locked sources and license/notice files under
+ignored `plugins/<name>/` directories; `verify` validates their contents. Plugin
+implementation packages retain upstream names as external build dependencies.
+Kotmark's own benchmark sources use `io.heapy.kotmark.benchmarks`.
+
 ## Test fixtures
 
 ### JetBrains Markdown reference

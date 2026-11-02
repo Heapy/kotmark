@@ -1,0 +1,39 @@
+public final class io/heapy/kotmark/ext/image/attributes/ImageAttributes : io/heapy/kotmark/node/CustomNode, io/heapy/kotmark/node/Delimited {
+	public fun <init> (Ljava/util/Map;)V
+	public final fun getAttributes ()Ljava/util/Map;
+	public fun getClosingDelimiter ()Ljava/lang/String;
+	public fun getOpeningDelimiter ()Ljava/lang/String;
+}
+
+public final class io/heapy/kotmark/ext/image/attributes/ImageAttributesExtension : io/heapy/kotmark/parser/Parser$ParserExtension, io/heapy/kotmark/renderer/html/HtmlRenderer$HtmlRendererExtension {
+	public static final field Companion Lio/heapy/kotmark/ext/image/attributes/ImageAttributesExtension$Companion;
+	public static final fun create ()Lio/heapy/kotmark/Extension;
+	public fun extend (Lio/heapy/kotmark/parser/Parser$Configuration;)V
+	public fun extend (Lio/heapy/kotmark/renderer/html/HtmlRenderer$Configuration;)V
+}
+
+public final class io/heapy/kotmark/ext/image/attributes/ImageAttributesExtension$Companion {
+	public final fun create ()Lio/heapy/kotmark/Extension;
+}
+
+public final class io/heapy/kotmark/ext/image/attributes/internal/ImageAttributesAttributeProvider : io/heapy/kotmark/renderer/html/AttributeProvider {
+	public static final field Companion Lio/heapy/kotmark/ext/image/attributes/internal/ImageAttributesAttributeProvider$Companion;
+	public fun setAttributes (Lio/heapy/kotmark/node/Node;Ljava/lang/String;Ljava/util/Map;)V
+}
+
+public final class io/heapy/kotmark/ext/image/attributes/internal/ImageAttributesAttributeProvider$Companion {
+	public final fun create ()Lio/heapy/kotmark/ext/image/attributes/internal/ImageAttributesAttributeProvider;
+}
+
+public final class io/heapy/kotmark/ext/image/attributes/internal/ImageAttributesDelimiterProcessor : io/heapy/kotmark/parser/delimiter/DelimiterProcessor {
+	public static final field Companion Lio/heapy/kotmark/ext/image/attributes/internal/ImageAttributesDelimiterProcessor$Companion;
+	public fun <init> ()V
+	public fun getClosingCharacter ()C
+	public fun getMinLength ()I
+	public fun getOpeningCharacter ()C
+	public fun process (Lio/heapy/kotmark/parser/delimiter/DelimiterRun;Lio/heapy/kotmark/parser/delimiter/DelimiterRun;)I
+}
+
+public final class io/heapy/kotmark/ext/image/attributes/internal/ImageAttributesDelimiterProcessor$Companion {
+}
+

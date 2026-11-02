@@ -1,0 +1,72 @@
+public final class io/heapy/kotmark/ext/footnotes/FootnoteDefinition : io/heapy/kotmark/node/CustomBlock {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun getLabel ()Ljava/lang/String;
+}
+
+public final class io/heapy/kotmark/ext/footnotes/FootnoteReference : io/heapy/kotmark/node/CustomNode {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun getLabel ()Ljava/lang/String;
+}
+
+public final class io/heapy/kotmark/ext/footnotes/FootnotesExtension : io/heapy/kotmark/parser/Parser$ParserExtension, io/heapy/kotmark/renderer/html/HtmlRenderer$HtmlRendererExtension, io/heapy/kotmark/renderer/markdown/MarkdownRenderer$MarkdownRendererExtension {
+	public static final field Companion Lio/heapy/kotmark/ext/footnotes/FootnotesExtension$Companion;
+	public synthetic fun <init> (ZLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public static final fun create ()Lio/heapy/kotmark/Extension;
+	public fun extend (Lio/heapy/kotmark/parser/Parser$Configuration;)V
+	public fun extend (Lio/heapy/kotmark/renderer/html/HtmlRenderer$Configuration;)V
+	public fun extend (Lio/heapy/kotmark/renderer/markdown/MarkdownRenderer$Configuration;)V
+}
+
+public final class io/heapy/kotmark/ext/footnotes/FootnotesExtension$Companion {
+	public final fun create ()Lio/heapy/kotmark/Extension;
+}
+
+public final class io/heapy/kotmark/ext/footnotes/FootnotesExtension$Configuration {
+	public final fun getInlineFootnotes ()Z
+	public final fun setInlineFootnotes (Z)V
+}
+
+public final class io/heapy/kotmark/ext/footnotes/FootnotesExtensionKt {
+	public static final fun footnotesExtension (Lkotlin/jvm/functions/Function1;)Lio/heapy/kotmark/ext/footnotes/FootnotesExtension;
+	public static synthetic fun footnotesExtension$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/heapy/kotmark/ext/footnotes/FootnotesExtension;
+}
+
+public final class io/heapy/kotmark/ext/footnotes/InlineFootnote : io/heapy/kotmark/node/CustomNode {
+	public fun <init> ()V
+}
+
+public final class io/heapy/kotmark/ext/footnotes/internal/FootnoteBlockParser : io/heapy/kotmark/parser/block/AbstractBlockParser {
+	public fun <init> (Ljava/lang/String;)V
+	public fun canContain (Lio/heapy/kotmark/node/Block;)Z
+	public fun getBlock ()Lio/heapy/kotmark/node/Block;
+	public fun getDefinitions ()Ljava/util/List;
+	public fun isContainer ()Z
+	public fun tryContinue (Lio/heapy/kotmark/parser/block/ParserState;)Lio/heapy/kotmark/parser/block/BlockContinue;
+}
+
+public final class io/heapy/kotmark/ext/footnotes/internal/FootnoteBlockParser$Factory : io/heapy/kotmark/parser/block/BlockParserFactory {
+	public fun <init> ()V
+	public fun tryStart (Lio/heapy/kotmark/parser/block/ParserState;Lio/heapy/kotmark/parser/block/MatchedBlockParser;)Lio/heapy/kotmark/parser/block/BlockStart;
+}
+
+public final class io/heapy/kotmark/ext/footnotes/internal/FootnoteHtmlNodeRenderer : io/heapy/kotmark/renderer/NodeRenderer {
+	public fun <init> (Lio/heapy/kotmark/renderer/html/HtmlNodeRendererContext;)V
+	public fun afterRoot (Lio/heapy/kotmark/node/Node;)V
+	public fun beforeRoot (Lio/heapy/kotmark/node/Node;)V
+	public fun getNodeTypes ()Ljava/util/Set;
+	public fun render (Lio/heapy/kotmark/node/Node;)V
+}
+
+public final class io/heapy/kotmark/ext/footnotes/internal/FootnoteLinkProcessor : io/heapy/kotmark/parser/beta/LinkProcessor {
+	public fun <init> ()V
+	public fun process (Lio/heapy/kotmark/parser/beta/LinkInfo;Lio/heapy/kotmark/parser/beta/Scanner;Lio/heapy/kotmark/parser/InlineParserContext;)Lio/heapy/kotmark/parser/beta/LinkResult;
+}
+
+public final class io/heapy/kotmark/ext/footnotes/internal/FootnoteMarkdownNodeRenderer : io/heapy/kotmark/renderer/NodeRenderer {
+	public fun <init> (Lio/heapy/kotmark/renderer/markdown/MarkdownNodeRendererContext;)V
+	public fun afterRoot (Lio/heapy/kotmark/node/Node;)V
+	public fun beforeRoot (Lio/heapy/kotmark/node/Node;)V
+	public fun getNodeTypes ()Ljava/util/Set;
+	public fun render (Lio/heapy/kotmark/node/Node;)V
+}
+

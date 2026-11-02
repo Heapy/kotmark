@@ -1,0 +1,48 @@
+public final class io/heapy/kotmark/autolink/Autolink {
+	public static final field INSTANCE Lio/heapy/kotmark/autolink/Autolink;
+	public static final fun renderLinks (Ljava/lang/CharSequence;Ljava/lang/Iterable;Lio/heapy/kotmark/autolink/LinkRenderer;)Ljava/lang/String;
+}
+
+public abstract interface annotation class io/heapy/kotmark/autolink/AutolinkDsl : java/lang/annotation/Annotation {
+}
+
+public final class io/heapy/kotmark/autolink/LinkExtractor {
+	public synthetic fun <init> (Lio/heapy/kotmark/autolink/internal/Scanner;Lio/heapy/kotmark/autolink/internal/Scanner;Lio/heapy/kotmark/autolink/internal/Scanner;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun extractLinks (Ljava/lang/CharSequence;)Ljava/lang/Iterable;
+	public final fun extractSpans (Ljava/lang/CharSequence;)Ljava/lang/Iterable;
+}
+
+public final class io/heapy/kotmark/autolink/LinkExtractor$Configuration {
+	public final fun getEmailDomainMustHaveDot ()Z
+	public final fun getLinkTypes ()Ljava/util/Set;
+	public final fun setEmailDomainMustHaveDot (Z)V
+	public final fun setLinkTypes (Ljava/util/Set;)V
+}
+
+public final class io/heapy/kotmark/autolink/LinkExtractorKt {
+	public static final fun linkExtractor (Lkotlin/jvm/functions/Function1;)Lio/heapy/kotmark/autolink/LinkExtractor;
+	public static synthetic fun linkExtractor$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/heapy/kotmark/autolink/LinkExtractor;
+}
+
+public abstract interface class io/heapy/kotmark/autolink/LinkRenderer {
+	public abstract fun render (Lio/heapy/kotmark/autolink/LinkSpan;Ljava/lang/CharSequence;Ljava/lang/StringBuilder;)V
+}
+
+public abstract interface class io/heapy/kotmark/autolink/LinkSpan : io/heapy/kotmark/autolink/Span {
+	public abstract fun getType ()Lio/heapy/kotmark/autolink/LinkType;
+}
+
+public final class io/heapy/kotmark/autolink/LinkType : java/lang/Enum {
+	public static final field EMAIL Lio/heapy/kotmark/autolink/LinkType;
+	public static final field URL Lio/heapy/kotmark/autolink/LinkType;
+	public static final field WWW Lio/heapy/kotmark/autolink/LinkType;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/heapy/kotmark/autolink/LinkType;
+	public static fun values ()[Lio/heapy/kotmark/autolink/LinkType;
+}
+
+public abstract interface class io/heapy/kotmark/autolink/Span {
+	public abstract fun getBeginIndex ()I
+	public abstract fun getEndIndex ()I
+}
+

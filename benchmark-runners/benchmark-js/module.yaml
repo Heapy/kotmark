@@ -1,0 +1,8 @@
+apply:
+  - //benchmark-runner.module-template.yaml
+
+product: js/app
+
+plugins:
+  benchmark:
+    platform: js

@@ -9,3 +9,5 @@
 
 # Local upstream reference checkouts
 /projects/
+# ktc-plugins managed entries
+/.ktc-plugins/

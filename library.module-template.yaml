@@ -1,0 +1,22 @@
+apply:
+  - //common.module-template.yaml
+
+settings:
+  publishing:
+    # Required for Dokka's KMP metadata model; no remote repository is enabled.
+    enabled: true
+    group: io.heapy.kotmark
+    version: 0.1.0-SNAPSHOT
+
+plugins:
+  bcv:
+    enabled: true
+    # These targets are not supported by BCV 0.2.1; their tests/builds remain in CI.
+    excludedTargets: [android, watchosDeviceArm64]
+  dokka:
+    enabled: true
+    documentedVisibilities: [public, protected]
+  kover:
+    enabled: true
+    # Establish reports before choosing a coverage policy.
+    minimumLineCoverage: 0

@@ -1,0 +1,43 @@
+public final class io/heapy/kotmark/ext/task/list/items/TaskListItemMarker : io/heapy/kotmark/node/CustomNode {
+	public fun <init> (Z)V
+	public final fun isChecked ()Z
+}
+
+public final class io/heapy/kotmark/ext/task/list/items/TaskListItemsExtension : io/heapy/kotmark/parser/Parser$ParserExtension, io/heapy/kotmark/renderer/html/HtmlRenderer$HtmlRendererExtension, io/heapy/kotmark/renderer/markdown/MarkdownRenderer$MarkdownRendererExtension {
+	public static final field Companion Lio/heapy/kotmark/ext/task/list/items/TaskListItemsExtension$Companion;
+	public static final fun create ()Lio/heapy/kotmark/Extension;
+	public fun extend (Lio/heapy/kotmark/parser/Parser$Configuration;)V
+	public fun extend (Lio/heapy/kotmark/renderer/html/HtmlRenderer$Configuration;)V
+	public fun extend (Lio/heapy/kotmark/renderer/markdown/MarkdownRenderer$Configuration;)V
+}
+
+public final class io/heapy/kotmark/ext/task/list/items/TaskListItemsExtension$Companion {
+	public final fun create ()Lio/heapy/kotmark/Extension;
+}
+
+public final class io/heapy/kotmark/ext/task/list/items/internal/TaskListItemHtmlNodeRenderer : io/heapy/kotmark/ext/task/list/items/internal/TaskListItemNodeRenderer {
+	public fun <init> (Lio/heapy/kotmark/renderer/html/HtmlNodeRendererContext;)V
+	public fun render (Lio/heapy/kotmark/node/Node;)V
+}
+
+public final class io/heapy/kotmark/ext/task/list/items/internal/TaskListItemMarkdownNodeRenderer : io/heapy/kotmark/ext/task/list/items/internal/TaskListItemNodeRenderer {
+	public fun <init> (Lio/heapy/kotmark/renderer/markdown/MarkdownNodeRendererContext;)V
+	public fun render (Lio/heapy/kotmark/node/Node;)V
+}
+
+public abstract class io/heapy/kotmark/ext/task/list/items/internal/TaskListItemNodeRenderer : io/heapy/kotmark/renderer/NodeRenderer {
+	public fun <init> ()V
+	public fun afterRoot (Lio/heapy/kotmark/node/Node;)V
+	public fun beforeRoot (Lio/heapy/kotmark/node/Node;)V
+	public final fun getNodeTypes ()Ljava/util/Set;
+}
+
+public final class io/heapy/kotmark/ext/task/list/items/internal/TaskListItemPostProcessor : io/heapy/kotmark/parser/PostProcessor {
+	public static final field Companion Lio/heapy/kotmark/ext/task/list/items/internal/TaskListItemPostProcessor$Companion;
+	public fun <init> ()V
+	public fun process (Lio/heapy/kotmark/node/Node;)Lio/heapy/kotmark/node/Node;
+}
+
+public final class io/heapy/kotmark/ext/task/list/items/internal/TaskListItemPostProcessor$Companion {
+}
+

@@ -1,0 +1,1454 @@
+public abstract interface class io/heapy/kotmark/Extension {
+}
+
+public abstract interface annotation class io/heapy/kotmark/KotmarkDsl : java/lang/annotation/Annotation {
+}
+
+public final class io/heapy/kotmark/internal/BlockQuoteParser : io/heapy/kotmark/parser/block/AbstractBlockParser {
+	public static final field Companion Lio/heapy/kotmark/internal/BlockQuoteParser$Companion;
+	public fun <init> ()V
+	public fun canContain (Lio/heapy/kotmark/node/Block;)Z
+	public synthetic fun getBlock ()Lio/heapy/kotmark/node/Block;
+	public fun getBlock ()Lio/heapy/kotmark/node/BlockQuote;
+	public fun isContainer ()Z
+	public fun tryContinue (Lio/heapy/kotmark/parser/block/ParserState;)Lio/heapy/kotmark/parser/block/BlockContinue;
+}
+
+public final class io/heapy/kotmark/internal/BlockQuoteParser$Companion {
+}
+
+public final class io/heapy/kotmark/internal/BlockQuoteParser$Factory : io/heapy/kotmark/parser/block/AbstractBlockParserFactory {
+	public fun <init> ()V
+	public fun tryStart (Lio/heapy/kotmark/parser/block/ParserState;Lio/heapy/kotmark/parser/block/MatchedBlockParser;)Lio/heapy/kotmark/parser/block/BlockStart;
+}
+
+public final class io/heapy/kotmark/internal/BlockStartImpl : io/heapy/kotmark/parser/block/BlockStart {
+	public fun <init> ([Lio/heapy/kotmark/parser/block/BlockParser;)V
+	public fun atColumn (I)Lio/heapy/kotmark/parser/block/BlockStart;
+	public fun atIndex (I)Lio/heapy/kotmark/parser/block/BlockStart;
+	public final fun getBlockParsers ()[Lio/heapy/kotmark/parser/block/BlockParser;
+	public final fun getNewColumn ()I
+	public final fun getNewIndex ()I
+	public final fun getReplaceParagraphLines ()I
+	public final fun isReplaceActiveBlockParser ()Z
+	public fun replaceActiveBlockParser ()Lio/heapy/kotmark/parser/block/BlockStart;
+	public fun replaceParagraphLines (I)Lio/heapy/kotmark/parser/block/BlockStart;
+}
+
+public final class io/heapy/kotmark/internal/Bracket {
+	public static final field Companion Lio/heapy/kotmark/internal/Bracket$Companion;
+	public synthetic fun <init> (Lio/heapy/kotmark/node/Text;Lio/heapy/kotmark/parser/beta/Position;Lio/heapy/kotmark/node/Text;Lio/heapy/kotmark/parser/beta/Position;Lio/heapy/kotmark/parser/beta/Position;Lio/heapy/kotmark/internal/Bracket;Lio/heapy/kotmark/internal/Delimiter;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getAllowed ()Z
+	public final fun getBracketAfter ()Z
+	public final fun getBracketNode ()Lio/heapy/kotmark/node/Text;
+	public final fun getBracketPosition ()Lio/heapy/kotmark/parser/beta/Position;
+	public final fun getContentPosition ()Lio/heapy/kotmark/parser/beta/Position;
+	public final fun getMarkerNode ()Lio/heapy/kotmark/node/Text;
+	public final fun getMarkerPosition ()Lio/heapy/kotmark/parser/beta/Position;
+	public final fun getPrevious ()Lio/heapy/kotmark/internal/Bracket;
+	public final fun getPreviousDelimiter ()Lio/heapy/kotmark/internal/Delimiter;
+	public static final fun link (Lio/heapy/kotmark/node/Text;Lio/heapy/kotmark/parser/beta/Position;Lio/heapy/kotmark/parser/beta/Position;Lio/heapy/kotmark/internal/Bracket;Lio/heapy/kotmark/internal/Delimiter;)Lio/heapy/kotmark/internal/Bracket;
+	public final fun setAllowed (Z)V
+	public final fun setBracketAfter (Z)V
+	public static final fun withMarker (Lio/heapy/kotmark/node/Text;Lio/heapy/kotmark/parser/beta/Position;Lio/heapy/kotmark/node/Text;Lio/heapy/kotmark/parser/beta/Position;Lio/heapy/kotmark/parser/beta/Position;Lio/heapy/kotmark/internal/Bracket;Lio/heapy/kotmark/internal/Delimiter;)Lio/heapy/kotmark/internal/Bracket;
+}
+
+public final class io/heapy/kotmark/internal/Bracket$Companion {
+	public final fun link (Lio/heapy/kotmark/node/Text;Lio/heapy/kotmark/parser/beta/Position;Lio/heapy/kotmark/parser/beta/Position;Lio/heapy/kotmark/internal/Bracket;Lio/heapy/kotmark/internal/Delimiter;)Lio/heapy/kotmark/internal/Bracket;
+	public final fun withMarker (Lio/heapy/kotmark/node/Text;Lio/heapy/kotmark/parser/beta/Position;Lio/heapy/kotmark/node/Text;Lio/heapy/kotmark/parser/beta/Position;Lio/heapy/kotmark/parser/beta/Position;Lio/heapy/kotmark/internal/Bracket;Lio/heapy/kotmark/internal/Delimiter;)Lio/heapy/kotmark/internal/Bracket;
+}
+
+public final class io/heapy/kotmark/internal/Definitions {
+	public fun <init> ()V
+	public final fun addDefinitions (Lio/heapy/kotmark/node/DefinitionMap;)V
+	public final fun getDefinition (Lkotlin/reflect/KClass;Ljava/lang/String;)Ljava/lang/Object;
+}
+
+public final class io/heapy/kotmark/internal/Delimiter : io/heapy/kotmark/parser/delimiter/DelimiterRun {
+	public fun <init> (Ljava/util/List;CZZLio/heapy/kotmark/internal/Delimiter;)V
+	public fun canClose ()Z
+	public fun canOpen ()Z
+	public final fun getCharacters ()Ljava/util/List;
+	public fun getCloser ()Lio/heapy/kotmark/node/Text;
+	public fun getClosers (I)Ljava/lang/Iterable;
+	public final fun getDelimiterChar ()C
+	public final fun getNext ()Lio/heapy/kotmark/internal/Delimiter;
+	public fun getOpener ()Lio/heapy/kotmark/node/Text;
+	public fun getOpeners (I)Ljava/lang/Iterable;
+	public final fun getPrevious ()Lio/heapy/kotmark/internal/Delimiter;
+	public fun length ()I
+	public fun originalLength ()I
+	public final fun setNext (Lio/heapy/kotmark/internal/Delimiter;)V
+	public final fun setPrevious (Lio/heapy/kotmark/internal/Delimiter;)V
+}
+
+public final class io/heapy/kotmark/internal/DocumentBlockParser : io/heapy/kotmark/parser/block/AbstractBlockParser {
+	public fun <init> ()V
+	public fun canContain (Lio/heapy/kotmark/node/Block;)Z
+	public synthetic fun getBlock ()Lio/heapy/kotmark/node/Block;
+	public fun getBlock ()Lio/heapy/kotmark/node/Document;
+	public fun isContainer ()Z
+	public fun tryContinue (Lio/heapy/kotmark/parser/block/ParserState;)Lio/heapy/kotmark/parser/block/BlockContinue;
+}
+
+public final class io/heapy/kotmark/internal/DocumentParser : io/heapy/kotmark/parser/block/ParserState {
+	public static final field Companion Lio/heapy/kotmark/internal/DocumentParser$Companion;
+	public fun <init> (Ljava/util/List;Lio/heapy/kotmark/parser/InlineParserFactory;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/Set;Lio/heapy/kotmark/parser/IncludeSourceSpans;I)V
+	public fun getActiveBlockParser ()Lio/heapy/kotmark/parser/block/BlockParser;
+	public fun getColumn ()I
+	public fun getIndent ()I
+	public fun getIndex ()I
+	public fun getLine ()Lio/heapy/kotmark/parser/SourceLine;
+	public fun getNextNonSpaceIndex ()I
+	public fun isBlank ()Z
+	public final fun parse (Ljava/lang/String;)Lio/heapy/kotmark/node/Document;
+}
+
+public final class io/heapy/kotmark/internal/DocumentParser$Companion {
+	public final fun calculateBlockParserFactories (Ljava/util/List;Ljava/util/Set;)Ljava/util/List;
+	public final fun checkEnabledBlockTypes (Ljava/util/Set;)V
+	public final fun getDefaultBlockParserTypes ()Ljava/util/Set;
+}
+
+public final class io/heapy/kotmark/internal/FencedCodeBlockParser : io/heapy/kotmark/parser/block/AbstractBlockParser {
+	public static final field Companion Lio/heapy/kotmark/internal/FencedCodeBlockParser$Companion;
+	public fun <init> (CII)V
+	public fun addLine (Lio/heapy/kotmark/parser/SourceLine;)V
+	public fun closeBlock ()V
+	public synthetic fun getBlock ()Lio/heapy/kotmark/node/Block;
+	public fun getBlock ()Lio/heapy/kotmark/node/FencedCodeBlock;
+	public fun tryContinue (Lio/heapy/kotmark/parser/block/ParserState;)Lio/heapy/kotmark/parser/block/BlockContinue;
+}
+
+public final class io/heapy/kotmark/internal/FencedCodeBlockParser$Companion {
+}
+
+public final class io/heapy/kotmark/internal/FencedCodeBlockParser$Factory : io/heapy/kotmark/parser/block/AbstractBlockParserFactory {
+	public fun <init> ()V
+	public fun tryStart (Lio/heapy/kotmark/parser/block/ParserState;Lio/heapy/kotmark/parser/block/MatchedBlockParser;)Lio/heapy/kotmark/parser/block/BlockStart;
+}
+
+public final class io/heapy/kotmark/internal/HeadingParser : io/heapy/kotmark/parser/block/AbstractBlockParser {
+	public static final field Companion Lio/heapy/kotmark/internal/HeadingParser$Companion;
+	public fun <init> (ILio/heapy/kotmark/parser/SourceLines;)V
+	public synthetic fun getBlock ()Lio/heapy/kotmark/node/Block;
+	public fun getBlock ()Lio/heapy/kotmark/node/Heading;
+	public fun parseInlines (Lio/heapy/kotmark/parser/InlineParser;)V
+	public fun tryContinue (Lio/heapy/kotmark/parser/block/ParserState;)Lio/heapy/kotmark/parser/block/BlockContinue;
+}
+
+public final class io/heapy/kotmark/internal/HeadingParser$Companion {
+}
+
+public final class io/heapy/kotmark/internal/HeadingParser$Factory : io/heapy/kotmark/parser/block/AbstractBlockParserFactory {
+	public fun <init> ()V
+	public fun tryStart (Lio/heapy/kotmark/parser/block/ParserState;Lio/heapy/kotmark/parser/block/MatchedBlockParser;)Lio/heapy/kotmark/parser/block/BlockStart;
+}
+
+public final class io/heapy/kotmark/internal/HtmlBlockParser : io/heapy/kotmark/parser/block/AbstractBlockParser {
+	public static final field Companion Lio/heapy/kotmark/internal/HtmlBlockParser$Companion;
+	public synthetic fun <init> (Lkotlin/text/Regex;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun addLine (Lio/heapy/kotmark/parser/SourceLine;)V
+	public fun closeBlock ()V
+	public synthetic fun getBlock ()Lio/heapy/kotmark/node/Block;
+	public fun getBlock ()Lio/heapy/kotmark/node/HtmlBlock;
+	public fun tryContinue (Lio/heapy/kotmark/parser/block/ParserState;)Lio/heapy/kotmark/parser/block/BlockContinue;
+}
+
+public final class io/heapy/kotmark/internal/HtmlBlockParser$Companion {
+}
+
+public final class io/heapy/kotmark/internal/HtmlBlockParser$Factory : io/heapy/kotmark/parser/block/AbstractBlockParserFactory {
+	public fun <init> ()V
+	public fun tryStart (Lio/heapy/kotmark/parser/block/ParserState;Lio/heapy/kotmark/parser/block/MatchedBlockParser;)Lio/heapy/kotmark/parser/block/BlockStart;
+}
+
+public final class io/heapy/kotmark/internal/IndentedCodeBlockParser : io/heapy/kotmark/parser/block/AbstractBlockParser {
+	public fun <init> ()V
+	public fun addLine (Lio/heapy/kotmark/parser/SourceLine;)V
+	public fun closeBlock ()V
+	public synthetic fun getBlock ()Lio/heapy/kotmark/node/Block;
+	public fun getBlock ()Lio/heapy/kotmark/node/IndentedCodeBlock;
+	public fun tryContinue (Lio/heapy/kotmark/parser/block/ParserState;)Lio/heapy/kotmark/parser/block/BlockContinue;
+}
+
+public final class io/heapy/kotmark/internal/IndentedCodeBlockParser$Factory : io/heapy/kotmark/parser/block/AbstractBlockParserFactory {
+	public fun <init> ()V
+	public fun tryStart (Lio/heapy/kotmark/parser/block/ParserState;Lio/heapy/kotmark/parser/block/MatchedBlockParser;)Lio/heapy/kotmark/parser/block/BlockStart;
+}
+
+public final class io/heapy/kotmark/internal/InlineParserContextImpl : io/heapy/kotmark/parser/InlineParserContext {
+	public fun <init> (Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/Set;Lio/heapy/kotmark/internal/Definitions;)V
+	public fun getCustomDelimiterProcessors ()Ljava/util/List;
+	public fun getCustomInlineContentParserFactories ()Ljava/util/List;
+	public fun getCustomLinkMarkers ()Ljava/util/Set;
+	public fun getCustomLinkProcessors ()Ljava/util/List;
+	public fun getDefinition (Lkotlin/reflect/KClass;Ljava/lang/String;)Ljava/lang/Object;
+	public fun getLinkReferenceDefinition (Ljava/lang/String;)Lio/heapy/kotmark/node/LinkReferenceDefinition;
+}
+
+public final class io/heapy/kotmark/internal/InlineParserImpl : io/heapy/kotmark/parser/InlineParser, io/heapy/kotmark/parser/beta/InlineParserState {
+	public static final field Companion Lio/heapy/kotmark/internal/InlineParserImpl$Companion;
+	public fun <init> (Lio/heapy/kotmark/parser/InlineParserContext;)V
+	public fun parse (Lio/heapy/kotmark/parser/SourceLines;Lio/heapy/kotmark/node/Node;)V
+	public fun scanner ()Lio/heapy/kotmark/parser/beta/Scanner;
+}
+
+public final class io/heapy/kotmark/internal/InlineParserImpl$Companion {
+}
+
+public final class io/heapy/kotmark/internal/LinkReferenceDefinitionParser {
+	public static final field Companion Lio/heapy/kotmark/internal/LinkReferenceDefinitionParser$Companion;
+	public fun <init> ()V
+	public final fun addSourceSpan (Lio/heapy/kotmark/node/SourceSpan;)V
+	public final fun getDefinitions ()Ljava/util/List;
+	public final fun getParagraphLines ()Lio/heapy/kotmark/parser/SourceLines;
+	public final fun getParagraphSourceSpans ()Ljava/util/List;
+	public final fun getState ()Lio/heapy/kotmark/internal/LinkReferenceDefinitionParser$State;
+	public final fun parse (Lio/heapy/kotmark/parser/SourceLine;)V
+	public final fun removeLines (I)Ljava/util/List;
+}
+
+public final class io/heapy/kotmark/internal/LinkReferenceDefinitionParser$Companion {
+}
+
+public final class io/heapy/kotmark/internal/LinkReferenceDefinitionParser$State : java/lang/Enum {
+	public static final field DESTINATION Lio/heapy/kotmark/internal/LinkReferenceDefinitionParser$State;
+	public static final field LABEL Lio/heapy/kotmark/internal/LinkReferenceDefinitionParser$State;
+	public static final field PARAGRAPH Lio/heapy/kotmark/internal/LinkReferenceDefinitionParser$State;
+	public static final field START_DEFINITION Lio/heapy/kotmark/internal/LinkReferenceDefinitionParser$State;
+	public static final field START_TITLE Lio/heapy/kotmark/internal/LinkReferenceDefinitionParser$State;
+	public static final field TITLE Lio/heapy/kotmark/internal/LinkReferenceDefinitionParser$State;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/heapy/kotmark/internal/LinkReferenceDefinitionParser$State;
+	public static fun values ()[Lio/heapy/kotmark/internal/LinkReferenceDefinitionParser$State;
+}
+
+public final class io/heapy/kotmark/internal/ListBlockParser : io/heapy/kotmark/parser/block/AbstractBlockParser {
+	public static final field Companion Lio/heapy/kotmark/internal/ListBlockParser$Companion;
+	public fun <init> (Lio/heapy/kotmark/node/ListBlock;)V
+	public fun canContain (Lio/heapy/kotmark/node/Block;)Z
+	public synthetic fun getBlock ()Lio/heapy/kotmark/node/Block;
+	public fun getBlock ()Lio/heapy/kotmark/node/ListBlock;
+	public fun isContainer ()Z
+	public fun tryContinue (Lio/heapy/kotmark/parser/block/ParserState;)Lio/heapy/kotmark/parser/block/BlockContinue;
+}
+
+public final class io/heapy/kotmark/internal/ListBlockParser$Companion {
+}
+
+public final class io/heapy/kotmark/internal/ListBlockParser$Factory : io/heapy/kotmark/parser/block/AbstractBlockParserFactory {
+	public fun <init> ()V
+	public fun tryStart (Lio/heapy/kotmark/parser/block/ParserState;Lio/heapy/kotmark/parser/block/MatchedBlockParser;)Lio/heapy/kotmark/parser/block/BlockStart;
+}
+
+public final class io/heapy/kotmark/internal/ListItemParser : io/heapy/kotmark/parser/block/AbstractBlockParser {
+	public fun <init> (II)V
+	public fun canContain (Lio/heapy/kotmark/node/Block;)Z
+	public synthetic fun getBlock ()Lio/heapy/kotmark/node/Block;
+	public fun getBlock ()Lio/heapy/kotmark/node/ListItem;
+	public fun isContainer ()Z
+	public fun tryContinue (Lio/heapy/kotmark/parser/block/ParserState;)Lio/heapy/kotmark/parser/block/BlockContinue;
+}
+
+public final class io/heapy/kotmark/internal/ParagraphParser : io/heapy/kotmark/parser/block/AbstractBlockParser {
+	public fun <init> ()V
+	public fun addLine (Lio/heapy/kotmark/parser/SourceLine;)V
+	public fun addSourceSpan (Lio/heapy/kotmark/node/SourceSpan;)V
+	public fun canHaveLazyContinuationLines ()Z
+	public fun closeBlock ()V
+	public synthetic fun getBlock ()Lio/heapy/kotmark/node/Block;
+	public fun getBlock ()Lio/heapy/kotmark/node/Paragraph;
+	public fun getDefinitions ()Ljava/util/List;
+	public final fun getParagraphLines ()Lio/heapy/kotmark/parser/SourceLines;
+	public fun parseInlines (Lio/heapy/kotmark/parser/InlineParser;)V
+	public final fun removeLines (I)Ljava/util/List;
+	public fun tryContinue (Lio/heapy/kotmark/parser/block/ParserState;)Lio/heapy/kotmark/parser/block/BlockContinue;
+}
+
+public final class io/heapy/kotmark/internal/ThematicBreakParser : io/heapy/kotmark/parser/block/AbstractBlockParser {
+	public static final field Companion Lio/heapy/kotmark/internal/ThematicBreakParser$Companion;
+	public fun <init> (Ljava/lang/String;)V
+	public synthetic fun getBlock ()Lio/heapy/kotmark/node/Block;
+	public fun getBlock ()Lio/heapy/kotmark/node/ThematicBreak;
+	public fun tryContinue (Lio/heapy/kotmark/parser/block/ParserState;)Lio/heapy/kotmark/parser/block/BlockContinue;
+}
+
+public final class io/heapy/kotmark/internal/ThematicBreakParser$Companion {
+}
+
+public final class io/heapy/kotmark/internal/ThematicBreakParser$Factory : io/heapy/kotmark/parser/block/AbstractBlockParserFactory {
+	public fun <init> ()V
+	public fun tryStart (Lio/heapy/kotmark/parser/block/ParserState;Lio/heapy/kotmark/parser/block/MatchedBlockParser;)Lio/heapy/kotmark/parser/block/BlockStart;
+}
+
+public final class io/heapy/kotmark/internal/inline/AsteriskDelimiterProcessor : io/heapy/kotmark/internal/inline/EmphasisDelimiterProcessor {
+	public fun <init> ()V
+}
+
+public final class io/heapy/kotmark/internal/inline/AutolinkInlineParser : io/heapy/kotmark/parser/beta/InlineContentParser {
+	public static final field Companion Lio/heapy/kotmark/internal/inline/AutolinkInlineParser$Companion;
+	public fun <init> ()V
+	public fun tryParse (Lio/heapy/kotmark/parser/beta/InlineParserState;)Lio/heapy/kotmark/parser/beta/ParsedInline;
+}
+
+public final class io/heapy/kotmark/internal/inline/AutolinkInlineParser$Companion {
+}
+
+public final class io/heapy/kotmark/internal/inline/AutolinkInlineParser$Factory : io/heapy/kotmark/parser/beta/InlineContentParserFactory {
+	public fun <init> ()V
+	public fun create ()Lio/heapy/kotmark/parser/beta/InlineContentParser;
+	public fun getTriggerCharacters ()Ljava/util/Set;
+}
+
+public final class io/heapy/kotmark/internal/inline/BackslashInlineParser : io/heapy/kotmark/parser/beta/InlineContentParser {
+	public static final field Companion Lio/heapy/kotmark/internal/inline/BackslashInlineParser$Companion;
+	public fun <init> ()V
+	public fun tryParse (Lio/heapy/kotmark/parser/beta/InlineParserState;)Lio/heapy/kotmark/parser/beta/ParsedInline;
+}
+
+public final class io/heapy/kotmark/internal/inline/BackslashInlineParser$Companion {
+}
+
+public final class io/heapy/kotmark/internal/inline/BackslashInlineParser$Factory : io/heapy/kotmark/parser/beta/InlineContentParserFactory {
+	public fun <init> ()V
+	public fun create ()Lio/heapy/kotmark/parser/beta/InlineContentParser;
+	public fun getTriggerCharacters ()Ljava/util/Set;
+}
+
+public final class io/heapy/kotmark/internal/inline/BackticksInlineParser : io/heapy/kotmark/parser/beta/InlineContentParser {
+	public fun <init> ()V
+	public fun tryParse (Lio/heapy/kotmark/parser/beta/InlineParserState;)Lio/heapy/kotmark/parser/beta/ParsedInline;
+}
+
+public final class io/heapy/kotmark/internal/inline/BackticksInlineParser$Factory : io/heapy/kotmark/parser/beta/InlineContentParserFactory {
+	public fun <init> ()V
+	public fun create ()Lio/heapy/kotmark/parser/beta/InlineContentParser;
+	public fun getTriggerCharacters ()Ljava/util/Set;
+}
+
+public final class io/heapy/kotmark/internal/inline/CoreLinkProcessor : io/heapy/kotmark/parser/beta/LinkProcessor {
+	public fun <init> ()V
+	public fun process (Lio/heapy/kotmark/parser/beta/LinkInfo;Lio/heapy/kotmark/parser/beta/Scanner;Lio/heapy/kotmark/parser/InlineParserContext;)Lio/heapy/kotmark/parser/beta/LinkResult;
+}
+
+public abstract class io/heapy/kotmark/internal/inline/EmphasisDelimiterProcessor : io/heapy/kotmark/parser/delimiter/DelimiterProcessor {
+	public fun <init> (C)V
+	public fun getClosingCharacter ()C
+	public fun getMinLength ()I
+	public fun getOpeningCharacter ()C
+	public fun process (Lio/heapy/kotmark/parser/delimiter/DelimiterRun;Lio/heapy/kotmark/parser/delimiter/DelimiterRun;)I
+}
+
+public final class io/heapy/kotmark/internal/inline/EntityInlineParser : io/heapy/kotmark/parser/beta/InlineContentParser {
+	public static final field Companion Lio/heapy/kotmark/internal/inline/EntityInlineParser$Companion;
+	public fun <init> ()V
+	public fun tryParse (Lio/heapy/kotmark/parser/beta/InlineParserState;)Lio/heapy/kotmark/parser/beta/ParsedInline;
+}
+
+public final class io/heapy/kotmark/internal/inline/EntityInlineParser$Companion {
+}
+
+public final class io/heapy/kotmark/internal/inline/EntityInlineParser$Factory : io/heapy/kotmark/parser/beta/InlineContentParserFactory {
+	public fun <init> ()V
+	public fun create ()Lio/heapy/kotmark/parser/beta/InlineContentParser;
+	public fun getTriggerCharacters ()Ljava/util/Set;
+}
+
+public final class io/heapy/kotmark/internal/inline/HtmlInlineParser : io/heapy/kotmark/parser/beta/InlineContentParser {
+	public static final field Companion Lio/heapy/kotmark/internal/inline/HtmlInlineParser$Companion;
+	public fun <init> ()V
+	public fun tryParse (Lio/heapy/kotmark/parser/beta/InlineParserState;)Lio/heapy/kotmark/parser/beta/ParsedInline;
+}
+
+public final class io/heapy/kotmark/internal/inline/HtmlInlineParser$Companion {
+}
+
+public final class io/heapy/kotmark/internal/inline/HtmlInlineParser$Factory : io/heapy/kotmark/parser/beta/InlineContentParserFactory {
+	public fun <init> ()V
+	public fun create ()Lio/heapy/kotmark/parser/beta/InlineContentParser;
+	public fun getTriggerCharacters ()Ljava/util/Set;
+}
+
+public final class io/heapy/kotmark/internal/inline/LinkResultImpl : io/heapy/kotmark/parser/beta/LinkResult {
+	public fun <init> (Lio/heapy/kotmark/internal/inline/LinkResultImpl$Type;Lio/heapy/kotmark/node/Node;Lio/heapy/kotmark/parser/beta/Position;)V
+	public final fun getNode ()Lio/heapy/kotmark/node/Node;
+	public final fun getPosition ()Lio/heapy/kotmark/parser/beta/Position;
+	public final fun getType ()Lio/heapy/kotmark/internal/inline/LinkResultImpl$Type;
+	public fun includeMarker ()Lio/heapy/kotmark/parser/beta/LinkResult;
+	public final fun isIncludeMarker ()Z
+}
+
+public final class io/heapy/kotmark/internal/inline/LinkResultImpl$Type : java/lang/Enum {
+	public static final field REPLACE Lio/heapy/kotmark/internal/inline/LinkResultImpl$Type;
+	public static final field WRAP Lio/heapy/kotmark/internal/inline/LinkResultImpl$Type;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/heapy/kotmark/internal/inline/LinkResultImpl$Type;
+	public static fun values ()[Lio/heapy/kotmark/internal/inline/LinkResultImpl$Type;
+}
+
+public final class io/heapy/kotmark/internal/inline/ParsedInlineImpl : io/heapy/kotmark/parser/beta/ParsedInline {
+	public fun <init> (Lio/heapy/kotmark/node/Node;Lio/heapy/kotmark/parser/beta/Position;)V
+	public final fun getNode ()Lio/heapy/kotmark/node/Node;
+	public final fun getPosition ()Lio/heapy/kotmark/parser/beta/Position;
+}
+
+public final class io/heapy/kotmark/internal/inline/UnderscoreDelimiterProcessor : io/heapy/kotmark/internal/inline/EmphasisDelimiterProcessor {
+	public fun <init> ()V
+}
+
+public final class io/heapy/kotmark/internal/renderer/NodeRendererMap {
+	public fun <init> ()V
+	public final fun add (Lio/heapy/kotmark/renderer/NodeRenderer;)V
+	public final fun afterRoot (Lio/heapy/kotmark/node/Node;)V
+	public final fun beforeRoot (Lio/heapy/kotmark/node/Node;)V
+	public final fun render (Lio/heapy/kotmark/node/Node;)V
+}
+
+public final class io/heapy/kotmark/internal/util/Escaping {
+	public static final field ENTITY Ljava/lang/String;
+	public static final field ESCAPABLE Ljava/lang/String;
+	public static final field INSTANCE Lio/heapy/kotmark/internal/util/Escaping;
+	public final fun escapeHtml (Ljava/lang/String;)Ljava/lang/String;
+	public final fun normalizeLabelContent (Ljava/lang/String;)Ljava/lang/String;
+	public final fun percentEncodeUrl (Ljava/lang/String;)Ljava/lang/String;
+	public final fun unescapeString (Ljava/lang/String;)Ljava/lang/String;
+}
+
+public final class io/heapy/kotmark/internal/util/LineReader : java/io/Closeable {
+	public static final field CHAR_BUFFER_SIZE I
+	public static final field Companion Lio/heapy/kotmark/internal/util/LineReader$Companion;
+	public static final field EXPECTED_LINE_LENGTH I
+	public fun <init> (Ljava/io/Reader;)V
+	public fun close ()V
+	public final fun getLineTerminator ()Ljava/lang/String;
+	public final fun readLine ()Ljava/lang/String;
+}
+
+public final class io/heapy/kotmark/internal/util/LineReader$Companion {
+}
+
+public final class io/heapy/kotmark/internal/util/LinkScanner {
+	public static final field INSTANCE Lio/heapy/kotmark/internal/util/LinkScanner;
+	public static final fun scanLinkDestination (Lio/heapy/kotmark/parser/beta/Scanner;)Z
+	public static final fun scanLinkLabelContent (Lio/heapy/kotmark/parser/beta/Scanner;)Z
+	public static final fun scanLinkTitle (Lio/heapy/kotmark/parser/beta/Scanner;)Z
+	public static final fun scanLinkTitleContent (Lio/heapy/kotmark/parser/beta/Scanner;C)Z
+}
+
+public final class io/heapy/kotmark/internal/util/Parsing {
+	public static final field CODE_BLOCK_INDENT I
+	public static final field INSTANCE Lio/heapy/kotmark/internal/util/Parsing;
+	public final fun columnsToNextTabStop (I)I
+}
+
+public final class io/heapy/kotmark/internal/util/UnicodeCategories {
+	public static final field INSTANCE Lio/heapy/kotmark/internal/util/UnicodeCategories;
+	public final fun category (I)Lkotlin/text/CharCategory;
+	public final fun isLetter (I)Z
+}
+
+public abstract class io/heapy/kotmark/node/AbstractVisitor : io/heapy/kotmark/node/Visitor {
+	public fun <init> ()V
+	public fun visit (Lio/heapy/kotmark/node/BlockQuote;)V
+	public fun visit (Lio/heapy/kotmark/node/BulletList;)V
+	public fun visit (Lio/heapy/kotmark/node/Code;)V
+	public fun visit (Lio/heapy/kotmark/node/CustomBlock;)V
+	public fun visit (Lio/heapy/kotmark/node/CustomNode;)V
+	public fun visit (Lio/heapy/kotmark/node/Document;)V
+	public fun visit (Lio/heapy/kotmark/node/Emphasis;)V
+	public fun visit (Lio/heapy/kotmark/node/FencedCodeBlock;)V
+	public fun visit (Lio/heapy/kotmark/node/HardLineBreak;)V
+	public fun visit (Lio/heapy/kotmark/node/Heading;)V
+	public fun visit (Lio/heapy/kotmark/node/HtmlBlock;)V
+	public fun visit (Lio/heapy/kotmark/node/HtmlInline;)V
+	public fun visit (Lio/heapy/kotmark/node/Image;)V
+	public fun visit (Lio/heapy/kotmark/node/IndentedCodeBlock;)V
+	public fun visit (Lio/heapy/kotmark/node/Link;)V
+	public fun visit (Lio/heapy/kotmark/node/LinkReferenceDefinition;)V
+	public fun visit (Lio/heapy/kotmark/node/ListItem;)V
+	public fun visit (Lio/heapy/kotmark/node/OrderedList;)V
+	public fun visit (Lio/heapy/kotmark/node/Paragraph;)V
+	public fun visit (Lio/heapy/kotmark/node/SoftLineBreak;)V
+	public fun visit (Lio/heapy/kotmark/node/StrongEmphasis;)V
+	public fun visit (Lio/heapy/kotmark/node/Text;)V
+	public fun visit (Lio/heapy/kotmark/node/ThematicBreak;)V
+	protected fun visitChildren (Lio/heapy/kotmark/node/Node;)V
+}
+
+public abstract class io/heapy/kotmark/node/Block : io/heapy/kotmark/node/Node {
+	public fun <init> ()V
+	protected fun setParent (Lio/heapy/kotmark/node/Node;)V
+}
+
+public final class io/heapy/kotmark/node/BlockQuote : io/heapy/kotmark/node/Block {
+	public fun <init> ()V
+	public fun accept (Lio/heapy/kotmark/node/Visitor;)V
+}
+
+public final class io/heapy/kotmark/node/BulletList : io/heapy/kotmark/node/ListBlock {
+	public fun <init> ()V
+	public fun accept (Lio/heapy/kotmark/node/Visitor;)V
+	public final fun getBulletMarker ()C
+	public final fun getMarker ()Ljava/lang/String;
+	public final fun setBulletMarker (C)V
+	public final fun setMarker (Ljava/lang/String;)V
+}
+
+public final class io/heapy/kotmark/node/Code : io/heapy/kotmark/node/Node {
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun accept (Lio/heapy/kotmark/node/Visitor;)V
+	public final fun getLiteral ()Ljava/lang/String;
+	public final fun setLiteral (Ljava/lang/String;)V
+}
+
+public abstract class io/heapy/kotmark/node/CustomBlock : io/heapy/kotmark/node/Block {
+	public fun <init> ()V
+	public fun accept (Lio/heapy/kotmark/node/Visitor;)V
+}
+
+public abstract class io/heapy/kotmark/node/CustomNode : io/heapy/kotmark/node/Node {
+	public fun <init> ()V
+	public fun accept (Lio/heapy/kotmark/node/Visitor;)V
+}
+
+public final class io/heapy/kotmark/node/DefinitionMap {
+	public fun <init> (Lkotlin/reflect/KClass;)V
+	public final fun addAll (Lio/heapy/kotmark/node/DefinitionMap;)V
+	public final fun get (Ljava/lang/String;)Ljava/lang/Object;
+	public final fun getType ()Lkotlin/reflect/KClass;
+	public final fun keySet ()Ljava/util/Set;
+	public final fun putIfAbsent (Ljava/lang/String;Ljava/lang/Object;)Ljava/lang/Object;
+	public final fun values ()Ljava/util/Collection;
+}
+
+public abstract interface class io/heapy/kotmark/node/Delimited {
+	public abstract fun getClosingDelimiter ()Ljava/lang/String;
+	public abstract fun getOpeningDelimiter ()Ljava/lang/String;
+}
+
+public final class io/heapy/kotmark/node/Document : io/heapy/kotmark/node/Block {
+	public fun <init> ()V
+	public fun accept (Lio/heapy/kotmark/node/Visitor;)V
+}
+
+public final class io/heapy/kotmark/node/Emphasis : io/heapy/kotmark/node/Node, io/heapy/kotmark/node/Delimited {
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;)V
+	public fun accept (Lio/heapy/kotmark/node/Visitor;)V
+	public fun getClosingDelimiter ()Ljava/lang/String;
+	public final fun getDelimiter ()Ljava/lang/String;
+	public fun getOpeningDelimiter ()Ljava/lang/String;
+	public final fun setDelimiter (Ljava/lang/String;)V
+}
+
+public final class io/heapy/kotmark/node/FencedCodeBlock : io/heapy/kotmark/node/Block {
+	public static final field Companion Lio/heapy/kotmark/node/FencedCodeBlock$Companion;
+	public fun <init> ()V
+	public fun accept (Lio/heapy/kotmark/node/Visitor;)V
+	public final fun getClosingFenceLength ()Ljava/lang/Integer;
+	public final fun getFenceChar ()C
+	public final fun getFenceCharacter ()Ljava/lang/String;
+	public final fun getFenceIndent ()I
+	public final fun getFenceLength ()I
+	public final fun getInfo ()Ljava/lang/String;
+	public final fun getLiteral ()Ljava/lang/String;
+	public final fun getOpeningFenceLength ()Ljava/lang/Integer;
+	public final fun setClosingFenceLength (Ljava/lang/Integer;)V
+	public final fun setFenceChar (C)V
+	public final fun setFenceCharacter (Ljava/lang/String;)V
+	public final fun setFenceIndent (I)V
+	public final fun setFenceLength (I)V
+	public final fun setInfo (Ljava/lang/String;)V
+	public final fun setLiteral (Ljava/lang/String;)V
+	public final fun setOpeningFenceLength (Ljava/lang/Integer;)V
+}
+
+public final class io/heapy/kotmark/node/FencedCodeBlock$Companion {
+}
+
+public final class io/heapy/kotmark/node/HardLineBreak : io/heapy/kotmark/node/Node {
+	public fun <init> ()V
+	public fun accept (Lio/heapy/kotmark/node/Visitor;)V
+}
+
+public final class io/heapy/kotmark/node/Heading : io/heapy/kotmark/node/Block {
+	public fun <init> ()V
+	public fun accept (Lio/heapy/kotmark/node/Visitor;)V
+	public final fun getLevel ()I
+	public final fun setLevel (I)V
+}
+
+public final class io/heapy/kotmark/node/HtmlBlock : io/heapy/kotmark/node/Block {
+	public fun <init> ()V
+	public fun accept (Lio/heapy/kotmark/node/Visitor;)V
+	public final fun getLiteral ()Ljava/lang/String;
+	public final fun setLiteral (Ljava/lang/String;)V
+}
+
+public final class io/heapy/kotmark/node/HtmlInline : io/heapy/kotmark/node/Node {
+	public fun <init> ()V
+	public fun accept (Lio/heapy/kotmark/node/Visitor;)V
+	public final fun getLiteral ()Ljava/lang/String;
+	public final fun setLiteral (Ljava/lang/String;)V
+}
+
+public final class io/heapy/kotmark/node/Image : io/heapy/kotmark/node/Node {
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public fun accept (Lio/heapy/kotmark/node/Visitor;)V
+	public final fun getDestination ()Ljava/lang/String;
+	public final fun getTitle ()Ljava/lang/String;
+	public final fun setDestination (Ljava/lang/String;)V
+	public final fun setTitle (Ljava/lang/String;)V
+}
+
+public final class io/heapy/kotmark/node/IndentedCodeBlock : io/heapy/kotmark/node/Block {
+	public fun <init> ()V
+	public fun accept (Lio/heapy/kotmark/node/Visitor;)V
+	public final fun getLiteral ()Ljava/lang/String;
+	public final fun setLiteral (Ljava/lang/String;)V
+}
+
+public final class io/heapy/kotmark/node/Link : io/heapy/kotmark/node/Node {
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public fun accept (Lio/heapy/kotmark/node/Visitor;)V
+	public final fun getDestination ()Ljava/lang/String;
+	public final fun getTitle ()Ljava/lang/String;
+	public final fun setDestination (Ljava/lang/String;)V
+	public final fun setTitle (Ljava/lang/String;)V
+}
+
+public final class io/heapy/kotmark/node/LinkReferenceDefinition : io/heapy/kotmark/node/Block {
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public fun accept (Lio/heapy/kotmark/node/Visitor;)V
+	public final fun getDestination ()Ljava/lang/String;
+	public final fun getLabel ()Ljava/lang/String;
+	public final fun getTitle ()Ljava/lang/String;
+	public final fun setDestination (Ljava/lang/String;)V
+	public final fun setLabel (Ljava/lang/String;)V
+	public final fun setTitle (Ljava/lang/String;)V
+}
+
+public abstract class io/heapy/kotmark/node/ListBlock : io/heapy/kotmark/node/Block {
+	public fun <init> ()V
+	public final fun isTight ()Z
+	public final fun setTight (Z)V
+}
+
+public final class io/heapy/kotmark/node/ListItem : io/heapy/kotmark/node/Block {
+	public fun <init> ()V
+	public fun accept (Lio/heapy/kotmark/node/Visitor;)V
+	public final fun appendChildBlock (Lio/heapy/kotmark/node/Block;)V
+	public final fun getContentIndent ()Ljava/lang/Integer;
+	public final fun getMarkerIndent ()Ljava/lang/Integer;
+	public final fun setContentIndent (Ljava/lang/Integer;)V
+	public final fun setMarkerIndent (Ljava/lang/Integer;)V
+}
+
+public abstract class io/heapy/kotmark/node/Node {
+	public fun <init> ()V
+	public abstract fun accept (Lio/heapy/kotmark/node/Visitor;)V
+	public final fun addSourceSpan (Lio/heapy/kotmark/node/SourceSpan;)V
+	public final fun appendChild (Lio/heapy/kotmark/node/Node;)V
+	public final fun getFirstChild ()Lio/heapy/kotmark/node/Node;
+	public final fun getLastChild ()Lio/heapy/kotmark/node/Node;
+	public final fun getNext ()Lio/heapy/kotmark/node/Node;
+	public final fun getParent ()Lio/heapy/kotmark/node/Node;
+	public final fun getPrevious ()Lio/heapy/kotmark/node/Node;
+	public fun getSourceSpans ()Ljava/util/List;
+	public final fun insertAfter (Lio/heapy/kotmark/node/Node;)V
+	public final fun insertBefore (Lio/heapy/kotmark/node/Node;)V
+	public final fun prependChild (Lio/heapy/kotmark/node/Node;)V
+	protected fun setParent (Lio/heapy/kotmark/node/Node;)V
+	public final fun setSourceSpans (Ljava/util/List;)V
+	public fun toString ()Ljava/lang/String;
+	protected fun toStringAttributes ()Ljava/lang/String;
+	public final fun unlink ()V
+}
+
+public final class io/heapy/kotmark/node/Nodes {
+	public static final field INSTANCE Lio/heapy/kotmark/node/Nodes;
+	public final fun between (Lio/heapy/kotmark/node/Node;Lio/heapy/kotmark/node/Node;)Ljava/lang/Iterable;
+}
+
+public final class io/heapy/kotmark/node/OrderedList : io/heapy/kotmark/node/ListBlock {
+	public fun <init> ()V
+	public fun accept (Lio/heapy/kotmark/node/Visitor;)V
+	public final fun getDelimiter ()C
+	public final fun getMarkerDelimiter ()Ljava/lang/String;
+	public final fun getMarkerStartNumber ()Ljava/lang/Integer;
+	public final fun getStartNumber ()I
+	public final fun setDelimiter (C)V
+	public final fun setMarkerDelimiter (Ljava/lang/String;)V
+	public final fun setMarkerStartNumber (Ljava/lang/Integer;)V
+	public final fun setStartNumber (I)V
+}
+
+public final class io/heapy/kotmark/node/Paragraph : io/heapy/kotmark/node/Block {
+	public fun <init> ()V
+	public fun accept (Lio/heapy/kotmark/node/Visitor;)V
+}
+
+public final class io/heapy/kotmark/node/SoftLineBreak : io/heapy/kotmark/node/Node {
+	public fun <init> ()V
+	public fun accept (Lio/heapy/kotmark/node/Visitor;)V
+}
+
+public final class io/heapy/kotmark/node/SourceSpan {
+	public static final field Companion Lio/heapy/kotmark/node/SourceSpan$Companion;
+	public synthetic fun <init> (IIIILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getColumnIndex ()I
+	public final fun getInputIndex ()I
+	public final fun getLength ()I
+	public final fun getLineIndex ()I
+	public fun hashCode ()I
+	public static final fun of (III)Lio/heapy/kotmark/node/SourceSpan;
+	public static final fun of (IIII)Lio/heapy/kotmark/node/SourceSpan;
+	public final fun subSpan (I)Lio/heapy/kotmark/node/SourceSpan;
+	public final fun subSpan (II)Lio/heapy/kotmark/node/SourceSpan;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/heapy/kotmark/node/SourceSpan$Companion {
+	public final fun of (III)Lio/heapy/kotmark/node/SourceSpan;
+	public final fun of (IIII)Lio/heapy/kotmark/node/SourceSpan;
+}
+
+public final class io/heapy/kotmark/node/SourceSpans {
+	public static final field Companion Lio/heapy/kotmark/node/SourceSpans$Companion;
+	public final fun addAll (Ljava/util/List;)V
+	public final fun addAllFrom (Ljava/lang/Iterable;)V
+	public static final fun empty ()Lio/heapy/kotmark/node/SourceSpans;
+	public final fun getSourceSpans ()Ljava/util/List;
+}
+
+public final class io/heapy/kotmark/node/SourceSpans$Companion {
+	public final fun empty ()Lio/heapy/kotmark/node/SourceSpans;
+}
+
+public final class io/heapy/kotmark/node/StrongEmphasis : io/heapy/kotmark/node/Node, io/heapy/kotmark/node/Delimited {
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;)V
+	public fun accept (Lio/heapy/kotmark/node/Visitor;)V
+	public fun getClosingDelimiter ()Ljava/lang/String;
+	public final fun getDelimiter ()Ljava/lang/String;
+	public fun getOpeningDelimiter ()Ljava/lang/String;
+	public final fun setDelimiter (Ljava/lang/String;)V
+}
+
+public final class io/heapy/kotmark/node/Text : io/heapy/kotmark/node/Node {
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;)V
+	public fun accept (Lio/heapy/kotmark/node/Visitor;)V
+	public final fun getLiteral ()Ljava/lang/String;
+	public final fun setLiteral (Ljava/lang/String;)V
+}
+
+public final class io/heapy/kotmark/node/ThematicBreak : io/heapy/kotmark/node/Block {
+	public fun <init> ()V
+	public fun accept (Lio/heapy/kotmark/node/Visitor;)V
+	public final fun getLiteral ()Ljava/lang/String;
+	public final fun setLiteral (Ljava/lang/String;)V
+}
+
+public abstract interface class io/heapy/kotmark/node/Visitor {
+	public abstract fun visit (Lio/heapy/kotmark/node/BlockQuote;)V
+	public abstract fun visit (Lio/heapy/kotmark/node/BulletList;)V
+	public abstract fun visit (Lio/heapy/kotmark/node/Code;)V
+	public abstract fun visit (Lio/heapy/kotmark/node/CustomBlock;)V
+	public abstract fun visit (Lio/heapy/kotmark/node/CustomNode;)V
+	public abstract fun visit (Lio/heapy/kotmark/node/Document;)V
+	public abstract fun visit (Lio/heapy/kotmark/node/Emphasis;)V
+	public abstract fun visit (Lio/heapy/kotmark/node/FencedCodeBlock;)V
+	public abstract fun visit (Lio/heapy/kotmark/node/HardLineBreak;)V
+	public abstract fun visit (Lio/heapy/kotmark/node/Heading;)V
+	public abstract fun visit (Lio/heapy/kotmark/node/HtmlBlock;)V
+	public abstract fun visit (Lio/heapy/kotmark/node/HtmlInline;)V
+	public abstract fun visit (Lio/heapy/kotmark/node/Image;)V
+	public abstract fun visit (Lio/heapy/kotmark/node/IndentedCodeBlock;)V
+	public abstract fun visit (Lio/heapy/kotmark/node/Link;)V
+	public abstract fun visit (Lio/heapy/kotmark/node/LinkReferenceDefinition;)V
+	public abstract fun visit (Lio/heapy/kotmark/node/ListItem;)V
+	public abstract fun visit (Lio/heapy/kotmark/node/OrderedList;)V
+	public abstract fun visit (Lio/heapy/kotmark/node/Paragraph;)V
+	public abstract fun visit (Lio/heapy/kotmark/node/SoftLineBreak;)V
+	public abstract fun visit (Lio/heapy/kotmark/node/StrongEmphasis;)V
+	public abstract fun visit (Lio/heapy/kotmark/node/Text;)V
+	public abstract fun visit (Lio/heapy/kotmark/node/ThematicBreak;)V
+}
+
+public final class io/heapy/kotmark/parser/IncludeSourceSpans : java/lang/Enum {
+	public static final field BLOCKS Lio/heapy/kotmark/parser/IncludeSourceSpans;
+	public static final field BLOCKS_AND_INLINES Lio/heapy/kotmark/parser/IncludeSourceSpans;
+	public static final field NONE Lio/heapy/kotmark/parser/IncludeSourceSpans;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/heapy/kotmark/parser/IncludeSourceSpans;
+	public static fun values ()[Lio/heapy/kotmark/parser/IncludeSourceSpans;
+}
+
+public abstract interface class io/heapy/kotmark/parser/InlineParser {
+	public abstract fun parse (Lio/heapy/kotmark/parser/SourceLines;Lio/heapy/kotmark/node/Node;)V
+}
+
+public abstract interface class io/heapy/kotmark/parser/InlineParserContext {
+	public abstract fun getCustomDelimiterProcessors ()Ljava/util/List;
+	public abstract fun getCustomInlineContentParserFactories ()Ljava/util/List;
+	public abstract fun getCustomLinkMarkers ()Ljava/util/Set;
+	public abstract fun getCustomLinkProcessors ()Ljava/util/List;
+	public abstract fun getDefinition (Lkotlin/reflect/KClass;Ljava/lang/String;)Ljava/lang/Object;
+	public fun getLinkReferenceDefinition (Ljava/lang/String;)Lio/heapy/kotmark/node/LinkReferenceDefinition;
+}
+
+public final class io/heapy/kotmark/parser/InlineParserContext$DefaultImpls {
+	public static fun getLinkReferenceDefinition (Lio/heapy/kotmark/parser/InlineParserContext;Ljava/lang/String;)Lio/heapy/kotmark/node/LinkReferenceDefinition;
+}
+
+public abstract interface class io/heapy/kotmark/parser/InlineParserFactory {
+	public abstract fun create (Lio/heapy/kotmark/parser/InlineParserContext;)Lio/heapy/kotmark/parser/InlineParser;
+}
+
+public final class io/heapy/kotmark/parser/Parser {
+	public synthetic fun <init> (Lio/heapy/kotmark/parser/Parser$Configuration;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun parse (Ljava/lang/String;)Lio/heapy/kotmark/node/Node;
+}
+
+public final class io/heapy/kotmark/parser/Parser$Configuration {
+	public final fun customBlockParserFactory (Lio/heapy/kotmark/parser/block/BlockParserFactory;)V
+	public final fun customDelimiterProcessor (Lio/heapy/kotmark/parser/delimiter/DelimiterProcessor;)V
+	public final fun customInlineContentParserFactory (Lio/heapy/kotmark/parser/beta/InlineContentParserFactory;)V
+	public final fun extensions (Ljava/lang/Iterable;)V
+	public final fun getEnabledBlockTypes ()Ljava/util/Set;
+	public final fun getIncludeSourceSpans ()Lio/heapy/kotmark/parser/IncludeSourceSpans;
+	public final fun getInlineParserFactory ()Lio/heapy/kotmark/parser/InlineParserFactory;
+	public final fun getMaxOpenBlockParsers ()I
+	public final fun linkMarker (C)V
+	public final fun linkProcessor (Lio/heapy/kotmark/parser/beta/LinkProcessor;)V
+	public final fun postProcessor (Lio/heapy/kotmark/parser/PostProcessor;)V
+	public final fun setEnabledBlockTypes (Ljava/util/Set;)V
+	public final fun setIncludeSourceSpans (Lio/heapy/kotmark/parser/IncludeSourceSpans;)V
+	public final fun setInlineParserFactory (Lio/heapy/kotmark/parser/InlineParserFactory;)V
+	public final fun setMaxOpenBlockParsers (I)V
+}
+
+public abstract interface class io/heapy/kotmark/parser/Parser$ParserExtension : io/heapy/kotmark/Extension {
+	public abstract fun extend (Lio/heapy/kotmark/parser/Parser$Configuration;)V
+}
+
+public final class io/heapy/kotmark/parser/ParserKt {
+	public static final fun parser (Lkotlin/jvm/functions/Function1;)Lio/heapy/kotmark/parser/Parser;
+	public static synthetic fun parser$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/heapy/kotmark/parser/Parser;
+}
+
+public final class io/heapy/kotmark/parser/ParserReaderKt {
+	public static final fun parseReader (Lio/heapy/kotmark/parser/Parser;Ljava/io/Reader;)Lio/heapy/kotmark/node/Node;
+}
+
+public abstract interface class io/heapy/kotmark/parser/PostProcessor {
+	public abstract fun process (Lio/heapy/kotmark/node/Node;)Lio/heapy/kotmark/node/Node;
+}
+
+public final class io/heapy/kotmark/parser/SourceLine {
+	public static final field Companion Lio/heapy/kotmark/parser/SourceLine$Companion;
+	public synthetic fun <init> (Ljava/lang/CharSequence;Lio/heapy/kotmark/node/SourceSpan;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getContent ()Ljava/lang/CharSequence;
+	public final fun getSourceSpan ()Lio/heapy/kotmark/node/SourceSpan;
+	public static final fun of (Ljava/lang/CharSequence;Lio/heapy/kotmark/node/SourceSpan;)Lio/heapy/kotmark/parser/SourceLine;
+	public final fun substring (II)Lio/heapy/kotmark/parser/SourceLine;
+}
+
+public final class io/heapy/kotmark/parser/SourceLine$Companion {
+	public final fun of (Ljava/lang/CharSequence;Lio/heapy/kotmark/node/SourceSpan;)Lio/heapy/kotmark/parser/SourceLine;
+}
+
+public final class io/heapy/kotmark/parser/SourceLines {
+	public static final field Companion Lio/heapy/kotmark/parser/SourceLines$Companion;
+	public fun <init> ()V
+	public final fun addLine (Lio/heapy/kotmark/parser/SourceLine;)V
+	public static final fun empty ()Lio/heapy/kotmark/parser/SourceLines;
+	public final fun getContent ()Ljava/lang/String;
+	public final fun getLines ()Ljava/util/List;
+	public final fun getSourceSpans ()Ljava/util/List;
+	public final fun isEmpty ()Z
+	public static final fun of (Lio/heapy/kotmark/parser/SourceLine;)Lio/heapy/kotmark/parser/SourceLines;
+	public static final fun of (Ljava/util/List;)Lio/heapy/kotmark/parser/SourceLines;
+}
+
+public final class io/heapy/kotmark/parser/SourceLines$Companion {
+	public final fun empty ()Lio/heapy/kotmark/parser/SourceLines;
+	public final fun of (Lio/heapy/kotmark/parser/SourceLine;)Lio/heapy/kotmark/parser/SourceLines;
+	public final fun of (Ljava/util/List;)Lio/heapy/kotmark/parser/SourceLines;
+}
+
+public abstract interface class io/heapy/kotmark/parser/beta/InlineContentParser {
+	public abstract fun tryParse (Lio/heapy/kotmark/parser/beta/InlineParserState;)Lio/heapy/kotmark/parser/beta/ParsedInline;
+}
+
+public abstract interface class io/heapy/kotmark/parser/beta/InlineContentParserFactory {
+	public abstract fun create ()Lio/heapy/kotmark/parser/beta/InlineContentParser;
+	public abstract fun getTriggerCharacters ()Ljava/util/Set;
+}
+
+public abstract interface class io/heapy/kotmark/parser/beta/InlineParserState {
+	public abstract fun scanner ()Lio/heapy/kotmark/parser/beta/Scanner;
+}
+
+public abstract interface class io/heapy/kotmark/parser/beta/LinkInfo {
+	public abstract fun afterTextBracket ()Lio/heapy/kotmark/parser/beta/Position;
+	public abstract fun destination ()Ljava/lang/String;
+	public abstract fun label ()Ljava/lang/String;
+	public abstract fun marker ()Lio/heapy/kotmark/node/Text;
+	public abstract fun openingBracket ()Lio/heapy/kotmark/node/Text;
+	public abstract fun text ()Ljava/lang/String;
+	public abstract fun title ()Ljava/lang/String;
+}
+
+public abstract interface class io/heapy/kotmark/parser/beta/LinkProcessor {
+	public abstract fun process (Lio/heapy/kotmark/parser/beta/LinkInfo;Lio/heapy/kotmark/parser/beta/Scanner;Lio/heapy/kotmark/parser/InlineParserContext;)Lio/heapy/kotmark/parser/beta/LinkResult;
+}
+
+public abstract interface class io/heapy/kotmark/parser/beta/LinkResult {
+	public static final field Companion Lio/heapy/kotmark/parser/beta/LinkResult$Companion;
+	public abstract fun includeMarker ()Lio/heapy/kotmark/parser/beta/LinkResult;
+	public static fun none ()Lio/heapy/kotmark/parser/beta/LinkResult;
+	public static fun replaceWith (Lio/heapy/kotmark/node/Node;Lio/heapy/kotmark/parser/beta/Position;)Lio/heapy/kotmark/parser/beta/LinkResult;
+	public static fun wrapTextIn (Lio/heapy/kotmark/node/Node;Lio/heapy/kotmark/parser/beta/Position;)Lio/heapy/kotmark/parser/beta/LinkResult;
+}
+
+public final class io/heapy/kotmark/parser/beta/LinkResult$Companion {
+	public final fun none ()Lio/heapy/kotmark/parser/beta/LinkResult;
+	public final fun replaceWith (Lio/heapy/kotmark/node/Node;Lio/heapy/kotmark/parser/beta/Position;)Lio/heapy/kotmark/parser/beta/LinkResult;
+	public final fun wrapTextIn (Lio/heapy/kotmark/node/Node;Lio/heapy/kotmark/parser/beta/Position;)Lio/heapy/kotmark/parser/beta/LinkResult;
+}
+
+public abstract interface class io/heapy/kotmark/parser/beta/ParsedInline {
+	public static final field Companion Lio/heapy/kotmark/parser/beta/ParsedInline$Companion;
+	public static fun none ()Lio/heapy/kotmark/parser/beta/ParsedInline;
+	public static fun of (Lio/heapy/kotmark/node/Node;Lio/heapy/kotmark/parser/beta/Position;)Lio/heapy/kotmark/parser/beta/ParsedInline;
+}
+
+public final class io/heapy/kotmark/parser/beta/ParsedInline$Companion {
+	public final fun none ()Lio/heapy/kotmark/parser/beta/ParsedInline;
+	public final fun of (Lio/heapy/kotmark/node/Node;Lio/heapy/kotmark/parser/beta/Position;)Lio/heapy/kotmark/parser/beta/ParsedInline;
+}
+
+public final class io/heapy/kotmark/parser/beta/Position {
+}
+
+public final class io/heapy/kotmark/parser/beta/Scanner {
+	public static final field Companion Lio/heapy/kotmark/parser/beta/Scanner$Companion;
+	public static final field END C
+	public fun <init> (Ljava/util/List;II)V
+	public final fun find (C)I
+	public final fun find (Lio/heapy/kotmark/text/CharMatcher;)I
+	public final fun getSource (Lio/heapy/kotmark/parser/beta/Position;Lio/heapy/kotmark/parser/beta/Position;)Lio/heapy/kotmark/parser/SourceLines;
+	public final fun hasNext ()Z
+	public final fun match (Lio/heapy/kotmark/text/CharMatcher;)I
+	public final fun matchMultiple (C)I
+	public final fun next ()V
+	public final fun next (C)Z
+	public final fun next (Ljava/lang/String;)Z
+	public static final fun of (Lio/heapy/kotmark/parser/SourceLines;)Lio/heapy/kotmark/parser/beta/Scanner;
+	public final fun peek ()C
+	public final fun peekCodePoint ()I
+	public final fun peekPreviousCodePoint ()I
+	public final fun position ()Lio/heapy/kotmark/parser/beta/Position;
+	public final fun setPosition (Lio/heapy/kotmark/parser/beta/Position;)V
+	public final fun whitespace ()I
+}
+
+public final class io/heapy/kotmark/parser/beta/Scanner$Companion {
+	public final fun of (Lio/heapy/kotmark/parser/SourceLines;)Lio/heapy/kotmark/parser/beta/Scanner;
+}
+
+public abstract class io/heapy/kotmark/parser/block/AbstractBlockParser : io/heapy/kotmark/parser/block/BlockParser {
+	public fun <init> ()V
+	public fun addLine (Lio/heapy/kotmark/parser/SourceLine;)V
+	public fun addSourceSpan (Lio/heapy/kotmark/node/SourceSpan;)V
+	public fun canContain (Lio/heapy/kotmark/node/Block;)Z
+	public fun canHaveLazyContinuationLines ()Z
+	public fun closeBlock ()V
+	public fun getDefinitions ()Ljava/util/List;
+	public fun isContainer ()Z
+	public fun parseInlines (Lio/heapy/kotmark/parser/InlineParser;)V
+}
+
+public abstract class io/heapy/kotmark/parser/block/AbstractBlockParserFactory : io/heapy/kotmark/parser/block/BlockParserFactory {
+	public fun <init> ()V
+}
+
+public abstract class io/heapy/kotmark/parser/block/BlockContinue {
+	public static final field Companion Lio/heapy/kotmark/parser/block/BlockContinue$Companion;
+	public static final fun atColumn (I)Lio/heapy/kotmark/parser/block/BlockContinue;
+	public static final fun atIndex (I)Lio/heapy/kotmark/parser/block/BlockContinue;
+	public static final fun finished ()Lio/heapy/kotmark/parser/block/BlockContinue;
+	public static final fun none ()Lio/heapy/kotmark/parser/block/BlockContinue;
+}
+
+public final class io/heapy/kotmark/parser/block/BlockContinue$AtColumn : io/heapy/kotmark/parser/block/BlockContinue {
+	public fun <init> (I)V
+	public final fun component1 ()I
+	public final fun copy (I)Lio/heapy/kotmark/parser/block/BlockContinue$AtColumn;
+	public static synthetic fun copy$default (Lio/heapy/kotmark/parser/block/BlockContinue$AtColumn;IILjava/lang/Object;)Lio/heapy/kotmark/parser/block/BlockContinue$AtColumn;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getNewColumn ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/heapy/kotmark/parser/block/BlockContinue$AtIndex : io/heapy/kotmark/parser/block/BlockContinue {
+	public fun <init> (I)V
+	public final fun component1 ()I
+	public final fun copy (I)Lio/heapy/kotmark/parser/block/BlockContinue$AtIndex;
+	public static synthetic fun copy$default (Lio/heapy/kotmark/parser/block/BlockContinue$AtIndex;IILjava/lang/Object;)Lio/heapy/kotmark/parser/block/BlockContinue$AtIndex;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getNewIndex ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/heapy/kotmark/parser/block/BlockContinue$Companion {
+	public final fun atColumn (I)Lio/heapy/kotmark/parser/block/BlockContinue;
+	public final fun atIndex (I)Lio/heapy/kotmark/parser/block/BlockContinue;
+	public final fun finished ()Lio/heapy/kotmark/parser/block/BlockContinue;
+	public final fun none ()Lio/heapy/kotmark/parser/block/BlockContinue;
+}
+
+public final class io/heapy/kotmark/parser/block/BlockContinue$Finished : io/heapy/kotmark/parser/block/BlockContinue {
+	public static final field INSTANCE Lio/heapy/kotmark/parser/block/BlockContinue$Finished;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class io/heapy/kotmark/parser/block/BlockParser {
+	public abstract fun addLine (Lio/heapy/kotmark/parser/SourceLine;)V
+	public abstract fun addSourceSpan (Lio/heapy/kotmark/node/SourceSpan;)V
+	public abstract fun canContain (Lio/heapy/kotmark/node/Block;)Z
+	public abstract fun canHaveLazyContinuationLines ()Z
+	public abstract fun closeBlock ()V
+	public abstract fun getBlock ()Lio/heapy/kotmark/node/Block;
+	public abstract fun getDefinitions ()Ljava/util/List;
+	public abstract fun isContainer ()Z
+	public abstract fun parseInlines (Lio/heapy/kotmark/parser/InlineParser;)V
+	public abstract fun tryContinue (Lio/heapy/kotmark/parser/block/ParserState;)Lio/heapy/kotmark/parser/block/BlockContinue;
+}
+
+public abstract interface class io/heapy/kotmark/parser/block/BlockParserFactory {
+	public abstract fun tryStart (Lio/heapy/kotmark/parser/block/ParserState;Lio/heapy/kotmark/parser/block/MatchedBlockParser;)Lio/heapy/kotmark/parser/block/BlockStart;
+}
+
+public abstract class io/heapy/kotmark/parser/block/BlockStart {
+	public static final field Companion Lio/heapy/kotmark/parser/block/BlockStart$Companion;
+	protected fun <init> ()V
+	public abstract fun atColumn (I)Lio/heapy/kotmark/parser/block/BlockStart;
+	public abstract fun atIndex (I)Lio/heapy/kotmark/parser/block/BlockStart;
+	public static final fun none ()Lio/heapy/kotmark/parser/block/BlockStart;
+	public static final fun of ([Lio/heapy/kotmark/parser/block/BlockParser;)Lio/heapy/kotmark/parser/block/BlockStart;
+	public abstract fun replaceActiveBlockParser ()Lio/heapy/kotmark/parser/block/BlockStart;
+	public abstract fun replaceParagraphLines (I)Lio/heapy/kotmark/parser/block/BlockStart;
+}
+
+public final class io/heapy/kotmark/parser/block/BlockStart$Companion {
+	public final fun none ()Lio/heapy/kotmark/parser/block/BlockStart;
+	public final fun of ([Lio/heapy/kotmark/parser/block/BlockParser;)Lio/heapy/kotmark/parser/block/BlockStart;
+}
+
+public abstract interface class io/heapy/kotmark/parser/block/MatchedBlockParser {
+	public abstract fun getMatchedBlockParser ()Lio/heapy/kotmark/parser/block/BlockParser;
+	public abstract fun getParagraphLines ()Lio/heapy/kotmark/parser/SourceLines;
+}
+
+public abstract interface class io/heapy/kotmark/parser/block/ParserState {
+	public abstract fun getActiveBlockParser ()Lio/heapy/kotmark/parser/block/BlockParser;
+	public abstract fun getColumn ()I
+	public abstract fun getIndent ()I
+	public abstract fun getIndex ()I
+	public abstract fun getLine ()Lio/heapy/kotmark/parser/SourceLine;
+	public abstract fun getNextNonSpaceIndex ()I
+	public abstract fun isBlank ()Z
+}
+
+public abstract interface class io/heapy/kotmark/parser/delimiter/DelimiterProcessor {
+	public abstract fun getClosingCharacter ()C
+	public abstract fun getMinLength ()I
+	public abstract fun getOpeningCharacter ()C
+	public abstract fun process (Lio/heapy/kotmark/parser/delimiter/DelimiterRun;Lio/heapy/kotmark/parser/delimiter/DelimiterRun;)I
+}
+
+public abstract interface class io/heapy/kotmark/parser/delimiter/DelimiterRun {
+	public abstract fun canClose ()Z
+	public abstract fun canOpen ()Z
+	public abstract fun getCloser ()Lio/heapy/kotmark/node/Text;
+	public abstract fun getClosers (I)Ljava/lang/Iterable;
+	public abstract fun getOpener ()Lio/heapy/kotmark/node/Text;
+	public abstract fun getOpeners (I)Ljava/lang/Iterable;
+	public abstract fun length ()I
+	public abstract fun originalLength ()I
+}
+
+public abstract interface class io/heapy/kotmark/renderer/NodeRenderer {
+	public fun afterRoot (Lio/heapy/kotmark/node/Node;)V
+	public fun beforeRoot (Lio/heapy/kotmark/node/Node;)V
+	public abstract fun getNodeTypes ()Ljava/util/Set;
+	public abstract fun render (Lio/heapy/kotmark/node/Node;)V
+}
+
+public final class io/heapy/kotmark/renderer/NodeRenderer$DefaultImpls {
+	public static fun afterRoot (Lio/heapy/kotmark/renderer/NodeRenderer;Lio/heapy/kotmark/node/Node;)V
+	public static fun beforeRoot (Lio/heapy/kotmark/renderer/NodeRenderer;Lio/heapy/kotmark/node/Node;)V
+}
+
+public abstract interface class io/heapy/kotmark/renderer/Renderer {
+	public abstract fun render (Lio/heapy/kotmark/node/Node;)Ljava/lang/String;
+	public abstract fun render (Lio/heapy/kotmark/node/Node;Ljava/lang/Appendable;)V
+}
+
+public abstract interface class io/heapy/kotmark/renderer/html/AttributeProvider {
+	public abstract fun setAttributes (Lio/heapy/kotmark/node/Node;Ljava/lang/String;Ljava/util/Map;)V
+}
+
+public abstract interface class io/heapy/kotmark/renderer/html/AttributeProviderContext {
+}
+
+public abstract interface class io/heapy/kotmark/renderer/html/AttributeProviderFactory {
+	public abstract fun create (Lio/heapy/kotmark/renderer/html/AttributeProviderContext;)Lio/heapy/kotmark/renderer/html/AttributeProvider;
+}
+
+public final class io/heapy/kotmark/renderer/html/CoreHtmlNodeRenderer : io/heapy/kotmark/node/AbstractVisitor, io/heapy/kotmark/renderer/NodeRenderer {
+	public fun <init> (Lio/heapy/kotmark/renderer/html/HtmlNodeRendererContext;)V
+	public fun afterRoot (Lio/heapy/kotmark/node/Node;)V
+	public fun beforeRoot (Lio/heapy/kotmark/node/Node;)V
+	public fun getNodeTypes ()Ljava/util/Set;
+	public fun render (Lio/heapy/kotmark/node/Node;)V
+	public fun visit (Lio/heapy/kotmark/node/BlockQuote;)V
+	public fun visit (Lio/heapy/kotmark/node/BulletList;)V
+	public fun visit (Lio/heapy/kotmark/node/Code;)V
+	public fun visit (Lio/heapy/kotmark/node/Document;)V
+	public fun visit (Lio/heapy/kotmark/node/Emphasis;)V
+	public fun visit (Lio/heapy/kotmark/node/FencedCodeBlock;)V
+	public fun visit (Lio/heapy/kotmark/node/HardLineBreak;)V
+	public fun visit (Lio/heapy/kotmark/node/Heading;)V
+	public fun visit (Lio/heapy/kotmark/node/HtmlBlock;)V
+	public fun visit (Lio/heapy/kotmark/node/HtmlInline;)V
+	public fun visit (Lio/heapy/kotmark/node/Image;)V
+	public fun visit (Lio/heapy/kotmark/node/IndentedCodeBlock;)V
+	public fun visit (Lio/heapy/kotmark/node/Link;)V
+	public fun visit (Lio/heapy/kotmark/node/ListItem;)V
+	public fun visit (Lio/heapy/kotmark/node/OrderedList;)V
+	public fun visit (Lio/heapy/kotmark/node/Paragraph;)V
+	public fun visit (Lio/heapy/kotmark/node/SoftLineBreak;)V
+	public fun visit (Lio/heapy/kotmark/node/StrongEmphasis;)V
+	public fun visit (Lio/heapy/kotmark/node/Text;)V
+	public fun visit (Lio/heapy/kotmark/node/ThematicBreak;)V
+}
+
+public final class io/heapy/kotmark/renderer/html/DefaultUrlSanitizer : io/heapy/kotmark/renderer/html/UrlSanitizer {
+	public static final field Companion Lio/heapy/kotmark/renderer/html/DefaultUrlSanitizer$Companion;
+	public fun <init> ()V
+	public fun <init> (Ljava/util/Collection;)V
+	public synthetic fun <init> (Ljava/util/Collection;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun sanitizeImageUrl (Ljava/lang/String;)Ljava/lang/String;
+	public fun sanitizeLinkUrl (Ljava/lang/String;)Ljava/lang/String;
+}
+
+public final class io/heapy/kotmark/renderer/html/DefaultUrlSanitizer$Companion {
+}
+
+public abstract interface class io/heapy/kotmark/renderer/html/HtmlNodeRendererContext {
+	public abstract fun encodeUrl (Ljava/lang/String;)Ljava/lang/String;
+	public abstract fun extendAttributes (Lio/heapy/kotmark/node/Node;Ljava/lang/String;Ljava/util/Map;)Ljava/util/Map;
+	public abstract fun getShouldEscapeHtml ()Z
+	public abstract fun getShouldOmitSingleParagraphP ()Z
+	public abstract fun getShouldSanitizeUrls ()Z
+	public abstract fun getSoftbreak ()Ljava/lang/String;
+	public abstract fun getUrlSanitizer ()Lio/heapy/kotmark/renderer/html/UrlSanitizer;
+	public abstract fun getWriter ()Lio/heapy/kotmark/renderer/html/HtmlWriter;
+	public abstract fun render (Lio/heapy/kotmark/node/Node;)V
+}
+
+public abstract interface class io/heapy/kotmark/renderer/html/HtmlNodeRendererFactory {
+	public abstract fun create (Lio/heapy/kotmark/renderer/html/HtmlNodeRendererContext;)Lio/heapy/kotmark/renderer/NodeRenderer;
+}
+
+public final class io/heapy/kotmark/renderer/html/HtmlRenderer : io/heapy/kotmark/renderer/Renderer {
+	public synthetic fun <init> (Lio/heapy/kotmark/renderer/html/HtmlRenderer$Configuration;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun render (Lio/heapy/kotmark/node/Node;)Ljava/lang/String;
+	public fun render (Lio/heapy/kotmark/node/Node;Ljava/lang/Appendable;)V
+}
+
+public final class io/heapy/kotmark/renderer/html/HtmlRenderer$Configuration {
+	public final fun attributeProviderFactory (Lio/heapy/kotmark/renderer/html/AttributeProviderFactory;)V
+	public final fun extensions (Ljava/lang/Iterable;)V
+	public final fun getEscapeHtml ()Z
+	public final fun getOmitSingleParagraphP ()Z
+	public final fun getPercentEncodeUrls ()Z
+	public final fun getSanitizeUrls ()Z
+	public final fun getSoftbreak ()Ljava/lang/String;
+	public final fun getUrlSanitizer ()Lio/heapy/kotmark/renderer/html/UrlSanitizer;
+	public final fun nodeRendererFactory (Lio/heapy/kotmark/renderer/html/HtmlNodeRendererFactory;)V
+	public final fun setEscapeHtml (Z)V
+	public final fun setOmitSingleParagraphP (Z)V
+	public final fun setPercentEncodeUrls (Z)V
+	public final fun setSanitizeUrls (Z)V
+	public final fun setSoftbreak (Ljava/lang/String;)V
+	public final fun setUrlSanitizer (Lio/heapy/kotmark/renderer/html/UrlSanitizer;)V
+}
+
+public abstract interface class io/heapy/kotmark/renderer/html/HtmlRenderer$HtmlRendererExtension : io/heapy/kotmark/Extension {
+	public abstract fun extend (Lio/heapy/kotmark/renderer/html/HtmlRenderer$Configuration;)V
+}
+
+public final class io/heapy/kotmark/renderer/html/HtmlRendererKt {
+	public static final fun htmlRenderer (Lkotlin/jvm/functions/Function1;)Lio/heapy/kotmark/renderer/html/HtmlRenderer;
+	public static synthetic fun htmlRenderer$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/heapy/kotmark/renderer/html/HtmlRenderer;
+}
+
+public final class io/heapy/kotmark/renderer/html/HtmlWriter {
+	public fun <init> (Ljava/lang/Appendable;)V
+	public final fun line ()V
+	public final fun raw (Ljava/lang/String;)V
+	public final fun tag (Ljava/lang/String;)V
+	public final fun tag (Ljava/lang/String;Ljava/util/Map;Z)V
+	public static synthetic fun tag$default (Lio/heapy/kotmark/renderer/html/HtmlWriter;Ljava/lang/String;Ljava/util/Map;ZILjava/lang/Object;)V
+	public final fun text (Ljava/lang/String;)V
+}
+
+public abstract interface class io/heapy/kotmark/renderer/html/UrlSanitizer {
+	public abstract fun sanitizeImageUrl (Ljava/lang/String;)Ljava/lang/String;
+	public abstract fun sanitizeLinkUrl (Ljava/lang/String;)Ljava/lang/String;
+}
+
+public final class io/heapy/kotmark/renderer/markdown/CoreMarkdownNodeRenderer : io/heapy/kotmark/node/AbstractVisitor, io/heapy/kotmark/renderer/NodeRenderer {
+	public static final field Companion Lio/heapy/kotmark/renderer/markdown/CoreMarkdownNodeRenderer$Companion;
+	public fun <init> (Lio/heapy/kotmark/renderer/markdown/MarkdownNodeRendererContext;)V
+	public fun afterRoot (Lio/heapy/kotmark/node/Node;)V
+	public fun beforeRoot (Lio/heapy/kotmark/node/Node;)V
+	public fun getNodeTypes ()Ljava/util/Set;
+	public fun render (Lio/heapy/kotmark/node/Node;)V
+	public fun visit (Lio/heapy/kotmark/node/BlockQuote;)V
+	public fun visit (Lio/heapy/kotmark/node/BulletList;)V
+	public fun visit (Lio/heapy/kotmark/node/Code;)V
+	public fun visit (Lio/heapy/kotmark/node/Document;)V
+	public fun visit (Lio/heapy/kotmark/node/Emphasis;)V
+	public fun visit (Lio/heapy/kotmark/node/FencedCodeBlock;)V
+	public fun visit (Lio/heapy/kotmark/node/HardLineBreak;)V
+	public fun visit (Lio/heapy/kotmark/node/Heading;)V
+	public fun visit (Lio/heapy/kotmark/node/HtmlBlock;)V
+	public fun visit (Lio/heapy/kotmark/node/HtmlInline;)V
+	public fun visit (Lio/heapy/kotmark/node/Image;)V
+	public fun visit (Lio/heapy/kotmark/node/IndentedCodeBlock;)V
+	public fun visit (Lio/heapy/kotmark/node/Link;)V
+	public fun visit (Lio/heapy/kotmark/node/ListItem;)V
+	public fun visit (Lio/heapy/kotmark/node/OrderedList;)V
+	public fun visit (Lio/heapy/kotmark/node/Paragraph;)V
+	public fun visit (Lio/heapy/kotmark/node/SoftLineBreak;)V
+	public fun visit (Lio/heapy/kotmark/node/StrongEmphasis;)V
+	public fun visit (Lio/heapy/kotmark/node/Text;)V
+	public fun visit (Lio/heapy/kotmark/node/ThematicBreak;)V
+}
+
+public final class io/heapy/kotmark/renderer/markdown/CoreMarkdownNodeRenderer$Companion {
+}
+
+public abstract interface class io/heapy/kotmark/renderer/markdown/MarkdownNodeRendererContext {
+	public abstract fun getSpecialCharacters ()Ljava/util/Set;
+	public abstract fun getWriter ()Lio/heapy/kotmark/renderer/markdown/MarkdownWriter;
+	public abstract fun render (Lio/heapy/kotmark/node/Node;)V
+}
+
+public abstract interface class io/heapy/kotmark/renderer/markdown/MarkdownNodeRendererFactory {
+	public abstract fun create (Lio/heapy/kotmark/renderer/markdown/MarkdownNodeRendererContext;)Lio/heapy/kotmark/renderer/NodeRenderer;
+	public abstract fun getSpecialCharacters ()Ljava/util/Set;
+}
+
+public final class io/heapy/kotmark/renderer/markdown/MarkdownRenderer : io/heapy/kotmark/renderer/Renderer {
+	public synthetic fun <init> (Lio/heapy/kotmark/renderer/markdown/MarkdownRenderer$Configuration;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun render (Lio/heapy/kotmark/node/Node;)Ljava/lang/String;
+	public fun render (Lio/heapy/kotmark/node/Node;Ljava/lang/Appendable;)V
+}
+
+public final class io/heapy/kotmark/renderer/markdown/MarkdownRenderer$Configuration {
+	public final fun extensions (Ljava/lang/Iterable;)V
+	public final fun nodeRendererFactory (Lio/heapy/kotmark/renderer/markdown/MarkdownNodeRendererFactory;)V
+}
+
+public abstract interface class io/heapy/kotmark/renderer/markdown/MarkdownRenderer$MarkdownRendererExtension : io/heapy/kotmark/Extension {
+	public abstract fun extend (Lio/heapy/kotmark/renderer/markdown/MarkdownRenderer$Configuration;)V
+}
+
+public final class io/heapy/kotmark/renderer/markdown/MarkdownRendererKt {
+	public static final fun markdownRenderer (Lkotlin/jvm/functions/Function1;)Lio/heapy/kotmark/renderer/markdown/MarkdownRenderer;
+	public static synthetic fun markdownRenderer$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/heapy/kotmark/renderer/markdown/MarkdownRenderer;
+}
+
+public final class io/heapy/kotmark/renderer/markdown/MarkdownWriter {
+	public fun <init> (Ljava/lang/Appendable;)V
+	public final fun block ()V
+	public final fun getLastChar ()C
+	public final fun isAtLineStart ()Z
+	public final fun line ()V
+	public final fun popPrefix ()V
+	public final fun popRawEscape ()V
+	public final fun popTight ()V
+	public final fun pushPrefix (Ljava/lang/String;)V
+	public final fun pushRawEscape (Lio/heapy/kotmark/text/CharMatcher;)V
+	public final fun pushTight (Z)V
+	public final fun raw (C)V
+	public final fun raw (Ljava/lang/String;)V
+	public final fun text (Ljava/lang/String;Lio/heapy/kotmark/text/CharMatcher;)V
+	public final fun writePrefix (Ljava/lang/String;)V
+}
+
+public final class io/heapy/kotmark/renderer/text/CoreTextContentNodeRenderer : io/heapy/kotmark/node/AbstractVisitor, io/heapy/kotmark/renderer/NodeRenderer {
+	public fun <init> (Lio/heapy/kotmark/renderer/text/TextContentNodeRendererContext;)V
+	public fun afterRoot (Lio/heapy/kotmark/node/Node;)V
+	public fun beforeRoot (Lio/heapy/kotmark/node/Node;)V
+	public fun getNodeTypes ()Ljava/util/Set;
+	public fun render (Lio/heapy/kotmark/node/Node;)V
+	public fun visit (Lio/heapy/kotmark/node/BlockQuote;)V
+	public fun visit (Lio/heapy/kotmark/node/BulletList;)V
+	public fun visit (Lio/heapy/kotmark/node/Code;)V
+	public fun visit (Lio/heapy/kotmark/node/Document;)V
+	public fun visit (Lio/heapy/kotmark/node/FencedCodeBlock;)V
+	public fun visit (Lio/heapy/kotmark/node/HardLineBreak;)V
+	public fun visit (Lio/heapy/kotmark/node/Heading;)V
+	public fun visit (Lio/heapy/kotmark/node/HtmlBlock;)V
+	public fun visit (Lio/heapy/kotmark/node/HtmlInline;)V
+	public fun visit (Lio/heapy/kotmark/node/Image;)V
+	public fun visit (Lio/heapy/kotmark/node/IndentedCodeBlock;)V
+	public fun visit (Lio/heapy/kotmark/node/Link;)V
+	public fun visit (Lio/heapy/kotmark/node/ListItem;)V
+	public fun visit (Lio/heapy/kotmark/node/OrderedList;)V
+	public fun visit (Lio/heapy/kotmark/node/Paragraph;)V
+	public fun visit (Lio/heapy/kotmark/node/SoftLineBreak;)V
+	public fun visit (Lio/heapy/kotmark/node/Text;)V
+	public fun visit (Lio/heapy/kotmark/node/ThematicBreak;)V
+}
+
+public final class io/heapy/kotmark/renderer/text/LineBreakRendering : java/lang/Enum {
+	public static final field COMPACT Lio/heapy/kotmark/renderer/text/LineBreakRendering;
+	public static final field SEPARATE_BLOCKS Lio/heapy/kotmark/renderer/text/LineBreakRendering;
+	public static final field STRIP Lio/heapy/kotmark/renderer/text/LineBreakRendering;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/heapy/kotmark/renderer/text/LineBreakRendering;
+	public static fun values ()[Lio/heapy/kotmark/renderer/text/LineBreakRendering;
+}
+
+public abstract interface class io/heapy/kotmark/renderer/text/TextContentNodeRendererContext {
+	public abstract fun getLineBreakRendering ()Lio/heapy/kotmark/renderer/text/LineBreakRendering;
+	public fun getStripNewlines ()Z
+	public abstract fun getWriter ()Lio/heapy/kotmark/renderer/text/TextContentWriter;
+	public abstract fun render (Lio/heapy/kotmark/node/Node;)V
+}
+
+public final class io/heapy/kotmark/renderer/text/TextContentNodeRendererContext$DefaultImpls {
+	public static fun getStripNewlines (Lio/heapy/kotmark/renderer/text/TextContentNodeRendererContext;)Z
+}
+
+public abstract interface class io/heapy/kotmark/renderer/text/TextContentNodeRendererFactory {
+	public abstract fun create (Lio/heapy/kotmark/renderer/text/TextContentNodeRendererContext;)Lio/heapy/kotmark/renderer/NodeRenderer;
+}
+
+public final class io/heapy/kotmark/renderer/text/TextContentRenderer : io/heapy/kotmark/renderer/Renderer {
+	public synthetic fun <init> (Lio/heapy/kotmark/renderer/text/TextContentRenderer$Configuration;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun render (Lio/heapy/kotmark/node/Node;)Ljava/lang/String;
+	public fun render (Lio/heapy/kotmark/node/Node;Ljava/lang/Appendable;)V
+}
+
+public final class io/heapy/kotmark/renderer/text/TextContentRenderer$Configuration {
+	public final fun extensions (Ljava/lang/Iterable;)V
+	public final fun getLineBreakRendering ()Lio/heapy/kotmark/renderer/text/LineBreakRendering;
+	public final fun nodeRendererFactory (Lio/heapy/kotmark/renderer/text/TextContentNodeRendererFactory;)V
+	public final fun setLineBreakRendering (Lio/heapy/kotmark/renderer/text/LineBreakRendering;)V
+}
+
+public abstract interface class io/heapy/kotmark/renderer/text/TextContentRenderer$TextContentRendererExtension : io/heapy/kotmark/Extension {
+	public abstract fun extend (Lio/heapy/kotmark/renderer/text/TextContentRenderer$Configuration;)V
+}
+
+public final class io/heapy/kotmark/renderer/text/TextContentRendererKt {
+	public static final fun textContentRenderer (Lkotlin/jvm/functions/Function1;)Lio/heapy/kotmark/renderer/text/TextContentRenderer;
+	public static synthetic fun textContentRenderer$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/heapy/kotmark/renderer/text/TextContentRenderer;
+}
+
+public final class io/heapy/kotmark/renderer/text/TextContentWriter {
+	public static final field Companion Lio/heapy/kotmark/renderer/text/TextContentWriter$Companion;
+	public fun <init> (Ljava/lang/Appendable;Lio/heapy/kotmark/renderer/text/LineBreakRendering;)V
+	public synthetic fun <init> (Ljava/lang/Appendable;Lio/heapy/kotmark/renderer/text/LineBreakRendering;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun block ()V
+	public final fun colon ()V
+	public final fun line ()V
+	public final fun popPrefix ()V
+	public final fun popTight ()V
+	public final fun pushPrefix (Ljava/lang/String;)V
+	public final fun pushTight (Z)V
+	public final fun resetBlock ()V
+	public final fun whitespace ()V
+	public final fun write (C)V
+	public final fun write (Ljava/lang/String;)V
+	public final fun writePrefix (Ljava/lang/String;)V
+	public final fun writeStripped (Ljava/lang/String;)V
+}
+
+public final class io/heapy/kotmark/renderer/text/TextContentWriter$Companion {
+}
+
+public final class io/heapy/kotmark/text/AsciiMatcher : io/heapy/kotmark/text/CharMatcher {
+	public synthetic fun <init> ([ZLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun matches (C)Z
+}
+
+public final class io/heapy/kotmark/text/AsciiMatcher$Configuration {
+	public final fun anyOf (Ljava/lang/String;)V
+	public final fun anyOf (Ljava/util/Collection;)V
+	public final fun c (C)V
+	public final fun range (CC)V
+}
+
+public final class io/heapy/kotmark/text/AsciiMatcherKt {
+	public static final fun asciiMatcher (Lio/heapy/kotmark/text/AsciiMatcher;Lkotlin/jvm/functions/Function1;)Lio/heapy/kotmark/text/AsciiMatcher;
+	public static synthetic fun asciiMatcher$default (Lio/heapy/kotmark/text/AsciiMatcher;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/heapy/kotmark/text/AsciiMatcher;
+}
+
+public abstract interface class io/heapy/kotmark/text/CharMatcher {
+	public abstract fun matches (C)Z
+}
+
+public final class io/heapy/kotmark/text/CharacterCategory {
+	public static final field CONNECTOR_PUNCTUATION I
+	public static final field CURRENCY_SYMBOL I
+	public static final field DASH_PUNCTUATION I
+	public static final field END_PUNCTUATION I
+	public static final field FINAL_QUOTE_PUNCTUATION I
+	public static final field INITIAL_QUOTE_PUNCTUATION I
+	public static final field INSTANCE Lio/heapy/kotmark/text/CharacterCategory;
+	public static final field MATH_SYMBOL I
+	public static final field MODIFIER_SYMBOL I
+	public static final field OTHER_PUNCTUATION I
+	public static final field OTHER_SYMBOL I
+	public static final field SPACE_SEPARATOR I
+	public static final field START_PUNCTUATION I
+}
+
+public final class io/heapy/kotmark/text/Characters {
+	public static final field INSTANCE Lio/heapy/kotmark/text/Characters;
+	public final fun find (CLjava/lang/CharSequence;I)I
+	public final fun findLineBreak (Ljava/lang/CharSequence;I)I
+	public final fun hasNonSpace (Ljava/lang/CharSequence;)Z
+	public final fun isBlank (Ljava/lang/CharSequence;)Z
+	public final fun isLetter (Ljava/lang/CharSequence;I)Z
+	public final fun isPunctuationCodePoint (I)Z
+	public final fun isSpaceOrTab (Ljava/lang/CharSequence;I)Z
+	public final fun isWhitespaceCodePoint (I)Z
+	public final fun skip (CLjava/lang/CharSequence;II)I
+	public final fun skipBackwards (CLjava/lang/CharSequence;II)I
+	public final fun skipSpaceTab (Ljava/lang/CharSequence;II)I
+	public final fun skipSpaceTabBackwards (Ljava/lang/CharSequence;II)I
+}
+
