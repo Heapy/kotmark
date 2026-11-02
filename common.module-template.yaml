@@ -3,3 +3,10 @@ settings:
     version: 2.4.21
     languageVersion: 2.4
     apiVersion: 2.4
+  jvm:
+    jdk:
+      version: 17
+    release: 17
+    test:
+      # Deeply nested Markdown fixtures need more than the default thread stack.
+      freeJvmArgs: [-Xss4m]

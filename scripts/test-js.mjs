@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Kotlin Toolchain 0.12 exposes JS test linking, but has no JS test runner.
+// Kotlin Toolchain 0.13 exposes JS test linking, but has no JS test runner.
 import { readdirSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
