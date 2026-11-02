@@ -77,7 +77,7 @@ object Escaping {
         }
 
     fun normalizeLabelContent(input: String): String {
-        val trimmed = input.trim()
+        val trimmed = input.trim { it <= '\u0020' }
         // Case fold U+1E9E to SS via lower then upper.
         val caseFolded = trimmed.lowercase().uppercase()
         return WHITESPACE.replace(caseFolded, " ")
