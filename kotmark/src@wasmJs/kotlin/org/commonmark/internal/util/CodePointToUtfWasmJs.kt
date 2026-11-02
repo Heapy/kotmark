@@ -5,6 +5,7 @@ private const val MIN_HIGH_SURROGATE = 0xD800
 private const val MIN_LOW_SURROGATE = 0xDC00
 
 internal actual fun codePointToUtf(codePoint: Int): String {
+    require(codePoint in 0..0x10FFFF) { "Invalid Unicode code point: $codePoint" }
     if (codePoint <= Char.MAX_VALUE.code) {
         return codePoint.toChar().toString()
     }
