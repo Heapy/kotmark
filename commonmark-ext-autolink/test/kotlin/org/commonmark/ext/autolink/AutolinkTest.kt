@@ -20,6 +20,30 @@ class AutolinkTest {
     private val renderer = HtmlRenderer.builder().extensions(extensions).build()
 
     @Test
+    fun arbitrarySchemesAndUserInfo() {
+        for (url in listOf("git://user@example.com/repo", "custom+v1://user:pass@example.com/path", "HTTP://example.com")) {
+            assertHtml(url, "<p><a href=\"$url\">$url</a></p>\n")
+        }
+        assertHtml("WWW.example.com", "<p><a href=\"http://WWW.example.com\">WWW.example.com</a></p>\n")
+    }
+
+    @Test
+    fun longEmailLikeTextWithoutAtSign() {
+        val text = "a.".repeat(10_000)
+        val started = kotlin.time.TimeSource.Monotonic.markNow()
+        assertHtml(text, "<p>$text</p>\n")
+        kotlin.test.assertTrue(started.elapsedNow() < kotlin.time.Duration.parse("5s"))
+    }
+
+    @Test
+    fun emailCandidateBoundaries() {
+        assertHtml("a@b@c.example", "<p>a@<a href=\"mailto:b@c.example\">b@c.example</a></p>\n")
+        assertHtml("a+b@example.com.", "<p><a href=\"mailto:a+b@example.com\">a+b@example.com</a>.</p>\n")
+        assertHtml("a@example.com..tail", "<p><a href=\"mailto:a@example.com\">a@example.com</a>..tail</p>\n")
+        assertHtml("a@example.com-", "<p>a@example.com-</p>\n")
+    }
+
+    @Test
     fun urlsEmailsAndWwwLinks() {
         assertHtml(
             "foo http://one.org/ bar http://two.org/",

@@ -60,7 +60,7 @@ class AutolinkPostProcessor(
     private fun findLinks(literal: String): List<LinkMatch> {
         val candidates = mutableListOf<LinkMatch>()
         if (AutolinkType.URL in linkTypes) {
-            URL_PATTERN.findAll(literal).forEach { match ->
+            findUrlCandidates(literal, URL_PATTERN).forEach { match ->
                 createUrlMatch(literal, match, AutolinkType.URL)?.let(candidates::add)
             }
         }
@@ -70,23 +70,7 @@ class AutolinkPostProcessor(
             }
         }
         if (AutolinkType.EMAIL in linkTypes) {
-            EMAIL_PATTERN.findAll(literal).forEach { match ->
-                val text = match.value
-                val domain = text.substringAfter('@')
-                if (
-                    domain.lastOrNull() != '-' &&
-                    domain.lastOrNull() != '_' &&
-                    isValidDomain(domain, email = true)
-                ) {
-                    candidates.add(
-                        LinkMatch(
-                            match.range.first,
-                            match.range.last + 1,
-                            AutolinkType.EMAIL,
-                        ),
-                    )
-                }
-            }
+            findEmails(literal, candidates)
         }
 
         val links = mutableListOf<LinkMatch>()
@@ -107,6 +91,46 @@ class AutolinkPostProcessor(
         return links
     }
 
+    private fun findUrlCandidates(literal: String, pattern: Regex): Sequence<MatchResult> = sequence {
+        var index = 0
+        while (index < literal.length) {
+            if (index == 0 || isUrlBoundary(literal[index - 1])) {
+                val match = pattern.matchAt(literal, index)
+                if (match != null) {
+                    yield(match)
+                    index = match.range.last + 1
+                    continue
+                }
+            }
+            index++
+        }
+    }
+
+    private fun findEmails(literal: String, candidates: MutableList<LinkMatch>) {
+        // Search from each '@', so a long local-part-like run without one is scanned only once.
+        var at = literal.indexOf('@')
+        while (at >= 0) {
+            var start = at
+            while (start > 0 && literal[start - 1].isEmailLocalCharacter()) start--
+            var end = at + 1
+            while (end < literal.length && literal[end].isAsciiDomainCharacter()) end++
+            while (end + 1 < literal.length && literal[end] == '.' && literal[end + 1].isAsciiDomainCharacter()) {
+                end++
+                while (end < literal.length && literal[end].isAsciiDomainCharacter()) end++
+            }
+            val domain = literal.substring(at + 1, end)
+            if (start < at && domain.lastOrNull() != '-' && domain.lastOrNull() != '_' &&
+                isValidDomain(domain, email = true)
+            ) {
+                candidates.add(LinkMatch(start, end, AutolinkType.EMAIL))
+            }
+            at = literal.indexOf('@', at + 1)
+        }
+    }
+
+    private fun Char.isEmailLocalCharacter(): Boolean =
+        isAsciiDomainCharacter() || this == '.' || this == '+'
+
     private fun createUrlMatch(
         literal: String,
         match: MatchResult,
@@ -123,15 +147,17 @@ class AutolinkPostProcessor(
                 match.value.indexOf("://") + 3
             }
         val afterPrefix = match.value.substring(prefixLength)
+        val authority = afterPrefix.takeWhile { it != '/' && it != '?' && it != '#' }
+        val hostAndPort = if (type == AutolinkType.URL) authority.substringAfterLast('@') else afterPrefix
         var domainEnd =
-            afterPrefix.indexOfFirst {
+            hostAndPort.indexOfFirst {
                 it != '.' && !it.isAsciiDomainCharacter()
             }
-                .let { if (it == -1) afterPrefix.length else it }
-        while (domainEnd > 0 && afterPrefix[domainEnd - 1] == '.') {
+                .let { if (it == -1) hostAndPort.length else it }
+        while (domainEnd > 0 && hostAndPort[domainEnd - 1] == '.') {
             domainEnd--
         }
-        val domain = afterPrefix.substring(0, domainEnd)
+        val domain = hostAndPort.substring(0, domainEnd)
         if (!isValidDomain(domain, email = false)) {
             return null
         }
@@ -229,13 +255,9 @@ class AutolinkPostProcessor(
 
     companion object {
         private val URL_PATTERN =
-            Regex(
-                "(?i)(?:https?://|ftp://)[A-Za-z0-9_-]+(?:\\.[A-Za-z0-9_-]+)+[^\\s<]*",
-            )
+            Regex("[A-Za-z][A-Za-z0-9+.-]*://[^\\s<]+")
         private val WWW_PATTERN =
-            Regex("(?i)www\\.[A-Za-z0-9_-]+(?:\\.[A-Za-z0-9_-]+)+[^\\s<]*")
-        private val EMAIL_PATTERN =
-            Regex("[A-Za-z0-9._+-]+@[A-Za-z0-9_-]+(?:\\.[A-Za-z0-9_-]+)+")
+            Regex("www\\.[A-Za-z0-9_-]+(?:\\.[A-Za-z0-9_-]+)+[^\\s<]*", RegexOption.IGNORE_CASE)
         private const val TRAILING_PUNCTUATION = "?!.,:*_~"
     }
 }
