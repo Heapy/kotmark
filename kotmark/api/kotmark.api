@@ -1120,6 +1120,12 @@ public abstract interface class io/heapy/kotmark/renderer/html/AttributeProvider
 	public abstract fun create (Lio/heapy/kotmark/renderer/html/AttributeProviderContext;)Lio/heapy/kotmark/renderer/html/AttributeProvider;
 }
 
+public final class io/heapy/kotmark/renderer/html/BaseUriUrlResolver : io/heapy/kotmark/renderer/html/UrlResolver {
+	public fun <init> (Ljava/lang/String;Z)V
+	public synthetic fun <init> (Ljava/lang/String;ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun resolveUrl (Lio/heapy/kotmark/node/Node;Ljava/lang/String;)Ljava/lang/String;
+}
+
 public final class io/heapy/kotmark/renderer/html/CoreHtmlNodeRenderer : io/heapy/kotmark/node/AbstractVisitor, io/heapy/kotmark/renderer/NodeRenderer {
 	public fun <init> (Lio/heapy/kotmark/renderer/html/HtmlNodeRendererContext;)V
 	public fun afterRoot (Lio/heapy/kotmark/node/Node;)V
@@ -1170,6 +1176,11 @@ public abstract interface class io/heapy/kotmark/renderer/html/HtmlNodeRendererC
 	public abstract fun getUrlSanitizer ()Lio/heapy/kotmark/renderer/html/UrlSanitizer;
 	public abstract fun getWriter ()Lio/heapy/kotmark/renderer/html/HtmlWriter;
 	public abstract fun render (Lio/heapy/kotmark/node/Node;)V
+	public fun resolveUrl (Lio/heapy/kotmark/node/Node;Ljava/lang/String;)Ljava/lang/String;
+}
+
+public final class io/heapy/kotmark/renderer/html/HtmlNodeRendererContext$DefaultImpls {
+	public static fun resolveUrl (Lio/heapy/kotmark/renderer/html/HtmlNodeRendererContext;Lio/heapy/kotmark/node/Node;Ljava/lang/String;)Ljava/lang/String;
 }
 
 public abstract interface class io/heapy/kotmark/renderer/html/HtmlNodeRendererFactory {
@@ -1190,6 +1201,7 @@ public final class io/heapy/kotmark/renderer/html/HtmlRenderer$Configuration {
 	public final fun getPercentEncodeUrls ()Z
 	public final fun getSanitizeUrls ()Z
 	public final fun getSoftbreak ()Ljava/lang/String;
+	public final fun getUrlResolver ()Lio/heapy/kotmark/renderer/html/UrlResolver;
 	public final fun getUrlSanitizer ()Lio/heapy/kotmark/renderer/html/UrlSanitizer;
 	public final fun nodeRendererFactory (Lio/heapy/kotmark/renderer/html/HtmlNodeRendererFactory;)V
 	public final fun setEscapeHtml (Z)V
@@ -1197,6 +1209,7 @@ public final class io/heapy/kotmark/renderer/html/HtmlRenderer$Configuration {
 	public final fun setPercentEncodeUrls (Z)V
 	public final fun setSanitizeUrls (Z)V
 	public final fun setSoftbreak (Ljava/lang/String;)V
+	public final fun setUrlResolver (Lio/heapy/kotmark/renderer/html/UrlResolver;)V
 	public final fun setUrlSanitizer (Lio/heapy/kotmark/renderer/html/UrlSanitizer;)V
 }
 
@@ -1217,6 +1230,10 @@ public final class io/heapy/kotmark/renderer/html/HtmlWriter {
 	public final fun tag (Ljava/lang/String;Ljava/util/Map;Z)V
 	public static synthetic fun tag$default (Lio/heapy/kotmark/renderer/html/HtmlWriter;Ljava/lang/String;Ljava/util/Map;ZILjava/lang/Object;)V
 	public final fun text (Ljava/lang/String;)V
+}
+
+public abstract interface class io/heapy/kotmark/renderer/html/UrlResolver {
+	public abstract fun resolveUrl (Lio/heapy/kotmark/node/Node;Ljava/lang/String;)Ljava/lang/String;
 }
 
 public abstract interface class io/heapy/kotmark/renderer/html/UrlSanitizer {

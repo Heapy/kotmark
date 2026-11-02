@@ -139,7 +139,7 @@ class CoreHtmlNodeRenderer(
 
     override fun visit(link: Link) {
         val attributes = linkedMapOf<String, String>()
-        var url = link.destination.orEmpty()
+        var url = context.resolveUrl(link, link.destination.orEmpty())
         if (context.shouldSanitizeUrls) {
             url = context.urlSanitizer.sanitizeLinkUrl(url)
             attributes["rel"] = "nofollow"
@@ -168,7 +168,7 @@ class CoreHtmlNodeRenderer(
     }
 
     override fun visit(image: Image) {
-        var url = image.destination.orEmpty()
+        var url = context.resolveUrl(image, image.destination.orEmpty())
         val altTextVisitor = AltTextVisitor()
         image.accept(altTextVisitor)
 

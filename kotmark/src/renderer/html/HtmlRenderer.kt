@@ -14,6 +14,7 @@ class HtmlRenderer private constructor(configuration: Configuration) : Renderer 
     private val omitSingleParagraphP = configuration.omitSingleParagraphP
     private val sanitizeUrls = configuration.sanitizeUrls
     private val urlSanitizer = configuration.urlSanitizer
+    private val urlResolver = configuration.urlResolver
     private val attributeProviderFactories = configuration.attributeProviderFactories.toList()
     private val nodeRendererFactories =
         buildList {
@@ -39,6 +40,12 @@ class HtmlRenderer private constructor(configuration: Configuration) : Renderer 
         var escapeHtml: Boolean = false
         var sanitizeUrls: Boolean = false
         var urlSanitizer: UrlSanitizer = DefaultUrlSanitizer()
+        /**
+         * Optional destination transformation for core links and images, before sanitization
+         * and encoding. Null preserves destinations. The AST is not modified.
+         * Custom node renderers can opt in through [HtmlNodeRendererContext.resolveUrl].
+         */
+        var urlResolver: UrlResolver? = null
         var percentEncodeUrls: Boolean = false
         var omitSingleParagraphP: Boolean = false
         internal val attributeProviderFactories = mutableListOf<AttributeProviderFactory>()
@@ -95,6 +102,9 @@ class HtmlRenderer private constructor(configuration: Configuration) : Renderer 
 
         override val softbreak: String
             get() = this@HtmlRenderer.softbreak
+
+        override fun resolveUrl(node: Node, destination: String): String =
+            urlResolver?.resolveUrl(node, destination) ?: destination
 
         override fun encodeUrl(url: String): String =
             if (percentEncodeUrls) {

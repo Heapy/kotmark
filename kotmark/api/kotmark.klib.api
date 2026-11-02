@@ -74,6 +74,10 @@ abstract fun interface io.heapy.kotmark.renderer.html/HtmlNodeRendererFactory { 
     abstract fun create(io.heapy.kotmark.renderer.html/HtmlNodeRendererContext): io.heapy.kotmark.renderer/NodeRenderer // io.heapy.kotmark.renderer.html/HtmlNodeRendererFactory.create|create(io.heapy.kotmark.renderer.html.HtmlNodeRendererContext){}[0]
 }
 
+abstract fun interface io.heapy.kotmark.renderer.html/UrlResolver { // io.heapy.kotmark.renderer.html/UrlResolver|null[0]
+    abstract fun resolveUrl(io.heapy.kotmark.node/Node, kotlin/String): kotlin/String // io.heapy.kotmark.renderer.html/UrlResolver.resolveUrl|resolveUrl(io.heapy.kotmark.node.Node;kotlin.String){}[0]
+}
+
 abstract fun interface io.heapy.kotmark.renderer.text/TextContentNodeRendererFactory { // io.heapy.kotmark.renderer.text/TextContentNodeRendererFactory|null[0]
     abstract fun create(io.heapy.kotmark.renderer.text/TextContentNodeRendererContext): io.heapy.kotmark.renderer/NodeRenderer // io.heapy.kotmark.renderer.text/TextContentNodeRendererFactory.create|create(io.heapy.kotmark.renderer.text.TextContentNodeRendererContext){}[0]
 }
@@ -247,6 +251,7 @@ abstract interface io.heapy.kotmark.renderer.html/HtmlNodeRendererContext { // i
     abstract fun encodeUrl(kotlin/String): kotlin/String // io.heapy.kotmark.renderer.html/HtmlNodeRendererContext.encodeUrl|encodeUrl(kotlin.String){}[0]
     abstract fun extendAttributes(io.heapy.kotmark.node/Node, kotlin/String, kotlin.collections/Map<kotlin/String, kotlin/String?>): kotlin.collections/Map<kotlin/String, kotlin/String?> // io.heapy.kotmark.renderer.html/HtmlNodeRendererContext.extendAttributes|extendAttributes(io.heapy.kotmark.node.Node;kotlin.String;kotlin.collections.Map<kotlin.String,kotlin.String?>){}[0]
     abstract fun render(io.heapy.kotmark.node/Node) // io.heapy.kotmark.renderer.html/HtmlNodeRendererContext.render|render(io.heapy.kotmark.node.Node){}[0]
+    open fun resolveUrl(io.heapy.kotmark.node/Node, kotlin/String): kotlin/String // io.heapy.kotmark.renderer.html/HtmlNodeRendererContext.resolveUrl|resolveUrl(io.heapy.kotmark.node.Node;kotlin.String){}[0]
 }
 
 abstract interface io.heapy.kotmark.renderer.html/UrlSanitizer { // io.heapy.kotmark.renderer.html/UrlSanitizer|null[0]
@@ -1303,6 +1308,12 @@ final class io.heapy.kotmark.parser/SourceLines { // io.heapy.kotmark.parser/Sou
     }
 }
 
+final class io.heapy.kotmark.renderer.html/BaseUriUrlResolver : io.heapy.kotmark.renderer.html/UrlResolver { // io.heapy.kotmark.renderer.html/BaseUriUrlResolver|null[0]
+    constructor <init>(kotlin/String, kotlin/Boolean = ...) // io.heapy.kotmark.renderer.html/BaseUriUrlResolver.<init>|<init>(kotlin.String;kotlin.Boolean){}[0]
+
+    final fun resolveUrl(io.heapy.kotmark.node/Node, kotlin/String): kotlin/String // io.heapy.kotmark.renderer.html/BaseUriUrlResolver.resolveUrl|resolveUrl(io.heapy.kotmark.node.Node;kotlin.String){}[0]
+}
+
 final class io.heapy.kotmark.renderer.html/CoreHtmlNodeRenderer : io.heapy.kotmark.node/AbstractVisitor, io.heapy.kotmark.renderer/NodeRenderer { // io.heapy.kotmark.renderer.html/CoreHtmlNodeRenderer|null[0]
     constructor <init>(io.heapy.kotmark.renderer.html/HtmlNodeRendererContext) // io.heapy.kotmark.renderer.html/CoreHtmlNodeRenderer.<init>|<init>(io.heapy.kotmark.renderer.html.HtmlNodeRendererContext){}[0]
 
@@ -1365,6 +1376,9 @@ final class io.heapy.kotmark.renderer.html/HtmlRenderer : io.heapy.kotmark.rende
         final var softbreak // io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration.softbreak|{}softbreak[0]
             final fun <get-softbreak>(): kotlin/String // io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration.softbreak.<get-softbreak>|<get-softbreak>(){}[0]
             final fun <set-softbreak>(kotlin/String) // io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration.softbreak.<set-softbreak>|<set-softbreak>(kotlin.String){}[0]
+        final var urlResolver // io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration.urlResolver|{}urlResolver[0]
+            final fun <get-urlResolver>(): io.heapy.kotmark.renderer.html/UrlResolver? // io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration.urlResolver.<get-urlResolver>|<get-urlResolver>(){}[0]
+            final fun <set-urlResolver>(io.heapy.kotmark.renderer.html/UrlResolver?) // io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration.urlResolver.<set-urlResolver>|<set-urlResolver>(io.heapy.kotmark.renderer.html.UrlResolver?){}[0]
         final var urlSanitizer // io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration.urlSanitizer|{}urlSanitizer[0]
             final fun <get-urlSanitizer>(): io.heapy.kotmark.renderer.html/UrlSanitizer // io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration.urlSanitizer.<get-urlSanitizer>|<get-urlSanitizer>(){}[0]
             final fun <set-urlSanitizer>(io.heapy.kotmark.renderer.html/UrlSanitizer) // io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration.urlSanitizer.<set-urlSanitizer>|<set-urlSanitizer>(io.heapy.kotmark.renderer.html.UrlSanitizer){}[0]
