@@ -10,6 +10,27 @@ import kotlin.test.assertSame
 
 class NodeBehaviorTest {
     @Test
+    fun siblingInsertionUsesTheExistingParentWithoutCallingSetParent() {
+        val parent = Emphasis()
+        val text = Text("text")
+        parent.appendChild(text)
+        val before = Paragraph()
+        val after = Paragraph()
+        text.insertBefore(before)
+        text.insertAfter(after)
+        assertSame(parent, before.parent)
+        assertSame(parent, after.parent)
+        assertSame(before, parent.firstChild)
+        assertSame(after, parent.lastChild)
+        assertSame(text, before.next)
+        assertSame(text, after.previous)
+        before.unlink()
+        after.unlink()
+        assertSame(text, parent.firstChild)
+        assertSame(text, parent.lastChild)
+    }
+
+    @Test
     fun visitorCanReplaceNodesWithoutDestroyingVisitOrder() {
         val visitor =
             object : AbstractVisitor() {

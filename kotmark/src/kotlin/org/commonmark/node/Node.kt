@@ -77,7 +77,7 @@ abstract class Node {
         sibling.nextField?.let { it.prevField = sibling }
         sibling.prevField = this
         nextField = sibling
-        sibling.setParent(parentField)
+        sibling.parentField = parentField
         if (sibling.nextField == null) {
             sibling.parentField?.let { it.lastChildField = sibling }
         }
@@ -90,7 +90,7 @@ abstract class Node {
         sibling.prevField?.let { it.nextField = sibling }
         sibling.nextField = this
         prevField = sibling
-        sibling.setParent(parentField)
+        sibling.parentField = parentField
         if (sibling.prevField == null) {
             sibling.parentField?.let { it.firstChildField = sibling }
         }
