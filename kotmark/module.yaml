@@ -1,3 +1,6 @@
+apply:
+  - //common.module-template.yaml
+
 product:
   type: kmp/lib
   platforms: [jvm, android, js, wasmJs, wasmWasi,
@@ -12,12 +15,5 @@ aliases:
 
 description: Kotlin Multiplatform port of commonmark-java — Markdown parsing and rendering.
 
-settings:
-  kotlin:
-    version: 2.3.20
-    languageVersion: 2.3
-    apiVersion: 2.3
-    allWarningsAsErrors: false
-
-dependencies:
+test-dependencies:
   - $kotlin.test
