@@ -13,3 +13,4 @@ test-dependencies:
 
 dependencies:
   - ../kotmark
+  - //test-fixtures

@@ -1,6 +1,6 @@
 package org.commonmark.ext.gfm.alerts
 
-import java.io.File
+import org.commonmark.testfixtures.TestFixtures
 import org.commonmark.parser.Parser
 import org.commonmark.renderer.html.HtmlRenderer
 import kotlin.test.Test
@@ -16,16 +16,11 @@ class AlertsSpecTest {
                 .extensions(listOf(extension))
                 .softbreak("<br>\n")
                 .build()
-        val fixture =
-            sequenceOf(
-                File("projects/commonmark-java/commonmark-ext-gfm-alerts/src/test/resources/alerts-spec.txt"),
-                File("../projects/commonmark-java/commonmark-ext-gfm-alerts/src/test/resources/alerts-spec.txt"),
-            ).firstOrNull(File::isFile)
-                ?: error("Unable to locate alerts-spec.txt from ${File(".").absolutePath}")
+        val fixture = TestFixtures.readText("commonmark-java/alerts-spec.txt")
 
         val failures = mutableListOf<String>()
         var count = 0
-        for ((source, expected) in readExamples(fixture.readText())) {
+        for ((source, expected) in readExamples(fixture)) {
             count++
             val actual = renderer.render(parser.parse(source))
             if (actual != expected) {

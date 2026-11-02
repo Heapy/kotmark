@@ -1,0 +1,2 @@
+# Preserve upstream bytes, including deliberate CR and CRLF regression inputs.
+resources/upstream/** -text

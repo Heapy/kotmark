@@ -60,7 +60,7 @@ object UnicodeCategories {
     }
 
     // Generated from Unicode 16.0.0 by scripts/generate-unicode-categories.py.
-    // Unicode data license: scripts/Unicode-LICENSE.txt.
+    // Unicode data license: UPSTREAM.md.
     // Each triple is an inclusive start, inclusive end, and CharCategory value.
     private val SUPPLEMENTARY_RANGES = intArrayOf(
         0x10000, 0x1000B, 5,  0x1000D, 0x10026, 5,  0x10028, 0x1003A, 5,

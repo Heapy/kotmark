@@ -6,6 +6,9 @@ Kotlin Multiplatform port of [commonmark-java](https://github.com/commonmark/com
 
 The repository contains the core `kotmark` module, shared test utilities, integration tests, and extensions for autolinks, footnotes, GFM alerts, strikethrough, tables, heading anchors, image attributes, insertions, task list items, and YAML front matter.
 
+The independent `autolink` module ports [autolink-java 0.12.0](UPSTREAM.md).
+The Markdown autolink extension uses its upstream rules, which differ from GFM in some cases.
+
 ## Development
 
 The project pins Kotlin Toolchain 0.13.0 in both wrappers and Kotlin 2.4.21 in
@@ -14,6 +17,11 @@ The project pins Kotlin Toolchain 0.13.0 in both wrappers and Kotlin 2.4.21 in
 ```shell
 ./kotlin test --platform jvm
 ```
+
+All test inputs and expected outputs are stored in the repository. Shared JVM
+fixtures are packaged by `test-fixtures`; their exact upstream revisions,
+checksums, and licenses are recorded in [UPSTREAM.md](UPSTREAM.md).
+Tests do not download upstream source repositories or require `projects/`.
 
 JVM artifacts target Java 17, and JVM tests run on JDK 17. Kotlin Toolchain
 provisions a matching JDK when needed. The shared template also configures the
@@ -79,10 +87,6 @@ fixture/integration suite remains JVM-only; other targets execute the common tes
 Linux ARM64 binaries are cross-compiled on x64 because Kotlin/Native does not
 provide a Linux ARM64 compiler host. CI transfers them as an artifact and executes
 them on an ARM64 runner. Apple jobs use the macOS 26 ARM64 image.
-
-The JVM integration suite needs the pinned reference checkouts listed in
-`.github/workflows/ci.yml`, under `projects/commonmark-java` and
-`projects/commonmark-spec`. CI fetches them automatically.
 
 Supplementary Unicode character categories are generated from Unicode 16.0.0.
 To regenerate the checked-in ranges (requires Python 3 and network access):

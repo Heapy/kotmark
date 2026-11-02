@@ -17,3 +17,6 @@ description: Kotlin Multiplatform port of commonmark-java — Markdown parsing a
 
 test-dependencies:
   - $kotlin.test
+
+test-dependencies@jvm:
+  - //test-fixtures

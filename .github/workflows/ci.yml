@@ -26,7 +26,6 @@ jobs:
             os: ubuntu-24.04
             platforms: jvm android
             mode: ktc
-            fixtures: true
           - name: Linux x64 tests
             os: ubuntu-24.04
             platforms: linuxX64
@@ -79,22 +78,6 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-
-      - name: Check out commonmark-java fixtures
-        if: matrix.fixtures == true
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          repository: commonmark/commonmark-java
-          ref: 9477a93b6b0965efc54c55bd40ad88fbbe25bc6f
-          path: projects/commonmark-java
-
-      - name: Check out CommonMark specification
-        if: matrix.fixtures == true
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          repository: commonmark/commonmark-spec
-          ref: 3da939428d80f146f270cd1765e4ba462e96bb1b
-          path: projects/commonmark-spec
 
       - name: Set up Node.js
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0

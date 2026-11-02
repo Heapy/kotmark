@@ -1,6 +1,6 @@
 package org.commonmark.test
 
-import java.io.File
+import org.commonmark.testfixtures.TestFixtures
 import org.commonmark.parser.Parser
 import org.commonmark.renderer.html.HtmlRenderer
 import kotlin.test.Test
@@ -9,33 +9,18 @@ import kotlin.test.fail
 class SpecCoreTest {
     @Test
     fun commonMarkJavaBundledSpec() {
-        assertSpec(
-            sequenceOf(
-                File("projects/commonmark-java/commonmark-test-util/src/main/resources/spec.txt"),
-                File("../projects/commonmark-java/commonmark-test-util/src/main/resources/spec.txt"),
-            ).firstOrNull(File::isFile)
-                ?: error("Unable to locate the commonmark-java spec fixture from ${File(".").absolutePath}"),
-        )
+        assertSpec("commonmark-java/spec.txt")
     }
 
     @Test
-    fun currentCommonMarkReferenceSpec() {
-        assertSpec(
-            sequenceOf(
-                File("projects/commonmark-spec/spec.txt"),
-                File("../projects/commonmark-spec/spec.txt"),
-            ).firstOrNull(File::isFile)
-                ?: error("Unable to locate the CommonMark reference spec from ${File(".").absolutePath}"),
-        )
+    fun pinnedCommonMarkReferenceSpec() {
+        assertSpec("commonmark-spec/spec.txt")
     }
 
     @Test
     fun commonMarkJavaBundledSpecWithCrLfInput() {
-        val spec = locate(
-            "projects/commonmark-java/commonmark-test-util/src/main/resources/spec.txt",
-        )
         assertSpec(
-            spec,
+            "commonmark-java/spec.txt",
             sourceTransform = { source -> source.replace("\n", "\r\n") },
         )
     }
@@ -49,21 +34,17 @@ class SpecCoreTest {
                 "\uFEFF# Hi\n" to "<p>\uFEFF# Hi</p>\n",
             )
         assertSpec(
-            locate(
-                "projects/commonmark-java/commonmark-test-util/src/main/resources/cmark-regression.txt",
-            ),
+            "commonmark-java/cmark-regression.txt",
             expectedOverrides = overrides,
         )
         assertSpec(
-            locate(
-                "projects/commonmark-java/commonmark-test-util/src/main/resources/commonmark.js-regression.txt",
-            ),
+            "commonmark-java/commonmark.js-regression.txt",
             expectedOverrides = overrides,
         )
     }
 
     private fun assertSpec(
-        spec: File,
+        resource: String,
         sourceTransform: (String) -> String = { it },
         expectedOverrides: Map<String, String> = emptyMap(),
     ) {
@@ -71,7 +52,7 @@ class SpecCoreTest {
         val renderer = HtmlRenderer.builder().percentEncodeUrls(true).build()
         val failures = mutableListOf<String>()
         var count = 0
-        for (example in readExamples(spec.readText())) {
+        for (example in readExamples(TestFixtures.readText(resource))) {
             count++
             val actual = renderer.render(parser.parse(sourceTransform(example.source)))
             val comparableActual = actual.replace('\t', '\u2192')
@@ -99,11 +80,6 @@ class SpecCoreTest {
             )
         }
     }
-
-    private fun locate(path: String): File =
-        sequenceOf(File(path), File("../$path"))
-            .firstOrNull(File::isFile)
-            ?: error("Unable to locate $path from ${File(".").absolutePath}")
 
     private fun readExamples(spec: String): List<Example> {
         val examples = mutableListOf<Example>()

@@ -1,4 +1,5 @@
 modules:
+  - ./autolink
   - ./commonmark-ext-autolink
   - ./commonmark-ext-footnotes
   - ./commonmark-ext-gfm-alerts
@@ -12,3 +13,4 @@ modules:
   - ./integration-test
   - ./kotmark
   - ./test-util
+  - ./test-fixtures

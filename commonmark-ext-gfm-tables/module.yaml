@@ -10,3 +10,6 @@ dependencies:
 
 test-dependencies:
   - $kotlin.test
+
+test-dependencies@jvm:
+  - //test-fixtures

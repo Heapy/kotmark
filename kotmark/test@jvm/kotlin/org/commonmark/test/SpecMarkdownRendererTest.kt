@@ -1,6 +1,6 @@
 package org.commonmark.test
 
-import java.io.File
+import org.commonmark.testfixtures.TestFixtures
 import org.commonmark.parser.Parser
 import org.commonmark.renderer.html.HtmlRenderer
 import org.commonmark.renderer.markdown.MarkdownRenderer
@@ -13,15 +13,10 @@ class SpecMarkdownRendererTest {
         val parser = Parser.builder().build()
         val markdownRenderer = MarkdownRenderer.builder().build()
         val htmlRenderer = HtmlRenderer.builder().percentEncodeUrls(true).build()
-        val spec =
-            sequenceOf(
-                File("projects/commonmark-java/commonmark-test-util/src/main/resources/spec.txt"),
-                File("../projects/commonmark-java/commonmark-test-util/src/main/resources/spec.txt"),
-            ).firstOrNull(File::isFile)
-                ?: error("Unable to locate spec.txt from ${File(".").absolutePath}")
+        val spec = TestFixtures.readText("commonmark-java/spec.txt")
         val failures = mutableListOf<String>()
         var count = 0
-        for (example in readExamples(spec.readText())) {
+        for (example in readExamples(spec)) {
             count++
             val markdown = markdownRenderer.render(parser.parse(example.source))
             val actual = htmlRenderer.render(parser.parse(markdown)).replace('\t', '\u2192')

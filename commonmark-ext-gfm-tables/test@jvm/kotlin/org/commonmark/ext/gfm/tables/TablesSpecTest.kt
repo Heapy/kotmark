@@ -1,6 +1,6 @@
 package org.commonmark.ext.gfm.tables
 
-import java.io.File
+import org.commonmark.testfixtures.TestFixtures
 import org.commonmark.parser.Parser
 import org.commonmark.renderer.html.HtmlRenderer
 import kotlin.test.Test
@@ -12,15 +12,10 @@ class TablesSpecTest {
         val extension = TablesExtension.create()
         val parser = Parser.builder().extensions(listOf(extension)).build()
         val renderer = HtmlRenderer.builder().extensions(listOf(extension)).build()
-        val fixture =
-            sequenceOf(
-                File("projects/commonmark-java/commonmark-test-util/src/main/resources/gfm-spec.txt"),
-                File("../projects/commonmark-java/commonmark-test-util/src/main/resources/gfm-spec.txt"),
-            ).firstOrNull(File::isFile)
-                ?: error("Unable to locate gfm-spec.txt from ${File(".").absolutePath}")
+        val fixture = TestFixtures.readText("commonmark-java/gfm-spec.txt")
         val failures = mutableListOf<String>()
         var count = 0
-        for ((source, expected) in readTableExamples(fixture.readText())) {
+        for ((source, expected) in readTableExamples(fixture)) {
             count++
             val actual = renderer.render(parser.parse(source))
             if (actual != expected) {
