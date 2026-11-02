@@ -1,6 +1,10 @@
 package org.commonmark.ext.image.attributes
 
 import org.commonmark.Extension
+import org.commonmark.ext.image.attributes.internal.ImageAttributesDelimiterProcessor
+import org.commonmark.node.Image
+import org.commonmark.node.Text
+import org.commonmark.parser.delimiter.DelimiterRun
 import org.commonmark.node.Paragraph
 import org.commonmark.node.SourceSpan
 import org.commonmark.parser.IncludeSourceSpans
@@ -13,6 +17,38 @@ class ImageAttributesTest {
     private val extensions: List<Extension> = listOf(ImageAttributesExtension.create())
     private val parser = Parser.builder().extensions(extensions).build()
     private val renderer = HtmlRenderer.builder().extensions(extensions).build()
+
+    @Test
+    fun processorAcceptsTrailingWhitespace() {
+        val image = Image("url", "")
+        val opening = Text("{")
+        val content = Text("width=5   ")
+        val closing = Text("}")
+        val paragraph = Paragraph()
+        for (node in listOf(image, opening, content, closing)) paragraph.appendChild(node)
+        val run = object : DelimiterRun {
+            override fun canOpen() = true
+            override fun canClose() = true
+            override fun length() = 1
+            override fun originalLength() = 1
+            override val opener = opening
+            override val closer = closing
+            override fun getOpeners(length: Int) = listOf(opening)
+            override fun getClosers(length: Int) = listOf(closing)
+        }
+        val processor = ImageAttributesDelimiterProcessor()
+        assertEquals(1, processor.process(run, run))
+        assertEquals("5", (image.firstChild as ImageAttributes).attributes["width"])
+    }
+
+    @Test
+    fun trailingEmptyPartsFollowJavaSplitSemantics() {
+        assertHtml("![text](/url.png){}", "<p><img src=\"/url.png\" alt=\"text\" />{}</p>\n")
+        assertHtml("![text](/url.png){width=}", "<p><img src=\"/url.png\" alt=\"text\" />{width=}</p>\n")
+        assertHtml("![text](/url.png){height=5 width=}", "<p><img src=\"/url.png\" alt=\"text\" />{height=5 width=}</p>\n")
+        assertHtml("![text](/url.png){width=5   }", "<p><img src=\"/url.png\" alt=\"text\" />{width=5   }</p>\n")
+        assertHtml("![text](/url.png){width=5=}", "<p><img src=\"/url.png\" alt=\"text\" width=\"5\" /></p>\n")
+    }
 
     @Test
     fun supportedAttributes() {

@@ -31,9 +31,11 @@ class ImageAttributesDelimiterProcessor : DelimiterProcessor {
             toUnlink.add(node)
         }
 
+        // Java String.split keeps the empty input as one (invalid) attribute.
+        if (content.isEmpty()) return 0
         val attributes = linkedMapOf<String, String>()
-        for (candidate in content.toString().split(WHITESPACE)) {
-            val parts = candidate.split('=')
+        for (candidate in content.toString().split(WHITESPACE).dropLastWhile(String::isEmpty)) {
+            val parts = candidate.split('=').dropLastWhile(String::isEmpty)
             if (parts.size <= 1 || parts[0].lowercase() !in SUPPORTED_ATTRIBUTES) {
                 return 0
             }
