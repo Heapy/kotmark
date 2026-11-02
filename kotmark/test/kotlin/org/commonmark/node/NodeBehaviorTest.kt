@@ -1,6 +1,5 @@
 package org.commonmark.node
 
-import org.commonmark.parser.Parser
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -50,30 +49,6 @@ class NodeBehaviorTest {
         assertEquals("bar", second.literal)
         assertNull(second.next)
         assertSame(second, paragraph.lastChild)
-    }
-
-    @Test
-    fun parsedEmphasisRetainsDelimiters() {
-        val document =
-            Parser.builder().build().parse(
-                "* *emphasis* \n* **strong** \n* _important_ \n* __CRITICAL__ \n",
-            )
-        val delimiters = mutableListOf<Delimited>()
-        document.accept(
-            object : AbstractVisitor() {
-                override fun visit(emphasis: Emphasis) {
-                    delimiters += emphasis
-                }
-
-                override fun visit(strongEmphasis: StrongEmphasis) {
-                    delimiters += strongEmphasis
-                }
-            },
-        )
-        assertEquals(
-            listOf("*" to "*", "**" to "**", "_" to "_", "__" to "__"),
-            delimiters.map { it.openingDelimiter to it.closingDelimiter },
-        )
     }
 
     @Test

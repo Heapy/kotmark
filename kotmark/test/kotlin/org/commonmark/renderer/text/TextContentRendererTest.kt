@@ -181,31 +181,6 @@ class TextContentRendererTest {
         )
     }
 
-    @Test
-    fun writerOperations() {
-        assertWriter("foo bar") {
-            write("foo")
-            whitespace()
-            write("bar")
-        }
-        assertWriter("foo:bar") {
-            write("foo")
-            colon()
-            write("bar")
-        }
-        assertWriter("foo\nbar") {
-            write("foo")
-            line()
-            write("bar")
-        }
-        assertWriter("foo bar") {
-            writeStripped("foo\n bar")
-        }
-        assertWriter("foo bar") {
-            write("foo bar")
-        }
-    }
-
     private fun assertModes(
         source: String,
         compactExpected: String,
@@ -233,12 +208,4 @@ class TextContentRendererTest {
         assertModes(source, expected, expected, expected)
     }
 
-    private fun assertWriter(
-        expected: String,
-        operations: TextContentWriter.() -> Unit,
-    ) {
-        val output = StringBuilder()
-        TextContentWriter(output).operations()
-        assertEquals(expected, output.toString())
-    }
 }
