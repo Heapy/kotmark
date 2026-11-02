@@ -13,6 +13,9 @@ class SourceLine private constructor(
     val sourceSpan: SourceSpan?,
 ) {
     fun substring(beginIndex: Int, endIndex: Int): SourceLine {
+        if (beginIndex < 0 || endIndex > content.length || beginIndex > endIndex) {
+            throw IndexOutOfBoundsException("beginIndex=$beginIndex, endIndex=$endIndex, length=${content.length}")
+        }
         val newContent = content.subSequence(beginIndex, endIndex)
         val newSourceSpan = sourceSpan?.let { span ->
             val length = endIndex - beginIndex
