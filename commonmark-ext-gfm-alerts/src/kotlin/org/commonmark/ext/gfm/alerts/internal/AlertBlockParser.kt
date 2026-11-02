@@ -157,7 +157,7 @@ class AlertBlockParser private constructor(
     }
 
     companion object {
-        private val ALERT_PATTERN_NO_CUSTOM_TITLE = Regex("^\\[!([a-zA-Z]+)]\\s*$")
-        private val ALERT_PATTERN_CUSTOM_TITLE = Regex("^\\[!([a-zA-Z]+)](.*)$")
+        private val ALERT_PATTERN_NO_CUSTOM_TITLE = Regex("^\\[!([a-zA-Z]+)\\]\\s*$")
+        private val ALERT_PATTERN_CUSTOM_TITLE = Regex("^\\[!([a-zA-Z]+)\\](.*)$")
     }
 }
