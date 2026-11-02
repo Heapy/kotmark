@@ -85,9 +85,15 @@ after updating the originals, then run the JVM and common platform suites.
 
 The supplementary category ranges in
 `kotmark/src/internal/util/UnicodeCategories.kt` are generated
-from [UnicodeData.txt 16.0.0](https://www.unicode.org/Public/16.0.0/ucd/UnicodeData.txt).
-Input SHA-256: `ff58e5823bd095166564a006e47d111130813dcf8bf234ef79fa51a870edb48f`.
+from [UnicodeData.txt 18.0.0](https://www.unicode.org/Public/18.0.0/ucd/UnicodeData.txt).
+Input SHA-256: `0736451de439ae7baf1425136617da495e09ee5afbe6e394374db7009ea08950`.
 The applicable Unicode notice is retained below.
+
+Regenerate from the project root with `kotlinr scripts/generate-unicode-categories.main.kts`.
+Add `--check` to verify the committed table without changing files. Both modes
+download the pinned input and verify its checksum before processing it.
+This table covers code points above U+FFFF; BMP categories and the JVM/JS parser
+helpers still use their platform's Unicode data.
 
 ## MIT notice for autolink
 
