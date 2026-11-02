@@ -11,7 +11,7 @@ UTF-16 begin/end indices retain the upstream inclusive/exclusive semantics. Extr
 
 Java getters become Kotlin properties (with equivalent JVM getters); nullable inputs are excluded by Kotlin types. Builders retain the upstream options and `builder()` is exposed with `@JvmStatic`. Kotlin read-only `Iterator` omits `remove`; the generated JVM implementation still throws `UnsupportedOperationException`. Internal implementation classes are Kotlin `internal`. Deprecated `Autolink.renderLinks` and `LinkRenderer` are retained. Java module descriptors and package-info documentation are not KMP runtime components.
 
-There is no GFM mode. `commonmark-ext-autolink` delegates extraction directly to this module, retaining the upstream AST handling, type configuration, source-span splitting, nested-link suppression, and href prefixes.
+There is no GFM mode. `kotmark-ext-autolink` delegates extraction directly to this module, retaining the upstream AST handling, type configuration, source-span splitting, nested-link suppression, and href prefixes.
 
 ## Upstream test mapping
 
@@ -94,7 +94,7 @@ The autolink and extension suites use committed Kotlin test data. Shared corpus 
 
 ```shell
 ./kotlin test --platform jvm
-./kotlin test -m autolink -m commonmark-ext-autolink --platform macosArm64
+./kotlin test -m autolink -m kotmark-ext-autolink --platform macosArm64
 node scripts/test-js.mjs
 ```
 
@@ -106,8 +106,8 @@ Validation environment: macOS ARM64, Kotlin Toolchain 0.13.0, Kotlin 2.4.21. The
 
 - One-time Java reference verification: compiled fresh, pinned, unmodified upstream sources and verified all 11 original inputs/GFM expectations and reference outputs. Differences are exactly examples 5, 6, 11. The temporary verification and fixture-fetch scripts were removed after bundling the test data.
 - `node scripts/test-js.mjs`: 318 passed, 0 failed, 0 skipped across the project, including all 99 common autolink tests and 19 extension tests; exit 0.
-- Library compilation: all 18 targets present at the time of the check for both `autolink` and `commonmark-ext-autolink`; exit 0. Parallel platform maintenance subsequently removed `iosX64` and `watchosArm32` from these modules, leaving 16 targets, all covered by that successful check. This is compilation evidence, not runtime verification of every target.
-- `./kotlin build -m autolink -m commonmark-ext-autolink`: attempted broader compilation and test-executable linking, exited 1 at `:autolink:linkWatchosArm32TestDebug`: Xcode reports `ld: -arch armv7k is no longer supported`. The legacy target’s library compiled; the later removal from the module matrix belongs to parallel platform maintenance. No watchOS ARM32 runtime or executable-linking claim is made.
+- Library compilation: all 18 targets present at the time of the check for both `autolink` and `kotmark-ext-autolink`; exit 0. Parallel platform maintenance subsequently removed `iosX64` and `watchosArm32` from these modules, leaving 16 targets, all covered by that successful check. This is compilation evidence, not runtime verification of every target.
+- `./kotlin build -m autolink -m kotmark-ext-autolink`: attempted broader compilation and test-executable linking, exited 1 at `:autolink:linkWatchosArm32TestDebug`: Xcode reports `ld: -arch armv7k is no longer supported`. The legacy target’s library compiled; the later removal from the module matrix belongs to parallel platform maintenance. No watchOS ARM32 runtime or executable-linking claim is made.
 - `./kotlin test --platform jvm --platform macosArm64`: exit 0; **334 JVM tests** and **318 macOS Native tests** passed, 0 failures/skips. The JVM run includes all 97 upstream extractor invocations, 4 added extractor tests, 19 extension methods (including the 9 upstream methods and 11 GFM data cases), and 4 integration methods. Native executes the 95 common upstream invocations plus 4 added extractor tests; the Java-only `remove` checks have no common Kotlin API equivalent.
 - After bundling the shared fixtures, `./kotlin test --platform jvm` passed **336 tests**, zero failures/skips, in an isolated source copy without `projects/` or existing build outputs. The two additional tests verify fixture hashes and example counts. Test data no longer requires either helper script or an upstream checkout.
 - `git diff --check`: passed.
@@ -116,7 +116,7 @@ To repeat the compilation-only check for the current 16-target matrix:
 
 ```sh
 set --
-for module in autolink commonmark-ext-autolink; do
+for module in autolink kotmark-ext-autolink; do
     for suffix in Jvm AndroidDebug Js WasmJs WasmWasi LinuxX64Debug LinuxArm64Debug MacosArm64Debug TvosArm64Debug TvosSimulatorArm64Debug IosArm64Debug IosSimulatorArm64Debug WatchosArm64Debug WatchosDeviceArm64Debug WatchosSimulatorArm64Debug MingwX64Debug; do
         set -- "$@" ":$module:compile$suffix"
     done

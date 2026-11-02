@@ -14,7 +14,7 @@ own license documentation; the filename and unrelated notices need not be retain
 
 | Source | Pinned revision | Local scope | License |
 | --- | --- | --- | --- |
-| [commonmark-java](https://github.com/commonmark/commonmark-java) | [9477a93b6b0965efc54c55bd40ad88fbbe25bc6f](https://github.com/commonmark/commonmark-java/tree/9477a93b6b0965efc54c55bd40ad88fbbe25bc6f), 0.29.1-SNAPSHOT | `kotmark`, `commonmark-ext-*`, test utilities and ported tests | BSD-2-Clause, Robin Stocker; test utility resources also retain Atlassian's notice |
+| [commonmark-java](https://github.com/commonmark/commonmark-java) | [9477a93b6b0965efc54c55bd40ad88fbbe25bc6f](https://github.com/commonmark/commonmark-java/tree/9477a93b6b0965efc54c55bd40ad88fbbe25bc6f), 0.29.1-SNAPSHOT | `kotmark`, `kotmark-ext-*`, test utilities and ported tests | BSD-2-Clause, Robin Stocker; test utility resources also retain Atlassian's notice |
 | [autolink-java](https://github.com/robinst/autolink-java) | [8b07a6911fd62871042c5b63412d3ac3489a0531](https://github.com/robinst/autolink-java/tree/8b07a6911fd62871042c5b63412d3ac3489a0531), tag `autolink-0.12.0` | `autolink` production code and tests | MIT, Robin Stocker |
 
 The commonmark-java revision is dated 2026-06-20, subject `README: Bump version`,
@@ -59,7 +59,7 @@ is by **GitHub**, based on CommonMark. Both are licensed under
 The original metadata and license notices remain in the unmodified corpus files.
 
 The 11 GFM autolink examples in
-`commonmark-ext-autolink/test/ext/autolink/GfmAutolinkExamples.kt`
+`kotmark-ext-autolink/test/ext/autolink/GfmAutolinkExamples.kt`
 are extracted from the pinned GFM corpus under the same CC-BY-SA-4.0 license.
 Their original inputs and GFM outputs are retained; separate commonmark-java
 reference outputs and Kotlin test scaffolding have been added.

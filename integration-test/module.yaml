@@ -11,13 +11,13 @@ test-dependencies:
   - $kotlin.test
   - ../kotmark
   - ../test-util
-  - ../commonmark-ext-autolink
-  - ../commonmark-ext-footnotes
-  - ../commonmark-ext-gfm-alerts
-  - ../commonmark-ext-gfm-strikethrough
-  - ../commonmark-ext-gfm-tables
-  - ../commonmark-ext-heading-anchor
-  - ../commonmark-ext-image-attributes
-  - ../commonmark-ext-ins
-  - ../commonmark-ext-task-list-items
-  - ../commonmark-ext-yaml-front-matter
+  - ../kotmark-ext-autolink
+  - ../kotmark-ext-footnotes
+  - ../kotmark-ext-gfm-alerts
+  - ../kotmark-ext-gfm-strikethrough
+  - ../kotmark-ext-gfm-tables
+  - ../kotmark-ext-heading-anchor
+  - ../kotmark-ext-image-attributes
+  - ../kotmark-ext-ins
+  - ../kotmark-ext-task-list-items
+  - ../kotmark-ext-yaml-front-matter

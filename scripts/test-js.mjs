@@ -7,7 +7,7 @@ import { resolve } from 'node:path';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const modules = ['autolink', 'kotmark', 'test-fixtures', 'integration-test',
-  ...readdirSync(root).filter(name => name.startsWith('commonmark-ext-')).sort()];
+  ...readdirSync(root).filter(name => name.startsWith('kotmark-ext-')).sort()];
 const build = spawnSync('./kotlin', ['task', ...modules.map(name => `:${name}:linkJsTest`)], {
   cwd: root, stdio: 'inherit',
 });
