@@ -41,7 +41,7 @@ class SpecialInputTest : CoreRenderingTestCase() {
 
     @Test
     fun surrogatePairInLinkDestination() {
-        assertRendering("[title](𝄞)", "<p><a href=\"𝄞\">title</a></p>\n")
+        assertRendering("[title](𝄞)", """<p><a href="𝄞">title</a></p>""" + "\n")
     }
 
     @Test
@@ -80,11 +80,29 @@ class SpecialInputTest : CoreRenderingTestCase() {
     fun columnIsInTabOnPreviousLine() {
         assertRendering(
             "- foo\n\n\tbar\n\n# baz\n",
-            "<ul>\n<li>\n<p>foo</p>\n<p>bar</p>\n</li>\n</ul>\n<h1>baz</h1>\n",
+            """
+                |<ul>
+                |<li>
+                |<p>foo</p>
+                |<p>bar</p>
+                |</li>
+                |</ul>
+                |<h1>baz</h1>
+                |
+            """.trimMargin(),
         )
         assertRendering(
             "- foo\n\n\tbar\n# baz\n",
-            "<ul>\n<li>\n<p>foo</p>\n<p>bar</p>\n</li>\n</ul>\n<h1>baz</h1>\n",
+            """
+                |<ul>
+                |<li>
+                |<p>foo</p>
+                |<p>bar</p>
+                |</li>
+                |</ul>
+                |<h1>baz</h1>
+                |
+            """.trimMargin(),
         )
     }
 
@@ -98,7 +116,7 @@ class SpecialInputTest : CoreRenderingTestCase() {
     @Test
     fun linkLabelLength() {
         val label1 = "a".repeat(999)
-        assertRendering("[foo][" + label1 + "]\n\n[" + label1 + "]: /", "<p><a href=\"/\">foo</a></p>\n")
+        assertRendering("[foo][" + label1 + "]\n\n[" + label1 + "]: /", """<p><a href="/">foo</a></p>""" + "\n")
         assertRendering(
             "[foo][x" + label1 + "]\n\n[x" + label1 + "]: /",
             "<p>[foo][x" + label1 + "]</p>\n<p>[x" + label1 + "]: /</p>\n",
@@ -109,7 +127,7 @@ class SpecialInputTest : CoreRenderingTestCase() {
         )
 
         val label2 = "a\n".repeat(499)
-        assertRendering("[foo][" + label2 + "]\n\n[" + label2 + "]: /", "<p><a href=\"/\">foo</a></p>\n")
+        assertRendering("[foo][" + label2 + "]\n\n[" + label2 + "]: /", """<p><a href="/">foo</a></p>""" + "\n")
         assertRendering(
             "[foo][12" + label2 + "]\n\n[12" + label2 + "]: /",
             "<p>[foo][12" + label2 + "]</p>\n<p>[12" + label2 + "]: /</p>\n",
@@ -119,27 +137,27 @@ class SpecialInputTest : CoreRenderingTestCase() {
     @Test
     fun linkDestinationEscaping() {
         // Backslash escapes `)`
-        assertRendering("[foo](\\))", "<p><a href=\")\">foo</a></p>\n")
+        assertRendering("""[foo](\))""", """<p><a href=")">foo</a></p>""" + "\n")
         // ` ` is not escapable, so the backslash is a literal backslash and there's an optional space at the end
-        assertRendering("[foo](\\ )", "<p><a href=\"\\\">foo</a></p>\n")
+        assertRendering("""[foo](\ )""", """<p><a href="\">foo</a></p>""" + "\n")
         // Backslash is a literal, so valid
-        assertRendering("[foo](<a\\b>)", "<p><a href=\"a\\b\">foo</a></p>\n")
+        assertRendering("""[foo](<a\b>)""", """<p><a href="a\b">foo</a></p>""" + "\n")
         // Backslash escapes `>` but there's another `>`, valid
-        assertRendering("[foo](<a\\>>)", "<p><a href=\"a&gt;\">foo</a></p>\n")
+        assertRendering("""[foo](<a\>>)""", """<p><a href="a&gt;">foo</a></p>""" + "\n")
 
         // This is a tricky one. There's `<` so we try to parse it as a `<` link but fail.
-        assertRendering("[foo](<\\>)", "<p>[foo](&lt;&gt;)</p>\n")
+        assertRendering("""[foo](<\>)""", "<p>[foo](&lt;&gt;)</p>\n")
     }
 
     // commonmark/CommonMark#468
     @Test
     fun linkReferenceBackslash() {
         // Backslash escapes ']', so not a valid link label
-        assertRendering("[\\]: test", "<p>[]: test</p>\n")
+        assertRendering("""[\]: test""", "<p>[]: test</p>\n")
         // Backslash is a literal, so valid
-        assertRendering("[a\\b]\n\n[a\\b]: test", "<p><a href=\"test\">a\\b</a></p>\n")
+        assertRendering("[a\\b]\n\n[a\\b]: test", """<p><a href="test">a\b</a></p>""" + "\n")
         // Backslash escapes `]` but there's another `]`, valid
-        assertRendering("[a\\]]\n\n[a\\]]: test", "<p><a href=\"test\">a]</a></p>\n")
+        assertRendering("[a\\]]\n\n[a\\]]: test", """<p><a href="test">a]</a></p>""" + "\n")
     }
 
     // commonmark/cmark#177
@@ -150,31 +168,36 @@ class SpecialInputTest : CoreRenderingTestCase() {
 
     @Test
     fun renderEvenRegexpProducesStackoverflow() {
-        render("Contents: <!--[if gte mso 9]> <w:LatentStyles DefLockedState=\"false\" DefUnhideWhenUsed=\"false\" DefSemiHidden=\"false\" DefQFormat=\"false\" DefPriority=\"99\" LatentStyleCount=\"371\">  <w:xxx Locked=\"false\" Priority=\"52\" Name=\"Grid Table 7 Colorful 6\"/> <w:xxx Locked=\"false\" Priority=\"46\" Name=\"List Table 1 Light\"/> <w:xxx Locked=\"false\" Priority=\"47\" Name=\"List Table 2\"/> <w:xxx Locked=\"false\" Priority=\"48\" Name=\"List Table 3\"/> <w:xxx Locked=\"false\" Priority=\"49\" Name=\"List Table 4\"/> <w:xxx Locked=\"false\" Priority=\"50\" Name=\"List Table 5 Dark\"/> <w:xxx Locked=\"false\" Priority=\"51\" Name=\"List Table 6 Colorful\"/> <w:xxx Locked=\"false\" Priority=\"52\" Name=\"List Table 7 Colorful\"/> <w:xxx Locked=\"false\" Priority=\"46\" Name=\"List Table 1 Light Accent 1\"/> <w:xxx Locked=\"false\" Priority=\"47\" Name=\"List Table 2 Accent 1\"/> <w:xxx Locked=\"false\" Priority=\"48\" Name=\"List Table 3 Accent 1\"/> <w:xxx Locked=\"false\" Priority=\"49\" Name=\"List Table 4 Accent 1\"/> <w:xxx Locked=\"false\" Priority=\"50\" Name=\"List Table 5 Dark Accent 1\"/>  <w:xxx Locked=\"false\" Priority=\"52\" Name=\"List Table 7 Colorful Accent 1\"/> <w:xxx Locked=\"false\" Priority=\"46\" Name=\"List Table 1 Light Accent 2\"/> <w:xxx Locked=\"false\" Priority=\"47\" Name=\"List Table 2 Accent 2\"/> <w:xxx Locked=\"false\" Priority=\"48\" Name=\"List Table 3 Accent 2\"/> <w:xxx Locked=\"false\" Priority=\"49\" Name=\"List Table 4 Accent 2\"/> <w:xxx Locked=\"false\" Priority=\"50\" Name=\"List Table 5 Dark Accent 2\"/> <w:xxx Locked=\"false\" Priority=\"51\" Name=\"List Table 6 Colorful Accent 2\"/> <w:xxx Locked=\"false\" Priority=\"52\" Name=\"List Table 7 Colorful Accent 2\"/> <w:xxx Locked=\"false\" Priority=\"46\" Name=\"List Table 1 Light Accent 3\"/> <w:xxx Locked=\"false\" Priority=\"47\" Name=\"List Table 2 Accent 3\"/> <w:xxx Locked=\"false\" Priority=\"48\" Name=\"List Table 3 Accent 3\"/> <w:xxx Locked=\"false\" Priority=\"49\" Name=\"List Table 4 Accent 3\" /> <w:xxx Locked=\"false\" Priority=\"50\" Name=\"List Table 5 Dark Accent 3\"/><w:xxx Locked=\"false\" Priority=\"51\" Name=\"List Table 6 Colorful Accent 3\"/></xml>")
+        render("""Contents: <!--[if gte mso 9]> <w:LatentStyles DefLockedState="false" DefUnhideWhenUsed="false" DefSemiHidden="false" DefQFormat="false" DefPriority="99" LatentStyleCount="371">  <w:xxx Locked="false" Priority="52" Name="Grid Table 7 Colorful 6"/> <w:xxx Locked="false" Priority="46" Name="List Table 1 Light"/> <w:xxx Locked="false" Priority="47" Name="List Table 2"/> <w:xxx Locked="false" Priority="48" Name="List Table 3"/> <w:xxx Locked="false" Priority="49" Name="List Table 4"/> <w:xxx Locked="false" Priority="50" Name="List Table 5 Dark"/> <w:xxx Locked="false" Priority="51" Name="List Table 6 Colorful"/> <w:xxx Locked="false" Priority="52" Name="List Table 7 Colorful"/> <w:xxx Locked="false" Priority="46" Name="List Table 1 Light Accent 1"/> <w:xxx Locked="false" Priority="47" Name="List Table 2 Accent 1"/> <w:xxx Locked="false" Priority="48" Name="List Table 3 Accent 1"/> <w:xxx Locked="false" Priority="49" Name="List Table 4 Accent 1"/> <w:xxx Locked="false" Priority="50" Name="List Table 5 Dark Accent 1"/>  <w:xxx Locked="false" Priority="52" Name="List Table 7 Colorful Accent 1"/> <w:xxx Locked="false" Priority="46" Name="List Table 1 Light Accent 2"/> <w:xxx Locked="false" Priority="47" Name="List Table 2 Accent 2"/> <w:xxx Locked="false" Priority="48" Name="List Table 3 Accent 2"/> <w:xxx Locked="false" Priority="49" Name="List Table 4 Accent 2"/> <w:xxx Locked="false" Priority="50" Name="List Table 5 Dark Accent 2"/> <w:xxx Locked="false" Priority="51" Name="List Table 6 Colorful Accent 2"/> <w:xxx Locked="false" Priority="52" Name="List Table 7 Colorful Accent 2"/> <w:xxx Locked="false" Priority="46" Name="List Table 1 Light Accent 3"/> <w:xxx Locked="false" Priority="47" Name="List Table 2 Accent 3"/> <w:xxx Locked="false" Priority="48" Name="List Table 3 Accent 3"/> <w:xxx Locked="false" Priority="49" Name="List Table 4 Accent 3" /> <w:xxx Locked="false" Priority="50" Name="List Table 5 Dark Accent 3"/><w:xxx Locked="false" Priority="51" Name="List Table 6 Colorful Accent 3"/></xml>""")
     }
 
     @Test
     fun deeplyIndentedList() {
         assertRendering(
-            "* one\n" +
-                "  * two\n" +
-                "    * three\n" +
-                "      * four",
-            "<ul>\n" +
-                "<li>one\n" +
-                "<ul>\n" +
-                "<li>two\n" +
-                "<ul>\n" +
-                "<li>three\n" +
-                "<ul>\n" +
-                "<li>four</li>\n" +
-                "</ul>\n" +
-                "</li>\n" +
-                "</ul>\n" +
-                "</li>\n" +
-                "</ul>\n" +
-                "</li>\n" +
-                "</ul>\n",
+            """
+                |* one
+                |  * two
+                |    * three
+                |      * four
+            """.trimMargin(),
+            """
+                |<ul>
+                |<li>one
+                |<ul>
+                |<li>two
+                |<ul>
+                |<li>three
+                |<ul>
+                |<li>four</li>
+                |</ul>
+                |</li>
+                |</ul>
+                |</li>
+                |</ul>
+                |</li>
+                |</ul>
+                |
+            """.trimMargin(),
         )
     }
 
@@ -197,34 +220,46 @@ class SpecialInputTest : CoreRenderingTestCase() {
     @Test
     fun htmlBlockInterruptingList() {
         assertRendering(
-            "- <script>\n" +
-                "- some text\n" +
-                "some other text\n" +
-                "</script>\n",
-            "<ul>\n" +
-                "<li>\n" +
-                "<script>\n" +
-                "</li>\n" +
-                "<li>some text\n" +
-                "some other text\n" +
-                "</script></li>\n" +
-                "</ul>\n",
+            """
+                |- <script>
+                |- some text
+                |some other text
+                |</script>
+                |
+            """.trimMargin(),
+            """
+                |<ul>
+                |<li>
+                |<script>
+                |</li>
+                |<li>some text
+                |some other text
+                |</script></li>
+                |</ul>
+                |
+            """.trimMargin(),
         )
 
         assertRendering(
-            "- <script>\n" +
-                "- some text\n" +
-                "some other text\n" +
-                "\n" +
-                "</script>\n",
-            "<ul>\n" +
-                "<li>\n" +
-                "<script>\n" +
-                "</li>\n" +
-                "<li>some text\n" +
-                "some other text</li>\n" +
-                "</ul>\n" +
-                "</script>\n",
+            """
+                |- <script>
+                |- some text
+                |some other text
+                |
+                |</script>
+                |
+            """.trimMargin(),
+            """
+                |<ul>
+                |<li>
+                |<script>
+                |</li>
+                |<li>some text
+                |some other text</li>
+                |</ul>
+                |</script>
+                |
+            """.trimMargin(),
         )
     }
 
@@ -234,18 +269,24 @@ class SpecialInputTest : CoreRenderingTestCase() {
             "Hello  \n" +
                 "**Bar**\n" +
                 "Foo\n",
-            "<p>Hello<br />\n" +
-                "<strong>Bar</strong>\n" +
-                "Foo</p>\n",
+            """
+                |<p>Hello<br />
+                |<strong>Bar</strong>
+                |Foo</p>
+                |
+            """.trimMargin(),
         )
 
         assertRendering(
             "Hello  \n" +
                 "**Bar**  \n" +
                 "Foo\n",
-            "<p>Hello<br />\n" +
-                "<strong>Bar</strong><br />\n" +
-                "Foo</p>\n",
+            """
+                |<p>Hello<br />
+                |<strong>Bar</strong><br />
+                |Foo</p>
+                |
+            """.trimMargin(),
         )
     }
 }

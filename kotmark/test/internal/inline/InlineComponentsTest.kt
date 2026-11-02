@@ -79,7 +79,7 @@ class InlineComponentsTest {
     @Test
     fun inlineHtml() {
         val samples = listOf(
-            "<tag attr=\"value\">",
+            """<tag attr="value">""",
             "</tag>",
             "<?test?>",
             "<!---->",

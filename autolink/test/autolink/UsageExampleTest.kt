@@ -12,11 +12,11 @@ class UsageExampleTest {
             for (span in extractor.extractSpans(input)) {
                 val text = input.substring(span.beginIndex, span.endIndex)
                 // Upstream Encode helpers are identities for this example too.
-                if (span is LinkSpan) append("<a href=\"").append(text).append("\">").append(text).append("</a>")
+                if (span is LinkSpan) append("""<a href="""").append(text).append("\">").append(text).append("</a>")
                 else append(text)
             }
         }
-        assertEquals("wow <a href=\"http://test.com\">http://test.com</a> such linked", html)
+        assertEquals("""wow <a href="http://test.com">http://test.com</a> such linked""", html)
     }
 
     @Test fun extractLinks() {

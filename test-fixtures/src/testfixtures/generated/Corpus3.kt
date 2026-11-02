@@ -4,5 +4,225 @@ package io.heapy.kotmark.testfixtures.generated
 
 // Source: commonmark-java/commonmark.js-regression.txt
 internal fun corpus3(): String = buildString(3788) {
-    append("# Regression tests\n\nEating a character after a partially consumed tab.\n\n```````````````````````````````` example\n* foo\n\u2192bar\n.\n<ul>\n<li>foo\nbar</li>\n</ul>\n````````````````````````````````\n\nType 7 HTML block followed by whitespace (#98).\n\n```````````````````````````````` example\n<a>  \nx\n.\n<a>  \nx\n````````````````````````````````\n\nh2..h6 raw HTML blocks (jgm/CommonMark#430).\n\n```````````````````````````````` example\n<h1>lorem</h1>\n\n<h2>lorem</h2>\n\n<h3>lorem</h3>\n\n<h4>lorem</h4>\n\n<h5>lorem</h5>\n\n<h6>lorem</h6>\n.\n<h1>lorem</h1>\n<h2>lorem</h2>\n<h3>lorem</h3>\n<h4>lorem</h4>\n<h5>lorem</h5>\n<h6>lorem</h6>\n````````````````````````````````\n\nIssue #109 - tabs after setext header line\n\n\n```````````````````````````````` example\nhi\n--\u2192\n.\n<h2>hi</h2>\n````````````````````````````````\n\nIssue #108 - Chinese punctuation not recognized\n\n```````````````````````````````` example\n**\u3002**\u8bdd\n.\n<p>**\u3002**\u8bdd</p>\n````````````````````````````````\n\nIssue jgm/cmark#177 - incorrect emphasis parsing\n\n```````````````````````````````` example\na***b* c*\n.\n<p>a*<em><em>b</em> c</em></p>\n````````````````````````````````\n\nIssue jgm/CommonMark#468 - backslash at end of link definition\n\n\n```````````````````````````````` example\n[\\]: test\n.\n<p>[]: test</p>\n````````````````````````````````\n\nIssue commonmark/commonmark.js#121 - punctuation set different\n\n```````````````````````````````` example\n^_test_\n.\n<p>^<em>test</em></p>\n````````````````````````````````\n\nIssue #116 - tabs before and after ATX closing heading\n```````````````````````````````` example\n# foo\u2192#\u2192\n.\n<h1>foo</h1>\n````````````````````````````````\n\ncommonmark/CommonMark#493 - escaped space not allowed in link destination.\n\n```````````````````````````````` example\n[link](a\\ b)\n.\n<p>[link](a\\ b)</p>\n````````````````````````````````\n\nIssue #527 - meta tags in inline contexts\n\n```````````````````````````````` example\nCity:\n<span itemprop=\"contentLocation\" itemscope itemtype=\"https://schema.org/City\">\n  <meta itemprop=\"name\" content=\"Springfield\">\n</span>\n.\n<p>City:\n<span itemprop=\"contentLocation\" itemscope itemtype=\"https://schema.org/City\">\n<meta itemprop=\"name\" content=\"Springfield\">\n</span></p>\n````````````````````````````````\n\nDouble-encoding.\n\n```````````````````````````````` example\n[XSS](javascript&amp;colon;alert%28&#039;XSS&#039;%29)\n.\n<p><a href=\"javascript&amp;colon;alert%28'XSS'%29\">XSS</a></p>\n````````````````````````````````\n\nPR #179\n\n```````````````````````````````` example\n[link](https://www.example.com/home/%25batty)\n.\n<p><a href=\"https://www.example.com/home/%25batty\">link</a></p>\n````````````````````````````````\n\nIssue commonamrk#517 - script, pre, style close tag without\nopener.\n\n```````````````````````````````` example\n</script>\n\n</pre>\n\n</style>\n.\n</script>\n</pre>\n</style>\n````````````````````````````````\n\nIssue #289.\n\n```````````````````````````````` example\n[a](<b) c>\n.\n<p>[a](&lt;b) c&gt;</p>\n````````````````````````````````\n\nIssue #161.\n\n```````````````````````````````` example\n*failed to be italic!*\\\ntext\n.\n<p><em>failed to be italic!</em><br />\ntext</p>\n````````````````````````````````\n\nIssue #196.\n\n```````````````````````````````` example\na <?\n?>\n.\n<p>a <?\n?></p>\n````````````````````````````````\n\nIssue #211\n\n```````````````````````````````` example\n[\\\nfoo]: /uri\n\n[\\\nfoo]\n.\n<p><a href=\"/uri\"><br />\nfoo</a></p>\n````````````````````````````````\n\nIssue #213 - type 7 blocks can't interrupt\nparagraph\n\n```````````````````````````````` example\n- <script>\n- some text\nsome other text\n</script>\n.\n<ul>\n<li>\n<script>\n</li>\n<li>some text\nsome other text\n</script></li>\n</ul>\n````````````````````````````````\n\nIssue cmark/#383 - emphasis parsing.\n\n```````````````````````````````` example\n*****Hello*world****\n.\n<p>**<em><strong>Hello<em>world</em></strong></em></p>\n````````````````````````````````\n\n")
+    append("""
+        |# Regression tests
+        |
+        |Eating a character after a partially consumed tab.
+        |
+        |```````````````````````````````` example
+        |* foo
+        |→bar
+        |.
+        |<ul>
+        |<li>foo
+        |bar</li>
+        |</ul>
+        |````````````````````````````````
+        |
+        |Type 7 HTML block followed by whitespace (#98).
+        |
+        |```````````````````````````````` example
+        |<a> ${' '}
+        |x
+        |.
+        |<a> ${' '}
+        |x
+        |````````````````````````````````
+        |
+        |h2..h6 raw HTML blocks (jgm/CommonMark#430).
+        |
+        |```````````````````````````````` example
+        |<h1>lorem</h1>
+        |
+        |<h2>lorem</h2>
+        |
+        |<h3>lorem</h3>
+        |
+        |<h4>lorem</h4>
+        |
+        |<h5>lorem</h5>
+        |
+        |<h6>lorem</h6>
+        |.
+        |<h1>lorem</h1>
+        |<h2>lorem</h2>
+        |<h3>lorem</h3>
+        |<h4>lorem</h4>
+        |<h5>lorem</h5>
+        |<h6>lorem</h6>
+        |````````````````````````````````
+        |
+        |Issue #109 - tabs after setext header line
+        |
+        |
+        |```````````````````````````````` example
+        |hi
+        |--→
+        |.
+        |<h2>hi</h2>
+        |````````````````````````````````
+        |
+        |Issue #108 - Chinese punctuation not recognized
+        |
+        |```````````````````````````````` example
+        |**。**话
+        |.
+        |<p>**。**话</p>
+        |````````````````````````````````
+        |
+        |Issue jgm/cmark#177 - incorrect emphasis parsing
+        |
+        |```````````````````````````````` example
+        |a***b* c*
+        |.
+        |<p>a*<em><em>b</em> c</em></p>
+        |````````````````````````````````
+        |
+        |Issue jgm/CommonMark#468 - backslash at end of link definition
+        |
+        |
+        |```````````````````````````````` example
+        |[\]: test
+        |.
+        |<p>[]: test</p>
+        |````````````````````````````````
+        |
+        |Issue commonmark/commonmark.js#121 - punctuation set different
+        |
+        |```````````````````````````````` example
+        |^_test_
+        |.
+        |<p>^<em>test</em></p>
+        |````````````````````````````````
+        |
+        |Issue #116 - tabs before and after ATX closing heading
+        |```````````````````````````````` example
+        |# foo→#→
+        |.
+        |<h1>foo</h1>
+        |````````````````````````````````
+        |
+        |commonmark/CommonMark#493 - escaped space not allowed in link destination.
+        |
+        |```````````````````````````````` example
+        |[link](a\ b)
+        |.
+        |<p>[link](a\ b)</p>
+        |````````````````````````````````
+        |
+        |Issue #527 - meta tags in inline contexts
+        |
+        |```````````````````````````````` example
+        |City:
+        |<span itemprop="contentLocation" itemscope itemtype="https://schema.org/City">
+        |  <meta itemprop="name" content="Springfield">
+        |</span>
+        |.
+        |<p>City:
+        |<span itemprop="contentLocation" itemscope itemtype="https://schema.org/City">
+        |<meta itemprop="name" content="Springfield">
+        |</span></p>
+        |````````````````````````````````
+        |
+        |Double-encoding.
+        |
+        |```````````````````````````````` example
+        |[XSS](javascript&amp;colon;alert%28&#039;XSS&#039;%29)
+        |.
+        |<p><a href="javascript&amp;colon;alert%28'XSS'%29">XSS</a></p>
+        |````````````````````````````````
+        |
+        |PR #179
+        |
+        |```````````````````````````````` example
+        |[link](https://www.example.com/home/%25batty)
+        |.
+        |<p><a href="https://www.example.com/home/%25batty">link</a></p>
+        |````````````````````````````````
+        |
+        |Issue commonamrk#517 - script, pre, style close tag without
+        |opener.
+        |
+        |```````````````````````````````` example
+        |</script>
+        |
+        |</pre>
+        |
+        |</style>
+        |.
+        |</script>
+        |</pre>
+        |</style>
+        |````````````````````````````````
+        |
+        |Issue #289.
+        |
+        |```````````````````````````````` example
+        |[a](<b) c>
+        |.
+        |<p>[a](&lt;b) c&gt;</p>
+        |````````````````````````````````
+        |
+        |Issue #161.
+        |
+        |```````````````````````````````` example
+        |*failed to be italic!*\
+        |text
+        |.
+        |<p><em>failed to be italic!</em><br />
+        |text</p>
+        |````````````````````````````````
+        |
+        |Issue #196.
+        |
+        |```````````````````````````````` example
+        |a <?
+        |?>
+        |.
+        |<p>a <?
+        |?></p>
+        |````````````````````````````````
+        |
+        |Issue #211
+        |
+        |```````````````````````````````` example
+        |[\
+        |foo]: /uri
+        |
+        |[\
+        |foo]
+        |.
+        |<p><a href="/uri"><br />
+        |foo</a></p>
+        |````````````````````````````````
+        |
+        |Issue #213 - type 7 blocks can't interrupt
+        |paragraph
+        |
+        |```````````````````````````````` example
+        |- <script>
+        |- some text
+        |some other text
+        |</script>
+        |.
+        |<ul>
+        |<li>
+        |<script>
+        |</li>
+        |<li>some text
+        |some other text
+        |</script></li>
+        |</ul>
+        |````````````````````````````````
+        |
+        |Issue cmark/#383 - emphasis parsing.
+        |
+        |```````````````````````````````` example
+        |*****Hello*world****
+        |.
+        |<p>**<em><strong>Hello<em>world</em></strong></em></p>
+        |````````````````````````````````
+        |
+        |
+    """.trimMargin())
 }

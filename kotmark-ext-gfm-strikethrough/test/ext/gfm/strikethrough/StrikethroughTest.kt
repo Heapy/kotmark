@@ -26,8 +26,16 @@ class StrikethroughTest {
         // All examples from the GFM "strikethrough" spec section.
         assertHtml("~~Hi~~ Hello, world!", "<p><del>Hi</del> Hello, world!</p>\n")
         assertHtml(
-            "This ~~has a\n\nnew paragraph~~.",
-            "<p>This ~~has a</p>\n<p>new paragraph~~.</p>\n",
+            """
+                |This ~~has a
+                |
+                |new paragraph~~.
+            """.trimMargin(),
+            """
+                |<p>This ~~has a</p>
+                |<p>new paragraph~~.</p>
+                |
+            """.trimMargin(),
         )
 
         assertHtml("~foo~", "<p><del>foo</del></p>\n")
@@ -49,7 +57,12 @@ class StrikethroughTest {
         )
         assertHtml(
             "> strike ~~that~~",
-            "<blockquote>\n<p>strike <del>that</del></p>\n</blockquote>\n",
+            """
+                |<blockquote>
+                |<p>strike <del>that</del></p>
+                |</blockquote>
+                |
+            """.trimMargin(),
         )
     }
 
@@ -60,7 +73,7 @@ class StrikethroughTest {
         assertEquals("~~", node.closingDelimiter)
         assertEquals("/foo/", text.render(parser.parse("~~foo~~")))
 
-        for (input in listOf("~foo~ ~bar~\n", "~~foo~~ ~~bar~~\n", "~~f\\~oo~~ ~~bar~~\n", "\\~foo\\~\n")) {
+        for (input in listOf("~foo~ ~bar~\n", "~~foo~~ ~~bar~~\n", """~~f\~oo~~ ~~bar~~""" + "\n", """\~foo\~""" + "\n")) {
             assertEquals(input, markdown.render(parser.parse(input)))
         }
 

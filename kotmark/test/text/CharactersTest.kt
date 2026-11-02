@@ -9,9 +9,9 @@ class CharactersTest {
     fun isPunctuation() {
         // From https://spec.commonmark.org/0.29/#ascii-punctuation-character
         val chars =
-            "!\"#\$%&'()*+,-./" + // (U+0021–2F)
+            """!"#$%&'()*+,-./""" + // (U+0021–2F)
                 ":;<=>?@" + // (U+003A–0040)
-                "[\\]^_`" + // (U+005B–0060)
+                """[\]^_`""" + // (U+005B–0060)
                 "{|}~" // (U+007B–007E)
 
         for (c in chars) {

@@ -26,7 +26,15 @@ class AlertsSpecTest {
             val actual = renderer.render(parser.parse(source))
             if (actual != expected) {
                 failures +=
-                    "example $count\nsource:\n$source\nexpected:\n$expected\nactual:\n$actual"
+                    """
+                        |example $count
+                        |source:
+                        |$source
+                        |expected:
+                        |$expected
+                        |actual:
+                        |$actual
+                    """.trimMargin()
             }
         }
         assertEquals(33, count, "Complete alerts corpus must execute")

@@ -74,13 +74,13 @@ class HtmlRendererTest {
     fun escapesTextAndAttributes() {
         assertEquals(
             "<p>escaping: &amp; &lt; &gt; &quot; '</p>\n",
-            render("escaping: & < > \" '"),
+            render("""escaping: & < > " '"""),
         )
 
         val paragraph = Paragraph()
         paragraph.appendChild(Link("&colon;", null))
         assertEquals(
-            "<p><a href=\"&amp;colon;\"></a></p>\n",
+            """<p><a href="&amp;colon;"></a></p>""" + "\n",
             HtmlRenderer.builder().build().render(paragraph),
         )
     }
@@ -94,15 +94,15 @@ class HtmlRendererTest {
                 .build()
 
         assertEquals(
-            "<p><a rel=\"nofollow\" href=\"https://example.com\">safe</a></p>\n",
+            """<p><a rel="nofollow" href="https://example.com">safe</a></p>""" + "\n",
             render("[safe](https://example.com)", renderer),
         )
         assertEquals(
-            "<p><a rel=\"nofollow\" href=\"\">unsafe</a></p>\n",
+            """<p><a rel="nofollow" href="">unsafe</a></p>""" + "\n",
             render("[unsafe](javascript:alert)", renderer),
         )
         assertEquals(
-            "<p><img src=\"\" alt=\"unsafe\" /></p>\n",
+            """<p><img src="" alt="unsafe" /></p>""" + "\n",
             render("![unsafe](ftp://example.com/a.png)", renderer),
         )
     }
@@ -111,11 +111,11 @@ class HtmlRendererTest {
     fun percentEncodesUrls() {
         val renderer = HtmlRenderer.builder().percentEncodeUrls(true).build()
         assertEquals(
-            "<p><a href=\"foo%20%C3%A4%5B%5D\">a</a></p>\n",
+            """<p><a href="foo%20%C3%A4%5B%5D">a</a></p>""" + "\n",
             render("[a](foo%20ä[])", renderer),
         )
         assertEquals(
-            "<p><a href=\"foo%25xx\">a</a></p>\n",
+            """<p><a href="foo%25xx">a</a></p>""" + "\n",
             render("[a](foo%xx)", renderer),
         )
     }
@@ -139,11 +139,15 @@ class HtmlRendererTest {
         val renderer = HtmlRenderer.builder().attributeProviderFactory(factory).build()
 
         assertEquals(
-            "<pre data-code-block=\"fenced\"><code data-custom=\"evil&quot;\">content\n</code></pre>\n",
+            """
+                |<pre data-code-block="fenced"><code data-custom="evil&quot;">content
+                |</code></pre>
+                |
+            """.trimMargin(),
             render("```evil\"\ncontent\n```", renderer),
         )
         assertEquals(
-            "<p><img src=\"/url\" test=\"hey\" /></p>\n",
+            """<p><img src="/url" test="hey" /></p>""" + "\n",
             render("![foo](/url)", renderer),
         )
     }
@@ -169,7 +173,11 @@ class HtmlRendererTest {
     @Test
     fun rendersImageAltTextAndCanOmitSingleParagraph() {
         assertEquals(
-            "<p><img src=\"/url\" alt=\"foo\nbar ä link code\" /></p>\n",
+            """
+                |<p><img src="/url" alt="foo
+                |bar ä link code" /></p>
+                |
+            """.trimMargin(),
             render("![foo\nbar &auml; [link](/other) `code`](/url)"),
         )
         assertEquals(
@@ -205,7 +213,7 @@ class HtmlRendererTest {
         val writer = HtmlWriter(output)
         writer.tag("input", linkedMapOf("disabled" to null, "value" to "\""), true)
         writer.line()
-        assertEquals("<input disabled value=\"&quot;\" />\n", output.toString())
+        assertEquals("""<input disabled value="&quot;" />""" + "\n", output.toString())
 
         val sanitizer = DefaultUrlSanitizer(listOf("https"))
         assertEquals("https://example.com", sanitizer.sanitizeLinkUrl(" \nhttps://example.com\t"))

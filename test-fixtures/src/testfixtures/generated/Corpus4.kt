@@ -4,6 +4,470 @@ package io.heapy.kotmark.testfixtures.generated
 
 // Source: commonmark-java/alerts-spec.txt
 internal fun corpus4(): String = buildString(9918) {
-    append("# Alerts\n\nExpectations verified against GitHub Markdown API (gh api markdown -f mode=gfm).\nOur HTML omits GitHub's SVG icons and uses a `data-alert-type` attribute instead.\n\n## Standard types\n\n```````````````````````````````` example alert\n> [!NOTE]\n> This is a note\n.\n<div class=\"markdown-alert markdown-alert-note\" data-alert-type=\"note\">\n<p class=\"markdown-alert-title\">Note</p>\n<p>This is a note</p>\n</div>\n````````````````````````````````\n\n```````````````````````````````` example alert\n> [!TIP]\n> This is a tip\n.\n<div class=\"markdown-alert markdown-alert-tip\" data-alert-type=\"tip\">\n<p class=\"markdown-alert-title\">Tip</p>\n<p>This is a tip</p>\n</div>\n````````````````````````````````\n\n```````````````````````````````` example alert\n> [!IMPORTANT]\n> This is important\n.\n<div class=\"markdown-alert markdown-alert-important\" data-alert-type=\"important\">\n<p class=\"markdown-alert-title\">Important</p>\n<p>This is important</p>\n</div>\n````````````````````````````````\n\n```````````````````````````````` example alert\n> [!WARNING]\n> This is a warning\n.\n<div class=\"markdown-alert markdown-alert-warning\" data-alert-type=\"warning\">\n<p class=\"markdown-alert-title\">Warning</p>\n<p>This is a warning</p>\n</div>\n````````````````````````````````\n\n```````````````````````````````` example alert\n> [!CAUTION]\n> This is a caution\n.\n<div class=\"markdown-alert markdown-alert-caution\" data-alert-type=\"caution\">\n<p class=\"markdown-alert-title\">Caution</p>\n<p>This is a caution</p>\n</div>\n````````````````````````````````\n\n## Case insensitivity\n\nAlert type matching is case-insensitive.\n\n```````````````````````````````` example alert\n> [!note]\n> Content\n.\n<div class=\"markdown-alert markdown-alert-note\" data-alert-type=\"note\">\n<p class=\"markdown-alert-title\">Note</p>\n<p>Content</p>\n</div>\n````````````````````````````````\n\n```````````````````````````````` example alert\n> [!Note]\n> Content\n.\n<div class=\"markdown-alert markdown-alert-note\" data-alert-type=\"note\">\n<p class=\"markdown-alert-title\">Note</p>\n<p>Content</p>\n</div>\n````````````````````````````````\n\n## Alert content\n\nMarker alone in first paragraph, blank line, then content:\n\n```````````````````````````````` example alert\n> [!NOTE]\n>\n> Content\n.\n<div class=\"markdown-alert markdown-alert-note\" data-alert-type=\"note\">\n<p class=\"markdown-alert-title\">Note</p>\n<p>Content</p>\n</div>\n````````````````````````````````\n\nMultiple paragraphs:\n\n```````````````````````````````` example alert\n> [!NOTE]\n> First paragraph\n>\n> Second paragraph\n.\n<div class=\"markdown-alert markdown-alert-note\" data-alert-type=\"note\">\n<p class=\"markdown-alert-title\">Note</p>\n<p>First paragraph</p>\n<p>Second paragraph</p>\n</div>\n````````````````````````````````\n\nInline formatting:\n\n```````````````````````````````` example alert\n> [!TIP]\n> This is **bold** and *italic*\n.\n<div class=\"markdown-alert markdown-alert-tip\" data-alert-type=\"tip\">\n<p class=\"markdown-alert-title\">Tip</p>\n<p>This is <strong>bold</strong> and <em>italic</em></p>\n</div>\n````````````````````````````````\n\nCode block inside alert:\n\n```````````````````````````````` example alert\n> [!TIP]\n> Code:\n>\n>     function() { }\n>\n> End\n.\n<div class=\"markdown-alert markdown-alert-tip\" data-alert-type=\"tip\">\n<p class=\"markdown-alert-title\">Tip</p>\n<p>Code:</p>\n<pre><code>function() { }\n</code></pre>\n<p>End</p>\n</div>\n````````````````````````````````\n\nList inside alert:\n\n```````````````````````````````` example alert\n> [!IMPORTANT]\n> Items:\n> - First item\n> - Second item\n.\n<div class=\"markdown-alert markdown-alert-important\" data-alert-type=\"important\">\n<p class=\"markdown-alert-title\">Important</p>\n<p>Items:</p>\n<ul>\n<li>First item</li>\n<li>Second item</li>\n</ul>\n</div>\n````````````````````````````````\n\nLinks inside alert:\n\n```````````````````````````````` example alert\n> [!NOTE]\n> Check out [this link](https://example.com) for more info\n.\n<div class=\"markdown-alert markdown-alert-note\" data-alert-type=\"note\">\n<p class=\"markdown-alert-title\">Note</p>\n<p>Check out <a href=\"https://example.com\">this link</a> for more info</p>\n</div>\n````````````````````````````````\n\nHeading inside alert:\n\n```````````````````````````````` example alert\n> [!IMPORTANT]\n> ## Heading\n> Content below heading\n.\n<div class=\"markdown-alert markdown-alert-important\" data-alert-type=\"important\">\n<p class=\"markdown-alert-title\">Important</p>\n<h2>Heading</h2>\n<p>Content below heading</p>\n</div>\n````````````````````````````````\n\nEmpty lines in middle of alert:\n\n```````````````````````````````` example alert\n> [!NOTE]\n> First\n>\n>\n> After empty lines\n.\n<div class=\"markdown-alert markdown-alert-note\" data-alert-type=\"note\">\n<p class=\"markdown-alert-title\">Note</p>\n<p>First</p>\n<p>After empty lines</p>\n</div>\n````````````````````````````````\n\n## Not an alert\n\nText after marker on the same line:\n\n```````````````````````````````` example alert\n> [!NOTE] Some text\n.\n<blockquote>\n<p>[!NOTE] Some text</p>\n</blockquote>\n````````````````````````````````\n\nUnknown type:\n\n```````````````````````````````` example alert\n> [!INVALID]\n> Some text\n.\n<blockquote>\n<p>[!INVALID]<br>\nSome text</p>\n</blockquote>\n````````````````````````````````\n\nUnconfigured custom type is not an alert:\n\n```````````````````````````````` example alert\n> [!INFO]\n> Should be blockquote\n.\n<blockquote>\n<p>[!INFO]<br>\nShould be blockquote</p>\n</blockquote>\n````````````````````````````````\n\nExtra space inside marker:\n\n```````````````````````````````` example alert\n> [! NOTE]\n> Should be blockquote\n.\n<blockquote>\n<p>[! NOTE]<br>\nShould be blockquote</p>\n</blockquote>\n````````````````````````````````\n\nMissing brackets:\n\n```````````````````````````````` example alert\n> !NOTE\n> Should be blockquote\n.\n<blockquote>\n<p>!NOTE<br>\nShould be blockquote</p>\n</blockquote>\n````````````````````````````````\n\nMissing exclamation mark:\n\n```````````````````````````````` example alert\n> [NOTE]\n> Should be blockquote\n.\n<blockquote>\n<p>[NOTE]<br>\nShould be blockquote</p>\n</blockquote>\n````````````````````````````````\n\nRegular blockquote is not affected:\n\n```````````````````````````````` example alert\n> This is a regular blockquote\n.\n<blockquote>\n<p>This is a regular blockquote</p>\n</blockquote>\n````````````````````````````````\n\n## Boundaries\n\nTrailing spaces after marker:\n\n```````````````````````````````` example alert\n> [!NOTE]  \n> This is a note\n.\n<div class=\"markdown-alert markdown-alert-note\" data-alert-type=\"note\">\n<p class=\"markdown-alert-title\">Note</p>\n<p>This is a note</p>\n</div>\n````````````````````````````````\n\nTrailing tabs after marker:\n\n```````````````````````````````` example alert\n> [!WARNING]\u2192\u2192\n> Be careful\n.\n<div class=\"markdown-alert markdown-alert-warning\" data-alert-type=\"warning\">\n<p class=\"markdown-alert-title\">Warning</p>\n<p>Be careful</p>\n</div>\n````````````````````````````````\n\nLeading spaces before blockquote marker:\n\n```````````````````````````````` example alert\n   > [!IMPORTANT]\n   > Content\n.\n<div class=\"markdown-alert markdown-alert-important\" data-alert-type=\"important\">\n<p class=\"markdown-alert-title\">Important</p>\n<p>Content</p>\n</div>\n````````````````````````````````\n\nAlert followed by blockquote:\n\n```````````````````````````````` example alert\n> [!NOTE]\n> This is an alert\n\n> This is a blockquote\n.\n<div class=\"markdown-alert markdown-alert-note\" data-alert-type=\"note\">\n<p class=\"markdown-alert-title\">Note</p>\n<p>This is an alert</p>\n</div>\n<blockquote>\n<p>This is a blockquote</p>\n</blockquote>\n````````````````````````````````\n\nAdjacent alerts:\n\n```````````````````````````````` example alert\n> [!NOTE]\n> First alert\n\n> [!WARNING]\n> Second alert\n.\n<div class=\"markdown-alert markdown-alert-note\" data-alert-type=\"note\">\n<p class=\"markdown-alert-title\">Note</p>\n<p>First alert</p>\n</div>\n<div class=\"markdown-alert markdown-alert-warning\" data-alert-type=\"warning\">\n<p class=\"markdown-alert-title\">Warning</p>\n<p>Second alert</p>\n</div>\n````````````````````````````````\n\n## Nesting and containers\n\nNested alert inside alert renders as blockquote:\n\n```````````````````````````````` example aler")
-    append("t\n> [!NOTE]\n> This is a note\n>> [!WARNING]\n>> Nested content\n.\n<div class=\"markdown-alert markdown-alert-note\" data-alert-type=\"note\">\n<p class=\"markdown-alert-title\">Note</p>\n<p>This is a note</p>\n<blockquote>\n<p>[!WARNING]<br>\nNested content</p>\n</blockquote>\n</div>\n````````````````````````````````\n\nNested blockquote inside alert:\n\n```````````````````````````````` example alert\n> [!NOTE]\n> This is a note\n>> Nested blockquote\n.\n<div class=\"markdown-alert markdown-alert-note\" data-alert-type=\"note\">\n<p class=\"markdown-alert-title\">Note</p>\n<p>This is a note</p>\n<blockquote>\n<p>Nested blockquote</p>\n</blockquote>\n</div>\n````````````````````````````````\n\nAlert inside list item stays as blockquote:\n\n```````````````````````````````` example alert\n- > [!NOTE]\n  > Test\n.\n<ul>\n<li>\n<blockquote>\n<p>[!NOTE]<br>\nTest</p>\n</blockquote>\n</li>\n</ul>\n````````````````````````````````\n\nAlert marker in content is treated as text:\n\n```````````````````````````````` example alert\n> [!NOTE]\n> This is a note\n> [!WARNING]\n> This is still part of the note\n.\n<div class=\"markdown-alert markdown-alert-note\" data-alert-type=\"note\">\n<p class=\"markdown-alert-title\">Note</p>\n<p>This is a note<br>\n[!WARNING]<br>\nThis is still part of the note</p>\n</div>\n````````````````````````````````\n\n## Continuation and interruption\n\nLazy continuation:\n\n```````````````````````````````` example alert\n> [!NOTE]\n> First line\nLazy continuation\n> Continues alert\n.\n<div class=\"markdown-alert markdown-alert-note\" data-alert-type=\"note\">\n<p class=\"markdown-alert-title\">Note</p>\n<p>First line<br>\nLazy continuation<br>\nContinues alert</p>\n</div>\n````````````````````````````````\n\nAlert type after regular blockquote content is not an alert:\n\n```````````````````````````````` example alert\n> Regular blockquote\n> [!NOTE]\n> More text\n.\n<blockquote>\n<p>Regular blockquote<br>\n[!NOTE]<br>\nMore text</p>\n</blockquote>\n````````````````````````````````\n")
+    append("""
+        |# Alerts
+        |
+        |Expectations verified against GitHub Markdown API (gh api markdown -f mode=gfm).
+        |Our HTML omits GitHub's SVG icons and uses a `data-alert-type` attribute instead.
+        |
+        |## Standard types
+        |
+        |```````````````````````````````` example alert
+        |> [!NOTE]
+        |> This is a note
+        |.
+        |<div class="markdown-alert markdown-alert-note" data-alert-type="note">
+        |<p class="markdown-alert-title">Note</p>
+        |<p>This is a note</p>
+        |</div>
+        |````````````````````````````````
+        |
+        |```````````````````````````````` example alert
+        |> [!TIP]
+        |> This is a tip
+        |.
+        |<div class="markdown-alert markdown-alert-tip" data-alert-type="tip">
+        |<p class="markdown-alert-title">Tip</p>
+        |<p>This is a tip</p>
+        |</div>
+        |````````````````````````````````
+        |
+        |```````````````````````````````` example alert
+        |> [!IMPORTANT]
+        |> This is important
+        |.
+        |<div class="markdown-alert markdown-alert-important" data-alert-type="important">
+        |<p class="markdown-alert-title">Important</p>
+        |<p>This is important</p>
+        |</div>
+        |````````````````````````````````
+        |
+        |```````````````````````````````` example alert
+        |> [!WARNING]
+        |> This is a warning
+        |.
+        |<div class="markdown-alert markdown-alert-warning" data-alert-type="warning">
+        |<p class="markdown-alert-title">Warning</p>
+        |<p>This is a warning</p>
+        |</div>
+        |````````````````````````````````
+        |
+        |```````````````````````````````` example alert
+        |> [!CAUTION]
+        |> This is a caution
+        |.
+        |<div class="markdown-alert markdown-alert-caution" data-alert-type="caution">
+        |<p class="markdown-alert-title">Caution</p>
+        |<p>This is a caution</p>
+        |</div>
+        |````````````````````````````````
+        |
+        |## Case insensitivity
+        |
+        |Alert type matching is case-insensitive.
+        |
+        |```````````````````````````````` example alert
+        |> [!note]
+        |> Content
+        |.
+        |<div class="markdown-alert markdown-alert-note" data-alert-type="note">
+        |<p class="markdown-alert-title">Note</p>
+        |<p>Content</p>
+        |</div>
+        |````````````````````````````````
+        |
+        |```````````````````````````````` example alert
+        |> [!Note]
+        |> Content
+        |.
+        |<div class="markdown-alert markdown-alert-note" data-alert-type="note">
+        |<p class="markdown-alert-title">Note</p>
+        |<p>Content</p>
+        |</div>
+        |````````````````````````````````
+        |
+        |## Alert content
+        |
+        |Marker alone in first paragraph, blank line, then content:
+        |
+        |```````````````````````````````` example alert
+        |> [!NOTE]
+        |>
+        |> Content
+        |.
+        |<div class="markdown-alert markdown-alert-note" data-alert-type="note">
+        |<p class="markdown-alert-title">Note</p>
+        |<p>Content</p>
+        |</div>
+        |````````````````````````````````
+        |
+        |Multiple paragraphs:
+        |
+        |```````````````````````````````` example alert
+        |> [!NOTE]
+        |> First paragraph
+        |>
+        |> Second paragraph
+        |.
+        |<div class="markdown-alert markdown-alert-note" data-alert-type="note">
+        |<p class="markdown-alert-title">Note</p>
+        |<p>First paragraph</p>
+        |<p>Second paragraph</p>
+        |</div>
+        |````````````````````````````````
+        |
+        |Inline formatting:
+        |
+        |```````````````````````````````` example alert
+        |> [!TIP]
+        |> This is **bold** and *italic*
+        |.
+        |<div class="markdown-alert markdown-alert-tip" data-alert-type="tip">
+        |<p class="markdown-alert-title">Tip</p>
+        |<p>This is <strong>bold</strong> and <em>italic</em></p>
+        |</div>
+        |````````````````````````````````
+        |
+        |Code block inside alert:
+        |
+        |```````````````````````````````` example alert
+        |> [!TIP]
+        |> Code:
+        |>
+        |>     function() { }
+        |>
+        |> End
+        |.
+        |<div class="markdown-alert markdown-alert-tip" data-alert-type="tip">
+        |<p class="markdown-alert-title">Tip</p>
+        |<p>Code:</p>
+        |<pre><code>function() { }
+        |</code></pre>
+        |<p>End</p>
+        |</div>
+        |````````````````````````````````
+        |
+        |List inside alert:
+        |
+        |```````````````````````````````` example alert
+        |> [!IMPORTANT]
+        |> Items:
+        |> - First item
+        |> - Second item
+        |.
+        |<div class="markdown-alert markdown-alert-important" data-alert-type="important">
+        |<p class="markdown-alert-title">Important</p>
+        |<p>Items:</p>
+        |<ul>
+        |<li>First item</li>
+        |<li>Second item</li>
+        |</ul>
+        |</div>
+        |````````````````````````````````
+        |
+        |Links inside alert:
+        |
+        |```````````````````````````````` example alert
+        |> [!NOTE]
+        |> Check out [this link](https://example.com) for more info
+        |.
+        |<div class="markdown-alert markdown-alert-note" data-alert-type="note">
+        |<p class="markdown-alert-title">Note</p>
+        |<p>Check out <a href="https://example.com">t
+    """.trimMargin())
+    append("""
+        |his link</a> for more info</p>
+        |</div>
+        |````````````````````````````````
+        |
+        |Heading inside alert:
+        |
+        |```````````````````````````````` example alert
+        |> [!IMPORTANT]
+        |> ## Heading
+        |> Content below heading
+        |.
+        |<div class="markdown-alert markdown-alert-important" data-alert-type="important">
+        |<p class="markdown-alert-title">Important</p>
+        |<h2>Heading</h2>
+        |<p>Content below heading</p>
+        |</div>
+        |````````````````````````````````
+        |
+        |Empty lines in middle of alert:
+        |
+        |```````````````````````````````` example alert
+        |> [!NOTE]
+        |> First
+        |>
+        |>
+        |> After empty lines
+        |.
+        |<div class="markdown-alert markdown-alert-note" data-alert-type="note">
+        |<p class="markdown-alert-title">Note</p>
+        |<p>First</p>
+        |<p>After empty lines</p>
+        |</div>
+        |````````````````````````````````
+        |
+        |## Not an alert
+        |
+        |Text after marker on the same line:
+        |
+        |```````````````````````````````` example alert
+        |> [!NOTE] Some text
+        |.
+        |<blockquote>
+        |<p>[!NOTE] Some text</p>
+        |</blockquote>
+        |````````````````````````````````
+        |
+        |Unknown type:
+        |
+        |```````````````````````````````` example alert
+        |> [!INVALID]
+        |> Some text
+        |.
+        |<blockquote>
+        |<p>[!INVALID]<br>
+        |Some text</p>
+        |</blockquote>
+        |````````````````````````````````
+        |
+        |Unconfigured custom type is not an alert:
+        |
+        |```````````````````````````````` example alert
+        |> [!INFO]
+        |> Should be blockquote
+        |.
+        |<blockquote>
+        |<p>[!INFO]<br>
+        |Should be blockquote</p>
+        |</blockquote>
+        |````````````````````````````````
+        |
+        |Extra space inside marker:
+        |
+        |```````````````````````````````` example alert
+        |> [! NOTE]
+        |> Should be blockquote
+        |.
+        |<blockquote>
+        |<p>[! NOTE]<br>
+        |Should be blockquote</p>
+        |</blockquote>
+        |````````````````````````````````
+        |
+        |Missing brackets:
+        |
+        |```````````````````````````````` example alert
+        |> !NOTE
+        |> Should be blockquote
+        |.
+        |<blockquote>
+        |<p>!NOTE<br>
+        |Should be blockquote</p>
+        |</blockquote>
+        |````````````````````````````````
+        |
+        |Missing exclamation mark:
+        |
+        |```````````````````````````````` example alert
+        |> [NOTE]
+        |> Should be blockquote
+        |.
+        |<blockquote>
+        |<p>[NOTE]<br>
+        |Should be blockquote</p>
+        |</blockquote>
+        |````````````````````````````````
+        |
+        |Regular blockquote is not affected:
+        |
+        |```````````````````````````````` example alert
+        |> This is a regular blockquote
+        |.
+        |<blockquote>
+        |<p>This is a regular blockquote</p>
+        |</blockquote>
+        |````````````````````````````````
+        |
+        |## Boundaries
+        |
+        |Trailing spaces after marker:
+        |
+        |```````````````````````````````` example alert
+        |> [!NOTE] ${' '}
+        |> This is a note
+        |.
+        |<div class="markdown-alert markdown-alert-note" data-alert-type="note">
+        |<p class="markdown-alert-title">Note</p>
+        |<p>This is a note</p>
+        |</div>
+        |````````````````````````````````
+        |
+        |Trailing tabs after marker:
+        |
+        |```````````````````````````````` example alert
+        |> [!WARNING]→→
+        |> Be careful
+        |.
+        |<div class="markdown-alert markdown-alert-warning" data-alert-type="warning">
+        |<p class="markdown-alert-title">Warning</p>
+        |<p>Be careful</p>
+        |</div>
+        |````````````````````````````````
+        |
+        |Leading spaces before blockquote marker:
+        |
+        |```````````````````````````````` example alert
+        |   > [!IMPORTANT]
+        |   > Content
+        |.
+        |<div class="markdown-alert markdown-alert-important" data-alert-type="important">
+        |<p class="markdown-alert-title">Important</p>
+        |<p>Content</p>
+        |</div>
+        |````````````````````````````````
+        |
+        |Alert followed by blockquote:
+        |
+        |```````````````````````````````` example alert
+        |> [!NOTE]
+        |> This is an alert
+        |
+        |> This is a blockquote
+        |.
+        |<div class="markdown-alert markdown-alert-note" data-alert-type="note">
+        |<p class="markdown-alert-title">Note</p>
+        |<p>This is an alert</p>
+        |</div>
+        |<blockquote>
+        |<p>This is a blockquote</p>
+        |</blockquote>
+        |````````````````````````````````
+        |
+        |Adjacent alerts:
+        |
+        |```````````````````````````````` example alert
+        |> [!NOTE]
+        |> First alert
+        |
+        |> [!WARNING]
+        |> Second alert
+        |.
+        |<div class="markdown-alert markdown-alert-note" data-alert-type="note">
+        |<p class="markdown-alert-title">Note</p>
+        |<p>First alert</p>
+        |</div>
+        |<div class="markdown-alert markdown-alert-warning" data-alert-type="warning">
+        |<p class="markdown-alert-title">Warning</p>
+        |<p>Second alert</p>
+        |</div>
+        |````````````````````````````````
+        |
+        |## Nesting and containers
+        |
+        |Nested alert inside alert renders as blockquote:
+        |
+        |```````````````````````````````` example aler
+    """.trimMargin())
+    append("""
+        |t
+        |> [!NOTE]
+        |> This is a note
+        |>> [!WARNING]
+        |>> Nested content
+        |.
+        |<div class="markdown-alert markdown-alert-note" data-alert-type="note">
+        |<p class="markdown-alert-title">Note</p>
+        |<p>This is a note</p>
+        |<blockquote>
+        |<p>[!WARNING]<br>
+        |Nested content</p>
+        |</blockquote>
+        |</div>
+        |````````````````````````````````
+        |
+        |Nested blockquote inside alert:
+        |
+        |```````````````````````````````` example alert
+        |> [!NOTE]
+        |> This is a note
+        |>> Nested blockquote
+        |.
+        |<div class="markdown-alert markdown-alert-note" data-alert-type="note">
+        |<p class="markdown-alert-title">Note</p>
+        |<p>This is a note</p>
+        |<blockquote>
+        |<p>Nested blockquote</p>
+        |</blockquote>
+        |</div>
+        |````````````````````````````````
+        |
+        |Alert inside list item stays as blockquote:
+        |
+        |```````````````````````````````` example alert
+        |- > [!NOTE]
+        |  > Test
+        |.
+        |<ul>
+        |<li>
+        |<blockquote>
+        |<p>[!NOTE]<br>
+        |Test</p>
+        |</blockquote>
+        |</li>
+        |</ul>
+        |````````````````````````````````
+        |
+        |Alert marker in content is treated as text:
+        |
+        |```````````````````````````````` example alert
+        |> [!NOTE]
+        |> This is a note
+        |> [!WARNING]
+        |> This is still part of the note
+        |.
+        |<div class="markdown-alert markdown-alert-note" data-alert-type="note">
+        |<p class="markdown-alert-title">Note</p>
+        |<p>This is a note<br>
+        |[!WARNING]<br>
+        |This is still part of the note</p>
+        |</div>
+        |````````````````````````````````
+        |
+        |## Continuation and interruption
+        |
+        |Lazy continuation:
+        |
+        |```````````````````````````````` example alert
+        |> [!NOTE]
+        |> First line
+        |Lazy continuation
+        |> Continues alert
+        |.
+        |<div class="markdown-alert markdown-alert-note" data-alert-type="note">
+        |<p class="markdown-alert-title">Note</p>
+        |<p>First line<br>
+        |Lazy continuation<br>
+        |Continues alert</p>
+        |</div>
+        |````````````````````````````````
+        |
+        |Alert type after regular blockquote content is not an alert:
+        |
+        |```````````````````````````````` example alert
+        |> Regular blockquote
+        |> [!NOTE]
+        |> More text
+        |.
+        |<blockquote>
+        |<p>Regular blockquote<br>
+        |[!NOTE]<br>
+        |More text</p>
+        |</blockquote>
+        |````````````````````````````````
+        |
+    """.trimMargin())
 }

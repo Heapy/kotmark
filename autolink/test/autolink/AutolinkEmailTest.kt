@@ -69,7 +69,7 @@ class AutolinkEmailTest : AutolinkTestCase() {
     fun allowedTextConfiguration1() {
         val extractor = LinkExtractor.builder().linkTypes(setOf(LinkType.EMAIL)).emailDomainMustHaveDot(true).build()
         // I know, I know...
-        assertLinked(extractor, LinkType.EMAIL, "#!\$%&'*+-/=?^_`{}|~@example.org", "|#!\$%&'*+-/=?^_`{}|~@example.org|")
+        assertLinked(extractor, LinkType.EMAIL, """#!$%&'*+-/=?^_`{}|~@example.org""", """|#!$%&'*+-/=?^_`{}|~@example.org|""")
 
     }
 
@@ -77,7 +77,7 @@ class AutolinkEmailTest : AutolinkTestCase() {
     fun allowedTextConfiguration2() {
         val extractor = LinkExtractor.builder().linkTypes(LinkType.entries.toSet()).emailDomainMustHaveDot(true).build()
         // I know, I know...
-        assertLinked(extractor, LinkType.EMAIL, "#!\$%&'*+-/=?^_`{}|~@example.org", "|#!\$%&'*+-/=?^_`{}|~@example.org|")
+        assertLinked(extractor, LinkType.EMAIL, """#!$%&'*+-/=?^_`{}|~@example.org""", """|#!$%&'*+-/=?^_`{}|~@example.org|""")
 
     }
 
@@ -85,7 +85,7 @@ class AutolinkEmailTest : AutolinkTestCase() {
     fun allowedTextConfiguration3() {
         val extractor = LinkExtractor.builder().linkTypes(LinkType.entries.toSet()).emailDomainMustHaveDot(false).build()
         // I know, I know...
-        assertLinked(extractor, LinkType.EMAIL, "#!\$%&'*+-/=?^_`{}|~@example.org", "|#!\$%&'*+-/=?^_`{}|~@example.org|")
+        assertLinked(extractor, LinkType.EMAIL, """#!$%&'*+-/=?^_`{}|~@example.org""", """|#!$%&'*+-/=?^_`{}|~@example.org|""")
 
     }
 
@@ -123,8 +123,8 @@ class AutolinkEmailTest : AutolinkTestCase() {
     fun specialSeparationConfiguration1() {
         val extractor = LinkExtractor.builder().linkTypes(setOf(LinkType.EMAIL)).emailDomainMustHaveDot(true).build()
         assertLinked(extractor, LinkType.EMAIL, "(a@example.com)", "(|a@example.com|)")
-        assertLinked(extractor, LinkType.EMAIL, "\"a@example.com\"", "\"|a@example.com|\"")
-        assertLinked(extractor, LinkType.EMAIL, "\"a@example.com\"", "\"|a@example.com|\"")
+        assertLinked(extractor, LinkType.EMAIL, """"a@example.com"""", """"|a@example.com|"""")
+        assertLinked(extractor, LinkType.EMAIL, """"a@example.com"""", """"|a@example.com|"""")
         assertLinked(extractor, LinkType.EMAIL, ",a@example.com,", ",|a@example.com|,")
         assertLinked(extractor, LinkType.EMAIL, ":a@example.com:", ":|a@example.com|:")
         assertLinked(extractor, LinkType.EMAIL, ";a@example.com;", ";|a@example.com|;")
@@ -135,8 +135,8 @@ class AutolinkEmailTest : AutolinkTestCase() {
     fun specialSeparationConfiguration2() {
         val extractor = LinkExtractor.builder().linkTypes(LinkType.entries.toSet()).emailDomainMustHaveDot(true).build()
         assertLinked(extractor, LinkType.EMAIL, "(a@example.com)", "(|a@example.com|)")
-        assertLinked(extractor, LinkType.EMAIL, "\"a@example.com\"", "\"|a@example.com|\"")
-        assertLinked(extractor, LinkType.EMAIL, "\"a@example.com\"", "\"|a@example.com|\"")
+        assertLinked(extractor, LinkType.EMAIL, """"a@example.com"""", """"|a@example.com|"""")
+        assertLinked(extractor, LinkType.EMAIL, """"a@example.com"""", """"|a@example.com|"""")
         assertLinked(extractor, LinkType.EMAIL, ",a@example.com,", ",|a@example.com|,")
         assertLinked(extractor, LinkType.EMAIL, ":a@example.com:", ":|a@example.com|:")
         assertLinked(extractor, LinkType.EMAIL, ";a@example.com;", ";|a@example.com|;")
@@ -147,8 +147,8 @@ class AutolinkEmailTest : AutolinkTestCase() {
     fun specialSeparationConfiguration3() {
         val extractor = LinkExtractor.builder().linkTypes(LinkType.entries.toSet()).emailDomainMustHaveDot(false).build()
         assertLinked(extractor, LinkType.EMAIL, "(a@example.com)", "(|a@example.com|)")
-        assertLinked(extractor, LinkType.EMAIL, "\"a@example.com\"", "\"|a@example.com|\"")
-        assertLinked(extractor, LinkType.EMAIL, "\"a@example.com\"", "\"|a@example.com|\"")
+        assertLinked(extractor, LinkType.EMAIL, """"a@example.com"""", """"|a@example.com|"""")
+        assertLinked(extractor, LinkType.EMAIL, """"a@example.com"""", """"|a@example.com|"""")
         assertLinked(extractor, LinkType.EMAIL, ",a@example.com,", ",|a@example.com|,")
         assertLinked(extractor, LinkType.EMAIL, ":a@example.com:", ":|a@example.com|:")
         assertLinked(extractor, LinkType.EMAIL, ";a@example.com;", ";|a@example.com|;")

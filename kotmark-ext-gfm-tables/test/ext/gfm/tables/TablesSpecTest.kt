@@ -21,7 +21,15 @@ class TablesSpecTest {
             val actual = renderer.render(parser.parse(source))
             if (actual != expected) {
                 failures +=
-                    "example $count\nsource:\n$source\nexpected:\n$expected\nactual:\n$actual"
+                    """
+                        |example $count
+                        |source:
+                        |$source
+                        |expected:
+                        |$expected
+                        |actual:
+                        |$actual
+                    """.trimMargin()
             }
         }
         assertEquals(8, count, "All GFM table examples must execute")

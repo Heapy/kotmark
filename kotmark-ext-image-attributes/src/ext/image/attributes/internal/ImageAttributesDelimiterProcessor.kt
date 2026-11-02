@@ -50,6 +50,6 @@ class ImageAttributesDelimiterProcessor : DelimiterProcessor {
 
     companion object {
         private val SUPPORTED_ATTRIBUTES = setOf("width", "height")
-        private val WHITESPACE = Regex("\\s+")
+        private val WHITESPACE = Regex("""\s+""")
     }
 }

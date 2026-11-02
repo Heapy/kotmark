@@ -30,6 +30,6 @@ class TaskListItemPostProcessor : PostProcessor {
     }
 
     companion object {
-        private val REGEX_TASK_LIST_ITEM = Regex("^\\[([xX\\s])\\]\\s+(.*)")
+        private val REGEX_TASK_LIST_ITEM = Regex("""^\[([xX\s])\]\s+(.*)""")
     }
 }

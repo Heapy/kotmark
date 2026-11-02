@@ -22,7 +22,7 @@ class AutolinkTest {
     @Test
     fun arbitrarySchemesAndUserInfo() {
         for (url in listOf("git://user@example.com/repo", "custom+v1://user:pass@example.com/path", "HTTP://example.com")) {
-            assertHtml(url, "<p><a href=\"$url\">$url</a></p>\n")
+            assertHtml(url, """<p><a href="$url">$url</a></p>""" + "\n")
         }
         // autolink-java recognizes lowercase www only.
         assertHtml("WWW.example.com", "<p>WWW.example.com</p>\n")
@@ -38,33 +38,33 @@ class AutolinkTest {
 
     @Test
     fun emailCandidateBoundaries() {
-        assertHtml("a@b@c.example", "<p>a@<a href=\"mailto:b@c.example\">b@c.example</a></p>\n")
-        assertHtml("a+b@example.com.", "<p><a href=\"mailto:a+b@example.com\">a+b@example.com</a>.</p>\n")
-        assertHtml("a@example.com..tail", "<p><a href=\"mailto:a@example.com\">a@example.com</a>..tail</p>\n")
+        assertHtml("a@b@c.example", """<p>a@<a href="mailto:b@c.example">b@c.example</a></p>""" + "\n")
+        assertHtml("a+b@example.com.", """<p><a href="mailto:a+b@example.com">a+b@example.com</a>.</p>""" + "\n")
+        assertHtml("a@example.com..tail", """<p><a href="mailto:a@example.com">a@example.com</a>..tail</p>""" + "\n")
         // Reference output from autolink-java 0.12.0: trim the dash from the email.
-        assertHtml("a@example.com-", "<p><a href=\"mailto:a@example.com\">a@example.com</a>-</p>\n")
+        assertHtml("a@example.com-", """<p><a href="mailto:a@example.com">a@example.com</a>-</p>""" + "\n")
     }
 
     @Test
     fun urlsEmailsAndWwwLinks() {
         assertHtml(
             "foo http://one.org/ bar http://two.org/",
-            "<p>foo <a href=\"http://one.org/\">http://one.org/</a> bar " +
-                "<a href=\"http://two.org/\">http://two.org/</a></p>\n",
+            """<p>foo <a href="http://one.org/">http://one.org/</a> bar """ +
+                """<a href="http://two.org/">http://two.org/</a></p>""" + "\n",
         )
         assertHtml(
             "foo http://one.org/ bar `code` baz http://two.org/",
-            "<p>foo <a href=\"http://one.org/\">http://one.org/</a> bar <code>code</code> baz " +
-                "<a href=\"http://two.org/\">http://two.org/</a></p>\n",
+            """<p>foo <a href="http://one.org/">http://one.org/</a> bar <code>code</code> baz """ +
+                """<a href="http://two.org/">http://two.org/</a></p>""" + "\n",
         )
         assertHtml(
             "foo@example.com",
-            "<p><a href=\"mailto:foo@example.com\">foo@example.com</a></p>\n",
+            """<p><a href="mailto:foo@example.com">foo@example.com</a></p>""" + "\n",
         )
         assertHtml("foo@com", "<p>foo@com</p>\n")
         assertHtml(
             "www.example.com",
-            "<p><a href=\"http://www.example.com\">www.example.com</a></p>\n",
+            """<p><a href="http://www.example.com">www.example.com</a></p>""" + "\n",
         )
     }
 
@@ -73,18 +73,18 @@ class AutolinkTest {
         assertHtml(
             "http://example.com/one. Example 2 (see http://example.com/two). " +
                 "Example 3: http://example.com/foo_(bar)",
-            "<p><a href=\"http://example.com/one\">http://example.com/one</a>. " +
-                "Example 2 (see <a href=\"http://example.com/two\">http://example.com/two</a>). " +
-                "Example 3: <a href=\"http://example.com/foo_(bar)\">http://example.com/foo_(bar)</a></p>\n",
+            """<p><a href="http://example.com/one">http://example.com/one</a>. """ +
+                """Example 2 (see <a href="http://example.com/two">http://example.com/two</a>). """ +
+                """Example 3: <a href="http://example.com/foo_(bar)">http://example.com/foo_(bar)</a></p>""" + "\n",
         )
         assertHtml(
             "www.google.com/search?q=Markup+(business)))",
-            "<p><a href=\"http://www.google.com/search?q=Markup+(business)\">" +
+            """<p><a href="http://www.google.com/search?q=Markup+(business)">""" +
                 "www.google.com/search?q=Markup+(business)</a>))</p>\n",
         )
         assertHtml(
             "www.google.com/search?q=commonmark&hl;",
-            "<p><a href=\"http://www.google.com/search?q=commonmark&amp;hl\">" +
+            """<p><a href="http://www.google.com/search?q=commonmark&amp;hl">""" +
                 "www.google.com/search?q=commonmark&amp;hl</a>;</p>\n",
         )
     }
@@ -93,7 +93,7 @@ class AutolinkTest {
     fun existingLinksAreNotNested() {
         assertHtml(
             "<http://example.com>",
-            "<p><a href=\"http://example.com\">http://example.com</a></p>\n",
+            """<p><a href="http://example.com">http://example.com</a></p>""" + "\n",
         )
     }
 
@@ -106,7 +106,7 @@ class AutolinkTest {
         val configuredParser = Parser.builder().extensions(listOf(extension)).build()
         val configuredRenderer = HtmlRenderer.builder().extensions(listOf(extension)).build()
         assertEquals(
-            "<p>www.example.com <a href=\"mailto:foo@example.com\">foo@example.com</a></p>\n",
+            """<p>www.example.com <a href="mailto:foo@example.com">foo@example.com</a></p>""" + "\n",
             configuredRenderer.render(
                 configuredParser.parse("www.example.com foo@example.com"),
             ),
@@ -126,8 +126,12 @@ class AutolinkTest {
         val paragraph =
             assertIs<Paragraph>(
                 spansParser.parse(
-                    "abc\nhttp://example.com/one\ndef http://example.com/two\n" +
-                        "ghi http://example.com/three jkl",
+                    """
+                        |abc
+                        |http://example.com/one
+                        |def http://example.com/two
+                        |ghi http://example.com/three jkl
+                    """.trimMargin(),
                 ).firstChild,
             )
         val abc = assertIs<Text>(paragraph.firstChild)

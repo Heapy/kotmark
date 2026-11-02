@@ -41,11 +41,20 @@ class AlertsTest {
             )
         }
         assertHtml(
-            "> [!note]\n> First paragraph\n>\n> Second **paragraph**",
+            """
+                |> [!note]
+                |> First paragraph
+                |>
+                |> Second **paragraph**
+            """.trimMargin(),
             alertHtml(
                 "note",
                 "Note",
-                "<p>First paragraph</p>\n<p>Second <strong>paragraph</strong></p>\n",
+                """
+                    |<p>First paragraph</p>
+                    |<p>Second <strong>paragraph</strong></p>
+                    |
+                """.trimMargin(),
             ),
         )
         assertHtml(
@@ -101,7 +110,7 @@ class AlertsTest {
             customHtml.render(customParser.parse(source)),
         )
         assertEquals(
-            alertHtml("important", "See <a href=\"https://example.com\">docs</a> or <code>run()</code>", "<p>Body</p>\n"),
+            alertHtml("important", """See <a href="https://example.com">docs</a> or <code>run()</code>""", "<p>Body</p>\n"),
             customHtml.render(
                 customParser.parse(
                     "> [!IMPORTANT] See [docs](https://example.com) or `run()`\n> Body",
@@ -128,13 +137,25 @@ class AlertsTest {
 
     @Test
     fun nestingIsConfigurable() {
-        val source = "> [!TIP]\n> Body\n> > [!IMPORTANT]\n> > Nested body"
+        val source = """
+            |> [!TIP]
+            |> Body
+            |> > [!IMPORTANT]
+            |> > Nested body
+        """.trimMargin()
         assertHtml(
             source,
             alertHtml(
                 "tip",
                 "Tip",
-                "<p>Body</p>\n<blockquote>\n<p>[!IMPORTANT]\nNested body</p>\n</blockquote>\n",
+                """
+                    |<p>Body</p>
+                    |<blockquote>
+                    |<p>[!IMPORTANT]
+                    |Nested body</p>
+                    |</blockquote>
+                    |
+                """.trimMargin(),
             ),
         )
 
@@ -159,11 +180,22 @@ class AlertsTest {
         for (
             input in
                 listOf(
-                    "> [!WARNING]\n> Be careful\n",
+                    """
+                        |> [!WARNING]
+                        |> Be careful
+                        |
+                    """.trimMargin(),
                     "> [!NOTE]\n> Note\n",
                     "> [!TIP]\n> Items:\n> \n> - First\n> - Second\n",
                     "> [!NOTE]\n",
-                    "- List\n\n> [!NOTE]\n\n- List\n",
+                    """
+                        |- List
+                        |
+                        |> [!NOTE]
+                        |
+                        |- List
+                        |
+                    """.trimMargin(),
                 )
         ) {
             assertEquals(input, renderer.render(parser.parse(input)))
@@ -177,18 +209,33 @@ class AlertsTest {
             listOf(AlertsExtension.builder().allowCustomTitles(true).build())
         val customParser = Parser.builder().extensions(customExtensions).build()
         val customRenderer = MarkdownRenderer.builder().extensions(customExtensions).build()
-        val titled = "> [!WARNING] Custom _title **with `formatting`**_\n> Be careful\n"
+        val titled = """
+            |> [!WARNING] Custom _title **with `formatting`**_
+            |> Be careful
+            |
+        """.trimMargin()
         assertEquals(titled, customRenderer.render(customParser.parse(titled)))
     }
 
     @Test
     fun textRenderingModes() {
-        val source = "> [!NOTE]\n> First paragraph\n>\n> Second paragraph"
+        val source = """
+            |> [!NOTE]
+            |> First paragraph
+            |>
+            |> Second paragraph
+        """.trimMargin()
         assertText(source, LineBreakRendering.COMPACT, "Note\nFirst paragraph\nSecond paragraph")
         assertText(
             source,
             LineBreakRendering.SEPARATE_BLOCKS,
-            "Note\n\nFirst paragraph\n\nSecond paragraph",
+            """
+                |Note
+                |
+                |First paragraph
+                |
+                |Second paragraph
+            """.trimMargin(),
         )
         assertText(source, LineBreakRendering.STRIP, "Note: First paragraph Second paragraph")
     }
@@ -207,8 +254,11 @@ class AlertsTest {
     }
 
     private fun alertHtml(type: String, title: String, body: String): String =
-        "<div class=\"markdown-alert markdown-alert-$type\" data-alert-type=\"$type\">\n" +
-            "<p class=\"markdown-alert-title\">$title</p>\n" +
+        """
+            |<div class="markdown-alert markdown-alert-$type" data-alert-type="$type">
+            |<p class="markdown-alert-title">$title</p>
+            |
+        """.trimMargin() +
             body +
             "</div>\n"
 }

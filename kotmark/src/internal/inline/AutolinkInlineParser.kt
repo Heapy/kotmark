@@ -44,11 +44,11 @@ class AutolinkInlineParser : InlineContentParser {
     }
 
     companion object {
-        private val URI = Regex("^[a-zA-Z][a-zA-Z0-9.+-]{1,31}:[^<>\\u0000-\\u0020]*$")
+        private val URI = Regex("""^[a-zA-Z][a-zA-Z0-9.+-]{1,31}:[^<>\u0000-\u0020]*$""")
         private val EMAIL = Regex(
-            "^([a-zA-Z0-9.!#\$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9]" +
+            """^([a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9]""" +
                 "(?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?" +
-                "(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*)$",
+                """(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*)$""",
         )
     }
 }

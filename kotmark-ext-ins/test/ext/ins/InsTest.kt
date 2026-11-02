@@ -40,7 +40,12 @@ class InsTest {
         )
         assertHtml(
             "> underline ++that++",
-            "<blockquote>\n<p>underline <ins>that</ins></p>\n</blockquote>\n",
+            """
+                |<blockquote>
+                |<p>underline <ins>that</ins></p>
+                |</blockquote>
+                |
+            """.trimMargin(),
         )
     }
 
@@ -51,7 +56,7 @@ class InsTest {
         assertEquals("++", node.closingDelimiter)
         assertEquals("foo", text.render(parser.parse("++foo++")))
 
-        for (input in listOf("++foo++\n", "\\+\\+foo\\+\\+\n")) {
+        for (input in listOf("++foo++\n", """\+\+foo\+\+""" + "\n")) {
             assertEquals(input, markdown.render(parser.parse(input)))
         }
 

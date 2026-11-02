@@ -80,11 +80,11 @@ class YamlFrontMatterBlockParser : AbstractBlockParser() {
     }
 
     companion object {
-        private val REGEX_METADATA = Regex("^[ ]{0,3}([A-Za-z0-9._-]+):\\s*(.*)")
-        private val REGEX_METADATA_LIST = Regex("^[ ]+-\\s*(.*)")
-        private val REGEX_METADATA_LITERAL = Regex("^\\s*(.*)")
-        private val REGEX_BEGIN = Regex("^-{3}(\\s.*)?")
-        private val REGEX_END = Regex("^(-{3}|\\.{3})(\\s.*)?")
+        private val REGEX_METADATA = Regex("""^[ ]{0,3}([A-Za-z0-9._-]+):\s*(.*)""")
+        private val REGEX_METADATA_LIST = Regex("""^[ ]+-\s*(.*)""")
+        private val REGEX_METADATA_LITERAL = Regex("""^\s*(.*)""")
+        private val REGEX_BEGIN = Regex("""^-{3}(\s.*)?""")
+        private val REGEX_END = Regex("""^(-{3}|\.{3})(\s.*)?""")
 
         private fun parseString(value: String): String =
             when {
@@ -92,8 +92,8 @@ class YamlFrontMatterBlockParser : AbstractBlockParser() {
                     value.substring(1, value.length - 1).replace("''", "'")
                 value.startsWith("\"") && value.endsWith("\"") ->
                     value.substring(1, value.length - 1)
-                        .replace("\\\"", "\"")
-                        .replace("\\\\", "\\")
+                        .replace("""\"""", "\"")
+                        .replace("""\\""", "\\")
                 else -> value
             }
     }

@@ -75,27 +75,27 @@ class HtmlBlockParser private constructor(
     companion object {
         private const val TAG_NAME = "[A-Za-z][A-Za-z0-9-]*"
         private const val ATTRIBUTE_NAME = "[a-zA-Z_:][a-zA-Z0-9:._-]*"
-        private const val UNQUOTED_VALUE = "[^\"'=<>`\\u0000-\\u0020]+"
+        private const val UNQUOTED_VALUE = """[^"'=<>`\u0000-\u0020]+"""
         private const val SINGLE_QUOTED_VALUE = "'[^']*'"
-        private const val DOUBLE_QUOTED_VALUE = "\"[^\"]*\""
+        private const val DOUBLE_QUOTED_VALUE = """"[^"]*""""
         private const val ATTRIBUTE_VALUE =
             "(?:$UNQUOTED_VALUE|$SINGLE_QUOTED_VALUE|$DOUBLE_QUOTED_VALUE)"
-        private const val ATTRIBUTE_VALUE_SPEC = "(?:\\s*=\\s*$ATTRIBUTE_VALUE)"
-        private const val ATTRIBUTE = "(?:\\s+$ATTRIBUTE_NAME$ATTRIBUTE_VALUE_SPEC?)"
-        private const val OPEN_TAG = "<$TAG_NAME$ATTRIBUTE*\\s*/?>"
-        private const val CLOSE_TAG = "</$TAG_NAME\\s*[>]"
+        private const val ATTRIBUTE_VALUE_SPEC = """(?:\s*=\s*$ATTRIBUTE_VALUE)"""
+        private const val ATTRIBUTE = """(?:\s+$ATTRIBUTE_NAME$ATTRIBUTE_VALUE_SPEC?)"""
+        private const val OPEN_TAG = """<$TAG_NAME$ATTRIBUTE*\s*/?>"""
+        private const val CLOSE_TAG = """</$TAG_NAME\s*[>]"""
 
         private val IGNORE_CASE = setOf(RegexOption.IGNORE_CASE)
         private val BLOCK_PATTERNS = listOf(
             BlockPatterns(Regex("(?!x)x"), null),
             BlockPatterns(
-                Regex("^<(?:script|pre|style|textarea)(?:\\s|>|$)", IGNORE_CASE),
+                Regex("""^<(?:script|pre|style|textarea)(?:\s|>|$)""", IGNORE_CASE),
                 Regex("</(?:script|pre|style|textarea)>", IGNORE_CASE),
             ),
             BlockPatterns(Regex("^<!--"), Regex("-->")),
-            BlockPatterns(Regex("^<[?]"), Regex("\\?>")),
+            BlockPatterns(Regex("^<[?]"), Regex("""\?>""")),
             BlockPatterns(Regex("^<![A-Z]"), Regex(">")),
-            BlockPatterns(Regex("^<!\\[CDATA\\["), Regex("\\]\\]>")),
+            BlockPatterns(Regex("""^<!\[CDATA\["""), Regex("""\]\]>""")),
             BlockPatterns(
                 Regex(
                     "^</?(?:address|article|aside|base|basefont|blockquote|body|" +
@@ -104,13 +104,13 @@ class HtmlBlockParser private constructor(
                         "h1|h2|h3|h4|h5|h6|head|header|hr|html|iframe|legend|li|link|" +
                         "main|menu|menuitem|nav|noframes|ol|optgroup|option|p|param|" +
                         "search|section|summary|table|tbody|td|tfoot|th|thead|title|tr|track|ul)" +
-                        "(?:\\s|[/]?[>]|$)",
+                        """(?:\s|[/]?[>]|$)""",
                     IGNORE_CASE,
                 ),
                 null,
             ),
             BlockPatterns(
-                Regex("^(?:$OPEN_TAG|$CLOSE_TAG)\\s*$", IGNORE_CASE),
+                Regex("""^(?:$OPEN_TAG|$CLOSE_TAG)\s*$""", IGNORE_CASE),
                 null,
             ),
         )

@@ -88,7 +88,7 @@ class FootnotesTest {
         val inline = find<InlineFootnote>(inlineParser.parse("Test ^[inline *footnote*]"))
         assertEquals("inline ", (inline.firstChild as Text).literal)
         assertIs<Emphasis>(inline.lastChild)
-        assertNull(findOrNull<InlineFootnote>(inlineParser.parse("Test \\^[not inline footnote]")))
+        assertNull(findOrNull<InlineFootnote>(inlineParser.parse("""Test \^[not inline footnote]""")))
         assertNull(findOrNull<InlineFootnote>(inlineParser.parse("Test ^[not inline footnote")))
 
         val codeFootnote = find<InlineFootnote>(inlineParser.parse("^[test `bla]`]"))

@@ -23,7 +23,7 @@ class InlineParserImplTest {
     fun parsesCoreInlineSyntax() {
         val paragraph = parse(
             "plain *em* **strong** `code` &amp; <i>x</i> " +
-                "[link](/url \"title\") ![image](/img)",
+                """[link](/url "title") ![image](/img)""",
         )
 
         assertEquals("plain ", assertIs<Text>(paragraph.firstChild).literal)

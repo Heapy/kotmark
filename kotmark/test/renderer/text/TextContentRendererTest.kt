@@ -46,73 +46,205 @@ class TextContentRendererTest {
     @Test
     fun linksImagesAndInlineCode() {
         assertAll(
-            "foo [text](http://link \"title\") bar",
-            "foo \"text\" (title: http://link) bar",
+            """foo [text](http://link "title") bar""",
+            """foo "text" (title: http://link) bar""",
         )
         assertAll(
-            "foo [text](http://link \"http://link\") bar",
-            "foo \"text\" (http://link) bar",
+            """foo [text](http://link "http://link") bar""",
+            """foo "text" (http://link) bar""",
         )
-        assertAll("foo [text](http://link) bar", "foo \"text\" (http://link) bar")
-        assertAll("foo [text]() bar", "foo \"text\" bar")
+        assertAll("foo [text](http://link) bar", """foo "text" (http://link) bar""")
+        assertAll("foo [text]() bar", """foo "text" bar""")
         assertAll("foo http://link bar", "foo http://link bar")
         assertAll(
-            "foo ![text](http://link \"title\") bar",
-            "foo \"text\" (title: http://link) bar",
+            """foo ![text](http://link "title") bar""",
+            """foo "text" (title: http://link) bar""",
         )
-        assertAll("foo ![text](http://link) bar", "foo \"text\" (http://link) bar")
-        assertAll("foo ![text]() bar", "foo \"text\" bar")
-        assertAll("foo `code` bar", "foo \"code\" bar")
+        assertAll("foo ![text](http://link) bar", """foo "text" (http://link) bar""")
+        assertAll("foo ![text]() bar", """foo "text" bar""")
+        assertAll("foo `code` bar", """foo "code" bar""")
     }
 
     @Test
     fun lists() {
         assertModes(
-            "foo\n* foo\n* bar\n\nbar",
+            """
+                |foo
+                |* foo
+                |* bar
+                |
+                |bar
+            """.trimMargin(),
             "foo\n* foo\n* bar\nbar",
-            "foo\n\n* foo\n* bar\n\nbar",
+            """
+                |foo
+                |
+                |* foo
+                |* bar
+                |
+                |bar
+            """.trimMargin(),
             "foo foo bar bar",
         )
         assertModes(
-            "foo\n- foo\n- bar\n\nbar",
+            """
+                |foo
+                |- foo
+                |- bar
+                |
+                |bar
+            """.trimMargin(),
             "foo\n- foo\n- bar\nbar",
-            "foo\n\n- foo\n- bar\n\nbar",
+            """
+                |foo
+                |
+                |- foo
+                |- bar
+                |
+                |bar
+            """.trimMargin(),
             "foo foo bar bar",
         )
         assertModes(
-            "foo\n1. foo\n2. bar\n\nbar",
-            "foo\n1. foo\n2. bar\nbar",
-            "foo\n\n1. foo\n2. bar\n\nbar",
+            """
+                |foo
+                |1. foo
+                |2. bar
+                |
+                |bar
+            """.trimMargin(),
+            """
+                |foo
+                |1. foo
+                |2. bar
+                |bar
+            """.trimMargin(),
+            """
+                |foo
+                |
+                |1. foo
+                |2. bar
+                |
+                |bar
+            """.trimMargin(),
             "foo 1. foo 2. bar bar",
         )
         assertModes(
-            "foo\n0) foo\n1) bar\n\nbar",
-            "foo\n0) foo\n1) bar\nbar",
-            "foo\n0) foo\n\n1) bar\n\nbar",
+            """
+                |foo
+                |0) foo
+                |1) bar
+                |
+                |bar
+            """.trimMargin(),
+            """
+                |foo
+                |0) foo
+                |1) bar
+                |bar
+            """.trimMargin(),
+            """
+                |foo
+                |0) foo
+                |
+                |1) bar
+                |
+                |bar
+            """.trimMargin(),
             "foo 0) foo 1) bar bar",
         )
         assertModes(
-            "bar\n1. foo\n   1. bar\n2. foo",
-            "bar\n1. foo\n   1. bar\n2. foo",
-            "bar\n\n1. foo\n   1. bar\n2. foo",
+            """
+                |bar
+                |1. foo
+                |   1. bar
+                |2. foo
+            """.trimMargin(),
+            """
+                |bar
+                |1. foo
+                |   1. bar
+                |2. foo
+            """.trimMargin(),
+            """
+                |bar
+                |
+                |1. foo
+                |   1. bar
+                |2. foo
+            """.trimMargin(),
             "bar 1. foo 1. bar 2. foo",
         )
         assertModes(
-            "bar\n* foo\n  - bar\n* foo",
-            "bar\n* foo\n  - bar\n* foo",
-            "bar\n\n* foo\n  - bar\n* foo",
+            """
+                |bar
+                |* foo
+                |  - bar
+                |* foo
+            """.trimMargin(),
+            """
+                |bar
+                |* foo
+                |  - bar
+                |* foo
+            """.trimMargin(),
+            """
+                |bar
+                |
+                |* foo
+                |  - bar
+                |* foo
+            """.trimMargin(),
             "bar foo bar foo",
         )
         assertModes(
-            "bar\n* foo\n  1. bar\n  2. bar\n* foo",
-            "bar\n* foo\n  1. bar\n  2. bar\n* foo",
-            "bar\n\n* foo\n  1. bar\n  2. bar\n* foo",
+            """
+                |bar
+                |* foo
+                |  1. bar
+                |  2. bar
+                |* foo
+            """.trimMargin(),
+            """
+                |bar
+                |* foo
+                |  1. bar
+                |  2. bar
+                |* foo
+            """.trimMargin(),
+            """
+                |bar
+                |
+                |* foo
+                |  1. bar
+                |  2. bar
+                |* foo
+            """.trimMargin(),
             "bar foo 1. bar 2. bar foo",
         )
         assertModes(
-            "bar\n1. foo\n   * bar\n   * bar\n2. foo",
-            "bar\n1. foo\n   * bar\n   * bar\n2. foo",
-            "bar\n\n1. foo\n   * bar\n   * bar\n2. foo",
+            """
+                |bar
+                |1. foo
+                |   * bar
+                |   * bar
+                |2. foo
+            """.trimMargin(),
+            """
+                |bar
+                |1. foo
+                |   * bar
+                |   * bar
+                |2. foo
+            """.trimMargin(),
+            """
+                |bar
+                |
+                |1. foo
+                |   * bar
+                |   * bar
+                |2. foo
+            """.trimMargin(),
             "bar 1. foo bar bar 2. foo",
         )
         assertModes(
@@ -128,13 +260,26 @@ class TextContentRendererTest {
     @Test
     fun codeBlocksBreaksAndHtml() {
         assertModes(
-            "foo\n```\nfoo\nbar\n```\nbar",
+            """
+                |foo
+                |```
+                |foo
+                |bar
+                |```
+                |bar
+            """.trimMargin(),
             "foo\nfoo\nbar\nbar",
             "foo\n\nfoo\nbar\n\nbar",
             "foo foo bar bar",
         )
         assertModes(
-            "foo\n\n    foo\n     bar\nbar",
+            """
+                |foo
+                |
+                |    foo
+                |     bar
+                |bar
+            """.trimMargin(),
             "foo\nfoo\n bar\nbar",
             "foo\n\nfoo\n bar\n\nbar",
             "foo foo bar bar",
@@ -149,7 +294,15 @@ class TextContentRendererTest {
         )
 
         val blockHtml =
-            "<table>\n  <tr>\n    <td>\n           foobar\n    </td>\n  </tr>\n</table>"
+            """
+                |<table>
+                |  <tr>
+                |    <td>
+                |           foobar
+                |    </td>
+                |  </tr>
+                |</table>
+            """.trimMargin()
         assertCompact(blockHtml, blockHtml)
         assertSeparate(blockHtml, blockHtml)
         assertAll("foo <foo>foobar</foo> bar", "foo <foo>foobar</foo> bar")
@@ -176,7 +329,7 @@ class TextContentRendererTest {
             }
         val renderer = TextContentRenderer.builder().nodeRendererFactory(factory).build()
         assertEquals(
-            "Hi \"Example\"",
+            """Hi "Example"""",
             renderer.render(parser.parse("Hi [Example](https://example.com)")),
         )
     }

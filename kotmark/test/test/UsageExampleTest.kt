@@ -72,7 +72,7 @@ class UsageExampleTest {
                 .build()
 
         val document = parser.parse("![text](/url.png)")
-        assertEquals("<p><img src=\"/url.png\" alt=\"text\" class=\"border\" /></p>\n", renderer.render(document))
+        assertEquals("""<p><img src="/url.png" alt="text" class="border" /></p>""" + "\n", renderer.render(document))
     }
 
     @Test
@@ -94,7 +94,7 @@ class UsageExampleTest {
             // This is called for all Text nodes. Override other visit methods for other node types.
 
             // Count words (this is just an example, don't actually do it this way for various reasons).
-            wordCount += text.literal.orEmpty().split(Regex("\\W+")).size
+            wordCount += text.literal.orEmpty().split(Regex("""\W+""")).size
 
             // Descend into children (could be omitted in this case because Text nodes don't have children).
             visitChildren(text)

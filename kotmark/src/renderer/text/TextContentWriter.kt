@@ -107,6 +107,6 @@ class TextContentWriter(
     }
 
     companion object {
-        private val WHITESPACE = Regex("[\\r\\n\\s]+")
+        private val WHITESPACE = Regex("""[\r\n\s]+""")
     }
 }

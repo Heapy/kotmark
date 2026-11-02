@@ -20,7 +20,13 @@ class YamlFrontMatterTest {
     @Test
     fun parsesValuesAndOmitsFrontMatterFromHtml() {
         assertFrontMatter(
-            "---\nhello: world\n...\n\ngreat",
+            """
+                |---
+                |hello: world
+                |...
+                |
+                |great
+            """.trimMargin(),
             mapOf("hello" to listOf("world")),
         )
         assertFrontMatter(
@@ -28,11 +34,27 @@ class YamlFrontMatterTest {
             mapOf("key" to emptyList()),
         )
         assertFrontMatter(
-            "---\nlist:\n  - value1\n  - value2\n...\n\ngreat",
+            """
+                |---
+                |list:
+                |  - value1
+                |  - value2
+                |...
+                |
+                |great
+            """.trimMargin(),
             mapOf("list" to listOf("value1", "value2")),
         )
         assertFrontMatter(
-            "---\nliteral: |\n  hello markdown!\n  literal thing...\n---\n\ngreat",
+            """
+                |---
+                |literal: |
+                |  hello markdown!
+                |  literal thing...
+                |---
+                |
+                |great
+            """.trimMargin(),
             mapOf("literal" to listOf("hello markdown!\nliteral thing...")),
         )
         assertEquals(
@@ -43,10 +65,22 @@ class YamlFrontMatterTest {
 
     @Test
     fun onlyRecognizesFrontMatterAtDocumentStart() {
-        val input = "# hello\n\nhello markdown world!\n---\nhello: world\n---"
+        val input = """
+            |# hello
+            |
+            |hello markdown world!
+            |---
+            |hello: world
+            |---
+        """.trimMargin()
         assertTrue(readData(input).isEmpty())
         assertEquals(
-            "<h1>hello</h1>\n<h2>hello markdown world!</h2>\n<h2>hello: world</h2>\n",
+            """
+                |<h1>hello</h1>
+                |<h2>hello markdown world!</h2>
+                |<h2>hello: world</h2>
+                |
+            """.trimMargin(),
             html.render(parser.parse(input)),
         )
         assertTrue(readData("----\ntest").isEmpty())
@@ -58,24 +92,105 @@ class YamlFrontMatterTest {
         for (
             input in
                 listOf(
-                    "---\ntitle: My Document\n---\n\nMarkdown content\n",
-                    "---\nkey:\n---\n\nMarkdown content\n",
-                    "---\ntitle: My Document\nauthor: John Doe\n---\n\nMarkdown content\n",
-                    "---\ntags:\n  - java\n  - markdown\n---\n\nMarkdown content\n",
-                    "---\ndescription: |\n  first line\n  second line\n---\n\nMarkdown content\n",
-                    "---\nkey: 'value with ''single quotes'''\n---\n\nMarkdown content\n",
-                    "---\ntags: [java, markdown]\n---\n\nMarkdown content\n",
-                    "---\ndata: {key: value}\n---\n\nMarkdown content\n",
-                    "---\n---\n\nMarkdown content\n",
+                    """
+                        |---
+                        |title: My Document
+                        |---
+                        |
+                        |Markdown content
+                        |
+                    """.trimMargin(),
+                    """
+                        |---
+                        |key:
+                        |---
+                        |
+                        |Markdown content
+                        |
+                    """.trimMargin(),
+                    """
+                        |---
+                        |title: My Document
+                        |author: John Doe
+                        |---
+                        |
+                        |Markdown content
+                        |
+                    """.trimMargin(),
+                    """
+                        |---
+                        |tags:
+                        |  - java
+                        |  - markdown
+                        |---
+                        |
+                        |Markdown content
+                        |
+                    """.trimMargin(),
+                    """
+                        |---
+                        |description: |
+                        |  first line
+                        |  second line
+                        |---
+                        |
+                        |Markdown content
+                        |
+                    """.trimMargin(),
+                    """
+                        |---
+                        |key: 'value with ''single quotes'''
+                        |---
+                        |
+                        |Markdown content
+                        |
+                    """.trimMargin(),
+                    """
+                        |---
+                        |tags: [java, markdown]
+                        |---
+                        |
+                        |Markdown content
+                        |
+                    """.trimMargin(),
+                    """
+                        |---
+                        |data: {key: value}
+                        |---
+                        |
+                        |Markdown content
+                        |
+                    """.trimMargin(),
+                    """
+                        |---
+                        |---
+                        |
+                        |Markdown content
+                        |
+                    """.trimMargin(),
                 )
         ) {
             assertEquals(input, markdown.render(parser.parse(input)))
         }
         assertEquals(
-            "---\nkey: 'value with \"double quotes\"'\n---\n\nMarkdown content\n",
+            """
+                |---
+                |key: 'value with "double quotes"'
+                |---
+                |
+                |Markdown content
+                |
+            """.trimMargin(),
             markdown.render(
                 parser.parse(
-                    "---\nkey: \"value with \\\"double quotes\\\"\"\n---\n\nMarkdown content\n",
+                    """
+                        |---
+                        |key: "value with \"double quotes\""
+                        |---
+                        |
+                        |Markdown content
+                        |
+                    """.trimMargin(),
                 ),
             ),
         )
@@ -114,7 +229,14 @@ class YamlFrontMatterTest {
         paragraph.appendChild(Text("Markdown content"))
         document.appendChild(paragraph)
         assertEquals(
-            "---\n$expectedLine\n---\n\nMarkdown content\n",
+            """
+                |---
+                |$expectedLine
+                |---
+                |
+                |Markdown content
+                |
+            """.trimMargin(),
             markdown.render(document),
         )
     }

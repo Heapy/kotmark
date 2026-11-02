@@ -9,99 +9,124 @@ class ListTightLooseTest : CoreRenderingTestCase() {
             "- foo\n" +
                 "- bar\n" +
                 "+ baz\n",
-            "<ul>\n" +
-                "<li>foo</li>\n" +
-                "<li>bar</li>\n" +
-                "</ul>\n" +
-                "<ul>\n" +
-                "<li>baz</li>\n" +
-                "</ul>\n",
+            """
+                |<ul>
+                |<li>foo</li>
+                |<li>bar</li>
+                |</ul>
+                |<ul>
+                |<li>baz</li>
+                |</ul>
+                |
+            """.trimMargin(),
         )
     }
 
     @Test
     fun loose() {
         assertRendering(
-            "- foo\n" +
-                "\n" +
-                "- bar\n" +
-                "\n" +
-                "\n" +
-                "- baz\n",
-            "<ul>\n" +
-                "<li>\n" +
-                "<p>foo</p>\n" +
-                "</li>\n" +
-                "<li>\n" +
-                "<p>bar</p>\n" +
-                "</li>\n" +
-                "<li>\n" +
-                "<p>baz</p>\n" +
-                "</li>\n" +
-                "</ul>\n",
+            """
+                |- foo
+                |
+                |- bar
+                |
+                |
+                |- baz
+                |
+            """.trimMargin(),
+            """
+                |<ul>
+                |<li>
+                |<p>foo</p>
+                |</li>
+                |<li>
+                |<p>bar</p>
+                |</li>
+                |<li>
+                |<p>baz</p>
+                |</li>
+                |</ul>
+                |
+            """.trimMargin(),
         )
     }
 
     @Test
     fun looseNested() {
         assertRendering(
-            "- foo\n" +
-                "  - bar\n" +
-                "\n" +
-                "\n" +
-                "    baz",
-            "<ul>\n" +
-                "<li>foo\n" +
-                "<ul>\n" +
-                "<li>\n" +
-                "<p>bar</p>\n" +
-                "<p>baz</p>\n" +
-                "</li>\n" +
-                "</ul>\n" +
-                "</li>\n" +
-                "</ul>\n",
+            """
+                |- foo
+                |  - bar
+                |
+                |
+                |    baz
+            """.trimMargin(),
+            """
+                |<ul>
+                |<li>foo
+                |<ul>
+                |<li>
+                |<p>bar</p>
+                |<p>baz</p>
+                |</li>
+                |</ul>
+                |</li>
+                |</ul>
+                |
+            """.trimMargin(),
         )
     }
 
     @Test
     fun looseNested2() {
         assertRendering(
-            "- a\n" +
-                "  - b\n" +
-                "\n" +
-                "    c\n" +
-                "- d\n",
-            "<ul>\n" +
-                "<li>a\n" +
-                "<ul>\n" +
-                "<li>\n" +
-                "<p>b</p>\n" +
-                "<p>c</p>\n" +
-                "</li>\n" +
-                "</ul>\n" +
-                "</li>\n" +
-                "<li>d</li>\n" +
-                "</ul>\n",
+            """
+                |- a
+                |  - b
+                |
+                |    c
+                |- d
+                |
+            """.trimMargin(),
+            """
+                |<ul>
+                |<li>a
+                |<ul>
+                |<li>
+                |<p>b</p>
+                |<p>c</p>
+                |</li>
+                |</ul>
+                |</li>
+                |<li>d</li>
+                |</ul>
+                |
+            """.trimMargin(),
         )
     }
 
     @Test
     fun looseOuter() {
         assertRendering(
-            "- foo\n" +
-                "  - bar\n" +
-                "\n" +
-                "\n" +
-                "  baz",
-            "<ul>\n" +
-                "<li>\n" +
-                "<p>foo</p>\n" +
-                "<ul>\n" +
-                "<li>bar</li>\n" +
-                "</ul>\n" +
-                "<p>baz</p>\n" +
-                "</li>\n" +
-                "</ul>\n",
+            """
+                |- foo
+                |  - bar
+                |
+                |
+                |  baz
+            """.trimMargin(),
+            """
+                |<ul>
+                |<li>
+                |<p>foo</p>
+                |<ul>
+                |<li>bar</li>
+                |</ul>
+                |<p>baz</p>
+                |</li>
+                |</ul>
+                |
+            """.trimMargin(),
         )
     }
 
@@ -111,12 +136,15 @@ class ListTightLooseTest : CoreRenderingTestCase() {
             "- one\n" +
                 "\n" +
                 "  two\n",
-            "<ul>\n" +
-                "<li>\n" +
-                "<p>one</p>\n" +
-                "<p>two</p>\n" +
-                "</li>\n" +
-                "</ul>\n",
+            """
+                |<ul>
+                |<li>
+                |<p>one</p>
+                |<p>two</p>
+                |</li>
+                |</ul>
+                |
+            """.trimMargin(),
         )
     }
 
@@ -126,52 +154,67 @@ class ListTightLooseTest : CoreRenderingTestCase() {
             "- foo\n" +
                 "- bar\n" +
                 "\n",
-            "<ul>\n" +
-                "<li>foo</li>\n" +
-                "<li>bar</li>\n" +
-                "</ul>\n",
+            """
+                |<ul>
+                |<li>foo</li>
+                |<li>bar</li>
+                |</ul>
+                |
+            """.trimMargin(),
         )
     }
 
     @Test
     fun tightListWithCodeBlock() {
         assertRendering(
-            "- a\n" +
-                "- ```\n" +
-                "  b\n" +
-                "\n" +
-                "\n" +
-                "  ```\n" +
-                "- c\n",
-            "<ul>\n" +
-                "<li>a</li>\n" +
-                "<li>\n" +
-                "<pre><code>b\n" +
-                "\n" +
-                "\n" +
-                "</code></pre>\n" +
-                "</li>\n" +
-                "<li>c</li>\n" +
-                "</ul>\n",
+            """
+                |- a
+                |- ```
+                |  b
+                |
+                |
+                |  ```
+                |- c
+                |
+            """.trimMargin(),
+            """
+                |<ul>
+                |<li>a</li>
+                |<li>
+                |<pre><code>b
+                |
+                |
+                |</code></pre>
+                |</li>
+                |<li>c</li>
+                |</ul>
+                |
+            """.trimMargin(),
         )
     }
 
     @Test
     fun tightListWithCodeBlock2() {
         assertRendering(
-            "* foo\n" +
-                "  ```\n" +
-                "  bar\n" +
-                "\n" +
-                "  ```\n" +
-                "  baz\n",
-            "<ul>\n" +
-                "<li>foo\n" +
-                "<pre><code>bar\n" +
-                "\n" +
-                "</code></pre>\n" +
-                "baz</li>\n" +
-                "</ul>\n",
+            """
+                |* foo
+                |  ```
+                |  bar
+                |
+                |  ```
+                |  baz
+                |
+            """.trimMargin(),
+            """
+                |<ul>
+                |<li>foo
+                |<pre><code>bar
+                |
+                |</code></pre>
+                |baz</li>
+                |</ul>
+                |
+            """.trimMargin(),
         )
     }
 
@@ -182,33 +225,41 @@ class ListTightLooseTest : CoreRenderingTestCase() {
                 "*\n" +
                 "\n" +
                 "* c",
-            "<ul>\n" +
-                "<li>\n" +
-                "<p>a</p>\n" +
-                "</li>\n" +
-                "<li></li>\n" +
-                "<li>\n" +
-                "<p>c</p>\n" +
-                "</li>\n" +
-                "</ul>\n",
+            """
+                |<ul>
+                |<li>
+                |<p>a</p>
+                |</li>
+                |<li></li>
+                |<li>
+                |<p>c</p>
+                |</li>
+                |</ul>
+                |
+            """.trimMargin(),
         )
     }
 
     @Test
     fun looseBlankLineAfterCodeBlock() {
         assertRendering(
-            "1. ```\n" +
-                "   foo\n" +
-                "   ```\n" +
-                "\n" +
-                "   bar",
-            "<ol>\n" +
-                "<li>\n" +
-                "<pre><code>foo\n" +
-                "</code></pre>\n" +
-                "<p>bar</p>\n" +
-                "</li>\n" +
-                "</ol>\n",
+            """
+                |1. ```
+                |   foo
+                |   ```
+                |
+                |   bar
+            """.trimMargin(),
+            """
+                |<ol>
+                |<li>
+                |<pre><code>foo
+                |</code></pre>
+                |<p>bar</p>
+                |</li>
+                |</ol>
+                |
+            """.trimMargin(),
         )
     }
 }

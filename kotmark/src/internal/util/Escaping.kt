@@ -5,14 +5,14 @@ package io.heapy.kotmark.internal.util
  */
 object Escaping {
 
-    const val ESCAPABLE: String = "[!\"#\$%&'()*+,./:;<=>?@\\[\\\\\\]^_`{|}~-]"
+    const val ESCAPABLE: String = """[!"#$%&'()*+,./:;<=>?@\[\\\]^_`{|}~-]"""
     const val ENTITY: String = "&(?:#x[a-f0-9]{1,6}|#[0-9]{1,7}|[a-z][a-z0-9]{1,31});"
 
-    private val BACKSLASH_OR_AMP: Regex = Regex("[\\\\&]")
+    private val BACKSLASH_OR_AMP: Regex = Regex("""[\\&]""")
     private val ENTITY_OR_ESCAPED_CHAR: Regex =
-        Regex("\\\\$ESCAPABLE|$ENTITY", setOf(RegexOption.IGNORE_CASE))
+        Regex("""\\$ESCAPABLE|$ENTITY""", setOf(RegexOption.IGNORE_CASE))
     private val ESCAPE_IN_URI: Regex =
-        Regex("(%[a-fA-F0-9]{0,2}|[^:/?#@!\$&'()*+,;=a-zA-Z0-9\\-._~])")
+        Regex("""(%[a-fA-F0-9]{0,2}|[^:/?#@!$&'()*+,;=a-zA-Z0-9\-._~])""")
     private val WHITESPACE: Regex = Regex("[ \t\r\n]+")
 
     private val HEX_DIGITS: CharArray =

@@ -24,17 +24,32 @@ val fixtures = manifest.lineSequence().filter { it.isNotBlank() }.map { line ->
 }.toList()
 
 fun literal(value: String): String = buildString {
-    append('"')
-    for (c in value) when (c) {
-        '\\' -> append("\\\\")
-        '"' -> append("\\\"")
-        '$' -> append("\\$")
-        '\n' -> append("\\n")
-        '\r' -> append("\\r")
-        '\t' -> append("\\t")
-        else -> if (c in ' '..'~') append(c) else append("\\u" + c.code.toString(16).padStart(4, '0'))
+    // trimMargin normalizes CR/CRLF, so keep those rare chunks untrimmed.
+    val multiline = '\n' in value && '\r' !in value
+    append("\"\"\"")
+    if (multiline) append("\n        |")
+    var quotes = 0
+    value.forEachIndexed { index, c ->
+        when {
+            c == '$' -> append("\${'$'}")
+            c == '"' && quotes == 2 -> append("\${'\"'}")
+            c == '\r' -> append("\${'\\r'}")
+            c == '\t' -> append("\${'\\t'}")
+            c == '\n' -> {
+                append('\n')
+                if (multiline) append("        |")
+            }
+            // Protect meaningful trailing spaces from editor whitespace cleanup.
+            c == ' ' && (index == value.lastIndex || value[index + 1] == '\n') -> append("\${' '}")
+            c.isISOControl() || c.isSurrogate() ->
+                append("\${'\\u${c.code.toString(16).padStart(4, '0')}'}")
+            else -> append(c)
+        }
+        quotes = if (c == '"' && quotes < 2) quotes + 1 else 0
     }
-    append('"')
+    if (multiline) append("\n    ")
+    append("\"\"\"")
+    if (multiline) append(".trimMargin()")
 }
 
 val header = """
@@ -49,9 +64,12 @@ fixtures.forEachIndexed { index, (name, text) ->
         appendLine(header)
         appendLine("// Source: $name")
         appendLine("internal fun corpus$index(): String = buildString(${text.length}) {")
-        // Keep each constant well below the JVM modified-UTF-8 limit. Separate
+        // Allow for the margin prefix on every line when keeping constants below
+        // the JVM modified-UTF-8 limit (even for chunks made entirely of newlines). Separate
         // append calls prevent the compiler folding the whole corpus into one constant.
-        for (chunk in text.chunked(8_000)) appendLine("    append(${literal(chunk)})")
+        // Every data line has a margin marker, including empty boundary lines, so
+        // trimMargin removes only source indentation and preserves fixture whitespace.
+        for (chunk in text.chunked(4_000)) appendLine("    append(${literal(chunk)})")
         appendLine("}")
     }
 }
@@ -59,7 +77,7 @@ files["EmbeddedFixtures.kt"] = buildString {
     appendLine(header)
     appendLine("internal fun embeddedFixture(path: String): String = when (path) {")
     fixtures.forEachIndexed { index, (name, _) -> appendLine("    ${literal(name)} -> corpus$index()") }
-    appendLine("    else -> error(\"Unknown bundled test fixture: \$path\")")
+    appendLine("""    else -> error("Unknown bundled test fixture: ${'$'}path")""")
     appendLine("}")
 }
 if (!checkOnly) output.createDirectories()

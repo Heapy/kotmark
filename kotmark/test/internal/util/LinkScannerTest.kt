@@ -12,7 +12,7 @@ class LinkScannerTest {
     @Test
     fun linkLabelContent() {
         assertScan("label]", true, "label", LinkScanner::scanLinkLabelContent)
-        assertScan("la\\]bel]", true, "la\\]bel", LinkScanner::scanLinkLabelContent)
+        assertScan("""la\]bel]""", true, """la\]bel""", LinkScanner::scanLinkLabelContent)
         assertScan("la[bel]", false, "la", LinkScanner::scanLinkLabelContent)
     }
 
@@ -29,7 +29,7 @@ class LinkScannerTest {
 
     @Test
     fun linkTitle() {
-        assertScan("\"title\"", true, "\"title\"", LinkScanner::scanLinkTitle)
+        assertScan(""""title"""", true, """"title"""", LinkScanner::scanLinkTitle)
         assertScan("'title'", true, "'title'", LinkScanner::scanLinkTitle)
         assertScan("(title)", true, "(title)", LinkScanner::scanLinkTitle)
         assertScan("(ti(tle)", false, "(ti", LinkScanner::scanLinkTitle)

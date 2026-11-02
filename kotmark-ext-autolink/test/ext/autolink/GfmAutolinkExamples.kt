@@ -10,67 +10,152 @@ internal val gfmAutolinkExamples = listOf(
     GfmAutolinkExample(
         1,
         "www.commonmark.org\n",
-        "<p><a href=\"http://www.commonmark.org\">www.commonmark.org</a></p>\n",
-        "<p><a href=\"http://www.commonmark.org\">www.commonmark.org</a></p>\n",
+        """<p><a href="http://www.commonmark.org">www.commonmark.org</a></p>""" + "\n",
+        """<p><a href="http://www.commonmark.org">www.commonmark.org</a></p>""" + "\n",
     ),
     GfmAutolinkExample(
         2,
         "Visit www.commonmark.org/help for more information.\n",
-        "<p>Visit <a href=\"http://www.commonmark.org/help\">www.commonmark.org/help</a> for more information.</p>\n",
-        "<p>Visit <a href=\"http://www.commonmark.org/help\">www.commonmark.org/help</a> for more information.</p>\n",
+        """<p>Visit <a href="http://www.commonmark.org/help">www.commonmark.org/help</a> for more information.</p>""" + "\n",
+        """<p>Visit <a href="http://www.commonmark.org/help">www.commonmark.org/help</a> for more information.</p>""" + "\n",
     ),
     GfmAutolinkExample(
         3,
-        "Visit www.commonmark.org.\n\nVisit www.commonmark.org/a.b.\n",
-        "<p>Visit <a href=\"http://www.commonmark.org\">www.commonmark.org</a>.</p>\n<p>Visit <a href=\"http://www.commonmark.org/a.b\">www.commonmark.org/a.b</a>.</p>\n",
-        "<p>Visit <a href=\"http://www.commonmark.org\">www.commonmark.org</a>.</p>\n<p>Visit <a href=\"http://www.commonmark.org/a.b\">www.commonmark.org/a.b</a>.</p>\n",
+        """
+            |Visit www.commonmark.org.
+            |
+            |Visit www.commonmark.org/a.b.
+            |
+        """.trimMargin(),
+        """
+            |<p>Visit <a href="http://www.commonmark.org">www.commonmark.org</a>.</p>
+            |<p>Visit <a href="http://www.commonmark.org/a.b">www.commonmark.org/a.b</a>.</p>
+            |
+        """.trimMargin(),
+        """
+            |<p>Visit <a href="http://www.commonmark.org">www.commonmark.org</a>.</p>
+            |<p>Visit <a href="http://www.commonmark.org/a.b">www.commonmark.org/a.b</a>.</p>
+            |
+        """.trimMargin(),
     ),
     GfmAutolinkExample(
         4,
-        "www.google.com/search?q=Markup+(business)\n\nwww.google.com/search?q=Markup+(business)))\n\n(www.google.com/search?q=Markup+(business))\n\n(www.google.com/search?q=Markup+(business)\n",
-        "<p><a href=\"http://www.google.com/search?q=Markup+(business)\">www.google.com/search?q=Markup+(business)</a></p>\n<p><a href=\"http://www.google.com/search?q=Markup+(business)\">www.google.com/search?q=Markup+(business)</a>))</p>\n<p>(<a href=\"http://www.google.com/search?q=Markup+(business)\">www.google.com/search?q=Markup+(business)</a>)</p>\n<p>(<a href=\"http://www.google.com/search?q=Markup+(business)\">www.google.com/search?q=Markup+(business)</a></p>\n",
-        "<p><a href=\"http://www.google.com/search?q=Markup+(business)\">www.google.com/search?q=Markup+(business)</a></p>\n<p><a href=\"http://www.google.com/search?q=Markup+(business)\">www.google.com/search?q=Markup+(business)</a>))</p>\n<p>(<a href=\"http://www.google.com/search?q=Markup+(business)\">www.google.com/search?q=Markup+(business)</a>)</p>\n<p>(<a href=\"http://www.google.com/search?q=Markup+(business)\">www.google.com/search?q=Markup+(business)</a></p>\n",
+        """
+            |www.google.com/search?q=Markup+(business)
+            |
+            |www.google.com/search?q=Markup+(business)))
+            |
+            |(www.google.com/search?q=Markup+(business))
+            |
+            |(www.google.com/search?q=Markup+(business)
+            |
+        """.trimMargin(),
+        """
+            |<p><a href="http://www.google.com/search?q=Markup+(business)">www.google.com/search?q=Markup+(business)</a></p>
+            |<p><a href="http://www.google.com/search?q=Markup+(business)">www.google.com/search?q=Markup+(business)</a>))</p>
+            |<p>(<a href="http://www.google.com/search?q=Markup+(business)">www.google.com/search?q=Markup+(business)</a>)</p>
+            |<p>(<a href="http://www.google.com/search?q=Markup+(business)">www.google.com/search?q=Markup+(business)</a></p>
+            |
+        """.trimMargin(),
+        """
+            |<p><a href="http://www.google.com/search?q=Markup+(business)">www.google.com/search?q=Markup+(business)</a></p>
+            |<p><a href="http://www.google.com/search?q=Markup+(business)">www.google.com/search?q=Markup+(business)</a>))</p>
+            |<p>(<a href="http://www.google.com/search?q=Markup+(business)">www.google.com/search?q=Markup+(business)</a>)</p>
+            |<p>(<a href="http://www.google.com/search?q=Markup+(business)">www.google.com/search?q=Markup+(business)</a></p>
+            |
+        """.trimMargin(),
     ),
     GfmAutolinkExample(
         5,
         "www.google.com/search?q=(business))+ok\n",
-        "<p><a href=\"http://www.google.com/search?q=(business))+ok\">www.google.com/search?q=(business))+ok</a></p>\n",
-        "<p><a href=\"http://www.google.com/search?q=(business)\">www.google.com/search?q=(business)</a>)+ok</p>\n",
+        """<p><a href="http://www.google.com/search?q=(business))+ok">www.google.com/search?q=(business))+ok</a></p>""" + "\n",
+        """<p><a href="http://www.google.com/search?q=(business)">www.google.com/search?q=(business)</a>)+ok</p>""" + "\n",
     ),
     GfmAutolinkExample(
         6,
-        "www.google.com/search?q=commonmark&hl=en\n\nwww.google.com/search?q=commonmark&hl;\n",
-        "<p><a href=\"http://www.google.com/search?q=commonmark&amp;hl=en\">www.google.com/search?q=commonmark&amp;hl=en</a></p>\n<p><a href=\"http://www.google.com/search?q=commonmark\">www.google.com/search?q=commonmark</a>&amp;hl;</p>\n",
-        "<p><a href=\"http://www.google.com/search?q=commonmark&amp;hl=en\">www.google.com/search?q=commonmark&amp;hl=en</a></p>\n<p><a href=\"http://www.google.com/search?q=commonmark&amp;hl\">www.google.com/search?q=commonmark&amp;hl</a>;</p>\n",
+        """
+            |www.google.com/search?q=commonmark&hl=en
+            |
+            |www.google.com/search?q=commonmark&hl;
+            |
+        """.trimMargin(),
+        """
+            |<p><a href="http://www.google.com/search?q=commonmark&amp;hl=en">www.google.com/search?q=commonmark&amp;hl=en</a></p>
+            |<p><a href="http://www.google.com/search?q=commonmark">www.google.com/search?q=commonmark</a>&amp;hl;</p>
+            |
+        """.trimMargin(),
+        """
+            |<p><a href="http://www.google.com/search?q=commonmark&amp;hl=en">www.google.com/search?q=commonmark&amp;hl=en</a></p>
+            |<p><a href="http://www.google.com/search?q=commonmark&amp;hl">www.google.com/search?q=commonmark&amp;hl</a>;</p>
+            |
+        """.trimMargin(),
     ),
     GfmAutolinkExample(
         7,
         "www.commonmark.org/he<lp\n",
-        "<p><a href=\"http://www.commonmark.org/he\">www.commonmark.org/he</a>&lt;lp</p>\n",
-        "<p><a href=\"http://www.commonmark.org/he\">www.commonmark.org/he</a>&lt;lp</p>\n",
+        """<p><a href="http://www.commonmark.org/he">www.commonmark.org/he</a>&lt;lp</p>""" + "\n",
+        """<p><a href="http://www.commonmark.org/he">www.commonmark.org/he</a>&lt;lp</p>""" + "\n",
     ),
     GfmAutolinkExample(
         8,
-        "http://commonmark.org\n\n(Visit https://encrypted.google.com/search?q=Markup+(business))\n\nAnonymous FTP is available at ftp://foo.bar.baz.\n",
-        "<p><a href=\"http://commonmark.org\">http://commonmark.org</a></p>\n<p>(Visit <a href=\"https://encrypted.google.com/search?q=Markup+(business)\">https://encrypted.google.com/search?q=Markup+(business)</a>)</p>\n<p>Anonymous FTP is available at <a href=\"ftp://foo.bar.baz\">ftp://foo.bar.baz</a>.</p>\n",
-        "<p><a href=\"http://commonmark.org\">http://commonmark.org</a></p>\n<p>(Visit <a href=\"https://encrypted.google.com/search?q=Markup+(business)\">https://encrypted.google.com/search?q=Markup+(business)</a>)</p>\n<p>Anonymous FTP is available at <a href=\"ftp://foo.bar.baz\">ftp://foo.bar.baz</a>.</p>\n",
+        """
+            |http://commonmark.org
+            |
+            |(Visit https://encrypted.google.com/search?q=Markup+(business))
+            |
+            |Anonymous FTP is available at ftp://foo.bar.baz.
+            |
+        """.trimMargin(),
+        """
+            |<p><a href="http://commonmark.org">http://commonmark.org</a></p>
+            |<p>(Visit <a href="https://encrypted.google.com/search?q=Markup+(business)">https://encrypted.google.com/search?q=Markup+(business)</a>)</p>
+            |<p>Anonymous FTP is available at <a href="ftp://foo.bar.baz">ftp://foo.bar.baz</a>.</p>
+            |
+        """.trimMargin(),
+        """
+            |<p><a href="http://commonmark.org">http://commonmark.org</a></p>
+            |<p>(Visit <a href="https://encrypted.google.com/search?q=Markup+(business)">https://encrypted.google.com/search?q=Markup+(business)</a>)</p>
+            |<p>Anonymous FTP is available at <a href="ftp://foo.bar.baz">ftp://foo.bar.baz</a>.</p>
+            |
+        """.trimMargin(),
     ),
     GfmAutolinkExample(
         9,
         "foo@bar.baz\n",
-        "<p><a href=\"mailto:foo@bar.baz\">foo@bar.baz</a></p>\n",
-        "<p><a href=\"mailto:foo@bar.baz\">foo@bar.baz</a></p>\n",
+        """<p><a href="mailto:foo@bar.baz">foo@bar.baz</a></p>""" + "\n",
+        """<p><a href="mailto:foo@bar.baz">foo@bar.baz</a></p>""" + "\n",
     ),
     GfmAutolinkExample(
         10,
         "hello@mail+xyz.example isn't valid, but hello+xyz@mail.example is.\n",
-        "<p>hello@mail+xyz.example isn't valid, but <a href=\"mailto:hello+xyz@mail.example\">hello+xyz@mail.example</a> is.</p>\n",
-        "<p>hello@mail+xyz.example isn't valid, but <a href=\"mailto:hello+xyz@mail.example\">hello+xyz@mail.example</a> is.</p>\n",
+        """<p>hello@mail+xyz.example isn't valid, but <a href="mailto:hello+xyz@mail.example">hello+xyz@mail.example</a> is.</p>""" + "\n",
+        """<p>hello@mail+xyz.example isn't valid, but <a href="mailto:hello+xyz@mail.example">hello+xyz@mail.example</a> is.</p>""" + "\n",
     ),
     GfmAutolinkExample(
         11,
-        "a.b-c_d@a.b\n\na.b-c_d@a.b.\n\na.b-c_d@a.b-\n\na.b-c_d@a.b_\n",
-        "<p><a href=\"mailto:a.b-c_d@a.b\">a.b-c_d@a.b</a></p>\n<p><a href=\"mailto:a.b-c_d@a.b\">a.b-c_d@a.b</a>.</p>\n<p>a.b-c_d@a.b-</p>\n<p>a.b-c_d@a.b_</p>\n",
-        "<p><a href=\"mailto:a.b-c_d@a.b\">a.b-c_d@a.b</a></p>\n<p><a href=\"mailto:a.b-c_d@a.b\">a.b-c_d@a.b</a>.</p>\n<p><a href=\"mailto:a.b-c_d@a.b\">a.b-c_d@a.b</a>-</p>\n<p><a href=\"mailto:a.b-c_d@a.b\">a.b-c_d@a.b</a>_</p>\n",
+        """
+            |a.b-c_d@a.b
+            |
+            |a.b-c_d@a.b.
+            |
+            |a.b-c_d@a.b-
+            |
+            |a.b-c_d@a.b_
+            |
+        """.trimMargin(),
+        """
+            |<p><a href="mailto:a.b-c_d@a.b">a.b-c_d@a.b</a></p>
+            |<p><a href="mailto:a.b-c_d@a.b">a.b-c_d@a.b</a>.</p>
+            |<p>a.b-c_d@a.b-</p>
+            |<p>a.b-c_d@a.b_</p>
+            |
+        """.trimMargin(),
+        """
+            |<p><a href="mailto:a.b-c_d@a.b">a.b-c_d@a.b</a></p>
+            |<p><a href="mailto:a.b-c_d@a.b">a.b-c_d@a.b</a>.</p>
+            |<p><a href="mailto:a.b-c_d@a.b">a.b-c_d@a.b</a>-</p>
+            |<p><a href="mailto:a.b-c_d@a.b">a.b-c_d@a.b</a>_</p>
+            |
+        """.trimMargin(),
     ),
 )

@@ -22,41 +22,73 @@ class TaskListItemsTest {
     fun syntaxAndHtmlRendering() {
         assertHtml(
             "- [x] this is *done*\n",
-            "<ul>\n<li>$HTML_CHECKED this is <em>done</em></li>\n</ul>\n",
+            """
+                |<ul>
+                |<li>$HTML_CHECKED this is <em>done</em></li>
+                |</ul>
+                |
+            """.trimMargin(),
         )
         assertHtml(
             "- [ ] do this\n",
-            "<ul>\n<li>$HTML_UNCHECKED do this</li>\n</ul>\n",
+            """
+                |<ul>
+                |<li>$HTML_UNCHECKED do this</li>
+                |</ul>
+                |
+            """.trimMargin(),
         )
         assertHtml(
-            "- [x] foo\n  - [ ] bar\n  - [x] baz\n- [ ] bim",
-            "<ul>\n" +
-                "<li>$HTML_CHECKED foo\n" +
-                "<ul>\n" +
-                "<li>$HTML_UNCHECKED bar</li>\n" +
-                "<li>$HTML_CHECKED baz</li>\n" +
-                "</ul>\n" +
-                "</li>\n" +
-                "<li>$HTML_UNCHECKED bim</li>\n" +
-                "</ul>\n",
+            """
+                |- [x] foo
+                |  - [ ] bar
+                |  - [x] baz
+                |- [ ] bim
+            """.trimMargin(),
+            """
+                |<ul>
+                |<li>$HTML_CHECKED foo
+                |<ul>
+                |<li>$HTML_UNCHECKED bar</li>
+                |<li>$HTML_CHECKED baz</li>
+                |</ul>
+                |</li>
+                |<li>$HTML_UNCHECKED bim</li>
+                |</ul>
+                |
+            """.trimMargin(),
         )
         assertHtml(
             "*   [ ]   do this\n*   [ ]   and this",
-            "<ul>\n<li>$HTML_UNCHECKED do this</li>\n<li>$HTML_UNCHECKED and this</li>\n</ul>\n",
+            """
+                |<ul>
+                |<li>$HTML_UNCHECKED do this</li>
+                |<li>$HTML_UNCHECKED and this</li>
+                |</ul>
+                |
+            """.trimMargin(),
         )
         assertHtml(
-            "+ [x] one\n  - [ ] two\n    * [x] three\n",
-            "<ul>\n" +
-                "<li>$HTML_CHECKED one\n" +
-                "<ul>\n" +
-                "<li>$HTML_UNCHECKED two\n" +
-                "<ul>\n" +
-                "<li>$HTML_CHECKED three</li>\n" +
-                "</ul>\n" +
-                "</li>\n" +
-                "</ul>\n" +
-                "</li>\n" +
-                "</ul>\n",
+            """
+                |+ [x] one
+                |  - [ ] two
+                |    * [x] three
+                |
+            """.trimMargin(),
+            """
+                |<ul>
+                |<li>$HTML_CHECKED one
+                |<ul>
+                |<li>$HTML_UNCHECKED two
+                |<ul>
+                |<li>$HTML_CHECKED three</li>
+                |</ul>
+                |</li>
+                |</ul>
+                |</li>
+                |</ul>
+                |
+            """.trimMargin(),
         )
     }
 
@@ -74,16 +106,37 @@ class TaskListItemsTest {
             assertHtml(source, "<ul>\n<li>$expectedText</li>\n</ul>\n")
         }
         assertHtml(
-            "* [  ] nor this\n* [XX] nor this\n",
-            "<ul>\n<li>[  ] nor this</li>\n<li>[XX] nor this</li>\n</ul>\n",
+            """
+                |* [  ] nor this
+                |* [XX] nor this
+                |
+            """.trimMargin(),
+            """
+                |<ul>
+                |<li>[  ] nor this</li>
+                |<li>[XX] nor this</li>
+                |</ul>
+                |
+            """.trimMargin(),
         )
         assertHtml(
             "+ text before [x] is not a task\n",
-            "<ul>\n<li>text before [x] is not a task</li>\n</ul>\n",
+            """
+                |<ul>
+                |<li>text before [x] is not a task</li>
+                |</ul>
+                |
+            """.trimMargin(),
         )
         assertHtml(
             "* [x]  \n* [ ]  \n",
-            "<ul>\n<li>[x]</li>\n<li>[ ]</li>\n</ul>\n",
+            """
+                |<ul>
+                |<li>[x]</li>
+                |<li>[ ]</li>
+                |</ul>
+                |
+            """.trimMargin(),
         )
     }
 
@@ -94,11 +147,32 @@ class TaskListItemsTest {
                 listOf(
                     "- [x] I am checked\n",
                     "- [ ] I am unchecked\n",
-                    "- [x] I am checked\n- [ ] I am unchecked\n",
-                    "- [ ] I am unchecked\n  - [x] I am a checked child\n",
-                    "- [x] I am **boldly** checked\n- [ ] I am *italicly* unchecked\n",
-                    "- [x] I am checked\n- [ ] I am unchecked\n- I am not a task item\n",
-                    "1. [x] I am checked\n2. [ ] I am unchecked\n",
+                    """
+                        |- [x] I am checked
+                        |- [ ] I am unchecked
+                        |
+                    """.trimMargin(),
+                    """
+                        |- [ ] I am unchecked
+                        |  - [x] I am a checked child
+                        |
+                    """.trimMargin(),
+                    """
+                        |- [x] I am **boldly** checked
+                        |- [ ] I am *italicly* unchecked
+                        |
+                    """.trimMargin(),
+                    """
+                        |- [x] I am checked
+                        |- [ ] I am unchecked
+                        |- I am not a task item
+                        |
+                    """.trimMargin(),
+                    """
+                        |1. [x] I am checked
+                        |2. [ ] I am unchecked
+                        |
+                    """.trimMargin(),
                 )
         ) {
             assertEquals(input, markdown.render(parser.parse(input)))
@@ -125,7 +199,7 @@ class TaskListItemsTest {
     }
 
     companion object {
-        private const val HTML_CHECKED = "<input type=\"checkbox\" disabled=\"\" checked=\"\">"
-        private const val HTML_UNCHECKED = "<input type=\"checkbox\" disabled=\"\">"
+        private const val HTML_CHECKED = """<input type="checkbox" disabled="" checked="">"""
+        private const val HTML_UNCHECKED = """<input type="checkbox" disabled="">"""
     }
 }

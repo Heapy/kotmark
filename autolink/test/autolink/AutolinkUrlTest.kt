@@ -73,8 +73,8 @@ class AutolinkUrlTest : AutolinkTestCase() {
         assertLinked(extractor, LinkType.URL, "ab://", "ab://")
         assertLinked(extractor, LinkType.URL, "http://", "http://")
         assertLinked(extractor, LinkType.URL, "http:// ", "http:// ")
-        assertLinked(extractor, LinkType.URL, "\"http://\"", "\"http://\"")
-        assertLinked(extractor, LinkType.URL, "\"http://...\", ", "\"http://...\", ")
+        assertLinked(extractor, LinkType.URL, """"http://"""", """"http://"""")
+        assertLinked(extractor, LinkType.URL, """"http://...", """, """"http://...", """)
 
         assertLinked(extractor, LinkType.URL, "http://a.", "|http://a|.")
 
@@ -86,8 +86,8 @@ class AutolinkUrlTest : AutolinkTestCase() {
         assertLinked(extractor, LinkType.URL, "ab://", "ab://")
         assertLinked(extractor, LinkType.URL, "http://", "http://")
         assertLinked(extractor, LinkType.URL, "http:// ", "http:// ")
-        assertLinked(extractor, LinkType.URL, "\"http://\"", "\"http://\"")
-        assertLinked(extractor, LinkType.URL, "\"http://...\", ", "\"http://...\", ")
+        assertLinked(extractor, LinkType.URL, """"http://"""", """"http://"""")
+        assertLinked(extractor, LinkType.URL, """"http://...", """, """"http://...", """)
 
         assertLinked(extractor, LinkType.URL, "http://a.", "|http://a|.")
 
@@ -219,7 +219,7 @@ class AutolinkUrlTest : AutolinkTestCase() {
         assertLinked(extractor, LinkType.URL, "(http://example.org/)", "(|http://example.org/|)")
         assertLinked(extractor, LinkType.URL, "[http://example.org/]", "[|http://example.org/|]")
         assertLinked(extractor, LinkType.URL, "{http://example.org/}", "{|http://example.org/|}")
-        assertLinked(extractor, LinkType.URL, "\"http://example.org/\"", "\"|http://example.org/|\"")
+        assertLinked(extractor, LinkType.URL, """"http://example.org/"""", """"|http://example.org/|"""")
         assertLinked(extractor, LinkType.URL, "'http://example.org/'", "'|http://example.org/|'")
         assertLinked(extractor, LinkType.URL, "http://foo[.]example[.]org/abc/", "|http://foo[.]example[.]org/abc/|")
 
@@ -235,7 +235,7 @@ class AutolinkUrlTest : AutolinkTestCase() {
         assertLinked(extractor, LinkType.URL, "(http://example.org/)", "(|http://example.org/|)")
         assertLinked(extractor, LinkType.URL, "[http://example.org/]", "[|http://example.org/|]")
         assertLinked(extractor, LinkType.URL, "{http://example.org/}", "{|http://example.org/|}")
-        assertLinked(extractor, LinkType.URL, "\"http://example.org/\"", "\"|http://example.org/|\"")
+        assertLinked(extractor, LinkType.URL, """"http://example.org/"""", """"|http://example.org/|"""")
         assertLinked(extractor, LinkType.URL, "'http://example.org/'", "'|http://example.org/|'")
         assertLinked(extractor, LinkType.URL, "http://foo[.]example[.]org/abc/", "|http://foo[.]example[.]org/abc/|")
 
@@ -283,8 +283,8 @@ class AutolinkUrlTest : AutolinkTestCase() {
         assertLinked(extractor, LinkType.URL, "http://example.org/'.", "|http://example.org/|'.")
         assertLinked(extractor, LinkType.URL, "http://example.org/it's", "|http://example.org/it's|")
         // " not allowed in URLs
-        assertLinked(extractor, LinkType.URL, "http://example.org/\"a", "|http://example.org/|\"a")
-        assertLinked(extractor, LinkType.URL, "http://example.org/\"a\"", "|http://example.org/|\"a\"")
+        assertLinked(extractor, LinkType.URL, """http://example.org/"a""", """|http://example.org/|"a""")
+        assertLinked(extractor, LinkType.URL, """http://example.org/"a"""", """|http://example.org/|"a"""")
         // ` not allowed in URLs
         assertLinked(extractor, LinkType.URL, "http://example.org/`a", "|http://example.org/|`a")
         assertLinked(extractor, LinkType.URL, "http://example.org/`a`", "|http://example.org/|`a`")
@@ -301,8 +301,8 @@ class AutolinkUrlTest : AutolinkTestCase() {
         assertLinked(extractor, LinkType.URL, "http://example.org/'.", "|http://example.org/|'.")
         assertLinked(extractor, LinkType.URL, "http://example.org/it's", "|http://example.org/it's|")
         // " not allowed in URLs
-        assertLinked(extractor, LinkType.URL, "http://example.org/\"a", "|http://example.org/|\"a")
-        assertLinked(extractor, LinkType.URL, "http://example.org/\"a\"", "|http://example.org/|\"a\"")
+        assertLinked(extractor, LinkType.URL, """http://example.org/"a""", """|http://example.org/|"a""")
+        assertLinked(extractor, LinkType.URL, """http://example.org/"a"""", """|http://example.org/|"a"""")
         // ` not allowed in URLs
         assertLinked(extractor, LinkType.URL, "http://example.org/`a", "|http://example.org/|`a")
         assertLinked(extractor, LinkType.URL, "http://example.org/`a`", "|http://example.org/|`a`")
@@ -312,9 +312,9 @@ class AutolinkUrlTest : AutolinkTestCase() {
     @Test
     fun htmlConfiguration1() {
         val extractor = LinkExtractor.builder().linkTypes(setOf(LinkType.URL)).emailDomainMustHaveDot(true).build()
-        assertLinked(extractor, LinkType.URL, "http://example.org\">", "|http://example.org|\">")
+        assertLinked(extractor, LinkType.URL, """http://example.org">""", """|http://example.org|">""")
         assertLinked(extractor, LinkType.URL, "http://example.org'>", "|http://example.org|'>")
-        assertLinked(extractor, LinkType.URL, "http://example.org\"/>", "|http://example.org|\"/>")
+        assertLinked(extractor, LinkType.URL, """http://example.org"/>""", """|http://example.org|"/>""")
         assertLinked(extractor, LinkType.URL, "http://example.org'/>", "|http://example.org|'/>")
         assertLinked(extractor, LinkType.URL, "http://example.org<p>", "|http://example.org|<p>")
         assertLinked(extractor, LinkType.URL, "http://example.org</p>", "|http://example.org|</p>")
@@ -324,9 +324,9 @@ class AutolinkUrlTest : AutolinkTestCase() {
     @Test
     fun htmlConfiguration2() {
         val extractor = LinkExtractor.builder().linkTypes(LinkType.entries.toSet()).emailDomainMustHaveDot(true).build()
-        assertLinked(extractor, LinkType.URL, "http://example.org\">", "|http://example.org|\">")
+        assertLinked(extractor, LinkType.URL, """http://example.org">""", """|http://example.org|">""")
         assertLinked(extractor, LinkType.URL, "http://example.org'>", "|http://example.org|'>")
-        assertLinked(extractor, LinkType.URL, "http://example.org\"/>", "|http://example.org|\"/>")
+        assertLinked(extractor, LinkType.URL, """http://example.org"/>""", """|http://example.org|"/>""")
         assertLinked(extractor, LinkType.URL, "http://example.org'/>", "|http://example.org|'/>")
         assertLinked(extractor, LinkType.URL, "http://example.org<p>", "|http://example.org|<p>")
         assertLinked(extractor, LinkType.URL, "http://example.org</p>", "|http://example.org|</p>")
@@ -336,7 +336,7 @@ class AutolinkUrlTest : AutolinkTestCase() {
     @Test
     fun cssConfiguration1() {
         val extractor = LinkExtractor.builder().linkTypes(setOf(LinkType.URL)).emailDomainMustHaveDot(true).build()
-        assertLinked(extractor, LinkType.URL, "http://example.org\");", "|http://example.org|\");")
+        assertLinked(extractor, LinkType.URL, """http://example.org");""", """|http://example.org|");""")
         assertLinked(extractor, LinkType.URL, "http://example.org');", "|http://example.org|');")
 
     }
@@ -344,7 +344,7 @@ class AutolinkUrlTest : AutolinkTestCase() {
     @Test
     fun cssConfiguration2() {
         val extractor = LinkExtractor.builder().linkTypes(LinkType.entries.toSet()).emailDomainMustHaveDot(true).build()
-        assertLinked(extractor, LinkType.URL, "http://example.org\");", "|http://example.org|\");")
+        assertLinked(extractor, LinkType.URL, """http://example.org");""", """|http://example.org|");""")
         assertLinked(extractor, LinkType.URL, "http://example.org');", "|http://example.org|');")
 
     }

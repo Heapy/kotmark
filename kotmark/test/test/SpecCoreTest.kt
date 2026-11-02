@@ -32,7 +32,7 @@ class SpecCoreTest {
         val overrides =
             mapOf(
                 "[XSS](javascript&amp;colon;alert%28&#039;XSS&#039;%29)\n" to
-                    "<p><a href=\"javascript&amp;colon;alert%28'XSS'%29\">XSS</a></p>\n",
+                    """<p><a href="javascript&amp;colon;alert%28'XSS'%29">XSS</a></p>""" + "\n",
                 "\uFEFF# Hi\n" to "<p>\uFEFF# Hi</p>\n",
             )
         assertSpec(
@@ -65,9 +65,9 @@ class SpecCoreTest {
             if (comparableActual != expected) {
                 failures +=
                     buildString {
-                        append("section \"")
+                        append("""section """")
                         append(example.section)
-                        append("\" example ")
+                        append("""" example """)
                         append(example.number)
                         append("\nsource:\n")
                         append(example.source)

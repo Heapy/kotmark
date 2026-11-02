@@ -3,11 +3,11 @@
 package io.heapy.kotmark.testfixtures.generated
 
 internal fun embeddedFixture(path: String): String = when (path) {
-    "commonmark-java/spec.txt" -> corpus0()
-    "commonmark-java/gfm-spec.txt" -> corpus1()
-    "commonmark-java/cmark-regression.txt" -> corpus2()
-    "commonmark-java/commonmark.js-regression.txt" -> corpus3()
-    "commonmark-java/alerts-spec.txt" -> corpus4()
-    "commonmark-spec/spec.txt" -> corpus5()
+    """commonmark-java/spec.txt""" -> corpus0()
+    """commonmark-java/gfm-spec.txt""" -> corpus1()
+    """commonmark-java/cmark-regression.txt""" -> corpus2()
+    """commonmark-java/commonmark.js-regression.txt""" -> corpus3()
+    """commonmark-java/alerts-spec.txt""" -> corpus4()
+    """commonmark-spec/spec.txt""" -> corpus5()
     else -> error("Unknown bundled test fixture: $path")
 }

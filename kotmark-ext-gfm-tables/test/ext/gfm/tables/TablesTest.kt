@@ -24,8 +24,16 @@ class TablesTest {
         assertEquals("<p>Abc|Def|Ghi\n---|---\n1|2|3</p>\n", render("Abc|Def|Ghi\n---|---\n1|2|3"))
         assertEquals(
             tableHtml(
-                "<th align=\"left\">Abc</th>\n<th align=\"center\">Def</th>\n",
-                "<td align=\"left\">1</td>\n<td align=\"center\">2</td>\n",
+                """
+                    |<th align="left">Abc</th>
+                    |<th align="center">Def</th>
+                    |
+                """.trimMargin(),
+                """
+                    |<td align="left">1</td>
+                    |<td align="center">2</td>
+                    |
+                """.trimMargin(),
             ),
             render("Abc|Def\n:---|:---:\n1|2"),
         )
@@ -35,22 +43,48 @@ class TablesTest {
     fun escapedPipesPaddingAndColumnCounts() {
         assertEquals(
             tableHtml(
-                "<th>Abc</th>\n<th>Def</th>\n",
-                "<td>1|2</td>\n<td>20</td>\n",
+                """
+                    |<th>Abc</th>
+                    |<th>Def</th>
+                    |
+                """.trimMargin(),
+                """
+                    |<td>1|2</td>
+                    |<td>20</td>
+                    |
+                """.trimMargin(),
             ),
             render(" Abc  | Def \n --- | --- \n 1\\|2 | 20 "),
         )
         assertEquals(
             tableHtml(
-                "<th>Abc</th>\n<th>Def</th>\n<th>Ghi</th>\n",
-                "<td>1</td>\n<td>2</td>\n<td></td>\n",
+                """
+                    |<th>Abc</th>
+                    |<th>Def</th>
+                    |<th>Ghi</th>
+                    |
+                """.trimMargin(),
+                """
+                    |<td>1</td>
+                    |<td>2</td>
+                    |<td></td>
+                    |
+                """.trimMargin(),
             ),
             render("Abc|Def|Ghi\n---|---|---\n1|2"),
         )
         assertEquals(
             tableHtml(
-                "<th>Abc</th>\n<th>Def</th>\n",
-                "<td>1</td>\n<td>2</td>\n",
+                """
+                    |<th>Abc</th>
+                    |<th>Def</th>
+                    |
+                """.trimMargin(),
+                """
+                    |<td>1</td>
+                    |<td>2</td>
+                    |
+                """.trimMargin(),
             ),
             render("Abc|Def\n---|---\n1|2|3"),
         )
@@ -60,8 +94,16 @@ class TablesTest {
     fun danglingPipeEndsTable() {
         assertEquals(
             tableHtml(
-                "<th>Abc</th>\n<th>Def</th>\n",
-                "<td>1</td>\n<td>2</td>\n",
+                """
+                    |<th>Abc</th>
+                    |<th>Def</th>
+                    |
+                """.trimMargin(),
+                """
+                    |<td>1</td>
+                    |<td>2</td>
+                    |
+                """.trimMargin(),
             ) + "<p>|</p>\n",
             render("Abc|Def\n---|---\n1|2\n  |  "),
         )
@@ -74,11 +116,36 @@ class TablesTest {
             input in
                 listOf(
                     "|Abc|\n|---|\n",
-                    "|Abc|Def|\n|---|---|\n|1|2|\n",
-                    "|Abc|Def|\n|:---|---:|\n|1|2|\n",
-                    "> |Abc|Def|\n> |---|---|\n> |1|2|\n",
-                    "|Abc|Def|\n|---|---|\n|Pipe in|text \\||\n",
-                    "|Abc|Def|\n|---|---|\n|Pipe in|code `\\|`|\n",
+                    """
+                        ||Abc|Def|
+                        ||---|---|
+                        ||1|2|
+                        |
+                    """.trimMargin(),
+                    """
+                        ||Abc|Def|
+                        ||:---|---:|
+                        ||1|2|
+                        |
+                    """.trimMargin(),
+                    """
+                        |> |Abc|Def|
+                        |> |---|---|
+                        |> |1|2|
+                        |
+                    """.trimMargin(),
+                    """
+                        ||Abc|Def|
+                        ||---|---|
+                        ||Pipe in|text \||
+                        |
+                    """.trimMargin(),
+                    """
+                        ||Abc|Def|
+                        ||---|---|
+                        ||Pipe in|code `\|`|
+                        |
+                    """.trimMargin(),
                 )
         ) {
             assertEquals(input, markdown.render(parser.parse(input)))
@@ -91,12 +158,27 @@ class TablesTest {
 
     @Test
     fun textRenderingModes() {
-        val source = "Foo\n\nAbc|Def\n---|---\n1|2\n\nBar"
+        val source = """
+            |Foo
+            |
+            |Abc|Def
+            |---|---
+            |1|2
+            |
+            |Bar
+        """.trimMargin()
         assertText(source, LineBreakRendering.COMPACT, "Foo\nAbc| Def\n1| 2\nBar")
         assertText(
             source,
             LineBreakRendering.SEPARATE_BLOCKS,
-            "Foo\n\nAbc| Def\n1| 2\n\nBar",
+            """
+                |Foo
+                |
+                |Abc| Def
+                |1| 2
+                |
+                |Bar
+            """.trimMargin(),
         )
         assertText(source, LineBreakRendering.STRIP, "Foo Abc| Def 1| 2 Bar")
     }
@@ -153,18 +235,21 @@ class TablesTest {
                 .extensions(extensions)
                 .build()
         assertEquals(
-            "<table test=\"block\">\n" +
-                "<thead test=\"head\">\n" +
-                "<tr test=\"row\">\n" +
-                "<th test=\"cell\">A</th>\n" +
-                "</tr>\n" +
-                "</thead>\n" +
-                "<tbody test=\"body\">\n" +
-                "<tr test=\"row\">\n" +
-                "<td test=\"cell\">1</td>\n" +
-                "</tr>\n" +
-                "</tbody>\n" +
-                "</table>\n",
+            """
+                |<table test="block">
+                |<thead test="head">
+                |<tr test="row">
+                |<th test="cell">A</th>
+                |</tr>
+                |</thead>
+                |<tbody test="body">
+                |<tr test="row">
+                |<td test="cell">1</td>
+                |</tr>
+                |</tbody>
+                |</table>
+                |
+            """.trimMargin(),
             renderer.render(parser.parse("A|\n-|\n1|")),
         )
     }
@@ -181,9 +266,12 @@ class TablesTest {
     private fun render(source: String): String = html.render(parser.parse(source))
 
     private fun tableHtml(headerCells: String, bodyCells: String? = null): String =
-        "<table>\n" +
-            "<thead>\n" +
-            "<tr>\n" +
+        """
+            |<table>
+            |<thead>
+            |<tr>
+            |
+        """.trimMargin() +
             headerCells +
             "</tr>\n" +
             "</thead>\n" +
@@ -191,9 +279,12 @@ class TablesTest {
                 "<tbody>\n" +
                     "<tr>\n" +
                     bodyCells +
-                    "</tr>\n" +
-                    "</tbody>\n" +
-                    "</table>\n"
+                    """
+                        |</tr>
+                        |</tbody>
+                        |</table>
+                        |
+                    """.trimMargin()
             } else {
                 "</table>\n"
             }

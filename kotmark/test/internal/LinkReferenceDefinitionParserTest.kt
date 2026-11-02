@@ -54,7 +54,7 @@ class LinkReferenceDefinitionParserTest {
     fun invalidTitleStillKeepsDestinationReference() {
         val parser = LinkReferenceDefinitionParser()
         parser.parseLine("[foo]: /url")
-        parser.parseLine("\"title\" bad")
+        parser.parseLine(""""title" bad""")
         assertEquals(State.PARAGRAPH, parser.state)
         assertDefinition(parser.definitions.single(), "foo", "/url", null)
     }

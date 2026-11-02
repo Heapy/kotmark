@@ -9,5 +9,5 @@ data class Example(
     val html: String,
 ) {
     override fun toString(): String =
-        "File \"$filename\" section \"$section\" example $exampleNumber"
+        """File "$filename" section "$section" example $exampleNumber"""
 }
