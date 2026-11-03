@@ -106,7 +106,7 @@ object LinkScanner {
         var empty = true
         while (scanner.hasNext()) {
             when (val current = scanner.peek()) {
-                ' ' -> return !empty
+                ' ' -> return !empty && parens == 0
                 '\\' -> {
                     scanner.next()
                     if (isEscapable(scanner.peek())) {
@@ -132,14 +132,14 @@ object LinkScanner {
 
                 else -> {
                     if (current.isIsoControl()) {
-                        return !empty
+                        return !empty && parens == 0
                     }
                     scanner.next()
                 }
             }
             empty = false
         }
-        return true
+        return parens == 0
     }
 
     private fun isEscapable(c: Char): Boolean =

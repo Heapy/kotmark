@@ -28,6 +28,34 @@ class LinkScannerTest {
     }
 
     @Test
+    fun unbalancedDestinationAtEof() {
+        assertScan("a(b", false, "a(b", LinkScanner::scanLinkDestination)
+    }
+
+    @Test
+    fun unbalancedDestinationBeforeSpace() {
+        assertScan("a(b title", false, "a(b", LinkScanner::scanLinkDestination)
+    }
+
+    @Test
+    fun unbalancedDestinationBeforeControl() {
+        for (control in listOf('\t', '\n', '\u007F', '\u0085')) {
+            assertScan("a(b${control}title", false, "a(b", LinkScanner::scanLinkDestination)
+        }
+        val scanner = Scanner.of(SourceLines.of(listOf(SourceLine.of("a(b", null), SourceLine.of("c", null))))
+        assertFalse(LinkScanner.scanLinkDestination(scanner))
+        assertEquals('\n', scanner.peek())
+    }
+
+    @Test
+    fun balancedEscapedAndAngleBracketDestinationsRemainValid() {
+        assertScan("a(b)", true, "a(b)", LinkScanner::scanLinkDestination)
+        assertScan("a(b)\ttitle", true, "a(b)", LinkScanner::scanLinkDestination)
+        assertScan("a\\(b", true, "a\\(b", LinkScanner::scanLinkDestination)
+        assertScan("<a(b>", true, "<a(b>", LinkScanner::scanLinkDestination)
+    }
+
+    @Test
     fun linkTitle() {
         assertScan(""""title"""", true, """"title"""", LinkScanner::scanLinkTitle)
         assertScan("'title'", true, "'title'", LinkScanner::scanLinkTitle)

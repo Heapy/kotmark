@@ -4,6 +4,17 @@ import kotlin.test.Test
 
 class SpecialInputTest : CoreRenderingTestCase() {
     @Test
+    fun linkReferenceDefinitionWithUnbalancedParens() {
+        assertRendering("[foo]: (", "<p>[foo]: (</p>\n")
+        assertRendering("[foo]: (\nbar", "<p>[foo]: (\nbar</p>\n")
+        assertRendering("[foo]: a(b\n\n[foo]", "<p>[foo]: a(b</p>\n<p>[foo]</p>\n")
+        assertRendering(
+            "[foo]: a(b) \"t\"\n\n[foo]",
+            "<p><a href=\"a(b)\" title=\"t\">foo</a></p>\n",
+        )
+    }
+
+    @Test
     fun codeSpansAfterUnmatchedBackticks() {
         assertRendering("`` unmatched `matched`", "<p>`` unmatched <code>matched</code></p>\n")
         assertRendering("`` unmatched\n`a\nb`", "<p>`` unmatched\n<code>a b</code></p>\n")
