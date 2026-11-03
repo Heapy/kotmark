@@ -64,6 +64,38 @@ class YamlFrontMatterTest {
     }
 
     @Test
+    fun longLiteralBlockPreservesTrimmedLinesAndBlankLines() {
+        val lines = listOf("") + List(5_000) { index ->
+            if (index % 17 == 0) "  " else "  line $index  "
+        } + listOf("")
+        assertFrontMatter(
+            "---\nliteral: |\n${lines.joinToString("\n")}\nnext: 'done'\n---\n",
+            mapOf("literal" to listOf(lines.joinToString("\n") { it.trim() }), "next" to listOf("done")),
+        )
+    }
+
+    @Test
+    fun valuesStaySeparateAcrossKeyTransitionsAndParserReuse() {
+        val document = parser.parse(
+            "---\nfirst: |\n  first line\n  second line\n" +
+                "quoted: 'it''s quoted'\nlist:\n  - 'one'\n  - \"two\"\n" +
+                "empty:\nlast: |\n  final line\n---\n",
+        )
+        val expected = mapOf(
+            "first" to listOf("first line\nsecond line"),
+            "quoted" to listOf("it's quoted"),
+            "list" to listOf("one", "two"),
+            "empty" to emptyList(),
+            "last" to listOf("final line"),
+        )
+        val original = YamlFrontMatterVisitor.readData(document)
+        assertEquals(expected, original)
+        assertFrontMatter("---\nfirst: |\n  replacement\n---\n", mapOf("first" to listOf("replacement")))
+        assertEquals(expected, original)
+        assertEquals(expected, YamlFrontMatterVisitor.readData(document))
+    }
+
+    @Test
     fun onlyRecognizesFrontMatterAtDocumentStart() {
         val input = """
             |# hello

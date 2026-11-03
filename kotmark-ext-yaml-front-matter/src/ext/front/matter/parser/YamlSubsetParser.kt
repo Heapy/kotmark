@@ -9,7 +9,7 @@ import io.heapy.kotmark.parser.SourceLine
 class YamlSubsetParser : FrontMatterParser {
     private var inLiteral = false
     private var currentKey: String? = null
-    private var currentValues = mutableListOf<String>()
+    private var currentValues = mutableListOf<StringBuilder>()
 
     override fun onNextLine(block: YamlFrontMatterBlock, line: SourceLine) {
         val metadata = REGEX_METADATA.matchEntire(line.content)
@@ -22,22 +22,22 @@ class YamlSubsetParser : FrontMatterParser {
             if (value == "|") {
                 inLiteral = true
             } else if (value.isNotEmpty()) {
-                currentValues.add(parseString(value))
+                currentValues.add(StringBuilder(parseString(value)))
             }
         } else if (inLiteral) {
             val literal = REGEX_METADATA_LITERAL.matchEntire(line.content)
             if (literal != null) {
                 val value = literal.groupValues[1].trim()
                 if (currentValues.size == 1) {
-                    currentValues[0] = "${currentValues[0]}\n$value"
+                    currentValues[0].append('\n').append(value)
                 } else {
-                    currentValues.add(value)
+                    currentValues.add(StringBuilder(value))
                 }
             }
         } else {
             val listItem = REGEX_METADATA_LIST.matchEntire(line.content)
             if (listItem != null) {
-                currentValues.add(parseString(listItem.groupValues[1]))
+                currentValues.add(StringBuilder(parseString(listItem.groupValues[1])))
             }
         }
     }
@@ -48,7 +48,7 @@ class YamlSubsetParser : FrontMatterParser {
     }
 
     private fun appendCurrentNode(block: YamlFrontMatterBlock) {
-        currentKey?.let { block.appendChild(YamlFrontMatterNode(it, currentValues)) }
+        currentKey?.let { block.appendChild(YamlFrontMatterNode(it, currentValues.map { value -> value.toString() })) }
     }
 
     class Factory : FrontMatterParser.Factory {
