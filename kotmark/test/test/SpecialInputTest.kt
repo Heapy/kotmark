@@ -82,6 +82,16 @@ class SpecialInputTest : CoreRenderingTestCase() {
     }
 
     @Test
+    fun partiallyConsumedTabBeforeHtmlBlockStart() {
+        assertRendering(">\t<div>", "<blockquote>\n  <div>\n</blockquote>\n")
+    }
+
+    @Test
+    fun partiallyConsumedTabBeforeHtmlBlockContinuation() {
+        assertRendering("> <div>\n>\tfoo", "<blockquote>\n<div>\n  foo\n</blockquote>\n")
+    }
+
+    @Test
     fun tightListInBlockQuote() {
         assertRendering("> *\n> * a", "<blockquote>\n<ul>\n<li></li>\n<li>a</li>\n</ul>\n</blockquote>\n")
     }

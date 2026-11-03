@@ -259,6 +259,10 @@ class DocumentParser(
     }
 
     private fun setNewIndex(newIndex: Int) {
+        if (newIndex == index) {
+            // Preserve a partially consumed tab when staying at the current position.
+            return
+        }
         if (newIndex >= nextNonSpace) {
             currentIndex = nextNonSpace
             currentColumn = nextNonSpaceColumn
