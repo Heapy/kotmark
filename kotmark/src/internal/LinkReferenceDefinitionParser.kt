@@ -21,6 +21,7 @@ class LinkReferenceDefinitionParser {
     private var titleDelimiter: Char = Scanner.END
     private var title: StringBuilder? = null
     private var referenceValid: Boolean = false
+    private var referenceSourceSpanCount: Int = 0
 
     val paragraphLines: SourceLines
         get() = SourceLines.of(paragraphLinesField)
@@ -60,13 +61,18 @@ class LinkReferenceDefinitionParser {
 
     fun addSourceSpan(sourceSpan: SourceSpan) {
         sourceSpans.add(sourceSpan)
+        // Clearing paragraph lines commits a valid definition; its span arrives after parsing.
+        if (paragraphLinesField.isEmpty()) {
+            referenceSourceSpanCount = sourceSpans.size
+        }
     }
 
     fun removeLines(lines: Int): List<SourceSpan> {
-        val firstRemoved = (sourceSpans.size - lines).coerceAtLeast(0)
+        // Replacing paragraph lines must preserve spans already committed to a definition.
+        val firstRemoved = (sourceSpans.size - lines).coerceAtLeast(referenceSourceSpanCount)
         val removedSpans = sourceSpans.subList(firstRemoved, sourceSpans.size).toList()
         removeLast(lines, paragraphLinesField)
-        removeLast(lines, sourceSpans)
+        sourceSpans.subList(firstRemoved, sourceSpans.size).clear()
         return removedSpans
     }
 
@@ -206,10 +212,11 @@ class LinkReferenceDefinitionParser {
         val definition = LinkReferenceDefinition(
             label?.toString(),
             Escaping.unescapeString(destination.orEmpty()),
-            title?.let { Escaping.unescapeString(it.toString()) },
+            if (state != State.TITLE) title?.let { Escaping.unescapeString(it.toString()) } else null,
         )
-        definition.setSourceSpans(sourceSpans)
-        sourceSpans.clear()
+        definition.setSourceSpans(sourceSpans.subList(0, referenceSourceSpanCount))
+        sourceSpans.subList(0, referenceSourceSpanCount).clear()
+        referenceSourceSpanCount = 0
         definitionsField.add(definition)
 
         label = null

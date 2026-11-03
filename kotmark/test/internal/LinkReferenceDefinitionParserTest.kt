@@ -61,6 +61,66 @@ class LinkReferenceDefinitionParserTest {
     }
 
     @Test
+    fun invalidMultilineTitleKeepsParagraphSourceSpans() {
+        val parser = LinkReferenceDefinitionParser()
+        val definitionSpan = SourceSpan.of(0, 0, 0, 11)
+        val titleSpan = SourceSpan.of(1, 0, 12, 6)
+        val invalidSpan = SourceSpan.of(2, 0, 19, 4)
+        parser.parseLine("[foo]: /url")
+        parser.addSourceSpan(definitionSpan)
+        assertEquals(State.START_TITLE, parser.state)
+        parser.parseLine("(title")
+        parser.addSourceSpan(titleSpan)
+        assertEquals(State.TITLE, parser.state)
+        parser.parseLine("foo(")
+        parser.addSourceSpan(invalidSpan)
+        assertEquals(State.PARAGRAPH, parser.state)
+
+        val definition = parser.definitions.single()
+        assertDefinition(definition, "foo", "/url", null)
+        assertEquals(listOf(definitionSpan), definition.getSourceSpans())
+        assertEquals("(title\nfoo(", parser.paragraphLines.content)
+        assertEquals(listOf(titleSpan, invalidSpan), parser.paragraphSourceSpans)
+    }
+
+    @Test
+    fun unclosedMultilineTitleKeepsParagraphSourceSpans() {
+        val parser = LinkReferenceDefinitionParser()
+        val definitionSpan = SourceSpan.of(0, 0, 0, 11)
+        val paragraphSpan = SourceSpan.of(1, 0, 12, 14)
+        parser.parseLine("[foo]: /url")
+        parser.addSourceSpan(definitionSpan)
+        parser.parseLine("(partial title")
+        parser.addSourceSpan(paragraphSpan)
+
+        val definition = parser.definitions.single()
+        assertDefinition(definition, "foo", "/url", null)
+        assertEquals(listOf(definitionSpan), definition.getSourceSpans())
+        assertEquals("(partial title", parser.paragraphLines.content)
+        assertEquals(listOf(paragraphSpan), parser.paragraphSourceSpans)
+    }
+
+    @Test
+    fun multilineTitleWithTrailingGarbageKeepsParagraphSourceSpans() {
+        val parser = LinkReferenceDefinitionParser()
+        val definitionSpan = SourceSpan.of(0, 0, 0, 11)
+        val titleSpan = SourceSpan.of(1, 0, 12, 6)
+        val invalidSpan = SourceSpan.of(2, 0, 19, 18)
+        parser.parseLine("[foo]: /url")
+        parser.addSourceSpan(definitionSpan)
+        parser.parseLine("\"title")
+        parser.addSourceSpan(titleSpan)
+        parser.parseLine("continued\" garbage")
+        parser.addSourceSpan(invalidSpan)
+
+        val definition = parser.definitions.single()
+        assertDefinition(definition, "foo", "/url", null)
+        assertEquals(listOf(definitionSpan), definition.getSourceSpans())
+        assertEquals("\"title\ncontinued\" garbage", parser.paragraphLines.content)
+        assertEquals(listOf(titleSpan, invalidSpan), parser.paragraphSourceSpans)
+    }
+
+    @Test
     fun definitionsMustStayAtParagraphStart() {
         val parser = LinkReferenceDefinitionParser()
         parser.parseLine("text")
@@ -85,6 +145,23 @@ class LinkReferenceDefinitionParserTest {
         assertEquals(spans.takeLast(2), parser.removeLines(2))
         assertEquals("first", parser.paragraphLines.content)
         assertEquals(spans.take(1), parser.paragraphSourceSpans)
+    }
+
+    @Test
+    fun removingAllParagraphLinesPreservesReferenceSourceSpans() {
+        val parser = LinkReferenceDefinitionParser()
+        val definitionSpan = SourceSpan.of(0, 0, 0, 11)
+        val paragraphSpan = SourceSpan.of(1, 0, 12, 14)
+        parser.parseLine("[foo]: /url")
+        parser.addSourceSpan(definitionSpan)
+        parser.parseLine("(partial title")
+        parser.addSourceSpan(paragraphSpan)
+
+        assertEquals(listOf(paragraphSpan), parser.removeLines(Int.MAX_VALUE))
+        val definition = parser.definitions.single()
+        assertDefinition(definition, "foo", "/url", null)
+        assertEquals(listOf(definitionSpan), definition.getSourceSpans())
+        assertTrue(parser.paragraphSourceSpans.isEmpty())
     }
 
     private fun LinkReferenceDefinitionParser.parseLine(content: String) {

@@ -18,6 +18,11 @@ import io.heapy.kotmark.node.SourceSpan
 import io.heapy.kotmark.node.StrongEmphasis
 import io.heapy.kotmark.node.Text
 import io.heapy.kotmark.node.ThematicBreak
+import io.heapy.kotmark.parser.block.AbstractBlockParser
+import io.heapy.kotmark.parser.block.BlockContinue
+import io.heapy.kotmark.parser.block.BlockStart
+import io.heapy.kotmark.parser.block.ParserState
+import io.heapy.kotmark.renderer.html.htmlRenderer
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -95,6 +100,50 @@ class SourceSpansTest {
             listOf(span(1, 0, 12, 7), span(2, 0, 20, 3)),
             find<Heading>(document).getSourceSpans(),
         )
+    }
+
+    @Test
+    fun unclosedReferenceTitleRemainsAParagraphWithItsOwnSpans() {
+        for (parser in listOf(blocksParser, inlinesParser)) {
+            val document = parser.parse("[foo]: /url\n(partial title\n\n[foo]")
+            val definition = find<LinkReferenceDefinition>(document)
+            assertEquals(null, definition.title)
+            assertEquals(listOf(span(0, 0, 0, 11)), definition.getSourceSpans())
+            assertEquals(listOf(span(1, 0, 12, 14)), find<Paragraph>(document).getSourceSpans())
+            assertEquals(
+                "<p>(partial title</p>\n<p><a href=\"/url\">foo</a></p>\n",
+                htmlRenderer().render(document),
+            )
+        }
+    }
+
+    @Test
+    fun replacingAllParagraphLinesPreservesReferenceSourceSpans() {
+        for (replaceActive in listOf(false, true)) {
+            val replacementParser = parser {
+                includeSourceSpans = IncludeSourceSpans.BLOCKS_AND_INLINES
+                customBlockParserFactory { state, _ ->
+                    if (state.line.content.toString() == "%%%") {
+                        val replacement = object : AbstractBlockParser() {
+                            override val block = ThematicBreak()
+                            override fun tryContinue(parserState: ParserState): BlockContinue? = null
+                        }
+                        val start = BlockStart.of(replacement).atIndex(3)
+                        if (replaceActive) start.replaceActiveBlockParser() else start.replaceParagraphLines(Int.MAX_VALUE)
+                    } else {
+                        null
+                    }
+                }
+            }
+            val document = replacementParser.parse("[foo]: /url\n(partial title\n%%%")
+            val definition = find<LinkReferenceDefinition>(document)
+            assertEquals(null, definition.title)
+            assertEquals(listOf(span(0, 0, 0, 11)), definition.getSourceSpans())
+            assertEquals(
+                listOf(span(1, 0, 12, 14), span(2, 0, 27, 3)),
+                find<ThematicBreak>(document).getSourceSpans(),
+            )
+        }
     }
 
     @Test
