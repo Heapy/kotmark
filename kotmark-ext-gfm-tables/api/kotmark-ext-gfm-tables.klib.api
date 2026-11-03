@@ -31,6 +31,7 @@ final class io.heapy.kotmark.ext.gfm.tables.internal/TableBlockParser : io.heapy
 
     final class Factory : io.heapy.kotmark.parser.block/AbstractBlockParserFactory { // io.heapy.kotmark.ext.gfm.tables.internal/TableBlockParser.Factory|null[0]
         constructor <init>() // io.heapy.kotmark.ext.gfm.tables.internal/TableBlockParser.Factory.<init>|<init>(){}[0]
+        constructor <init>(kotlin/Int?) // io.heapy.kotmark.ext.gfm.tables.internal/TableBlockParser.Factory.<init>|<init>(kotlin.Int?){}[0]
 
         final fun tryStart(io.heapy.kotmark.parser.block/ParserState, io.heapy.kotmark.parser.block/MatchedBlockParser): io.heapy.kotmark.parser.block/BlockStart? // io.heapy.kotmark.ext.gfm.tables.internal/TableBlockParser.Factory.tryStart|tryStart(io.heapy.kotmark.parser.block.ParserState;io.heapy.kotmark.parser.block.MatchedBlockParser){}[0]
     }
@@ -98,7 +99,18 @@ final class io.heapy.kotmark.ext.gfm.tables/TablesExtension : io.heapy.kotmark.p
     final fun extend(io.heapy.kotmark.renderer.markdown/MarkdownRenderer.Configuration) // io.heapy.kotmark.ext.gfm.tables/TablesExtension.extend|extend(io.heapy.kotmark.renderer.markdown.MarkdownRenderer.Configuration){}[0]
     final fun extend(io.heapy.kotmark.renderer.text/TextContentRenderer.Configuration) // io.heapy.kotmark.ext.gfm.tables/TablesExtension.extend|extend(io.heapy.kotmark.renderer.text.TextContentRenderer.Configuration){}[0]
 
+    final class Configuration { // io.heapy.kotmark.ext.gfm.tables/TablesExtension.Configuration|null[0]
+        final var maxCells // io.heapy.kotmark.ext.gfm.tables/TablesExtension.Configuration.maxCells|{}maxCells[0]
+            final fun <get-maxCells>(): kotlin/Int? // io.heapy.kotmark.ext.gfm.tables/TablesExtension.Configuration.maxCells.<get-maxCells>|<get-maxCells>(){}[0]
+            final fun <set-maxCells>(kotlin/Int?) // io.heapy.kotmark.ext.gfm.tables/TablesExtension.Configuration.maxCells.<set-maxCells>|<set-maxCells>(kotlin.Int?){}[0]
+    }
+
     final object Companion { // io.heapy.kotmark.ext.gfm.tables/TablesExtension.Companion|null[0]
+        final const val DEFAULT_MAX_CELLS // io.heapy.kotmark.ext.gfm.tables/TablesExtension.Companion.DEFAULT_MAX_CELLS|{}DEFAULT_MAX_CELLS[0]
+            final fun <get-DEFAULT_MAX_CELLS>(): kotlin/Int // io.heapy.kotmark.ext.gfm.tables/TablesExtension.Companion.DEFAULT_MAX_CELLS.<get-DEFAULT_MAX_CELLS>|<get-DEFAULT_MAX_CELLS>(){}[0]
+
         final fun create(): io.heapy.kotmark/Extension // io.heapy.kotmark.ext.gfm.tables/TablesExtension.Companion.create|create(){}[0]
     }
 }
+
+final fun io.heapy.kotmark.ext.gfm.tables/tablesExtension(kotlin/Function1<io.heapy.kotmark.ext.gfm.tables/TablesExtension.Configuration, kotlin/Unit> = ...): io.heapy.kotmark.ext.gfm.tables/TablesExtension // io.heapy.kotmark.ext.gfm.tables/tablesExtension|tablesExtension(kotlin.Function1<io.heapy.kotmark.ext.gfm.tables.TablesExtension.Configuration,kotlin.Unit>){}[0]

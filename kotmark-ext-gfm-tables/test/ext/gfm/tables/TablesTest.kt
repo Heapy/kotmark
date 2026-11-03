@@ -10,12 +10,67 @@ import io.heapy.kotmark.renderer.text.LineBreakRendering
 import io.heapy.kotmark.renderer.text.textContentRenderer
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import kotlin.test.assertIs
 
 class TablesTest {
     private val extensions: List<Extension> = listOf(TablesExtension.create())
     private val parser = parser { extensions(extensions) }
     private val html = htmlRenderer { extensions(extensions) }
+
+    @Test
+    fun maxCellsCountsHeadersAndOmittedBodyCells() {
+        val limitedParser = parser { extensions(listOf(tablesExtension { maxCells = 6 })) }
+        val source = " A|B|C\n-|-|-\n1|2"
+        assertEquals(render(source), html.render(limitedParser.parse(source)))
+        val error = assertFailsWith<IllegalArgumentException> { limitedParser.parse("$source\nbad") }
+        assertEquals(
+            "Aborting parsing because maximum number of cells reached (maxCells = 6)",
+            error.message,
+        )
+
+        val paddedCellParser = parser { extensions(listOf(tablesExtension { maxCells = 5 })) }
+        assertFailsWith<IllegalArgumentException> { paddedCellParser.parse(source) }
+        val headerParser = parser { extensions(listOf(tablesExtension { maxCells = 2 })) }
+        assertFailsWith<IllegalArgumentException> { headerParser.parse("A|B|C\n-|-|-") }
+        val zeroCellParser = parser { extensions(listOf(tablesExtension { maxCells = 0 })) }
+        assertEquals("<p>plain text</p>\n", html.render(zeroCellParser.parse("plain text")))
+        assertFailsWith<IllegalArgumentException> { zeroCellParser.parse("A|\n-|") }
+    }
+
+    @Test
+    fun maxCellsAppliesPerTableAndPerParse() {
+        val limitedParser = parser { extensions(listOf(tablesExtension { maxCells = 2 })) }
+        val source = "A|\n-|\n1|"
+        val tables = "$source\n\n$source"
+        assertEquals(render(tables), html.render(limitedParser.parse(tables)))
+        assertFailsWith<IllegalArgumentException> { limitedParser.parse("$source\n2|") }
+        assertEquals(render(source), html.render(limitedParser.parse(source)))
+    }
+
+    @Test
+    fun maxCellsConfigurationIsSnapshotted() {
+        lateinit var configuration: TablesExtension.Configuration
+        val extension = tablesExtension {
+            configuration = this
+            maxCells = 2
+        }
+        configuration.maxCells = null
+        val limitedParser = parser { extensions(listOf(extension)) }
+        assertFailsWith<IllegalArgumentException> { limitedParser.parse("A|B|C\n-|-|-") }
+    }
+
+    @Test
+    fun maxCellsDefaultsAndCanBeDisabled() {
+        val extension = tablesExtension {
+            assertEquals(1_000_000, TablesExtension.DEFAULT_MAX_CELLS)
+            assertEquals(TablesExtension.DEFAULT_MAX_CELLS, maxCells)
+            maxCells = null
+        }
+        val unlimitedParser = parser { extensions(listOf(extension)) }
+        val source = "A|B|C\n-|-|-\n1|2\nbad"
+        assertEquals(render(source), html.render(unlimitedParser.parse(source)))
+    }
 
     @Test
     fun tableSyntaxAndAlignment() {

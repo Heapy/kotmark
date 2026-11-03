@@ -5,6 +5,7 @@ import io.heapy.kotmark.ext.gfm.tables.TableBody
 import io.heapy.kotmark.ext.gfm.tables.TableCell
 import io.heapy.kotmark.ext.gfm.tables.TableHead
 import io.heapy.kotmark.ext.gfm.tables.TableRow
+import io.heapy.kotmark.ext.gfm.tables.TablesExtension
 import io.heapy.kotmark.node.Block
 import io.heapy.kotmark.parser.InlineParser
 import io.heapy.kotmark.parser.SourceLine
@@ -20,9 +21,11 @@ import io.heapy.kotmark.text.Characters
 class TableBlockParser private constructor(
     private val columns: List<TableCellInfo>,
     headerLine: SourceLine,
+    private val maxCells: Int?,
 ) : AbstractBlockParser() {
     private val table = TableBlock()
     private val rowLines = mutableListOf(headerLine)
+    private var cells = 0
     private var lazyContinuationLines = true
 
     override fun canHaveLazyContinuationLines(): Boolean = lazyContinuationLines
@@ -94,6 +97,12 @@ class TableBlockParser private constructor(
         column: Int,
         inlineParser: InlineParser,
     ): TableCell {
+        if (maxCells != null) {
+            require(cells < maxCells) {
+                "Aborting parsing because maximum number of cells reached (maxCells = $maxCells)"
+            }
+            cells++
+        }
         val tableCell = TableCell()
         cell.sourceSpan?.let(tableCell::addSourceSpan)
         columns.getOrNull(column)?.let { info ->
@@ -107,7 +116,9 @@ class TableBlockParser private constructor(
         return tableCell
     }
 
-    class Factory : AbstractBlockParserFactory() {
+    class Factory(private val maxCells: Int?) : AbstractBlockParserFactory() {
+        constructor() : this(TablesExtension.DEFAULT_MAX_CELLS)
+
         override fun tryStart(
             state: ParserState,
             matchedBlockParser: MatchedBlockParser,
@@ -124,7 +135,7 @@ class TableBlockParser private constructor(
                     val paragraph = paragraphLines.last()
                     val headerCells = split(paragraph)
                     if (columns.size >= headerCells.size) {
-                        return BlockStart.of(TableBlockParser(columns, paragraph))
+                        return BlockStart.of(TableBlockParser(columns, paragraph, maxCells))
                             .atIndex(state.index)
                             .replaceParagraphLines(1)
                     }
