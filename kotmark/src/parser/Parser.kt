@@ -89,7 +89,13 @@ class Parser private constructor(configuration: Configuration) {
             }
         var inlineParserFactory: InlineParserFactory? = null
         var includeSourceSpans: IncludeSourceSpans = IncludeSourceSpans.NONE
-        var maxOpenBlockParsers: Int = Int.MAX_VALUE
+        /**
+         * Maximum number of open non-document block parsers; must be zero or greater.
+         * Once the limit is reached, additional block starts are treated as plain text instead
+         * of creating deeper nested block structure. The document root is not counted.
+         * Defaults to 100; use [Int.MAX_VALUE] for no limit.
+         */
+        var maxOpenBlockParsers: Int = 100
             set(value) {
                 require(value >= 0) { "maxOpenBlockParsers must be >= 0" }
                 field = value

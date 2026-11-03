@@ -39,6 +39,7 @@ advance the pinned test corpora or imply a full update to a later release.
 | [5f4778b90381dbc3b4983b72885f73b1f7fcf6f3](https://github.com/commonmark/commonmark-java/commit/5f4778b90381dbc3b4983b72885f73b1f7fcf6f3), front matter parser package | `kotmark-ext-yaml-front-matter` API and references | Moved `FrontMatterParser` into the `parser` subpackage; Kotlin factory parameter naming retained |
 | [946b6c5e63a82d324f00b0f78cd39a401bbd127c](https://github.com/commonmark/commonmark-java/commit/946b6c5e63a82d324f00b0f78cd39a401bbd127c), inline HTML scan caching | `kotmark` inline HTML parser and adapted tests | Per-fragment failed-terminator caches avoid repeated scans of unterminated HTML constructs |
 | [4fd2d38c724cdad9e29ff7a389f17309568b6b24](https://github.com/commonmark/commonmark-java/commit/4fd2d38c724cdad9e29ff7a389f17309568b6b24), table cell limit | `kotmark-ext-gfm-tables` code and adapted tests | Per-table limit defaults to 1,000,000 cells, configurable through the Kotlin DSL; existing no-argument entry points retained |
+| [ddcccbe865f0c1f2fccb02296ede2b8c36467e44](https://github.com/commonmark/commonmark-java/commit/ddcccbe865f0c1f2fccb02296ede2b8c36467e44), default block nesting limit | `kotmark` parser configuration and adapted tests | Existing open-block limit defaults to 100; `Int.MAX_VALUE` retains unlimited parsing |
 
 These adaptations retain the commonmark-java BSD-2-Clause notice below.
 

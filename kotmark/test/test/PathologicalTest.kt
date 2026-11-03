@@ -77,10 +77,12 @@ class PathologicalTest {
     @Test
     fun nestedBlockQuotes() {
         val count = 1_000
-        assertRendering(
-            "> ".repeat(count) + "a\n",
+        val source = "> ".repeat(count) + "a\n"
+        val unlimitedParser = parser { maxOpenBlockParsers = Int.MAX_VALUE }
+        assertEquals(
             "<blockquote>\n".repeat(count) + "<p>a</p>\n" +
                 "</blockquote>\n".repeat(count),
+            renderer.render(unlimitedParser.parse(source)),
         )
     }
 

@@ -24,6 +24,16 @@ Each factory creates an independent configuration. The core provides factories f
 
 Use `nodeRenderer<Heading>` to register a handler whose node argument already has the correct type. Register overrides before the extension that supplies the default renderer.
 
+## Block nesting limit
+
+`maxOpenBlockParsers` defaults to `100`. Once the limit is reached, additional
+block starts are treated as plain text instead of creating deeper block structure.
+The document root is not counted, and reaching the limit does not throw an exception.
+
+Set `parser { maxOpenBlockParsers = Int.MAX_VALUE }` to remove the limit, or choose
+another non-negative value. This option controls block nesting; it does not limit
+inline nesting or the total number of blocks in a document.
+
 ## Configuration rules
 
 - Register extensions with the parser and with each renderer that should handle them.

@@ -180,6 +180,28 @@ class ParserTest {
         assertNull(document.firstChild?.next)
     }
 
+    @Test
+    fun defaultMaximumOpenBlocksLimitsNesting() {
+        fun assertNesting(parser: Parser, sourceDepth: Int, expectedDepth: Int) {
+            var node = parser.parse("> ".repeat(sourceDepth) + "text").firstChild
+            repeat(expectedDepth) {
+                val quote = assertIs<BlockQuote>(node)
+                assertNull(quote.next)
+                node = quote.firstChild
+            }
+            val paragraph = assertIs<Paragraph>(node)
+            assertNull(paragraph.next)
+            assertEquals("> ".repeat(sourceDepth - expectedDepth) + "text", textOf(paragraph))
+        }
+
+        val defaultParser = parser { assertEquals(100, maxOpenBlockParsers) }
+        assertNesting(defaultParser, sourceDepth = 3, expectedDepth = 3)
+        assertNesting(defaultParser, sourceDepth = 99, expectedDepth = 99)
+        assertNesting(defaultParser, sourceDepth = 100, expectedDepth = 100)
+        assertNesting(defaultParser, sourceDepth = 101, expectedDepth = 100)
+        assertNesting(parser { maxOpenBlockParsers = Int.MAX_VALUE }, sourceDepth = 101, expectedDepth = 101)
+    }
+
     private fun textOf(root: Node): String {
         val result = StringBuilder()
         fun appendText(node: Node?) {
