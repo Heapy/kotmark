@@ -9,6 +9,7 @@ import io.heapy.kotmark.node.Link
 import io.heapy.kotmark.node.Node
 import io.heapy.kotmark.node.Paragraph
 import io.heapy.kotmark.node.SoftLineBreak
+import io.heapy.kotmark.node.SourceSpan
 import io.heapy.kotmark.node.StrongEmphasis
 import io.heapy.kotmark.node.Text
 import io.heapy.kotmark.parser.SourceLine
@@ -17,6 +18,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
 import kotlin.test.assertNull
+import kotlin.test.assertSame
 
 class InlineParserImplTest {
     @Test
@@ -42,6 +44,38 @@ class InlineParserImplTest {
         val image = find<Image>(paragraph)
         assertEquals("/img", image.destination)
         assertEquals("image", assertIs<Text>(image.firstChild).literal)
+    }
+
+    @Test
+    fun mergesTextAcrossNestedChildrenAndSiblingsWithSourceSpans() {
+        val prefix = """left\* &amp; """
+        val outerPrefix = """outer\! &amp; """
+        val inner = """inner\? &lt;"""
+        val outerSuffix = """ tail\+"""
+        val suffix = """ right\_ &gt;"""
+        val source = "$prefix*$outerPrefix**$inner**$outerSuffix*$suffix"
+        val paragraph = parse(SourceLines.of(SourceLine.of(source, SourceSpan.of(0, 0, 0, source.length))))
+
+        fun assertMergedText(node: Node?, expected: String, raw: String): Text {
+            val text = assertIs<Text>(node)
+            assertEquals(expected, text.literal)
+            val offset = source.indexOf(raw)
+            assertEquals(listOf(SourceSpan.of(0, offset, offset, raw.length)), text.getSourceSpans())
+            return text
+        }
+
+        val first = assertMergedText(paragraph.firstChild, "left* & ", prefix)
+        val emphasis = assertIs<Emphasis>(first.next)
+        val leading = assertMergedText(emphasis.firstChild, "outer! & ", outerPrefix)
+        val strong = assertIs<StrongEmphasis>(leading.next)
+        val innerText = assertMergedText(strong.firstChild, "inner? <", inner)
+        assertSame(innerText, strong.lastChild)
+        val trailing = assertMergedText(strong.next, " tail+", outerSuffix)
+        assertSame(trailing, emphasis.lastChild)
+        assertNull(trailing.next)
+        val last = assertMergedText(emphasis.next, " right_ >", suffix)
+        assertSame(last, paragraph.lastChild)
+        assertNull(last.next)
     }
 
     @Test

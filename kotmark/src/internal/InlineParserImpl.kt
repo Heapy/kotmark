@@ -552,16 +552,23 @@ class InlineParserImpl(
     }
 
     private fun mergeChildTextNodes(node: Node) {
-        val firstChild = node.firstChild ?: return
-        mergeTextNodesInclusive(firstChild, requireNotNull(node.lastChild))
+        if (node.firstChild == null) return
+        // Each parent's text runs are disjoint from its descendants'. Process those parents
+        // with an explicit stack so deeply nested inline content does not recurse here.
+        val parents = ArrayDeque<Node>()
+        parents.addLast(node)
+        while (parents.isNotEmpty()) {
+            mergeTextNodesInclusive(parents.removeLast(), parents)
+        }
     }
 
-    private fun mergeTextNodesInclusive(fromNode: Node, toNode: Node) {
+    private fun mergeTextNodesInclusive(parent: Node, parents: ArrayDeque<Node>) {
         var first: Text? = null
         var last: Text? = null
         var length = 0
 
-        var node: Node? = fromNode
+        var node = parent.firstChild
+        val toNode = parent.lastChild
         while (node != null) {
             if (node is Text) {
                 if (first == null) {
@@ -574,7 +581,9 @@ class InlineParserImpl(
                 first = null
                 last = null
                 length = 0
-                mergeChildTextNodes(node)
+                if (node.firstChild != null) {
+                    parents.addLast(node)
+                }
             }
             if (node === toNode) {
                 break

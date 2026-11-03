@@ -22,6 +22,7 @@ import kotlin.test.assertFailsWith
 import kotlin.test.assertIs
 import kotlin.test.assertNull
 import kotlin.test.assertSame
+import kotlin.test.assertTrue
 
 class ParserTest {
     @Test
@@ -200,6 +201,20 @@ class ParserTest {
         assertNesting(defaultParser, sourceDepth = 100, expectedDepth = 100)
         assertNesting(defaultParser, sourceDepth = 101, expectedDepth = 100)
         assertNesting(parser { maxOpenBlockParsers = Int.MAX_VALUE }, sourceDepth = 101, expectedDepth = 101)
+    }
+
+    @Test
+    fun deeplyNestedInlineDoesNotOverflowParsing() {
+        val count = 50_000
+        var node = parser().parse("*".repeat(count) + "x" + "*".repeat(count))
+        var nesting = 0
+        // Inspect iteratively: rendering or visiting this deep tree recursively is out of scope.
+        while (true) {
+            node = node.firstChild ?: break
+            nesting++
+        }
+        assertTrue(nesting > 1_000)
+        assertEquals("x", assertIs<Text>(node).literal)
     }
 
     private fun textOf(root: Node): String {
