@@ -14,7 +14,7 @@ own license documentation; the filename and unrelated notices need not be retain
 
 | Source | Pinned revision | Local scope | License |
 | --- | --- | --- | --- |
-| [commonmark-java](https://github.com/commonmark/commonmark-java) | [9477a93b6b0965efc54c55bd40ad88fbbe25bc6f](https://github.com/commonmark/commonmark-java/tree/9477a93b6b0965efc54c55bd40ad88fbbe25bc6f), 0.29.1-SNAPSHOT | `kotmark`, `kotmark-ext-*`, test utilities and ported tests | BSD-2-Clause, Robin Stocker; test utility resources also retain Atlassian's notice |
+| [commonmark-java](https://github.com/commonmark/commonmark-java) | [9477a93b6b0965efc54c55bd40ad88fbbe25bc6f](https://github.com/commonmark/commonmark-java/tree/9477a93b6b0965efc54c55bd40ad88fbbe25bc6f), 0.29.1-SNAPSHOT | `kotmark`, `kotmark-ext-*`, adapted rendering in `kotmark-renderer-kotlinx-html`, test utilities and ported tests | BSD-2-Clause, Robin Stocker; test utility resources also retain Atlassian's notice |
 | [autolink-java](https://github.com/robinst/autolink-java) | [8b07a6911fd62871042c5b63412d3ac3489a0531](https://github.com/robinst/autolink-java/tree/8b07a6911fd62871042c5b63412d3ac3489a0531), tag `autolink-0.12.0` | `autolink` production code and tests | MIT, Robin Stocker |
 
 The commonmark-java revision is dated 2026-06-20, subject `README: Bump version`,
@@ -27,6 +27,13 @@ adaptations, test coverage and known GFM differences are documented in
 [autolink/README.md](autolink/README.md).
 
 ## Build tooling
+
+The optional `kotmark-renderer-kotlinx-html` module downloads
+[kotlinx.html 0.12.0](https://github.com/Kotlin/kotlinx.html/tree/5a8158a23d26f52a67d9b375be7b306beff1b254)
+(Apache-2.0, JetBrains; tag commit `5a8158a23d26f52a67d9b375be7b306beff1b254`).
+Its JVM compatibility tests download [jsoup 1.18.3](https://github.com/jhy/jsoup/tree/7c56eb26c8cc772c5c3d0e052dc076a128173c85)
+(MIT, Jonathan Hedley; tag commit `7c56eb26c8cc772c5c3d0e052dc076a128173c85`).
+Neither library's sources are vendored; jsoup is test-only.
 
 Build plugins are downloaded dependencies, not vendored sources. The installer
 launchers are from [ktc-plugins v0.3.1](https://github.com/Heapy/ktc-plugins/releases/tag/v0.3.1)

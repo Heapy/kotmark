@@ -6,8 +6,13 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { resolve } from 'node:path';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
-const modules = ['autolink', 'kotmark', 'test-fixtures', 'integration-test',
+const availableModules = ['autolink', 'kotmark', 'test-fixtures', 'integration-test', 'kotmark-renderer-kotlinx-html',
   ...readdirSync(root).filter(name => name.startsWith('kotmark-ext-')).sort()];
+const requestedModules = process.argv.slice(2);
+if (requestedModules.some(name => !availableModules.includes(name))) {
+  throw new Error(`Select modules from: ${availableModules.join(', ')}`);
+}
+const modules = requestedModules.length ? [...new Set(requestedModules)] : availableModules;
 const build = spawnSync('./kotlin', ['task', ...modules.map(name => `:${name}:linkJsTest`)], {
   cwd: root, stdio: 'inherit',
 });

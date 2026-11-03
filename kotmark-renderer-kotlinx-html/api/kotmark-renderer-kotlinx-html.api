@@ -1,0 +1,111 @@
+public abstract interface class io/heapy/kotmark/renderer/kotlinxhtml/KotlinxHtmlAdapter {
+	public abstract fun extend (Lio/heapy/kotmark/renderer/kotlinxhtml/KotlinxHtmlRenderer$Configuration;)V
+}
+
+public abstract interface class io/heapy/kotmark/renderer/kotlinxhtml/KotlinxHtmlNodeRendererContext : io/heapy/kotmark/renderer/html/AttributeProviderContext {
+	public abstract fun element (Lio/heapy/kotmark/node/Node;Ljava/lang/String;Ljava/util/Map;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun element$default (Lio/heapy/kotmark/renderer/kotlinxhtml/KotlinxHtmlNodeRendererContext;Lio/heapy/kotmark/node/Node;Ljava/lang/String;Ljava/util/Map;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public abstract fun encodeUrl (Ljava/lang/String;)Ljava/lang/String;
+	public abstract fun extendAttributes (Lio/heapy/kotmark/node/Node;Ljava/lang/String;Ljava/util/Map;)Ljava/util/Map;
+	public abstract fun getConsumer ()Lkotlinx/html/TagConsumer;
+	public abstract fun getEscapeHtml ()Z
+	public abstract fun getOmitSingleParagraphP ()Z
+	public abstract fun getSanitizeUrls ()Z
+	public abstract fun getSoftbreak ()Ljava/lang/String;
+	public abstract fun getUrlSanitizer ()Lio/heapy/kotmark/renderer/html/UrlSanitizer;
+	public abstract fun line ()V
+	public abstract fun raw (Ljava/lang/String;)V
+	public abstract fun render (Lio/heapy/kotmark/node/Node;)V
+	public abstract fun renderChildren (Lio/heapy/kotmark/node/Node;)V
+	public abstract fun resolveUrl (Lio/heapy/kotmark/node/Node;Ljava/lang/String;)Ljava/lang/String;
+	public abstract fun text (Ljava/lang/String;)V
+}
+
+public final class io/heapy/kotmark/renderer/kotlinxhtml/KotlinxHtmlNodeRendererContext$DefaultImpls {
+	public static synthetic fun element$default (Lio/heapy/kotmark/renderer/kotlinxhtml/KotlinxHtmlNodeRendererContext;Lio/heapy/kotmark/node/Node;Ljava/lang/String;Ljava/util/Map;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+}
+
+public abstract interface class io/heapy/kotmark/renderer/kotlinxhtml/KotlinxHtmlNodeRendererFactory {
+	public abstract fun create (Lio/heapy/kotmark/renderer/kotlinxhtml/KotlinxHtmlNodeRendererContext;)Lio/heapy/kotmark/renderer/NodeRenderer;
+}
+
+public final class io/heapy/kotmark/renderer/kotlinxhtml/KotlinxHtmlRenderer : io/heapy/kotmark/renderer/Renderer {
+	public synthetic fun <init> (Lio/heapy/kotmark/renderer/kotlinxhtml/KotlinxHtmlRenderer$Configuration;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun render (Lio/heapy/kotmark/node/Node;)Ljava/lang/String;
+	public fun render (Lio/heapy/kotmark/node/Node;Ljava/lang/Appendable;)V
+	public final fun render (Lio/heapy/kotmark/node/Node;Lkotlinx/html/FlowContent;)V
+	public final fun render (Lio/heapy/kotmark/node/Node;Lkotlinx/html/TagConsumer;)V
+}
+
+public final class io/heapy/kotmark/renderer/kotlinxhtml/KotlinxHtmlRenderer$Configuration {
+	public final fun adapters (Ljava/lang/Iterable;)V
+	public final fun adapters ([Lio/heapy/kotmark/renderer/kotlinxhtml/KotlinxHtmlAdapter;)V
+	public final fun attributeProviderFactory (Lio/heapy/kotmark/renderer/html/AttributeProviderFactory;)V
+	public final fun getEscapeHtml ()Z
+	public final fun getOmitSingleParagraphP ()Z
+	public final fun getPercentEncodeUrls ()Z
+	public final fun getSanitizeUrls ()Z
+	public final fun getSoftbreak ()Ljava/lang/String;
+	public final fun getUrlResolver ()Lio/heapy/kotmark/renderer/html/UrlResolver;
+	public final fun getUrlSanitizer ()Lio/heapy/kotmark/renderer/html/UrlSanitizer;
+	public final fun nodeRendererFactory (Lio/heapy/kotmark/renderer/kotlinxhtml/KotlinxHtmlNodeRendererFactory;)V
+	public final fun setEscapeHtml (Z)V
+	public final fun setOmitSingleParagraphP (Z)V
+	public final fun setPercentEncodeUrls (Z)V
+	public final fun setSanitizeUrls (Z)V
+	public final fun setSoftbreak (Ljava/lang/String;)V
+	public final fun setUrlResolver (Lio/heapy/kotmark/renderer/html/UrlResolver;)V
+	public final fun setUrlSanitizer (Lio/heapy/kotmark/renderer/html/UrlSanitizer;)V
+}
+
+public final class io/heapy/kotmark/renderer/kotlinxhtml/KotlinxHtmlRendererKt {
+	public static final fun kotlinxHtmlRenderer (Lkotlin/jvm/functions/Function1;)Lio/heapy/kotmark/renderer/kotlinxhtml/KotlinxHtmlRenderer;
+	public static synthetic fun kotlinxHtmlRenderer$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/heapy/kotmark/renderer/kotlinxhtml/KotlinxHtmlRenderer;
+}
+
+public final class io/heapy/kotmark/renderer/kotlinxhtml/adapters/AlertsAdapterKt {
+	public static final fun alertsAdapter (Ljava/util/Map;)Lio/heapy/kotmark/renderer/kotlinxhtml/KotlinxHtmlAdapter;
+	public static synthetic fun alertsAdapter$default (Ljava/util/Map;ILjava/lang/Object;)Lio/heapy/kotmark/renderer/kotlinxhtml/KotlinxHtmlAdapter;
+}
+
+public final class io/heapy/kotmark/renderer/kotlinxhtml/adapters/FootnotesAdapterKt {
+	public static final fun footnotesAdapter ()Lio/heapy/kotmark/renderer/kotlinxhtml/KotlinxHtmlAdapter;
+}
+
+public final class io/heapy/kotmark/renderer/kotlinxhtml/adapters/HeadingAnchorAdapterKt {
+	public static final fun headingAnchorAdapter (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lio/heapy/kotmark/renderer/kotlinxhtml/KotlinxHtmlAdapter;
+	public static synthetic fun headingAnchorAdapter$default (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lio/heapy/kotmark/renderer/kotlinxhtml/KotlinxHtmlAdapter;
+}
+
+public final class io/heapy/kotmark/renderer/kotlinxhtml/adapters/HighlightAdapterKt {
+	public static final fun highlightAdapter ()Lio/heapy/kotmark/renderer/kotlinxhtml/KotlinxHtmlAdapter;
+}
+
+public final class io/heapy/kotmark/renderer/kotlinxhtml/adapters/ImageAttributesAdapterKt {
+	public static final fun imageAttributesAdapter ()Lio/heapy/kotmark/renderer/kotlinxhtml/KotlinxHtmlAdapter;
+}
+
+public final class io/heapy/kotmark/renderer/kotlinxhtml/adapters/InsAdapterKt {
+	public static final fun insAdapter ()Lio/heapy/kotmark/renderer/kotlinxhtml/KotlinxHtmlAdapter;
+}
+
+public final class io/heapy/kotmark/renderer/kotlinxhtml/adapters/MathAdapterKt {
+	public static final fun mathAdapter ()Lio/heapy/kotmark/renderer/kotlinxhtml/KotlinxHtmlAdapter;
+}
+
+public final class io/heapy/kotmark/renderer/kotlinxhtml/adapters/StrikethroughAdapterKt {
+	public static final fun strikethroughAdapter ()Lio/heapy/kotmark/renderer/kotlinxhtml/KotlinxHtmlAdapter;
+}
+
+public final class io/heapy/kotmark/renderer/kotlinxhtml/adapters/TablesAdapterKt {
+	public static final fun tablesAdapter ()Lio/heapy/kotmark/renderer/kotlinxhtml/KotlinxHtmlAdapter;
+}
+
+public final class io/heapy/kotmark/renderer/kotlinxhtml/adapters/TaskListItemsAdapterKt {
+	public static final fun taskListItemsAdapter ()Lio/heapy/kotmark/renderer/kotlinxhtml/KotlinxHtmlAdapter;
+}
+
+public final class io/heapy/kotmark/renderer/kotlinxhtml/adapters/YamlFrontMatterAdapterKt {
+	public static final fun yamlFrontMatterAdapter ()Lio/heapy/kotmark/renderer/kotlinxhtml/KotlinxHtmlAdapter;
+}
+

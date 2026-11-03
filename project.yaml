@@ -17,6 +17,7 @@ modules:
   - kotmark-ext-math
   - kotmark-ext-task-list-items
   - kotmark-ext-yaml-front-matter
+  - kotmark-renderer-kotlinx-html
   - plugins/bcv
   - plugins/benchmark
   - plugins/dokka

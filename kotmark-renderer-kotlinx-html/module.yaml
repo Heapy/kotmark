@@ -1,0 +1,43 @@
+apply:
+  - //library.module-template.yaml
+
+product:
+  type: kmp/lib
+  # kotlinx.html 0.12.0 advertises wasmWasi but its artifact is not published.
+  platforms: [jvm, android, js, wasmJs, linuxX64, linuxArm64, macosArm64, tvosArm64, tvosSimulatorArm64, iosArm64, iosSimulatorArm64, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, mingwX64]
+
+description: Optional kotlinx.html renderer with explicitly registered Markdown extension adapters.
+
+dependencies:
+  - //kotmark: exported
+  - org.jetbrains.kotlinx:kotlinx-html:0.12.0: exported
+  - //kotmark-ext-footnotes: compile-only
+  - //kotmark-ext-gfm-alerts: compile-only
+  - //kotmark-ext-gfm-strikethrough: compile-only
+  - //kotmark-ext-gfm-tables: compile-only
+  - //kotmark-ext-heading-anchor: compile-only
+  - //kotmark-ext-highlight: compile-only
+  - //kotmark-ext-image-attributes: compile-only
+  - //kotmark-ext-ins: compile-only
+  - //kotmark-ext-math: compile-only
+  - //kotmark-ext-task-list-items: compile-only
+  - //kotmark-ext-yaml-front-matter: compile-only
+
+test-dependencies:
+  - $kotlin.test
+  - //test-fixtures
+  - //kotmark-ext-autolink
+  - //kotmark-ext-footnotes
+  - //kotmark-ext-gfm-alerts
+  - //kotmark-ext-gfm-strikethrough
+  - //kotmark-ext-gfm-tables
+  - //kotmark-ext-heading-anchor
+  - //kotmark-ext-highlight
+  - //kotmark-ext-image-attributes
+  - //kotmark-ext-ins
+  - //kotmark-ext-math
+  - //kotmark-ext-task-list-items
+  - //kotmark-ext-yaml-front-matter
+
+test-dependencies@jvm:
+  - org.jsoup:jsoup:1.18.3

@@ -15,6 +15,9 @@ on KaTeX, MathJax, Compose, or a TeX engine.
 The independent `autolink` module ports [autolink-java 0.12.0](UPSTREAM.md).
 The Markdown autolink extension uses its upstream rules, which differ from GFM in some cases.
 
+The optional [kotlinx.html renderer](kotmark-renderer-kotlinx-html/README.md)
+inserts Markdown into HTML DSL/DOM consumers with explicitly selected extension adapters.
+
 ## Configuration DSLs
 
 Create parsers and renderers with configuration blocks. Omitting the block uses the defaults.

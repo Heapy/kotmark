@@ -1,0 +1,58 @@
+name: Publication integration
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publication-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  consumers:
+    name: Published consumers (${{ matrix.platform }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { platform: jvm, os: ubuntu-24.04 }
+          - { platform: js, os: ubuntu-24.04 }
+          - { platform: wasmJs, os: ubuntu-24.04 }
+          - { platform: wasmWasi, os: ubuntu-24.04 }
+          - { platform: linuxX64, os: ubuntu-24.04 }
+          - { platform: macosArm64, os: macos-26 }
+    env:
+      KOTLIN_CLI_NO_WELCOME_BANNER: '1'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: Heapy/setup-ktc@cc63216665ce07ce0709fe52ef4a4b0b63aeaddc # v1.1.0
+        with:
+          version: auto
+      - uses: Heapy/setup-main-kts@b0858237748f325b825e752bbac2ec2eb1fb9419 # v1.0.1
+        with:
+          kotlin-version: '2.4.21'
+          java-version: '25'
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+      - name: Publish locally and test independent consumers
+        env:
+          TEST_PLATFORM: ${{ matrix.platform }}
+        run: kotlinr scripts/test-publication.main.kts --platform "$TEST_PLATFORM"
+      - name: Upload publication diagnostics
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: publication-${{ matrix.platform }}
+          path: |
+            build/publication-test/results.json
+            build/publication-test/*/results.json
+            build/publication-test/*/*.log
+            build/publication-test/*/metadata/

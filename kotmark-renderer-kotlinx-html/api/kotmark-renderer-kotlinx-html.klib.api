@@ -1,0 +1,89 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, js, linuxArm64, linuxX64, macosArm64, mingwX64, tvosArm64, tvosSimulatorArm64, wasmJs, watchosArm64, watchosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <kotmark-renderer-kotlinx-html>
+abstract fun interface io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlAdapter { // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlAdapter|null[0]
+    abstract fun extend(io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlRenderer.Configuration) // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlAdapter.extend|extend(io.heapy.kotmark.renderer.kotlinxhtml.KotlinxHtmlRenderer.Configuration){}[0]
+}
+
+abstract fun interface io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlNodeRendererFactory { // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlNodeRendererFactory|null[0]
+    abstract fun create(io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlNodeRendererContext): io.heapy.kotmark.renderer/NodeRenderer // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlNodeRendererFactory.create|create(io.heapy.kotmark.renderer.kotlinxhtml.KotlinxHtmlNodeRendererContext){}[0]
+}
+
+abstract interface io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlNodeRendererContext : io.heapy.kotmark.renderer.html/AttributeProviderContext { // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlNodeRendererContext|null[0]
+    abstract val consumer // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlNodeRendererContext.consumer|{}consumer[0]
+        abstract fun <get-consumer>(): kotlinx.html/TagConsumer<*> // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlNodeRendererContext.consumer.<get-consumer>|<get-consumer>(){}[0]
+    abstract val escapeHtml // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlNodeRendererContext.escapeHtml|{}escapeHtml[0]
+        abstract fun <get-escapeHtml>(): kotlin/Boolean // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlNodeRendererContext.escapeHtml.<get-escapeHtml>|<get-escapeHtml>(){}[0]
+    abstract val omitSingleParagraphP // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlNodeRendererContext.omitSingleParagraphP|{}omitSingleParagraphP[0]
+        abstract fun <get-omitSingleParagraphP>(): kotlin/Boolean // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlNodeRendererContext.omitSingleParagraphP.<get-omitSingleParagraphP>|<get-omitSingleParagraphP>(){}[0]
+    abstract val sanitizeUrls // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlNodeRendererContext.sanitizeUrls|{}sanitizeUrls[0]
+        abstract fun <get-sanitizeUrls>(): kotlin/Boolean // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlNodeRendererContext.sanitizeUrls.<get-sanitizeUrls>|<get-sanitizeUrls>(){}[0]
+    abstract val softbreak // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlNodeRendererContext.softbreak|{}softbreak[0]
+        abstract fun <get-softbreak>(): kotlin/String // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlNodeRendererContext.softbreak.<get-softbreak>|<get-softbreak>(){}[0]
+    abstract val urlSanitizer // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlNodeRendererContext.urlSanitizer|{}urlSanitizer[0]
+        abstract fun <get-urlSanitizer>(): io.heapy.kotmark.renderer.html/UrlSanitizer // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlNodeRendererContext.urlSanitizer.<get-urlSanitizer>|<get-urlSanitizer>(){}[0]
+
+    abstract fun element(io.heapy.kotmark.node/Node, kotlin/String, kotlin.collections/Map<kotlin/String, kotlin/String?> = ..., kotlin/Function1<kotlinx.html/FlowContent, kotlin/Unit> = ...) // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlNodeRendererContext.element|element(io.heapy.kotmark.node.Node;kotlin.String;kotlin.collections.Map<kotlin.String,kotlin.String?>;kotlin.Function1<kotlinx.html.FlowContent,kotlin.Unit>){}[0]
+    abstract fun encodeUrl(kotlin/String): kotlin/String // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlNodeRendererContext.encodeUrl|encodeUrl(kotlin.String){}[0]
+    abstract fun extendAttributes(io.heapy.kotmark.node/Node, kotlin/String, kotlin.collections/Map<kotlin/String, kotlin/String?>): kotlin.collections/Map<kotlin/String, kotlin/String?> // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlNodeRendererContext.extendAttributes|extendAttributes(io.heapy.kotmark.node.Node;kotlin.String;kotlin.collections.Map<kotlin.String,kotlin.String?>){}[0]
+    abstract fun line() // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlNodeRendererContext.line|line(){}[0]
+    abstract fun raw(kotlin/String) // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlNodeRendererContext.raw|raw(kotlin.String){}[0]
+    abstract fun render(io.heapy.kotmark.node/Node) // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlNodeRendererContext.render|render(io.heapy.kotmark.node.Node){}[0]
+    abstract fun renderChildren(io.heapy.kotmark.node/Node) // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlNodeRendererContext.renderChildren|renderChildren(io.heapy.kotmark.node.Node){}[0]
+    abstract fun resolveUrl(io.heapy.kotmark.node/Node, kotlin/String): kotlin/String // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlNodeRendererContext.resolveUrl|resolveUrl(io.heapy.kotmark.node.Node;kotlin.String){}[0]
+    abstract fun text(kotlin/String) // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlNodeRendererContext.text|text(kotlin.String){}[0]
+}
+
+final class io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlRenderer : io.heapy.kotmark.renderer/Renderer { // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlRenderer|null[0]
+    final fun render(io.heapy.kotmark.node/Node): kotlin/String // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlRenderer.render|render(io.heapy.kotmark.node.Node){}[0]
+    final fun render(io.heapy.kotmark.node/Node, kotlin.text/Appendable) // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlRenderer.render|render(io.heapy.kotmark.node.Node;kotlin.text.Appendable){}[0]
+    final fun render(io.heapy.kotmark.node/Node, kotlinx.html/FlowContent) // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlRenderer.render|render(io.heapy.kotmark.node.Node;kotlinx.html.FlowContent){}[0]
+    final fun render(io.heapy.kotmark.node/Node, kotlinx.html/TagConsumer<*>) // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlRenderer.render|render(io.heapy.kotmark.node.Node;kotlinx.html.TagConsumer<*>){}[0]
+
+    final class Configuration { // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlRenderer.Configuration|null[0]
+        final var escapeHtml // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlRenderer.Configuration.escapeHtml|{}escapeHtml[0]
+            final fun <get-escapeHtml>(): kotlin/Boolean // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlRenderer.Configuration.escapeHtml.<get-escapeHtml>|<get-escapeHtml>(){}[0]
+            final fun <set-escapeHtml>(kotlin/Boolean) // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlRenderer.Configuration.escapeHtml.<set-escapeHtml>|<set-escapeHtml>(kotlin.Boolean){}[0]
+        final var omitSingleParagraphP // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlRenderer.Configuration.omitSingleParagraphP|{}omitSingleParagraphP[0]
+            final fun <get-omitSingleParagraphP>(): kotlin/Boolean // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlRenderer.Configuration.omitSingleParagraphP.<get-omitSingleParagraphP>|<get-omitSingleParagraphP>(){}[0]
+            final fun <set-omitSingleParagraphP>(kotlin/Boolean) // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlRenderer.Configuration.omitSingleParagraphP.<set-omitSingleParagraphP>|<set-omitSingleParagraphP>(kotlin.Boolean){}[0]
+        final var percentEncodeUrls // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlRenderer.Configuration.percentEncodeUrls|{}percentEncodeUrls[0]
+            final fun <get-percentEncodeUrls>(): kotlin/Boolean // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlRenderer.Configuration.percentEncodeUrls.<get-percentEncodeUrls>|<get-percentEncodeUrls>(){}[0]
+            final fun <set-percentEncodeUrls>(kotlin/Boolean) // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlRenderer.Configuration.percentEncodeUrls.<set-percentEncodeUrls>|<set-percentEncodeUrls>(kotlin.Boolean){}[0]
+        final var sanitizeUrls // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlRenderer.Configuration.sanitizeUrls|{}sanitizeUrls[0]
+            final fun <get-sanitizeUrls>(): kotlin/Boolean // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlRenderer.Configuration.sanitizeUrls.<get-sanitizeUrls>|<get-sanitizeUrls>(){}[0]
+            final fun <set-sanitizeUrls>(kotlin/Boolean) // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlRenderer.Configuration.sanitizeUrls.<set-sanitizeUrls>|<set-sanitizeUrls>(kotlin.Boolean){}[0]
+        final var softbreak // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlRenderer.Configuration.softbreak|{}softbreak[0]
+            final fun <get-softbreak>(): kotlin/String // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlRenderer.Configuration.softbreak.<get-softbreak>|<get-softbreak>(){}[0]
+            final fun <set-softbreak>(kotlin/String) // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlRenderer.Configuration.softbreak.<set-softbreak>|<set-softbreak>(kotlin.String){}[0]
+        final var urlResolver // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlRenderer.Configuration.urlResolver|{}urlResolver[0]
+            final fun <get-urlResolver>(): io.heapy.kotmark.renderer.html/UrlResolver? // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlRenderer.Configuration.urlResolver.<get-urlResolver>|<get-urlResolver>(){}[0]
+            final fun <set-urlResolver>(io.heapy.kotmark.renderer.html/UrlResolver?) // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlRenderer.Configuration.urlResolver.<set-urlResolver>|<set-urlResolver>(io.heapy.kotmark.renderer.html.UrlResolver?){}[0]
+        final var urlSanitizer // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlRenderer.Configuration.urlSanitizer|{}urlSanitizer[0]
+            final fun <get-urlSanitizer>(): io.heapy.kotmark.renderer.html/UrlSanitizer // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlRenderer.Configuration.urlSanitizer.<get-urlSanitizer>|<get-urlSanitizer>(){}[0]
+            final fun <set-urlSanitizer>(io.heapy.kotmark.renderer.html/UrlSanitizer) // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlRenderer.Configuration.urlSanitizer.<set-urlSanitizer>|<set-urlSanitizer>(io.heapy.kotmark.renderer.html.UrlSanitizer){}[0]
+
+        final fun adapters(kotlin.collections/Iterable<io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlAdapter>) // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlRenderer.Configuration.adapters|adapters(kotlin.collections.Iterable<io.heapy.kotmark.renderer.kotlinxhtml.KotlinxHtmlAdapter>){}[0]
+        final fun adapters(kotlin/Array<out io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlAdapter>...) // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlRenderer.Configuration.adapters|adapters(kotlin.Array<out|io.heapy.kotmark.renderer.kotlinxhtml.KotlinxHtmlAdapter>...){}[0]
+        final fun attributeProviderFactory(io.heapy.kotmark.renderer.html/AttributeProviderFactory) // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlRenderer.Configuration.attributeProviderFactory|attributeProviderFactory(io.heapy.kotmark.renderer.html.AttributeProviderFactory){}[0]
+        final fun nodeRendererFactory(io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlNodeRendererFactory) // io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlRenderer.Configuration.nodeRendererFactory|nodeRendererFactory(io.heapy.kotmark.renderer.kotlinxhtml.KotlinxHtmlNodeRendererFactory){}[0]
+    }
+}
+
+final fun io.heapy.kotmark.renderer.kotlinxhtml.adapters/alertsAdapter(kotlin.collections/Map<kotlin/String, kotlin/String> = ...): io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlAdapter // io.heapy.kotmark.renderer.kotlinxhtml.adapters/alertsAdapter|alertsAdapter(kotlin.collections.Map<kotlin.String,kotlin.String>){}[0]
+final fun io.heapy.kotmark.renderer.kotlinxhtml.adapters/footnotesAdapter(): io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlAdapter // io.heapy.kotmark.renderer.kotlinxhtml.adapters/footnotesAdapter|footnotesAdapter(){}[0]
+final fun io.heapy.kotmark.renderer.kotlinxhtml.adapters/headingAnchorAdapter(kotlin/String = ..., kotlin/String = ..., kotlin/String = ...): io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlAdapter // io.heapy.kotmark.renderer.kotlinxhtml.adapters/headingAnchorAdapter|headingAnchorAdapter(kotlin.String;kotlin.String;kotlin.String){}[0]
+final fun io.heapy.kotmark.renderer.kotlinxhtml.adapters/highlightAdapter(): io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlAdapter // io.heapy.kotmark.renderer.kotlinxhtml.adapters/highlightAdapter|highlightAdapter(){}[0]
+final fun io.heapy.kotmark.renderer.kotlinxhtml.adapters/imageAttributesAdapter(): io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlAdapter // io.heapy.kotmark.renderer.kotlinxhtml.adapters/imageAttributesAdapter|imageAttributesAdapter(){}[0]
+final fun io.heapy.kotmark.renderer.kotlinxhtml.adapters/insAdapter(): io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlAdapter // io.heapy.kotmark.renderer.kotlinxhtml.adapters/insAdapter|insAdapter(){}[0]
+final fun io.heapy.kotmark.renderer.kotlinxhtml.adapters/mathAdapter(): io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlAdapter // io.heapy.kotmark.renderer.kotlinxhtml.adapters/mathAdapter|mathAdapter(){}[0]
+final fun io.heapy.kotmark.renderer.kotlinxhtml.adapters/strikethroughAdapter(): io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlAdapter // io.heapy.kotmark.renderer.kotlinxhtml.adapters/strikethroughAdapter|strikethroughAdapter(){}[0]
+final fun io.heapy.kotmark.renderer.kotlinxhtml.adapters/tablesAdapter(): io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlAdapter // io.heapy.kotmark.renderer.kotlinxhtml.adapters/tablesAdapter|tablesAdapter(){}[0]
+final fun io.heapy.kotmark.renderer.kotlinxhtml.adapters/taskListItemsAdapter(): io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlAdapter // io.heapy.kotmark.renderer.kotlinxhtml.adapters/taskListItemsAdapter|taskListItemsAdapter(){}[0]
+final fun io.heapy.kotmark.renderer.kotlinxhtml.adapters/yamlFrontMatterAdapter(): io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlAdapter // io.heapy.kotmark.renderer.kotlinxhtml.adapters/yamlFrontMatterAdapter|yamlFrontMatterAdapter(){}[0]
+final fun io.heapy.kotmark.renderer.kotlinxhtml/kotlinxHtmlRenderer(kotlin/Function1<io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlRenderer.Configuration, kotlin/Unit> = ...): io.heapy.kotmark.renderer.kotlinxhtml/KotlinxHtmlRenderer // io.heapy.kotmark.renderer.kotlinxhtml/kotlinxHtmlRenderer|kotlinxHtmlRenderer(kotlin.Function1<io.heapy.kotmark.renderer.kotlinxhtml.KotlinxHtmlRenderer.Configuration,kotlin.Unit>){}[0]
