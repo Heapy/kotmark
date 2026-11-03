@@ -4,6 +4,23 @@ import kotlin.test.Test
 
 class SpecialInputTest : CoreRenderingTestCase() {
     @Test
+    fun autolinksRecoverAfterNestedOpeningBrackets() {
+        assertRendering(
+            "<<https://example.com>",
+            "<p>&lt;<a href=\"https://example.com\">https://example.com</a></p>\n",
+        )
+        assertRendering(
+            "<bad <me@example.com>>",
+            "<p>&lt;bad <a href=\"mailto:me@example.com\">me@example.com</a>&gt;</p>\n",
+        )
+        assertRendering(
+            "x <bad<em>ok</em> <https://bad space> <https://example.com>",
+            "<p>x &lt;bad<em>ok</em> &lt;https://bad space&gt; " +
+                "<a href=\"https://example.com\">https://example.com</a></p>\n",
+        )
+    }
+
+    @Test
     fun empty() {
         assertRendering("", "")
     }

@@ -6,6 +6,7 @@ import io.heapy.kotmark.parser.beta.InlineContentParser
 import io.heapy.kotmark.parser.beta.InlineContentParserFactory
 import io.heapy.kotmark.parser.beta.InlineParserState
 import io.heapy.kotmark.parser.beta.ParsedInline
+import io.heapy.kotmark.text.asciiMatcher
 
 /**
  * Parses URI and email autolinks in angle brackets.
@@ -15,7 +16,9 @@ class AutolinkInlineParser : InlineContentParser {
         val scanner = inlineParserState.scanner()
         scanner.next()
         val textStart = scanner.position()
-        if (scanner.find('>') > 0) {
+        if (scanner.find(ANGLE_BRACKETS) > 0) {
+            if (scanner.peek() != '>') return ParsedInline.none()
+
             val textSource = scanner.getSource(textStart, scanner.position())
             val content = textSource.content
             scanner.next()
@@ -44,6 +47,11 @@ class AutolinkInlineParser : InlineContentParser {
     }
 
     companion object {
+        private val ANGLE_BRACKETS = asciiMatcher {
+            c('<')
+            c('>')
+        }
+
         private val URI = Regex("""^[a-zA-Z][a-zA-Z0-9.+-]{1,31}:[^<>\u0000-\u0020]*$""")
         private val EMAIL = Regex(
             """^([a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9]""" +

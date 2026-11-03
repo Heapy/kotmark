@@ -130,6 +130,12 @@ class PathologicalTest {
         assertRendering("x <![CDATA[ >".repeat(size), "<p>" + "x &lt;![CDATA[ &gt;".repeat(size) + "</p>\n")
     }
 
+    @Test
+    fun autolinkWithoutCloser() {
+        val count = 160_000
+        assertRendering("<".repeat(count), "<p>" + "&lt;".repeat(count) + "</p>\n")
+    }
+
     private fun assertRendering(source: String, expected: String) {
         assertEquals(expected, renderer.render(parser.parse(source)))
     }
