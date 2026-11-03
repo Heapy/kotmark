@@ -1,6 +1,8 @@
 package io.heapy.kotmark.text
 
-import java.lang.Character as JCharacter
+// These helpers need Java's full Unicode code point operations, beyond a single Kotlin Char.
+@Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")
+private typealias JCharacter = java.lang.Character
 
 internal actual fun codePointAt(s: CharSequence, index: Int): Int = JCharacter.codePointAt(s, index)
 

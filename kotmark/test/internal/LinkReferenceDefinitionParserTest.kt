@@ -2,6 +2,7 @@ package io.heapy.kotmark.internal
 
 import io.heapy.kotmark.internal.LinkReferenceDefinitionParser.State
 import io.heapy.kotmark.node.LinkReferenceDefinition
+import io.heapy.kotmark.node.SourceSpan
 import io.heapy.kotmark.parser.SourceLine
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -66,6 +67,24 @@ class LinkReferenceDefinitionParserTest {
         parser.parseLine("[foo]: /url")
         assertTrue(parser.definitions.isEmpty())
         assertEquals("text\n[foo]: /url", parser.paragraphLines.content)
+    }
+
+    @Test
+    fun removeLinesKeepsEarlierLinesAndReturnsRemovedSpansInOrder() {
+        val parser = LinkReferenceDefinitionParser()
+        val lines = listOf("first", "second", "third")
+        var inputIndex = 0
+        val spans = lines.mapIndexed { index, content ->
+            val span = SourceSpan.of(index, 0, inputIndex, content.length)
+            parser.parse(SourceLine.of(content, span))
+            parser.addSourceSpan(span)
+            inputIndex += content.length + 1
+            span
+        }
+
+        assertEquals(spans.takeLast(2), parser.removeLines(2))
+        assertEquals("first", parser.paragraphLines.content)
+        assertEquals(spans.take(1), parser.paragraphSourceSpans)
     }
 
     private fun LinkReferenceDefinitionParser.parseLine(content: String) {

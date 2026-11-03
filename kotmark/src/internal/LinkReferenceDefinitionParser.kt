@@ -233,7 +233,7 @@ class LinkReferenceDefinitionParser {
                 list.clear()
             } else {
                 repeat(count) {
-                    list.removeLast()
+                    list.removeAt(list.lastIndex)
                 }
             }
         }

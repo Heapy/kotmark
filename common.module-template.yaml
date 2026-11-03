@@ -13,3 +13,8 @@ settings:
     test:
       # Deeply nested Markdown fixtures need more than the default thread stack.
       freeJvmArgs: [-Xss4m]
+
+settings@android:
+  android:
+    minSdk: 24
+    compileSdk: 37

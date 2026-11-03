@@ -491,7 +491,7 @@ class InlineParserImpl(
 
             val foundOpener = requireNotNull(opener)
             repeat(usedDelimiters) {
-                foundOpener.characters.removeLast().unlink()
+                foundOpener.characters.removeAt(foundOpener.characters.lastIndex).unlink()
             }
             repeat(usedDelimiters) {
                 currentCloser.characters.removeAt(0).unlink()

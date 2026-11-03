@@ -7,7 +7,7 @@ rendering it as HTML, Markdown, or plain text. Based on
 [commonmark-java](https://github.com/commonmark/commonmark-java), with opt-in
 extensions and support for custom parsers and renderers.
 
-Supports JVM (Java 17+), Android, JavaScript, WebAssembly, and Kotlin/Native.
+Supports JVM (Java 17+), Android 7.0+ (API 24+), JavaScript, WebAssembly, and Kotlin/Native.
 
 The optional [kotlinx.html renderer](kotmark-renderer-kotlinx-html/README.md)
 inserts Markdown into HTML DSL/DOM consumers with explicitly selected extension adapters.
