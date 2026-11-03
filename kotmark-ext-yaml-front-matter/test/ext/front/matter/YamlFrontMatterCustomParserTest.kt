@@ -1,6 +1,7 @@
 package io.heapy.kotmark.ext.front.matter
 
-import io.heapy.kotmark.ext.front.matter.FrontMatterParser.SeparatorRole
+import io.heapy.kotmark.ext.front.matter.parser.FrontMatterParser
+import io.heapy.kotmark.ext.front.matter.parser.FrontMatterParser.SeparatorRole
 import io.heapy.kotmark.node.SourceSpan
 import io.heapy.kotmark.parser.IncludeSourceSpans
 import io.heapy.kotmark.parser.SourceLine
@@ -11,7 +12,7 @@ import kotlin.test.assertEquals
 
 class YamlFrontMatterCustomParserTest {
     @Test
-    fun separatorCanBeContentAndCallbacksReceiveSourcePositionsOnce() {
+    fun separatorCanBeRawContentAndCallbacksReceiveSourcePositionsOnce() {
         val ordinaryLines = mutableListOf<SourceLine>()
         val separators = mutableListOf<SourceLine>()
         val extension = YamlFrontMatterExtension.create(

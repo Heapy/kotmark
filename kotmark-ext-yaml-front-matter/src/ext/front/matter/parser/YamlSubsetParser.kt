@@ -1,9 +1,8 @@
 package io.heapy.kotmark.ext.front.matter.parser
 
-import io.heapy.kotmark.ext.front.matter.FrontMatterParser
-import io.heapy.kotmark.ext.front.matter.FrontMatterParser.SeparatorRole
 import io.heapy.kotmark.ext.front.matter.YamlFrontMatterBlock
 import io.heapy.kotmark.ext.front.matter.YamlFrontMatterNode
+import io.heapy.kotmark.ext.front.matter.parser.FrontMatterParser.SeparatorRole
 import io.heapy.kotmark.parser.SourceLine
 
 /** Parses the existing limited YAML subset into key/value nodes. */

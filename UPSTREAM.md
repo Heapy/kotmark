@@ -36,6 +36,7 @@ advance the pinned test corpora or imply a full update to a later release.
 | [614abc159d31ae0b1ef46540f838c76d2aad2a9c](https://github.com/commonmark/commonmark-java/commit/614abc159d31ae0b1ef46540f838c76d2aad2a9c), YAML front matter extractors | `kotmark-ext-yaml-front-matter` code and adapted tests | Kotlin extractor API, raw-content AST node and Markdown rendering; existing no-argument entry points retained |
 | [2b264befeb501d1561c1200ccb2333cad8924dd0](https://github.com/commonmark/commonmark-java/commit/2b264befeb501d1561c1200ccb2333cad8924dd0), front matter parser API | `kotmark-ext-yaml-front-matter` code and adapted tests | Renamed raw-content API, source lines and explicit separator roles; pre-existing no-argument entry points retained |
 | [e45a48033f430d7675cd8388eaf5057e94e9ea96](https://github.com/commonmark/commonmark-java/commit/e45a48033f430d7675cd8388eaf5057e94e9ea96), Markdown line separators | `kotmark` Markdown renderer, writer and adapted tests | Configurable line separators through the Kotlin DSL; existing writer constructor and default LF output retained |
+| [5f4778b90381dbc3b4983b72885f73b1f7fcf6f3](https://github.com/commonmark/commonmark-java/commit/5f4778b90381dbc3b4983b72885f73b1f7fcf6f3), front matter parser package | `kotmark-ext-yaml-front-matter` API and references | Moved `FrontMatterParser` into the `parser` subpackage; Kotlin factory parameter naming retained |
 
 These adaptations retain the commonmark-java BSD-2-Clause notice below.
 

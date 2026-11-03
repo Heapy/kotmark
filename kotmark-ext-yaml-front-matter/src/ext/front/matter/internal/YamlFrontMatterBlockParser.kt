@@ -1,7 +1,7 @@
 package io.heapy.kotmark.ext.front.matter.internal
 
 import io.heapy.kotmark.ext.front.matter.YamlFrontMatterBlock
-import io.heapy.kotmark.ext.front.matter.FrontMatterParser
+import io.heapy.kotmark.ext.front.matter.parser.FrontMatterParser
 import io.heapy.kotmark.ext.front.matter.parser.YamlSubsetParser
 import io.heapy.kotmark.node.Block
 import io.heapy.kotmark.node.Document

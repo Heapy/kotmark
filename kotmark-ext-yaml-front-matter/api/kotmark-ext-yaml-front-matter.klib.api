@@ -6,23 +6,23 @@
 // - Show declarations: true
 
 // Library unique name: <kotmark-ext-yaml-front-matter>
-abstract interface io.heapy.kotmark.ext.front.matter/FrontMatterParser { // io.heapy.kotmark.ext.front.matter/FrontMatterParser|null[0]
-    abstract fun onEndingSeparator(io.heapy.kotmark.ext.front.matter/YamlFrontMatterBlock, io.heapy.kotmark.parser/SourceLine): io.heapy.kotmark.ext.front.matter/FrontMatterParser.SeparatorRole // io.heapy.kotmark.ext.front.matter/FrontMatterParser.onEndingSeparator|onEndingSeparator(io.heapy.kotmark.ext.front.matter.YamlFrontMatterBlock;io.heapy.kotmark.parser.SourceLine){}[0]
-    abstract fun onNextLine(io.heapy.kotmark.ext.front.matter/YamlFrontMatterBlock, io.heapy.kotmark.parser/SourceLine) // io.heapy.kotmark.ext.front.matter/FrontMatterParser.onNextLine|onNextLine(io.heapy.kotmark.ext.front.matter.YamlFrontMatterBlock;io.heapy.kotmark.parser.SourceLine){}[0]
+abstract interface io.heapy.kotmark.ext.front.matter.parser/FrontMatterParser { // io.heapy.kotmark.ext.front.matter.parser/FrontMatterParser|null[0]
+    abstract fun onEndingSeparator(io.heapy.kotmark.ext.front.matter/YamlFrontMatterBlock, io.heapy.kotmark.parser/SourceLine): io.heapy.kotmark.ext.front.matter.parser/FrontMatterParser.SeparatorRole // io.heapy.kotmark.ext.front.matter.parser/FrontMatterParser.onEndingSeparator|onEndingSeparator(io.heapy.kotmark.ext.front.matter.YamlFrontMatterBlock;io.heapy.kotmark.parser.SourceLine){}[0]
+    abstract fun onNextLine(io.heapy.kotmark.ext.front.matter/YamlFrontMatterBlock, io.heapy.kotmark.parser/SourceLine) // io.heapy.kotmark.ext.front.matter.parser/FrontMatterParser.onNextLine|onNextLine(io.heapy.kotmark.ext.front.matter.YamlFrontMatterBlock;io.heapy.kotmark.parser.SourceLine){}[0]
 
-    final enum class SeparatorRole : kotlin/Enum<io.heapy.kotmark.ext.front.matter/FrontMatterParser.SeparatorRole> { // io.heapy.kotmark.ext.front.matter/FrontMatterParser.SeparatorRole|null[0]
-        enum entry BLOCK_END // io.heapy.kotmark.ext.front.matter/FrontMatterParser.SeparatorRole.BLOCK_END|null[0]
-        enum entry CONTENT // io.heapy.kotmark.ext.front.matter/FrontMatterParser.SeparatorRole.CONTENT|null[0]
+    final enum class SeparatorRole : kotlin/Enum<io.heapy.kotmark.ext.front.matter.parser/FrontMatterParser.SeparatorRole> { // io.heapy.kotmark.ext.front.matter.parser/FrontMatterParser.SeparatorRole|null[0]
+        enum entry BLOCK_END // io.heapy.kotmark.ext.front.matter.parser/FrontMatterParser.SeparatorRole.BLOCK_END|null[0]
+        enum entry CONTENT // io.heapy.kotmark.ext.front.matter.parser/FrontMatterParser.SeparatorRole.CONTENT|null[0]
 
-        final val entries // io.heapy.kotmark.ext.front.matter/FrontMatterParser.SeparatorRole.entries|#static{}entries[0]
-            final fun <get-entries>(): kotlin.enums/EnumEntries<io.heapy.kotmark.ext.front.matter/FrontMatterParser.SeparatorRole> // io.heapy.kotmark.ext.front.matter/FrontMatterParser.SeparatorRole.entries.<get-entries>|<get-entries>#static(){}[0]
+        final val entries // io.heapy.kotmark.ext.front.matter.parser/FrontMatterParser.SeparatorRole.entries|#static{}entries[0]
+            final fun <get-entries>(): kotlin.enums/EnumEntries<io.heapy.kotmark.ext.front.matter.parser/FrontMatterParser.SeparatorRole> // io.heapy.kotmark.ext.front.matter.parser/FrontMatterParser.SeparatorRole.entries.<get-entries>|<get-entries>#static(){}[0]
 
-        final fun valueOf(kotlin/String): io.heapy.kotmark.ext.front.matter/FrontMatterParser.SeparatorRole // io.heapy.kotmark.ext.front.matter/FrontMatterParser.SeparatorRole.valueOf|valueOf#static(kotlin.String){}[0]
-        final fun values(): kotlin/Array<io.heapy.kotmark.ext.front.matter/FrontMatterParser.SeparatorRole> // io.heapy.kotmark.ext.front.matter/FrontMatterParser.SeparatorRole.values|values#static(){}[0]
+        final fun valueOf(kotlin/String): io.heapy.kotmark.ext.front.matter.parser/FrontMatterParser.SeparatorRole // io.heapy.kotmark.ext.front.matter.parser/FrontMatterParser.SeparatorRole.valueOf|valueOf#static(kotlin.String){}[0]
+        final fun values(): kotlin/Array<io.heapy.kotmark.ext.front.matter.parser/FrontMatterParser.SeparatorRole> // io.heapy.kotmark.ext.front.matter.parser/FrontMatterParser.SeparatorRole.values|values#static(){}[0]
     }
 
-    abstract fun interface Factory { // io.heapy.kotmark.ext.front.matter/FrontMatterParser.Factory|null[0]
-        abstract fun create(): io.heapy.kotmark.ext.front.matter/FrontMatterParser // io.heapy.kotmark.ext.front.matter/FrontMatterParser.Factory.create|create(){}[0]
+    abstract fun interface Factory { // io.heapy.kotmark.ext.front.matter.parser/FrontMatterParser.Factory|null[0]
+        abstract fun create(): io.heapy.kotmark.ext.front.matter.parser/FrontMatterParser // io.heapy.kotmark.ext.front.matter.parser/FrontMatterParser.Factory.create|create(){}[0]
     }
 }
 
@@ -35,7 +35,7 @@ abstract class io.heapy.kotmark.ext.front.matter.internal/YamlFrontMatterNodeRen
 
 final class io.heapy.kotmark.ext.front.matter.internal/YamlFrontMatterBlockParser : io.heapy.kotmark.parser.block/AbstractBlockParser { // io.heapy.kotmark.ext.front.matter.internal/YamlFrontMatterBlockParser|null[0]
     constructor <init>() // io.heapy.kotmark.ext.front.matter.internal/YamlFrontMatterBlockParser.<init>|<init>(){}[0]
-    constructor <init>(io.heapy.kotmark.ext.front.matter/FrontMatterParser) // io.heapy.kotmark.ext.front.matter.internal/YamlFrontMatterBlockParser.<init>|<init>(io.heapy.kotmark.ext.front.matter.FrontMatterParser){}[0]
+    constructor <init>(io.heapy.kotmark.ext.front.matter.parser/FrontMatterParser) // io.heapy.kotmark.ext.front.matter.internal/YamlFrontMatterBlockParser.<init>|<init>(io.heapy.kotmark.ext.front.matter.parser.FrontMatterParser){}[0]
 
     final val block // io.heapy.kotmark.ext.front.matter.internal/YamlFrontMatterBlockParser.block|{}block[0]
         final fun <get-block>(): io.heapy.kotmark.node/Block // io.heapy.kotmark.ext.front.matter.internal/YamlFrontMatterBlockParser.block.<get-block>|<get-block>(){}[0]
@@ -44,7 +44,7 @@ final class io.heapy.kotmark.ext.front.matter.internal/YamlFrontMatterBlockParse
 
     final class Factory : io.heapy.kotmark.parser.block/AbstractBlockParserFactory { // io.heapy.kotmark.ext.front.matter.internal/YamlFrontMatterBlockParser.Factory|null[0]
         constructor <init>() // io.heapy.kotmark.ext.front.matter.internal/YamlFrontMatterBlockParser.Factory.<init>|<init>(){}[0]
-        constructor <init>(io.heapy.kotmark.ext.front.matter/FrontMatterParser.Factory) // io.heapy.kotmark.ext.front.matter.internal/YamlFrontMatterBlockParser.Factory.<init>|<init>(io.heapy.kotmark.ext.front.matter.FrontMatterParser.Factory){}[0]
+        constructor <init>(io.heapy.kotmark.ext.front.matter.parser/FrontMatterParser.Factory) // io.heapy.kotmark.ext.front.matter.internal/YamlFrontMatterBlockParser.Factory.<init>|<init>(io.heapy.kotmark.ext.front.matter.parser.FrontMatterParser.Factory){}[0]
 
         final fun tryStart(io.heapy.kotmark.parser.block/ParserState, io.heapy.kotmark.parser.block/MatchedBlockParser): io.heapy.kotmark.parser.block/BlockStart? // io.heapy.kotmark.ext.front.matter.internal/YamlFrontMatterBlockParser.Factory.tryStart|tryStart(io.heapy.kotmark.parser.block.ParserState;io.heapy.kotmark.parser.block.MatchedBlockParser){}[0]
     }
@@ -58,29 +58,29 @@ final class io.heapy.kotmark.ext.front.matter.internal/YamlFrontMatterMarkdownNo
     final fun render(io.heapy.kotmark.node/Node) // io.heapy.kotmark.ext.front.matter.internal/YamlFrontMatterMarkdownNodeRenderer.render|render(io.heapy.kotmark.node.Node){}[0]
 }
 
-final class io.heapy.kotmark.ext.front.matter.parser/RawContentParser : io.heapy.kotmark.ext.front.matter/FrontMatterParser { // io.heapy.kotmark.ext.front.matter.parser/RawContentParser|null[0]
+final class io.heapy.kotmark.ext.front.matter.parser/RawContentParser : io.heapy.kotmark.ext.front.matter.parser/FrontMatterParser { // io.heapy.kotmark.ext.front.matter.parser/RawContentParser|null[0]
     constructor <init>() // io.heapy.kotmark.ext.front.matter.parser/RawContentParser.<init>|<init>(){}[0]
 
-    final fun onEndingSeparator(io.heapy.kotmark.ext.front.matter/YamlFrontMatterBlock, io.heapy.kotmark.parser/SourceLine): io.heapy.kotmark.ext.front.matter/FrontMatterParser.SeparatorRole // io.heapy.kotmark.ext.front.matter.parser/RawContentParser.onEndingSeparator|onEndingSeparator(io.heapy.kotmark.ext.front.matter.YamlFrontMatterBlock;io.heapy.kotmark.parser.SourceLine){}[0]
+    final fun onEndingSeparator(io.heapy.kotmark.ext.front.matter/YamlFrontMatterBlock, io.heapy.kotmark.parser/SourceLine): io.heapy.kotmark.ext.front.matter.parser/FrontMatterParser.SeparatorRole // io.heapy.kotmark.ext.front.matter.parser/RawContentParser.onEndingSeparator|onEndingSeparator(io.heapy.kotmark.ext.front.matter.YamlFrontMatterBlock;io.heapy.kotmark.parser.SourceLine){}[0]
     final fun onNextLine(io.heapy.kotmark.ext.front.matter/YamlFrontMatterBlock, io.heapy.kotmark.parser/SourceLine) // io.heapy.kotmark.ext.front.matter.parser/RawContentParser.onNextLine|onNextLine(io.heapy.kotmark.ext.front.matter.YamlFrontMatterBlock;io.heapy.kotmark.parser.SourceLine){}[0]
 
-    final class Factory : io.heapy.kotmark.ext.front.matter/FrontMatterParser.Factory { // io.heapy.kotmark.ext.front.matter.parser/RawContentParser.Factory|null[0]
+    final class Factory : io.heapy.kotmark.ext.front.matter.parser/FrontMatterParser.Factory { // io.heapy.kotmark.ext.front.matter.parser/RawContentParser.Factory|null[0]
         constructor <init>() // io.heapy.kotmark.ext.front.matter.parser/RawContentParser.Factory.<init>|<init>(){}[0]
 
-        final fun create(): io.heapy.kotmark.ext.front.matter/FrontMatterParser // io.heapy.kotmark.ext.front.matter.parser/RawContentParser.Factory.create|create(){}[0]
+        final fun create(): io.heapy.kotmark.ext.front.matter.parser/FrontMatterParser // io.heapy.kotmark.ext.front.matter.parser/RawContentParser.Factory.create|create(){}[0]
     }
 }
 
-final class io.heapy.kotmark.ext.front.matter.parser/YamlSubsetParser : io.heapy.kotmark.ext.front.matter/FrontMatterParser { // io.heapy.kotmark.ext.front.matter.parser/YamlSubsetParser|null[0]
+final class io.heapy.kotmark.ext.front.matter.parser/YamlSubsetParser : io.heapy.kotmark.ext.front.matter.parser/FrontMatterParser { // io.heapy.kotmark.ext.front.matter.parser/YamlSubsetParser|null[0]
     constructor <init>() // io.heapy.kotmark.ext.front.matter.parser/YamlSubsetParser.<init>|<init>(){}[0]
 
-    final fun onEndingSeparator(io.heapy.kotmark.ext.front.matter/YamlFrontMatterBlock, io.heapy.kotmark.parser/SourceLine): io.heapy.kotmark.ext.front.matter/FrontMatterParser.SeparatorRole // io.heapy.kotmark.ext.front.matter.parser/YamlSubsetParser.onEndingSeparator|onEndingSeparator(io.heapy.kotmark.ext.front.matter.YamlFrontMatterBlock;io.heapy.kotmark.parser.SourceLine){}[0]
+    final fun onEndingSeparator(io.heapy.kotmark.ext.front.matter/YamlFrontMatterBlock, io.heapy.kotmark.parser/SourceLine): io.heapy.kotmark.ext.front.matter.parser/FrontMatterParser.SeparatorRole // io.heapy.kotmark.ext.front.matter.parser/YamlSubsetParser.onEndingSeparator|onEndingSeparator(io.heapy.kotmark.ext.front.matter.YamlFrontMatterBlock;io.heapy.kotmark.parser.SourceLine){}[0]
     final fun onNextLine(io.heapy.kotmark.ext.front.matter/YamlFrontMatterBlock, io.heapy.kotmark.parser/SourceLine) // io.heapy.kotmark.ext.front.matter.parser/YamlSubsetParser.onNextLine|onNextLine(io.heapy.kotmark.ext.front.matter.YamlFrontMatterBlock;io.heapy.kotmark.parser.SourceLine){}[0]
 
-    final class Factory : io.heapy.kotmark.ext.front.matter/FrontMatterParser.Factory { // io.heapy.kotmark.ext.front.matter.parser/YamlSubsetParser.Factory|null[0]
+    final class Factory : io.heapy.kotmark.ext.front.matter.parser/FrontMatterParser.Factory { // io.heapy.kotmark.ext.front.matter.parser/YamlSubsetParser.Factory|null[0]
         constructor <init>() // io.heapy.kotmark.ext.front.matter.parser/YamlSubsetParser.Factory.<init>|<init>(){}[0]
 
-        final fun create(): io.heapy.kotmark.ext.front.matter/FrontMatterParser // io.heapy.kotmark.ext.front.matter.parser/YamlSubsetParser.Factory.create|create(){}[0]
+        final fun create(): io.heapy.kotmark.ext.front.matter.parser/FrontMatterParser // io.heapy.kotmark.ext.front.matter.parser/YamlSubsetParser.Factory.create|create(){}[0]
     }
 }
 
@@ -94,7 +94,7 @@ final class io.heapy.kotmark.ext.front.matter/YamlFrontMatterExtension : io.heap
 
     final object Companion { // io.heapy.kotmark.ext.front.matter/YamlFrontMatterExtension.Companion|null[0]
         final fun create(): io.heapy.kotmark/Extension // io.heapy.kotmark.ext.front.matter/YamlFrontMatterExtension.Companion.create|create(){}[0]
-        final fun create(io.heapy.kotmark.ext.front.matter/FrontMatterParser.Factory): io.heapy.kotmark/Extension // io.heapy.kotmark.ext.front.matter/YamlFrontMatterExtension.Companion.create|create(io.heapy.kotmark.ext.front.matter.FrontMatterParser.Factory){}[0]
+        final fun create(io.heapy.kotmark.ext.front.matter.parser/FrontMatterParser.Factory): io.heapy.kotmark/Extension // io.heapy.kotmark.ext.front.matter/YamlFrontMatterExtension.Companion.create|create(io.heapy.kotmark.ext.front.matter.parser.FrontMatterParser.Factory){}[0]
     }
 }
 

@@ -1,5 +1,6 @@
-package io.heapy.kotmark.ext.front.matter
+package io.heapy.kotmark.ext.front.matter.parser
 
+import io.heapy.kotmark.ext.front.matter.YamlFrontMatterBlock
 import io.heapy.kotmark.parser.SourceLine
 
 /** Parses front matter lines and appends child nodes to store the result in [YamlFrontMatterBlock]. */

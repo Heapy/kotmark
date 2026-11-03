@@ -1,7 +1,8 @@
 package io.heapy.kotmark.ext.front.matter
 
-import io.heapy.kotmark.ext.front.matter.FrontMatterParser.SeparatorRole
 import io.heapy.kotmark.ext.front.matter.internal.YamlFrontMatterBlockParser
+import io.heapy.kotmark.ext.front.matter.parser.FrontMatterParser
+import io.heapy.kotmark.ext.front.matter.parser.FrontMatterParser.SeparatorRole
 import io.heapy.kotmark.ext.front.matter.parser.RawContentParser
 import io.heapy.kotmark.node.CustomNode
 import io.heapy.kotmark.node.Node

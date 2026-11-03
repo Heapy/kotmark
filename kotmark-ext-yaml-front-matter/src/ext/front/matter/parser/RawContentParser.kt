@@ -1,9 +1,8 @@
 package io.heapy.kotmark.ext.front.matter.parser
 
-import io.heapy.kotmark.ext.front.matter.FrontMatterParser
-import io.heapy.kotmark.ext.front.matter.FrontMatterParser.SeparatorRole
 import io.heapy.kotmark.ext.front.matter.YamlFrontMatterBlock
 import io.heapy.kotmark.ext.front.matter.YamlFrontMatterRawContent
+import io.heapy.kotmark.ext.front.matter.parser.FrontMatterParser.SeparatorRole
 import io.heapy.kotmark.parser.SourceLine
 
 /** Keeps YAML lines as text so that callers can parse them with a YAML library of their choice. */

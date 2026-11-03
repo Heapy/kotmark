@@ -1,36 +1,19 @@
-public abstract interface class io/heapy/kotmark/ext/front/matter/FrontMatterParser {
-	public abstract fun onEndingSeparator (Lio/heapy/kotmark/ext/front/matter/YamlFrontMatterBlock;Lio/heapy/kotmark/parser/SourceLine;)Lio/heapy/kotmark/ext/front/matter/FrontMatterParser$SeparatorRole;
-	public abstract fun onNextLine (Lio/heapy/kotmark/ext/front/matter/YamlFrontMatterBlock;Lio/heapy/kotmark/parser/SourceLine;)V
-}
-
-public abstract interface class io/heapy/kotmark/ext/front/matter/FrontMatterParser$Factory {
-	public abstract fun create ()Lio/heapy/kotmark/ext/front/matter/FrontMatterParser;
-}
-
-public final class io/heapy/kotmark/ext/front/matter/FrontMatterParser$SeparatorRole : java/lang/Enum {
-	public static final field BLOCK_END Lio/heapy/kotmark/ext/front/matter/FrontMatterParser$SeparatorRole;
-	public static final field CONTENT Lio/heapy/kotmark/ext/front/matter/FrontMatterParser$SeparatorRole;
-	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public static fun valueOf (Ljava/lang/String;)Lio/heapy/kotmark/ext/front/matter/FrontMatterParser$SeparatorRole;
-	public static fun values ()[Lio/heapy/kotmark/ext/front/matter/FrontMatterParser$SeparatorRole;
-}
-
 public final class io/heapy/kotmark/ext/front/matter/YamlFrontMatterBlock : io/heapy/kotmark/node/CustomBlock {
 	public fun <init> ()V
 }
 
 public final class io/heapy/kotmark/ext/front/matter/YamlFrontMatterExtension : io/heapy/kotmark/parser/Parser$ParserExtension, io/heapy/kotmark/renderer/markdown/MarkdownRenderer$MarkdownRendererExtension {
 	public static final field Companion Lio/heapy/kotmark/ext/front/matter/YamlFrontMatterExtension$Companion;
-	public synthetic fun <init> (Lio/heapy/kotmark/ext/front/matter/FrontMatterParser$Factory;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Lio/heapy/kotmark/ext/front/matter/parser/FrontMatterParser$Factory;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public static final fun create ()Lio/heapy/kotmark/Extension;
-	public static final fun create (Lio/heapy/kotmark/ext/front/matter/FrontMatterParser$Factory;)Lio/heapy/kotmark/Extension;
+	public static final fun create (Lio/heapy/kotmark/ext/front/matter/parser/FrontMatterParser$Factory;)Lio/heapy/kotmark/Extension;
 	public fun extend (Lio/heapy/kotmark/parser/Parser$Configuration;)V
 	public fun extend (Lio/heapy/kotmark/renderer/markdown/MarkdownRenderer$Configuration;)V
 }
 
 public final class io/heapy/kotmark/ext/front/matter/YamlFrontMatterExtension$Companion {
 	public final fun create ()Lio/heapy/kotmark/Extension;
-	public final fun create (Lio/heapy/kotmark/ext/front/matter/FrontMatterParser$Factory;)Lio/heapy/kotmark/Extension;
+	public final fun create (Lio/heapy/kotmark/ext/front/matter/parser/FrontMatterParser$Factory;)Lio/heapy/kotmark/Extension;
 }
 
 public final class io/heapy/kotmark/ext/front/matter/YamlFrontMatterNode : io/heapy/kotmark/node/CustomNode {
@@ -66,7 +49,7 @@ public final class io/heapy/kotmark/ext/front/matter/YamlFrontMatterVisitor$Comp
 public final class io/heapy/kotmark/ext/front/matter/internal/YamlFrontMatterBlockParser : io/heapy/kotmark/parser/block/AbstractBlockParser {
 	public static final field Companion Lio/heapy/kotmark/ext/front/matter/internal/YamlFrontMatterBlockParser$Companion;
 	public fun <init> ()V
-	public fun <init> (Lio/heapy/kotmark/ext/front/matter/FrontMatterParser;)V
+	public fun <init> (Lio/heapy/kotmark/ext/front/matter/parser/FrontMatterParser;)V
 	public fun getBlock ()Lio/heapy/kotmark/node/Block;
 	public fun tryContinue (Lio/heapy/kotmark/parser/block/ParserState;)Lio/heapy/kotmark/parser/block/BlockContinue;
 }
@@ -76,7 +59,7 @@ public final class io/heapy/kotmark/ext/front/matter/internal/YamlFrontMatterBlo
 
 public final class io/heapy/kotmark/ext/front/matter/internal/YamlFrontMatterBlockParser$Factory : io/heapy/kotmark/parser/block/AbstractBlockParserFactory {
 	public fun <init> ()V
-	public fun <init> (Lio/heapy/kotmark/ext/front/matter/FrontMatterParser$Factory;)V
+	public fun <init> (Lio/heapy/kotmark/ext/front/matter/parser/FrontMatterParser$Factory;)V
 	public fun tryStart (Lio/heapy/kotmark/parser/block/ParserState;Lio/heapy/kotmark/parser/block/MatchedBlockParser;)Lio/heapy/kotmark/parser/block/BlockStart;
 }
 
@@ -92,25 +75,42 @@ public abstract class io/heapy/kotmark/ext/front/matter/internal/YamlFrontMatter
 	public fun getNodeTypes ()Ljava/util/Set;
 }
 
-public final class io/heapy/kotmark/ext/front/matter/parser/RawContentParser : io/heapy/kotmark/ext/front/matter/FrontMatterParser {
+public abstract interface class io/heapy/kotmark/ext/front/matter/parser/FrontMatterParser {
+	public abstract fun onEndingSeparator (Lio/heapy/kotmark/ext/front/matter/YamlFrontMatterBlock;Lio/heapy/kotmark/parser/SourceLine;)Lio/heapy/kotmark/ext/front/matter/parser/FrontMatterParser$SeparatorRole;
+	public abstract fun onNextLine (Lio/heapy/kotmark/ext/front/matter/YamlFrontMatterBlock;Lio/heapy/kotmark/parser/SourceLine;)V
+}
+
+public abstract interface class io/heapy/kotmark/ext/front/matter/parser/FrontMatterParser$Factory {
+	public abstract fun create ()Lio/heapy/kotmark/ext/front/matter/parser/FrontMatterParser;
+}
+
+public final class io/heapy/kotmark/ext/front/matter/parser/FrontMatterParser$SeparatorRole : java/lang/Enum {
+	public static final field BLOCK_END Lio/heapy/kotmark/ext/front/matter/parser/FrontMatterParser$SeparatorRole;
+	public static final field CONTENT Lio/heapy/kotmark/ext/front/matter/parser/FrontMatterParser$SeparatorRole;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/heapy/kotmark/ext/front/matter/parser/FrontMatterParser$SeparatorRole;
+	public static fun values ()[Lio/heapy/kotmark/ext/front/matter/parser/FrontMatterParser$SeparatorRole;
+}
+
+public final class io/heapy/kotmark/ext/front/matter/parser/RawContentParser : io/heapy/kotmark/ext/front/matter/parser/FrontMatterParser {
 	public fun <init> ()V
-	public fun onEndingSeparator (Lio/heapy/kotmark/ext/front/matter/YamlFrontMatterBlock;Lio/heapy/kotmark/parser/SourceLine;)Lio/heapy/kotmark/ext/front/matter/FrontMatterParser$SeparatorRole;
+	public fun onEndingSeparator (Lio/heapy/kotmark/ext/front/matter/YamlFrontMatterBlock;Lio/heapy/kotmark/parser/SourceLine;)Lio/heapy/kotmark/ext/front/matter/parser/FrontMatterParser$SeparatorRole;
 	public fun onNextLine (Lio/heapy/kotmark/ext/front/matter/YamlFrontMatterBlock;Lio/heapy/kotmark/parser/SourceLine;)V
 }
 
-public final class io/heapy/kotmark/ext/front/matter/parser/RawContentParser$Factory : io/heapy/kotmark/ext/front/matter/FrontMatterParser$Factory {
+public final class io/heapy/kotmark/ext/front/matter/parser/RawContentParser$Factory : io/heapy/kotmark/ext/front/matter/parser/FrontMatterParser$Factory {
 	public fun <init> ()V
-	public fun create ()Lio/heapy/kotmark/ext/front/matter/FrontMatterParser;
+	public fun create ()Lio/heapy/kotmark/ext/front/matter/parser/FrontMatterParser;
 }
 
-public final class io/heapy/kotmark/ext/front/matter/parser/YamlSubsetParser : io/heapy/kotmark/ext/front/matter/FrontMatterParser {
+public final class io/heapy/kotmark/ext/front/matter/parser/YamlSubsetParser : io/heapy/kotmark/ext/front/matter/parser/FrontMatterParser {
 	public fun <init> ()V
-	public fun onEndingSeparator (Lio/heapy/kotmark/ext/front/matter/YamlFrontMatterBlock;Lio/heapy/kotmark/parser/SourceLine;)Lio/heapy/kotmark/ext/front/matter/FrontMatterParser$SeparatorRole;
+	public fun onEndingSeparator (Lio/heapy/kotmark/ext/front/matter/YamlFrontMatterBlock;Lio/heapy/kotmark/parser/SourceLine;)Lio/heapy/kotmark/ext/front/matter/parser/FrontMatterParser$SeparatorRole;
 	public fun onNextLine (Lio/heapy/kotmark/ext/front/matter/YamlFrontMatterBlock;Lio/heapy/kotmark/parser/SourceLine;)V
 }
 
-public final class io/heapy/kotmark/ext/front/matter/parser/YamlSubsetParser$Factory : io/heapy/kotmark/ext/front/matter/FrontMatterParser$Factory {
+public final class io/heapy/kotmark/ext/front/matter/parser/YamlSubsetParser$Factory : io/heapy/kotmark/ext/front/matter/parser/FrontMatterParser$Factory {
 	public fun <init> ()V
-	public fun create ()Lio/heapy/kotmark/ext/front/matter/FrontMatterParser;
+	public fun create ()Lio/heapy/kotmark/ext/front/matter/parser/FrontMatterParser;
 }
 

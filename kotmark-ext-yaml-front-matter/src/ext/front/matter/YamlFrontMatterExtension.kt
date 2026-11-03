@@ -3,6 +3,7 @@ package io.heapy.kotmark.ext.front.matter
 import io.heapy.kotmark.Extension
 import io.heapy.kotmark.ext.front.matter.internal.YamlFrontMatterBlockParser
 import io.heapy.kotmark.ext.front.matter.internal.YamlFrontMatterMarkdownNodeRenderer
+import io.heapy.kotmark.ext.front.matter.parser.FrontMatterParser
 import io.heapy.kotmark.ext.front.matter.parser.YamlSubsetParser
 import io.heapy.kotmark.parser.Parser
 import io.heapy.kotmark.renderer.NodeRenderer
