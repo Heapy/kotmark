@@ -87,28 +87,24 @@ is plain text.
 
 ```kotlin
 import io.heapy.kotmark.node.Code
-import io.heapy.kotmark.node.Node
-import io.heapy.kotmark.renderer.NodeRenderer
+import io.heapy.kotmark.renderer.kotlinxhtml.nodeRenderer
 
 val custom = kotlinxHtmlRenderer {
-    nodeRendererFactory { context ->
-        object : NodeRenderer {
-            override val nodeTypes = setOf(Code::class)
-            override fun render(node: Node) {
-                context.element(node, "code", mapOf("class" to "inline-code")) {
-                    context.text((node as Code).literal.orEmpty())
-                }
-            }
+    nodeRenderer<Code> { code ->
+        element(code, "code", mapOf("class" to "inline-code")) {
+            text(code.literal.orEmpty())
         }
     }
 }
 ```
 
-`context.element` applies attribute providers before opening a real kotlinx.html
+`element` applies attribute providers before opening a real kotlinx.html
 tag and supplies a `FlowContent` receiver for DSL calls. `text` escapes content;
 `raw` inserts trusted markup. Render descendants through `render`/`renderChildren`
 to preserve dispatch to other adapters. Existing `AttributeProviderFactory` and
-`NodeRenderer` lifecycle hooks are supported.
+`NodeRenderer` lifecycle hooks are supported through `nodeRendererFactory`.
+Typed handlers match the exact node class and receive the context for the current render.
+State captured outside the handler is shared; use a factory for per-render mutable state.
 
 The first handler registered for a node type wins; core handlers come last.
 Register overrides before adapters. Factories/providers create fresh state per

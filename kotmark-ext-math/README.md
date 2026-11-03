@@ -75,7 +75,7 @@ content are deliberately not this extension's grammar.
 `InlineMath : CustomNode, Delimited` and `MathBlock : CustomBlock` expose mutable,
 non-null `literal: String` properties. Parsed nodes have no children. Applications
 can visit them with the existing custom-node visitor API or register a
-`NodeRenderer` for `InlineMath::class` and `MathBlock::class`.
+`nodeRenderer<InlineMath>` and `nodeRenderer<MathBlock>` handlers.
 
 The default renderers registered by the extension behave as follows:
 
@@ -99,26 +99,19 @@ first renderer registered for a node type wins:
 ```kotlin
 import io.heapy.kotmark.ext.math.InlineMath
 import io.heapy.kotmark.ext.math.MathBlock
-import io.heapy.kotmark.node.Node
-import io.heapy.kotmark.renderer.NodeRenderer
+import io.heapy.kotmark.renderer.html.nodeRenderer
 
 val customHtml = htmlRenderer {
-    nodeRendererFactory { context ->
-        object : NodeRenderer {
-            override val nodeTypes = setOf(InlineMath::class, MathBlock::class)
-
-            override fun render(node: Node) {
-                val source = when (node) {
-                    is InlineMath -> node.literal
-                    is MathBlock -> node.literal
-                    else -> return
-                }
-                // Replace with your engine adapter; this example safely emits source.
-                context.writer.tag("code")
-                context.writer.text(source)
-                context.writer.tag("/code")
-            }
-        }
+    // Replace with your engine adapter; these handlers safely emit source.
+    nodeRenderer<InlineMath> { math ->
+        writer.tag("code")
+        writer.text(math.literal)
+        writer.tag("/code")
+    }
+    nodeRenderer<MathBlock> { math ->
+        writer.tag("code")
+        writer.text(math.literal)
+        writer.tag("/code")
     }
     extensions(extensions)
 }

@@ -1,9 +1,9 @@
 package io.heapy.kotmark.renderer.kotlinxhtml
 
-import io.heapy.kotmark.node.Node
+import io.heapy.kotmark.node.Document
 import io.heapy.kotmark.node.Text
 import io.heapy.kotmark.parser.parser
-import io.heapy.kotmark.renderer.NodeRenderer
+import io.heapy.kotmark.renderer.typedNodeRenderer
 import io.heapy.kotmark.renderer.html.AttributeProvider
 import io.heapy.kotmark.renderer.html.UrlResolver
 import kotlinx.html.div
@@ -77,17 +77,28 @@ class KotlinxHtmlRendererTest {
     @Test
     fun customizationUsesDslAndFirstRegisteredHandlerWins() {
         val custom = kotlinxHtmlRenderer {
-            nodeRendererFactory { context ->
-                object : NodeRenderer {
-                    override val nodeTypes = setOf(Text::class)
-                    override fun render(node: Node) {
-                        context.element(node, "span") { span { +"custom" } }
-                    }
-                }
+            nodeRenderer<Text> { node ->
+                element(node, "span") { span { +node.literal.orEmpty().uppercase() } }
             }
+            nodeRendererFactory { context -> typedNodeRenderer<Text> { context.text("factory") } }
+            nodeRenderer<Text> { text("last") }
             attributeProviderFactory { AttributeProvider { _, tag, attributes -> if (tag == "span") attributes["class"] = "label" } }
         }
-        assertEquals("<p><span class=\"label\"><span>custom</span></span></p>", custom.render(parser.parse("ignored")))
+        repeat(2) {
+            assertEquals("<p><span class=\"label\"><span>CUSTOM</span></span></p>", custom.render(parser.parse("custom")))
+        }
+    }
+
+    @Test
+    fun typedFactoryCreatesFreshMutableStateForEachRender() {
+        val custom = kotlinxHtmlRenderer {
+            nodeRendererFactory { context ->
+                var count = 0
+                typedNodeRenderer<Text> { node -> context.text("${++count}:${node.literal}") }
+            }
+        }
+        val document = Document().apply { appendChild(Text("a")); appendChild(Text("b")) }
+        repeat(2) { assertEquals("1:a2:b", custom.render(document)) }
     }
 
     @Test
@@ -96,6 +107,7 @@ class KotlinxHtmlRendererTest {
         val custom = kotlinxHtmlRenderer { configuration = this; omitSingleParagraphP = true }
         configuration.omitSingleParagraphP = false
         configuration.attributeProviderFactory { AttributeProvider { _, _, attrs -> attrs["class"] = "late" } }
+        configuration.nodeRenderer<Text> { text("late") }
         assertEquals("text", custom.render(parser.parse("text")))
         assertEquals("<p>a</p><p>b</p>", custom.render(parser.parse("a\n\nb")))
     }

@@ -1183,6 +1183,10 @@ public final class io/heapy/kotmark/renderer/html/HtmlNodeRendererContext$Defaul
 	public static fun resolveUrl (Lio/heapy/kotmark/renderer/html/HtmlNodeRendererContext;Lio/heapy/kotmark/node/Node;Ljava/lang/String;)Ljava/lang/String;
 }
 
+public final class io/heapy/kotmark/renderer/html/HtmlNodeRendererContextKt {
+	public static final fun renderChildren (Lio/heapy/kotmark/renderer/html/HtmlNodeRendererContext;Lio/heapy/kotmark/node/Node;)V
+}
+
 public abstract interface class io/heapy/kotmark/renderer/html/HtmlNodeRendererFactory {
 	public abstract fun create (Lio/heapy/kotmark/renderer/html/HtmlNodeRendererContext;)Lio/heapy/kotmark/renderer/NodeRenderer;
 }
@@ -1279,6 +1283,10 @@ public abstract interface class io/heapy/kotmark/renderer/markdown/MarkdownNodeR
 	public abstract fun render (Lio/heapy/kotmark/node/Node;)V
 }
 
+public final class io/heapy/kotmark/renderer/markdown/MarkdownNodeRendererContextKt {
+	public static final fun renderChildren (Lio/heapy/kotmark/renderer/markdown/MarkdownNodeRendererContext;Lio/heapy/kotmark/node/Node;)V
+}
+
 public abstract interface class io/heapy/kotmark/renderer/markdown/MarkdownNodeRendererFactory {
 	public abstract fun create (Lio/heapy/kotmark/renderer/markdown/MarkdownNodeRendererContext;)Lio/heapy/kotmark/renderer/NodeRenderer;
 	public abstract fun getSpecialCharacters ()Ljava/util/Set;
@@ -1366,6 +1374,10 @@ public abstract interface class io/heapy/kotmark/renderer/text/TextContentNodeRe
 
 public final class io/heapy/kotmark/renderer/text/TextContentNodeRendererContext$DefaultImpls {
 	public static fun getStripNewlines (Lio/heapy/kotmark/renderer/text/TextContentNodeRendererContext;)Z
+}
+
+public final class io/heapy/kotmark/renderer/text/TextContentNodeRendererContextKt {
+	public static final fun renderChildren (Lio/heapy/kotmark/renderer/text/TextContentNodeRendererContext;Lio/heapy/kotmark/node/Node;)V
 }
 
 public abstract interface class io/heapy/kotmark/renderer/text/TextContentNodeRendererFactory {

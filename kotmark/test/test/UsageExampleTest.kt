@@ -9,12 +9,10 @@ import io.heapy.kotmark.node.Node
 import io.heapy.kotmark.node.Text
 import io.heapy.kotmark.parser.IncludeSourceSpans
 import io.heapy.kotmark.parser.parser
-import io.heapy.kotmark.renderer.NodeRenderer
 import io.heapy.kotmark.renderer.html.AttributeProvider
-import io.heapy.kotmark.renderer.html.HtmlNodeRendererContext
 import io.heapy.kotmark.renderer.html.htmlRenderer
+import io.heapy.kotmark.renderer.html.nodeRenderer
 import io.heapy.kotmark.renderer.markdown.markdownRenderer
-import kotlin.reflect.KClass
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -80,7 +78,13 @@ class UsageExampleTest {
         val parser = parser()
         val renderer =
             htmlRenderer {
-                nodeRendererFactory { context -> IndentedCodeBlockNodeRenderer(context) }
+                nodeRenderer<IndentedCodeBlock> { codeBlock ->
+                    writer.line()
+                    writer.tag("pre")
+                    writer.text(codeBlock.literal.orEmpty())
+                    writer.tag("/pre")
+                    writer.line()
+                }
             }
 
         val document = parser.parse("Example:\n\n    code")
@@ -109,20 +113,4 @@ class UsageExampleTest {
         }
     }
 
-    private class IndentedCodeBlockNodeRenderer(context: HtmlNodeRendererContext) : NodeRenderer {
-        private val html = context.writer
-
-        // Return the node types we want to use this renderer for.
-        override val nodeTypes: Set<KClass<out Node>> = setOf(IndentedCodeBlock::class)
-
-        override fun render(node: Node) {
-            // We only handle one type as per nodeTypes, so we can just cast it here.
-            val codeBlock = node as IndentedCodeBlock
-            html.line()
-            html.tag("pre")
-            html.text(codeBlock.literal.orEmpty())
-            html.tag("/pre")
-            html.line()
-        }
-    }
 }

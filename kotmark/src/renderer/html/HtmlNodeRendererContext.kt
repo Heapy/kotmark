@@ -28,3 +28,13 @@ interface HtmlNodeRendererContext {
     val shouldSanitizeUrls: Boolean
     val urlSanitizer: UrlSanitizer
 }
+
+/** Renders children in order, saving each next sibling before rendering a potentially mutable node. */
+fun HtmlNodeRendererContext.renderChildren(parent: Node) {
+    var child = parent.firstChild
+    while (child != null) {
+        val next = child.next
+        render(child)
+        child = next
+    }
+}
