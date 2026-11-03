@@ -13,7 +13,7 @@ plugins:
   'dokka':
     repository: 'Heapy/ktc-dokka'
     ref:
-      tag: 'v0.2.0'
+      tag: 'v0.3.0'
     mode: downloaded
   'kover':
     repository: 'Heapy/ktc-kover'

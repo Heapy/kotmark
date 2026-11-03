@@ -3,10 +3,23 @@ apply:
 
 settings:
   publishing:
-    # Required for Dokka's KMP metadata model; no remote repository is enabled.
     enabled: true
     group: io.heapy.kotmark
     version: 0.1.0-SNAPSHOT
+    # Uses manual release in Central Portal after upload and validation.
+    mavenCentral: enabled
+    signArtifacts: true
+    publishSources: true
+    pom:
+      url: https://github.com/Heapy/kotmark
+      scm: https://github.com/Heapy/kotmark.git
+      developers:
+        - id: IRus
+          name: Ruslan Ibrahimau
+          url: https://github.com/IRus
+      licenses:
+        - name: Apache License, Version 2.0
+          url: https://www.apache.org/licenses/LICENSE-2.0.txt
 
 plugins:
   bcv:

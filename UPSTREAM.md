@@ -44,7 +44,7 @@ hashes are recorded in [ktc-plugins.lock.yaml](ktc-plugins.lock.yaml):
 | --- | --- | --- | --- |
 | [BCV](https://github.com/Heapy/ktc-bcv) | v0.2.1 | `ae91324e8618fceb524c919edfdd19a395514fd0` | Apache-2.0 |
 | [Benchmark](https://github.com/Heapy/ktc-benchmark) | v0.1.2 | `83c9aab643c2780f0e8868e694bb63e0b069b9f5` | Apache-2.0; upstream generator attribution in NOTICE |
-| [Dokka](https://github.com/Heapy/ktc-dokka) | v0.2.0 | `d4f78329ca1af863f4f75069db8ec856dfaf372e` | Apache-2.0 |
+| [Dokka](https://github.com/Heapy/ktc-dokka) | v0.3.0 | `fe7e056c8894f5ba5b99676299ca8a4201199806` | Apache-2.0 |
 | [Kover](https://github.com/Heapy/ktc-kover) | v0.2.1 | `39305c2b699f6980776dd2dbc554e4b2648d170a` | Apache-2.0 |
 
 `./ktc-plugins sync` restores the locked sources and license/notice files under

@@ -17,6 +17,63 @@ ignored `plugins/` directories, never vendored. CI restores and verifies the sam
 
 Run the complete JVM suite with `./kotlin test --platform jvm`.
 
+## Published consumer integration
+
+[Publication tests](../publication-test/README.md) publish the real renderer and
+its dependencies to Maven Local, then compile and execute independent consumers.
+They check optional dependency isolation on JVM/JS/Wasm-JS, the accepted Native
+transitive-extension behavior, and parser-only Wasm-WASI support. The publication
+CI workflow runs the platform matrix and retains metadata and diagnostic logs.
+
+```shell
+kotlinr scripts/test-publication.main.kts --platform jvm
+# All web targets plus the runnable Native target on the current host:
+kotlinr scripts/test-publication.main.kts
+```
+
+## Publishing to Maven Central from a local machine
+
+Production libraries share Central publication settings in
+`library.module-template.yaml`: signed artifacts, sources, and POM metadata.
+Module names and descriptions supply each POM's name and description. Kotlin
+Toolchain 0.13.0 automatically adds an empty javadoc JAR; the generated Dokka site
+is not embedded in that archive. The `docs-jar` command below produces a separate
+archive with the actual documentation. Connecting it to the Central bundle before
+signing and checksum generation still requires a publication integration; running
+`docs-jar` before `publish` does not replace the Toolchain's placeholder.
+
+Before a release, select a non-SNAPSHOT version in the library template and
+complete release verification, including the full multiplatform publication and
+an independent Gradle consumer. The current `0.1.0-SNAPSHOT` is still the
+development version; enabling Central publication does not prepare a release.
+
+Set these environment variables in the local publishing shell using credentials
+from your secret store (do not commit their values):
+
+| Variable | Value |
+| --- | --- |
+| `KOTLIN_TOOLCHAIN_MAVEN_CENTRAL_USERNAME` | Username part of the Central Portal user token |
+| `KOTLIN_TOOLCHAIN_MAVEN_CENTRAL_PASSWORD` | Password part of the Central Portal user token |
+| `KOTLIN_TOOLCHAIN_SIGNING_KEY` | ASCII-armored private PGP signing key |
+| `KOTLIN_TOOLCHAIN_SIGNING_KEY_PASSPHRASE` | Key passphrase, if required |
+
+The token must have access to the namespace covering `io.heapy.kotmark`, and the
+public signing key must be available as required by
+[Central's signing documentation](https://central.sonatype.org/publish/requirements/gpg/).
+After release verification, upload from the repository root:
+
+```shell
+./ktc-plugins sync
+./ktc-plugins verify
+./kotlin publish mavenCentral
+```
+
+Kotlin Toolchain's default `manual` mode uploads the artifacts and waits for
+validation. Complete the release in
+[Central Portal](https://central.sonatype.com/publishing/deployments).
+The Maven Local consumer tests disable signing and Central publication in their
+staged projects, so they do not need these credentials.
+
 ## Property tests and fuzzing
 
 The common integration suite includes deterministic property tests and mutation fuzz
@@ -133,8 +190,8 @@ node scripts/test-additional-platforms.mjs watchosSimulatorArm64
 
 Production libraries apply `library.module-template.yaml`; test infrastructure and
 benchmarks use the common template without API, documentation, or coverage policy.
-The library template supplies `io.heapy.kotmark:…:0.1.0-SNAPSHOT` metadata for Dokka's
-KMP model. These local snapshot coordinates are separate from the published
+The library template supplies `io.heapy.kotmark:…:0.1.0-SNAPSHOT` metadata for
+publication and Dokka's KMP model. These development coordinates are separate from the published
 `0.1.0` release used in the user guides.
 
 **API review:** BCV checks committed JVM and KLib snapshots. Run checks before and
@@ -181,15 +238,19 @@ Native SDKs (macOS with Xcode for this project):
 
 ```shell
 node scripts/library-tools.mjs docs
+# Generate HTML and a standalone documentation archive for one library:
+node scripts/library-tools.mjs docs-jar kotmark
 ```
 
 Open `build/documentation/tasks/_<module>_dokkaHtml@dokka/html/index.html`. The helper
 creates a disposable source/model copy under `build/documentation-project`, omitting
-Android and mapping shared JVM/Android sources to JVM. It also fixes a Dokka 0.2.0
-validator bug in the disposable plugin copy: package directories such as
-`io.heapy.kotmark.renderer.html` must not be read as HTML files. The helper guards
-the patch against source changes on upgrade. Production targets and the original
-locked plugin installation remain unchanged and verifiable.
+Android and mapping shared JVM/Android sources to JVM. Production targets and the
+locked plugin installation remain unchanged and verifiable. Dokka 0.3.0 handles
+package directories such as `io.heapy.kotmark.renderer.html` without a local patch.
+`docs-jar` uses the same model and writes
+`build/documentation/tasks/_<module>_dokkaJar@dokka/<module>-javadoc.jar`, including
+all generated HTML and site assets. It does not include Android-only API or attach
+the archive to a Maven publication.
 Sites include public and protected API. See [site maintenance](maintaining-site.md)
 for assembling the published documentation. The manual CI workflow run uploads
 per-library sites as `api-documentation`. External documentation links are

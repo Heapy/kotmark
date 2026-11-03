@@ -135,13 +135,13 @@ plugins:
         executable: false
   'dokka':
     repository: 'Heapy/ktc-dokka'
-    declarationSha256: 'c79a604c385b1ba561ab10393bf2e2a3b932e1fd7874f4d1217b347d2f27eb3a'
-    commit: 'd4f78329ca1af863f4f75069db8ec856dfaf372e'
+    declarationSha256: '67799ce60ea6ce1e41961dfa47762a7cc64db0eb949a7f783ab10c69a0d3d7ef'
+    commit: 'fe7e056c8894f5ba5b99676299ca8a4201199806'
     sourcePath: 'plugins/dokka'
     destination: 'plugins/dokka'
     mode: 'downloaded'
     pluginId: 'dokka'
-    treeSha256: '7648ef04bdd60057b7aefe313fdf23d357f7f49c250d25658838634705fba68f'
+    treeSha256: 'dbcef1659c3c521fb9ebca0ac746458e0432f191735f8a6d5223464bca00998d'
     producer:
       path: ktc-plugin.yaml
       sha256: '87bbdde4690b83d34fdc2a187cb1c5c27377f74349eb0d9097fc4cef183c4952'
@@ -151,16 +151,19 @@ plugins:
         sha256: 'cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30'
         executable: false
       'module.yaml':
-        sha256: 'bf54e20b53de555606b58362f000c8982e490cc5dd44036201ce51b731f1293c'
+        sha256: '73c09dc0ea8761a13223fb484df3247ace50e965b8387217bba45b645e6d4bc3'
         executable: false
       'plugin.yaml':
-        sha256: '90d69bc7e73574c706ec5f6f2c2173db4d0e190b46c3c310d78fb3ee977be15b'
+        sha256: 'c7c9b483deb0e7da9a79226cb6645a3de48971ed18bd586e00762d4ebe13009b'
         executable: false
       'src/DokkaSettings.kt':
         sha256: '8612d024dba2dadbd11ea2b266f9c0f38f46630465a4a92ad1e7513c7770a509'
         executable: false
       'src/DokkaTask.kt':
-        sha256: '521f5ae2c49377c8303d7727858d44f1095e3feaa840c7c31f221971a0bf63a0'
+        sha256: '0b8497a9be5b78edfd21c64d10b5ee32314f77fef90b016fd237a09d20b5e600'
+        executable: false
+      'src/JavadocJar.kt':
+        sha256: '0db44f7453f642c5dee8e671fcd7a4cd904ec895b0b6291aa6bdf7d3da7a6f9d'
         executable: false
       'src/ProcessOutput.kt':
         sha256: '312d4514006678b553be540359947a51cb7c0e0008fec6c19675f47718cf0adf'
@@ -168,8 +171,14 @@ plugins:
       'src/SourceSets.kt':
         sha256: 'd070150e92da5e181491f8c8787f22f158fef27fb17b48e528592b0ba5835660'
         executable: false
+      'test/JavadocJarTest.kt':
+        sha256: '0cbcb99f9935075b0bd4effdcb0e63c3ac4e04dd8711f77f85f874135ffeabf9'
+        executable: false
       'test/ProcessesTest.kt':
         sha256: 'e732554d8cef0f8b5d5c9d067505961ad32a6c5693b641f74d91ec11f28ec71b'
+        executable: false
+      'test/ResolvedTypesTest.kt':
+        sha256: '66eba6f5f7482cb1e39e02cdf138fd281746e402974e995c7dac0cf093112e26'
         executable: false
   'kover':
     repository: 'Heapy/ktc-kover'
