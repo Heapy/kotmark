@@ -9,6 +9,7 @@ product:
 dependencies:
   - //kotmark
   - //autolink
+  - //test-fixtures
 
 settings:
   jvm:
