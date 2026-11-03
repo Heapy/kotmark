@@ -98,18 +98,13 @@ class FencedCodeBlockParser(
             index: Int,
             indent: Int,
         ): FencedCodeBlockParser? {
-            var backticks = 0
-            var tildes = 0
-            for (currentIndex in index..<line.length) {
-                when (line[currentIndex]) {
-                    '`' -> backticks++
-                    '~' -> tildes++
-                    else -> break
-                }
-            }
+            // Only the leading run is the fence; the other character can start the info string.
+            val length = line.length
+            val backticks = Characters.skip('`', line, index, length) - index
+            val tildes = Characters.skip('~', line, index, length) - index
 
             return when {
-                backticks >= 3 && tildes == 0 -> {
+                backticks >= 3 -> {
                     if (Characters.find('`', line, index + backticks) != -1) {
                         null
                     } else {
@@ -117,7 +112,7 @@ class FencedCodeBlockParser(
                     }
                 }
 
-                tildes >= 3 && backticks == 0 ->
+                tildes >= 3 ->
                     FencedCodeBlockParser('~', tildes, indent)
 
                 else -> null
