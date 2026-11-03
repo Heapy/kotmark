@@ -6,6 +6,7 @@ import io.heapy.kotmark.node.BulletList
 import io.heapy.kotmark.node.ListBlock
 import io.heapy.kotmark.node.ListItem
 import io.heapy.kotmark.node.OrderedList
+import io.heapy.kotmark.node.Paragraph
 import io.heapy.kotmark.parser.block.AbstractBlockParser
 import io.heapy.kotmark.parser.block.AbstractBlockParserFactory
 import io.heapy.kotmark.parser.block.BlockContinue
@@ -54,7 +55,8 @@ class ListBlockParser(
 
             val markerIndex = state.nextNonSpaceIndex
             val markerColumn = state.column + state.indent
-            val inParagraph = !matchedBlockParser.paragraphLines.isEmpty()
+            // A paragraph containing only link reference definitions is still open.
+            val inParagraph = matched.block is Paragraph
             val listData = parseList(state.line.content, markerIndex, markerColumn, inParagraph)
                 ?: return BlockStart.none()
 

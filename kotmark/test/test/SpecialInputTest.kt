@@ -4,6 +4,28 @@ import kotlin.test.Test
 
 class SpecialInputTest : CoreRenderingTestCase() {
     @Test
+    fun listCannotInterruptParagraphWithOnlyLinkReferenceDefinitions() {
+        // Reference definitions leave the paragraph open, so ordinary interruption rules apply.
+        assertRendering(
+            "[foo]: /url\n2. a\n\n[foo]",
+            "<p>2. a</p>\n<p><a href=\"/url\">foo</a></p>\n",
+        )
+        assertRendering("[foo]: /url\n-\n\n[foo]", "<p>-</p>\n<p><a href=\"/url\">foo</a></p>\n")
+        assertRendering("[foo]: /url \"t\"\n2. a", "<p>2. a</p>\n")
+        assertRendering("> [foo]: /url\n> 2. a", "<blockquote>\n<p>2. a</p>\n</blockquote>\n")
+        assertRendering("[foo]: /url\n1. a", "<ol>\n<li>a</li>\n</ol>\n")
+        assertRendering("[foo]: /url\n- a", "<ul>\n<li>a</li>\n</ul>\n")
+    }
+
+    @Test
+    fun listMayStartAfterBlankLineFollowingReferenceDefinition() {
+        assertRendering(
+            "[foo]: /url\n\n2. a\n\n[foo]",
+            "<ol start=\"2\">\n<li>a</li>\n</ol>\n<p><a href=\"/url\">foo</a></p>\n",
+        )
+    }
+
+    @Test
     fun linkReferenceDefinitionWithUnbalancedParens() {
         assertRendering("[foo]: (", "<p>[foo]: (</p>\n")
         assertRendering("[foo]: (\nbar", "<p>[foo]: (\nbar</p>\n")
