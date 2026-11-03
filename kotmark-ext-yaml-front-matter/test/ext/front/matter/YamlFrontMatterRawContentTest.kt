@@ -1,10 +1,11 @@
 package io.heapy.kotmark.ext.front.matter
 
-import io.heapy.kotmark.ext.front.matter.extractor.YamlContentExtractor
+import io.heapy.kotmark.ext.front.matter.FrontMatterParser.SeparatorRole
 import io.heapy.kotmark.ext.front.matter.internal.YamlFrontMatterBlockParser
+import io.heapy.kotmark.ext.front.matter.parser.RawContentParser
 import io.heapy.kotmark.node.CustomNode
 import io.heapy.kotmark.node.Node
-import io.heapy.kotmark.parser.block.BlockContinue
+import io.heapy.kotmark.parser.SourceLine
 import io.heapy.kotmark.parser.parser
 import io.heapy.kotmark.renderer.html.htmlRenderer
 import io.heapy.kotmark.renderer.markdown.markdownRenderer
@@ -14,8 +15,8 @@ import kotlin.test.assertFalse
 import kotlin.test.assertIs
 import kotlin.test.assertTrue
 
-class YamlFrontMatterContentTest {
-    private val extension = YamlFrontMatterExtension.create(YamlContentExtractor.Factory())
+class YamlFrontMatterRawContentTest {
+    private val extension = YamlFrontMatterExtension.create(RawContentParser.Factory())
     private val parser = parser { extensions(listOf(extension)) }
     private val html = htmlRenderer { extensions(listOf(extension)) }
     private val markdown = markdownRenderer { extensions(listOf(extension)) }
@@ -25,7 +26,7 @@ class YamlFrontMatterContentTest {
         val content = "# metadata\nauthor:\n  name: 'Alice'  \n  active: true\ntags: [kotlin, markdown]\n\n"
         val document = parser.parse("---\n${content}...\n\ngreat")
 
-        assertEquals(content, YamlFrontMatterVisitor.readContent(document))
+        assertEquals(content, YamlFrontMatterVisitor.readRawContent(document))
         assertTrue(YamlFrontMatterVisitor.readData(document).isEmpty())
         assertEquals("<p>great</p>\n", html.render(document))
         assertEquals("---\n${content}---\n\ngreat\n", markdown.render(document))
@@ -35,17 +36,17 @@ class YamlFrontMatterContentTest {
     fun indentedDashesAreContentAndLineEndingsAreNormalized() {
         val document = parser.parse("---\r\n  first: foo\r\n  second: |\r\n    ---\r\n  third: bar\r\n...\r\n\r\ngreat")
 
-        assertEquals("  first: foo\n  second: |\n    ---\n  third: bar\n", YamlFrontMatterVisitor.readContent(document))
+        assertEquals("  first: foo\n  second: |\n    ---\n  third: bar\n", YamlFrontMatterVisitor.readRawContent(document))
         assertEquals("<p>great</p>\n", html.render(document))
     }
 
     @Test
     fun modifiedContentGetsATrailingNewlineBeforeClosingDelimiter() {
         val document = parser.parse("---\nhello: world\n---\n\ngreat")
-        val content = assertIs<YamlFrontMatterContent>(document.firstChild?.firstChild)
+        val content = assertIs<YamlFrontMatterRawContent>(document.firstChild?.firstChild)
         content.content = "see: you    "
 
-        assertEquals("see: you    ", YamlFrontMatterVisitor.readContent(document))
+        assertEquals("see: you    ", YamlFrontMatterVisitor.readRawContent(document))
         assertTrue(visit(document).isFrontMatterPresent)
         assertEquals("---\nsee: you    \n---\n\ngreat\n", markdown.render(document))
 
@@ -58,58 +59,58 @@ class YamlFrontMatterContentTest {
         for (content in listOf("title: My Document\n", "next: document\n")) {
             val input = "---\n${content}---\n\nMarkdown content\n"
             val document = parser.parse(input)
-            assertEquals(content, YamlFrontMatterVisitor.readContent(document))
+            assertEquals(content, YamlFrontMatterVisitor.readRawContent(document))
             assertEquals(input, markdown.render(document))
         }
         assertFalse(visit(parser.parse("great!")).isFrontMatterPresent)
-        assertEquals("", YamlFrontMatterVisitor.readContent(parser.parse("great!")))
+        assertEquals("", YamlFrontMatterVisitor.readRawContent(parser.parse("great!")))
     }
 
     @Test
     fun emptyContentIsPresentButAnEmptyDataBlockHasNoMetadataNodes() {
         val contentDocument = parser.parse("---\n---\ntest")
         assertTrue(visit(contentDocument).isFrontMatterPresent)
-        assertEquals("", YamlFrontMatterVisitor.readContent(contentDocument))
+        assertEquals("", YamlFrontMatterVisitor.readRawContent(contentDocument))
 
         val dataParser = parser { extensions(listOf(YamlFrontMatterExtension.create())) }
         assertFalse(visit(dataParser.parse("---\n---\ntest")).isFrontMatterPresent)
     }
 
     @Test
-    fun defaultExtractorPreservesDataAccessAndHasNoRawContent() {
+    fun defaultParserPreservesDataAccessAndHasNoRawContent() {
         val dataParser = parser { extensions(listOf(YamlFrontMatterExtension.create())) }
         val document = dataParser.parse("---\nhello: 'world'\n---\n")
 
         assertEquals(mapOf("hello" to listOf("world")), YamlFrontMatterVisitor.readData(document))
-        assertEquals("", YamlFrontMatterVisitor.readContent(document))
+        assertEquals("", YamlFrontMatterVisitor.readRawContent(document))
         assertTrue(visit(document).isFrontMatterPresent)
     }
 
     @Test
     fun visitorDescendsThroughOtherCustomNodes() {
         val outer = object : CustomNode() {}
-        outer.appendChild(YamlFrontMatterContent("key: value\n"))
+        outer.appendChild(YamlFrontMatterRawContent("key: value\n"))
 
-        assertEquals("key: value\n", YamlFrontMatterVisitor.readContent(outer))
+        assertEquals("key: value\n", YamlFrontMatterVisitor.readRawContent(outer))
         assertTrue(visit(outer).isFrontMatterPresent)
     }
 
     @Test
-    fun customExtractorReceivesLinesAndClosingDelimiterCallbackPerBlock() {
+    fun customParserReceivesLinesAndClosingDelimiterCallbackPerBlock() {
         val lineGroups = mutableListOf<MutableList<String>>()
         var finishedBlocks = 0
-        val factory = YamlFrontMatterExtractor.Factory {
+        val factory = FrontMatterParser.Factory {
             val lines = mutableListOf<String>()
             lineGroups.add(lines)
-            object : YamlFrontMatterExtractor {
-                override fun onNextLine(block: YamlFrontMatterBlock, line: CharSequence) {
-                    lines.add(line.toString())
+            object : FrontMatterParser {
+                override fun onNextLine(block: YamlFrontMatterBlock, line: SourceLine) {
+                    lines.add(line.content.toString())
                 }
 
-                override fun onBlockEnd(block: YamlFrontMatterBlock): BlockContinue {
+                override fun onEndingSeparator(block: YamlFrontMatterBlock, separator: SourceLine): SeparatorRole {
                     block.appendChild(YamlFrontMatterNode("lines", lines.toList()))
                     finishedBlocks++
-                    return BlockContinue.Finished
+                    return SeparatorRole.BLOCK_END
                 }
             }
         }
@@ -132,7 +133,7 @@ class YamlFrontMatterContentTest {
     fun contentIsOnlyExtractedFromAClosedFrontMatterBlockAtDocumentStart() {
         for (input in listOf("---\nunclosed: input", "body\n---\nkey: value\n---", "----\nkey: value")) {
             val document = parser.parse(input)
-            assertEquals("", YamlFrontMatterVisitor.readContent(document))
+            assertEquals("", YamlFrontMatterVisitor.readRawContent(document))
             assertFalse(visit(document).isFrontMatterPresent)
         }
     }

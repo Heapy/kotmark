@@ -5,7 +5,7 @@ import io.heapy.kotmark.ext.autolink.AutolinkExtension
 import io.heapy.kotmark.ext.footnotes.FootnotesExtension
 import io.heapy.kotmark.ext.front.matter.YamlFrontMatterExtension
 import io.heapy.kotmark.ext.front.matter.YamlFrontMatterVisitor
-import io.heapy.kotmark.ext.front.matter.extractor.YamlContentExtractor
+import io.heapy.kotmark.ext.front.matter.parser.RawContentParser
 import io.heapy.kotmark.ext.gfm.alerts.AlertsExtension
 import io.heapy.kotmark.ext.gfm.strikethrough.StrikethroughExtension
 import io.heapy.kotmark.ext.gfm.tables.TablesExtension
@@ -100,17 +100,17 @@ class IntegrationTest {
     @Test
     fun rawFrontMatterDoesNotParseOtherExtensionSyntaxAndPreservesTheBody() {
         val rawExtensions = extensions.filterNot { it is YamlFrontMatterExtension } +
-            YamlFrontMatterExtension.create(YamlContentExtractor.Factory())
+            YamlFrontMatterExtension.create(RawContentParser.Factory())
         val rawParser = parser { extensions(rawExtensions) }
         val rawMarkdown = markdownRenderer { extensions(rawExtensions) }
         val content = "title: '==highlight== and ++insert++'\nlink: https://example.com\n"
         val body = "|Column|\n|---|\n|~~deleted~~|\n\n- [x] task done\n"
         val document = rawParser.parse("---\n${content}---\n\n$body")
 
-        assertEquals(content, YamlFrontMatterVisitor.readContent(document))
+        assertEquals(content, YamlFrontMatterVisitor.readRawContent(document))
         assertEquals(html.render(parser.parse(body)), html.render(document))
         val reparsed = rawParser.parse(rawMarkdown.render(document))
-        assertEquals(content, YamlFrontMatterVisitor.readContent(reparsed))
+        assertEquals(content, YamlFrontMatterVisitor.readRawContent(reparsed))
         assertEquals(html.render(document), html.render(reparsed))
     }
 

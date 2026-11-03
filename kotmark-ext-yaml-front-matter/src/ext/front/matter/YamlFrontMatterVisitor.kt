@@ -7,7 +7,7 @@ import kotlin.jvm.JvmStatic
 
 class YamlFrontMatterVisitor : AbstractVisitor() {
     val data: MutableMap<String, List<String>> = linkedMapOf()
-    var content: String = ""
+    var rawContent: String = ""
         private set
 
     /** Whether a data or content node was visited; an empty parsed-data block has neither. */
@@ -20,8 +20,8 @@ class YamlFrontMatterVisitor : AbstractVisitor() {
                 data[customNode.key] = customNode.values
                 isFrontMatterPresent = true
             }
-            is YamlFrontMatterContent -> {
-                content = customNode.content
+            is YamlFrontMatterRawContent -> {
+                rawContent = customNode.content
                 isFrontMatterPresent = true
             }
             else -> super.visit(customNode)
@@ -29,14 +29,14 @@ class YamlFrontMatterVisitor : AbstractVisitor() {
     }
 
     companion object {
-        /** Reads metadata produced by the default data extractor, or an empty map. */
+        /** Reads metadata produced by the default YAML subset parser, or an empty map. */
         @JvmStatic
         fun readData(document: Node): Map<String, List<String>> =
             YamlFrontMatterVisitor().also { document.accept(it) }.data
 
-        /** Reads text produced by the content extractor, or an empty string. */
+        /** Reads text produced by the raw content parser, or an empty string. */
         @JvmStatic
-        fun readContent(document: Node): String =
-            YamlFrontMatterVisitor().also { document.accept(it) }.content
+        fun readRawContent(document: Node): String =
+            YamlFrontMatterVisitor().also { document.accept(it) }.rawContent
     }
 }

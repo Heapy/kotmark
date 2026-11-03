@@ -1,18 +1,19 @@
-package io.heapy.kotmark.ext.front.matter.extractor
+package io.heapy.kotmark.ext.front.matter.parser
 
+import io.heapy.kotmark.ext.front.matter.FrontMatterParser
+import io.heapy.kotmark.ext.front.matter.FrontMatterParser.SeparatorRole
 import io.heapy.kotmark.ext.front.matter.YamlFrontMatterBlock
-import io.heapy.kotmark.ext.front.matter.YamlFrontMatterExtractor
 import io.heapy.kotmark.ext.front.matter.YamlFrontMatterNode
-import io.heapy.kotmark.parser.block.BlockContinue
+import io.heapy.kotmark.parser.SourceLine
 
 /** Parses the existing limited YAML subset into key/value nodes. */
-class YamlDataExtractor : YamlFrontMatterExtractor {
+class YamlSubsetParser : FrontMatterParser {
     private var inLiteral = false
     private var currentKey: String? = null
     private var currentValues = mutableListOf<String>()
 
-    override fun onNextLine(block: YamlFrontMatterBlock, line: CharSequence) {
-        val metadata = REGEX_METADATA.matchEntire(line)
+    override fun onNextLine(block: YamlFrontMatterBlock, line: SourceLine) {
+        val metadata = REGEX_METADATA.matchEntire(line.content)
         if (metadata != null) {
             appendCurrentNode(block)
             inLiteral = false
@@ -25,7 +26,7 @@ class YamlDataExtractor : YamlFrontMatterExtractor {
                 currentValues.add(parseString(value))
             }
         } else if (inLiteral) {
-            val literal = REGEX_METADATA_LITERAL.matchEntire(line)
+            val literal = REGEX_METADATA_LITERAL.matchEntire(line.content)
             if (literal != null) {
                 val value = literal.groupValues[1].trim()
                 if (currentValues.size == 1) {
@@ -35,24 +36,24 @@ class YamlDataExtractor : YamlFrontMatterExtractor {
                 }
             }
         } else {
-            val listItem = REGEX_METADATA_LIST.matchEntire(line)
+            val listItem = REGEX_METADATA_LIST.matchEntire(line.content)
             if (listItem != null) {
                 currentValues.add(parseString(listItem.groupValues[1]))
             }
         }
     }
 
-    override fun onBlockEnd(block: YamlFrontMatterBlock): BlockContinue {
+    override fun onEndingSeparator(block: YamlFrontMatterBlock, separator: SourceLine): SeparatorRole {
         appendCurrentNode(block)
-        return BlockContinue.Finished
+        return SeparatorRole.BLOCK_END
     }
 
     private fun appendCurrentNode(block: YamlFrontMatterBlock) {
         currentKey?.let { block.appendChild(YamlFrontMatterNode(it, currentValues)) }
     }
 
-    class Factory : YamlFrontMatterExtractor.Factory {
-        override fun create(): YamlFrontMatterExtractor = YamlDataExtractor()
+    class Factory : FrontMatterParser.Factory {
+        override fun create(): FrontMatterParser = YamlSubsetParser()
     }
 
     private companion object {

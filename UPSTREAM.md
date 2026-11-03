@@ -34,6 +34,7 @@ advance the pinned test corpora or imply a full update to a later release.
 | Source commit | Local scope | Adaptation |
 | --- | --- | --- |
 | [614abc159d31ae0b1ef46540f838c76d2aad2a9c](https://github.com/commonmark/commonmark-java/commit/614abc159d31ae0b1ef46540f838c76d2aad2a9c), YAML front matter extractors | `kotmark-ext-yaml-front-matter` code and adapted tests | Kotlin extractor API, raw-content AST node and Markdown rendering; existing no-argument entry points retained |
+| [2b264befeb501d1561c1200ccb2333cad8924dd0](https://github.com/commonmark/commonmark-java/commit/2b264befeb501d1561c1200ccb2333cad8924dd0), front matter parser API | `kotmark-ext-yaml-front-matter` code and adapted tests | Renamed raw-content API, source lines and explicit separator roles; pre-existing no-argument entry points retained |
 
 These adaptations retain the commonmark-java BSD-2-Clause notice below.
 

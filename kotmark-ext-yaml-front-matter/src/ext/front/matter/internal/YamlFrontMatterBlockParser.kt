@@ -1,8 +1,8 @@
 package io.heapy.kotmark.ext.front.matter.internal
 
 import io.heapy.kotmark.ext.front.matter.YamlFrontMatterBlock
-import io.heapy.kotmark.ext.front.matter.YamlFrontMatterExtractor
-import io.heapy.kotmark.ext.front.matter.extractor.YamlDataExtractor
+import io.heapy.kotmark.ext.front.matter.FrontMatterParser
+import io.heapy.kotmark.ext.front.matter.parser.YamlSubsetParser
 import io.heapy.kotmark.node.Block
 import io.heapy.kotmark.node.Document
 import io.heapy.kotmark.parser.block.AbstractBlockParser
@@ -13,27 +13,30 @@ import io.heapy.kotmark.parser.block.MatchedBlockParser
 import io.heapy.kotmark.parser.block.ParserState
 
 class YamlFrontMatterBlockParser(
-    private val extractor: YamlFrontMatterExtractor,
+    private val frontMatterParser: FrontMatterParser,
 ) : AbstractBlockParser() {
-    constructor() : this(YamlDataExtractor())
+    constructor() : this(YamlSubsetParser())
 
     override val block: Block
         field = YamlFrontMatterBlock()
 
     override fun tryContinue(parserState: ParserState): BlockContinue {
-        val line = parserState.line.content
-        if (REGEX_END.matches(line)) {
-            return extractor.onBlockEnd(block)
+        val line = parserState.line
+        if (REGEX_END.matches(line.content)) {
+            return when (frontMatterParser.onEndingSeparator(block, line)) {
+                FrontMatterParser.SeparatorRole.BLOCK_END -> BlockContinue.Finished
+                FrontMatterParser.SeparatorRole.CONTENT -> BlockContinue.AtIndex(parserState.index)
+            }
         }
 
-        extractor.onNextLine(block, line)
+        frontMatterParser.onNextLine(block, line)
         return BlockContinue.AtIndex(parserState.index)
     }
 
     class Factory(
-        private val extractorFactory: YamlFrontMatterExtractor.Factory,
+        private val frontMatterParserFactory: FrontMatterParser.Factory,
     ) : AbstractBlockParserFactory() {
-        constructor() : this(YamlDataExtractor.Factory())
+        constructor() : this(YamlSubsetParser.Factory())
 
         override fun tryStart(
             state: ParserState,
@@ -45,7 +48,7 @@ class YamlFrontMatterBlockParser(
                 parent.firstChild == null &&
                 REGEX_BEGIN.matches(state.line.content)
             ) {
-                BlockStart.of(YamlFrontMatterBlockParser(extractorFactory.create())).atIndex(state.nextNonSpaceIndex)
+                BlockStart.of(YamlFrontMatterBlockParser(frontMatterParserFactory.create())).atIndex(state.nextNonSpaceIndex)
             } else {
                 BlockStart.none()
             }

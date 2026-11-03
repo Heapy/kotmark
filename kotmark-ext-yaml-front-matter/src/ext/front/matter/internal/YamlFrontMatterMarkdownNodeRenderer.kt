@@ -1,6 +1,6 @@
 package io.heapy.kotmark.ext.front.matter.internal
 
-import io.heapy.kotmark.ext.front.matter.YamlFrontMatterContent
+import io.heapy.kotmark.ext.front.matter.YamlFrontMatterRawContent
 import io.heapy.kotmark.ext.front.matter.YamlFrontMatterNode
 import io.heapy.kotmark.node.Node
 import io.heapy.kotmark.renderer.markdown.MarkdownNodeRendererContext
@@ -17,7 +17,7 @@ class YamlFrontMatterMarkdownNodeRenderer(
         while (child != null) {
             when (child) {
                 is YamlFrontMatterNode -> renderNode(child)
-                is YamlFrontMatterContent -> renderContent(child)
+                is YamlFrontMatterRawContent -> renderContent(child)
             }
             child = child.next
         }
@@ -30,7 +30,7 @@ class YamlFrontMatterMarkdownNodeRenderer(
         writer.line()
     }
 
-    private fun renderContent(node: YamlFrontMatterContent) {
+    private fun renderContent(node: YamlFrontMatterRawContent) {
         writer.raw(node.content)
         if (!node.content.endsWith('\n')) {
             writer.raw('\n')
