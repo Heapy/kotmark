@@ -7,7 +7,12 @@ interface LinkInfo {
 
     fun openingBracket(): Text
 
-    fun text(): String
+    /**
+     * The text between the first brackets, such as `foo` in `[foo][bar]`.
+     * Call during link processing with the scanner passed to [LinkProcessor.process].
+     * Extracting the text does not change the scanner's position.
+     */
+    fun text(scanner: Scanner): String
 
     fun label(): String?
 

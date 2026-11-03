@@ -23,7 +23,7 @@ class FootnoteLinkProcessor : LinkProcessor {
         if (linkInfo.destination() != null) {
             return LinkResult.none()
         }
-        val text = linkInfo.text()
+        val text = linkInfo.text(scanner)
         if (!text.startsWith("^")) {
             return LinkResult.none()
         }

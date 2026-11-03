@@ -230,11 +230,11 @@ class InlineParserImpl(
         val afterClose = scannerValue.position()
         val destinationTitle = parseInlineDestinationTitle(scannerValue)
         if (destinationTitle != null) {
-            val text = scannerValue.getSource(opener.contentPosition, beforeClose).content
             return LinkInfoImpl(
                 opener.markerNode,
                 opener.bracketNode,
-                text,
+                opener.contentPosition,
+                beforeClose,
                 null,
                 destinationTitle.destination,
                 destinationTitle.title,
@@ -252,11 +252,11 @@ class InlineParserImpl(
             return null
         }
 
-        val text = scannerValue.getSource(opener.contentPosition, beforeClose).content
         return LinkInfoImpl(
             opener.markerNode,
             opener.bracketNode,
-            text,
+            opener.contentPosition,
+            beforeClose,
             label,
             null,
             null,
@@ -704,17 +704,22 @@ class InlineParserImpl(
     private class LinkInfoImpl(
         private val marker: Text?,
         private val openingBracket: Text,
-        private val text: String,
+        private val textStart: Position,
+        private val textEnd: Position,
         private val label: String?,
         private val destination: String?,
         private val title: String?,
         private val afterTextBracket: Position,
     ) : LinkInfo {
+        private var text: String? = null
+
         override fun marker(): Text? = marker
 
         override fun openingBracket(): Text = openingBracket
 
-        override fun text(): String = text
+        override fun text(scanner: Scanner): String =
+            // Eagerly copying the source for every nested image would take quadratic time.
+            text ?: scanner.getSource(textStart, textEnd).content.also { text = it }
 
         override fun label(): String? = label
 

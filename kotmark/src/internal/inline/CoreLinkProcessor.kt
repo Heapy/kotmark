@@ -21,7 +21,7 @@ class CoreLinkProcessor : LinkProcessor {
         }
 
         val label = linkInfo.label()
-        val reference = if (!label.isNullOrEmpty()) label else linkInfo.text()
+        val reference = if (!label.isNullOrEmpty()) label else linkInfo.text(scanner)
         val definition = context.getDefinition(LinkReferenceDefinition::class, reference)
             ?: return LinkResult.none()
         return process(linkInfo, scanner, definition.destination, definition.title)

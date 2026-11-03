@@ -888,7 +888,7 @@ public abstract interface class io/heapy/kotmark/parser/beta/LinkInfo {
 	public abstract fun label ()Ljava/lang/String;
 	public abstract fun marker ()Lio/heapy/kotmark/node/Text;
 	public abstract fun openingBracket ()Lio/heapy/kotmark/node/Text;
-	public abstract fun text ()Ljava/lang/String;
+	public abstract fun text (Lio/heapy/kotmark/parser/beta/Scanner;)Ljava/lang/String;
 	public abstract fun title ()Ljava/lang/String;
 }
 

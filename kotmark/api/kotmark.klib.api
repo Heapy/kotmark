@@ -132,7 +132,7 @@ abstract interface io.heapy.kotmark.parser.beta/LinkInfo { // io.heapy.kotmark.p
     abstract fun label(): kotlin/String? // io.heapy.kotmark.parser.beta/LinkInfo.label|label(){}[0]
     abstract fun marker(): io.heapy.kotmark.node/Text? // io.heapy.kotmark.parser.beta/LinkInfo.marker|marker(){}[0]
     abstract fun openingBracket(): io.heapy.kotmark.node/Text // io.heapy.kotmark.parser.beta/LinkInfo.openingBracket|openingBracket(){}[0]
-    abstract fun text(): kotlin/String // io.heapy.kotmark.parser.beta/LinkInfo.text|text(){}[0]
+    abstract fun text(io.heapy.kotmark.parser.beta/Scanner): kotlin/String // io.heapy.kotmark.parser.beta/LinkInfo.text|text(io.heapy.kotmark.parser.beta.Scanner){}[0]
     abstract fun title(): kotlin/String? // io.heapy.kotmark.parser.beta/LinkInfo.title|title(){}[0]
 }
 

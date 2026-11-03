@@ -20,6 +20,13 @@ class PathologicalTest {
     }
 
     @Test
+    fun nestedImagesParsing() {
+        val count = 80_000
+        val source = "![".repeat(count) + "x" + "](u)".repeat(count)
+        val _ = parser.parse(source)
+    }
+
+    @Test
     fun nestedStrongEmphasis() {
         val count = 500
         val source = "*a **a ".repeat(count) + "b" + " a** a*".repeat(count)
