@@ -2,13 +2,13 @@ schemaVersion: 1
 plugins:
   'bcv':
     repository: 'Heapy/ktc-bcv'
-    declarationSha256: '72e97eeebdee5327cda231d581299e28d05937cddb38cc7ccef1f2f3320f22c2'
-    commit: 'ae91324e8618fceb524c919edfdd19a395514fd0'
+    declarationSha256: '7d9817445abcec9c530a53796f9aeb1a9dce0fd6e84c60c3df92f07cd03688bc'
+    commit: 'f16bde636e8eb0d1f217096247c8346d40ee52fd'
     sourcePath: 'plugins/bcv'
     destination: 'plugins/bcv'
     mode: 'downloaded'
     pluginId: 'bcv'
-    treeSha256: '146a6a22f0c8f397a14e28039e2de2656ab7d14356e582212c1a7983b48a1d8e'
+    treeSha256: '7aaeab52be6a35faa5dbd6da9422358f3e671f9b77bfbd21c02f84e26516fd90'
     producer:
       path: ktc-plugin.yaml
       sha256: '9d8c0cb70d7e6b7bae923e9ec85b39422ad726e571aacfa1a654d7931c7e0a5b'
@@ -27,7 +27,7 @@ plugins:
         sha256: 'ac8928097e3c5463f19366b7d05e83d1992db8ed1949127fe505f2e94db3e125'
         executable: false
       'src/AbiWorker.kt':
-        sha256: '14f489c437f6ccb158b685f9106b13b84988885907c66bfec4ccc640aec35e71'
+        sha256: 'ba81f793e5a1362c047e707c3dab3d638ad9af13b17453cd01f848c6f6b0bc89'
         executable: false
       'src/ApiTasks.kt':
         sha256: '5a39bb5173bcd87fb8ea14c9396f6c310fdc3d102c031e76707614677ee3f1a1'
@@ -36,7 +36,7 @@ plugins:
         sha256: 'bbaabf695678fd32323b1ef3cc728f4af4dc62f0af66800e75f1cfd3d16c3aa8'
         executable: false
       'src/BuildTasks.kt':
-        sha256: '443b165de670fce12b034fedf1d2aadc63acaf2237c1cbc6bf2803876d0fc23b'
+        sha256: '3db1713aa93b39797d2fde68465608b7d1e34b4d3e3254d57dd8292613224845'
         executable: false
       'src/KlibApiTasks.kt':
         sha256: '505d6afa0c6f3f601f2de0e45590accde06ba2a1e8e5595caef3715cef54d32b'
@@ -48,7 +48,10 @@ plugins:
         sha256: '960068b6413f0e405f936fe9051a94c94ab17f99aa8f1f2a61a3462edf960960'
         executable: false
       'src/TargetPlan.kt':
-        sha256: 'ce440bac6be68fe4f09966c14b9513e9eae63b98b7c2965d6daf894be953a546'
+        sha256: '29a4f43f93ec974ca145490040bbeb09b384c960da33d75a7faae31917159640'
+        executable: false
+      'src/Workspace.kt':
+        sha256: '9a598e373a6d0ae1f343269fc35bd6c78e6acef3253df16130b2b3bc55b81c6a'
         executable: false
       'test/ApiCheckTest.kt':
         sha256: 'c7dfc1fc0dafa3e34361a07aa19241a3435ee2e680e238c47c09be22f9718290'
@@ -60,7 +63,7 @@ plugins:
         sha256: '598800aedf6b25dc36a8132fc9f134eaaa9b25ec2d5fa7b95120decd58d1345e'
         executable: false
       'test/TargetPlanTest.kt':
-        sha256: '1039763534a1394f697b9a80a8288654837f4cf5617a7f19be8b63a8cbaa92b4'
+        sha256: '5b5defbb0b67aba8d3df49af785ceeac302623d6677f491d9a899aed16562817'
         executable: false
   'benchmark':
     repository: 'Heapy/ktc-benchmark'
@@ -135,13 +138,13 @@ plugins:
         executable: false
   'dokka':
     repository: 'Heapy/ktc-dokka'
-    declarationSha256: '79ed0fa91c213ac66385d20653a07d54a6f15243ae2b664ac31d65764b69d91b'
-    commit: '76f9f361ec63db6c76f88cc93e7f3efaa1402900'
+    declarationSha256: 'f3fab6d2b6c9f68fbf4a9332b41f1819c8f59688d37eb6d7d5f550e0ff38c0c0'
+    commit: '9dd55767fd1e38d2dead71abe074b78dd7802a37'
     sourcePath: 'plugins/dokka'
     destination: 'plugins/dokka'
     mode: 'downloaded'
     pluginId: 'dokka'
-    treeSha256: '7d5e7a89b46f71a6f6ba02b666c526266c91cf480d7691aaf553a820032eebe6'
+    treeSha256: '45bd0727902c91defb88d8b78ef230b878a541cc273ae11df3c14f2844bbee2e'
     producer:
       path: ktc-plugin.yaml
       sha256: '87bbdde4690b83d34fdc2a187cb1c5c27377f74349eb0d9097fc4cef183c4952'
@@ -169,7 +172,7 @@ plugins:
         sha256: '312d4514006678b553be540359947a51cb7c0e0008fec6c19675f47718cf0adf'
         executable: false
       'src/SourceSets.kt':
-        sha256: '981b113591893ac8101f491b90c3a05fc3113765507b96af3e1141cc95c0c55b'
+        sha256: 'c81f65b4bab6f7d56e007a3ad7ae5b7d9f57831689bd6a1325b5376d6f804bf3'
         executable: false
       'test/JavadocJarTest.kt':
         sha256: '0cbcb99f9935075b0bd4effdcb0e63c3ac4e04dd8711f77f85f874135ffeabf9'

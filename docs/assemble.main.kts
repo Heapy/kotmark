@@ -8,6 +8,7 @@ import javax.xml.XMLConstants
 import javax.xml.parsers.DocumentBuilderFactory
 import kotlin.io.path.isDirectory
 import kotlin.io.path.isRegularFile
+import kotlin.io.path.readText
 import kotlin.io.path.writeText
 import org.w3c.dom.Element
 
@@ -16,6 +17,19 @@ val repository = Path.of("").toAbsolutePath().normalize()
 val build = Path.of(args.firstOrNull() ?: "build").let { if (it.isAbsolute) it else repository.resolve(it) }.normalize()
 val siteSource = repository.resolve("build/site")
 val site = build.resolve("pages")
+val expectedModules = Files.list(repository).use { paths ->
+    paths.filter { path ->
+        val module = path.resolve("module.yaml")
+        module.isRegularFile() && module.readText().contains("//library.module-template.yaml")
+    }.map { it.fileName.toString() }.toList().toSet()
+}
+check(expectedModules.isNotEmpty()) { "No production libraries discovered" }
+fun requireCompleteReports(kind: String, modules: Collection<String>) {
+    val actual = modules.toSet()
+    check(actual == expectedModules) {
+        "$kind reports incomplete: missing ${expectedModules - actual}, unexpected ${actual - expectedModules}"
+    }
+}
 require(siteSource.resolve("index.html").isRegularFile()) { "Generated site is missing from $siteSource; run ./kotlin run --platform jvm -m site-builder first" }
 
 fun copyTree(source: Path, target: Path) {
@@ -84,6 +98,7 @@ val apiEntries = dokkaTasks.map { task ->
     module
 }.distinct().sorted()
 check(apiEntries.size == dokkaTasks.size) { "Duplicate Dokka module reports found" }
+requireCompleteReports("API", apiEntries)
 val apiRows = apiEntries.joinToString("\n") { module ->
     "<tr><th scope=\"row\"><a href=\"${html(module)}/index.html\">${html(module)}</a></th><td>Kotlin Multiplatform API reference</td></tr>"
 }
@@ -126,6 +141,7 @@ val coverageEntries = coverageTasks.map { task ->
     CoverageEntry(module, lineCounter.getAttribute("missed").toInt(), lineCounter.getAttribute("covered").toInt())
 }.distinctBy { it.module }.sortedBy { it.module }
 check(coverageEntries.size == coverageTasks.size) { "Duplicate Kover module reports found" }
+requireCompleteReports("Coverage", coverageEntries.map { it.module })
 val coverageRows = coverageEntries.joinToString("\n") { entry ->
     val total = entry.missed + entry.covered
     val percentage = if (total == 0) "n/a" else String.format(Locale.ROOT, "%.1f%%", entry.covered * 100.0 / total)

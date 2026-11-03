@@ -3,7 +3,7 @@ plugins:
   'bcv':
     repository: 'Heapy/ktc-bcv'
     ref:
-      tag: 'v0.2.1'
+      commit: 'f16bde636e8eb0d1f217096247c8346d40ee52fd'
     mode: downloaded
   'benchmark':
     repository: 'Heapy/ktc-benchmark'
@@ -13,7 +13,7 @@ plugins:
   'dokka':
     repository: 'Heapy/ktc-dokka'
     ref:
-      tag: 'v0.4.0'
+      commit: '9dd55767fd1e38d2dead71abe074b78dd7802a37'
     mode: downloaded
   'kover':
     repository: 'Heapy/ktc-kover'
