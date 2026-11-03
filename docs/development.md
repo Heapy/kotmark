@@ -203,12 +203,16 @@ node scripts/library-tools.mjs api-dump kotmark
 ```
 
 The optional module arguments select production libraries; omitting them selects
-all libraries. The helper runs modules sequentially because these plugins launch
-nested builds. `jvm-api-check`, `jvm-api-dump`, `klib-api-check`, and `klib-api-dump`
+all libraries. Compiler outputs and ABI reader binaries are shared across modules,
+while readers run sequentially to bound memory. Use `--targets jvm,js,wasmJs,wasmWasi`
+to compile all selected artifacts in one graph before checking them; select targets
+supported by the current host. The plugin revalidates compiler inputs even when
+artifacts already exist. Nested compiler outputs live in `build/bcv-workspace`,
+separately from the outer build lock. `jvm-api-check`, `jvm-api-dump`, `klib-api-check`, and `klib-api-dump`
 select one snapshot format. Compatible additions also require baseline review.
 KLib checks select web targets and the current host's Native family. Run on macOS,
 Linux, and Windows for complete supported-target coverage; updates preserve other
-targets already in the baseline. BCV 0.2.1 excludes Android and `watchosDeviceArm64`;
+targets already in the baseline. BCV excludes Android and `watchosDeviceArm64`;
 their existing platform builds/tests remain enabled. Swift/TypeScript exports and
 behavioral compatibility are not checked.
 
@@ -252,15 +256,13 @@ For the complete site's API reference, generate modules sequentially to bound
 memory use by nested compiler and Dokka processes:
 
 ```shell
-for module in autolink kotmark kotmark-ext-* kotmark-renderer-kotlinx-html; do
-  ./kotlin do dokkaHtml -m "$module" --build-dir build/documentation || exit
-done
+node scripts/documentation.mjs
 ```
 
 The site assembler reads these outputs from `build/documentation/tasks`.
 Sites include public and protected API. See [site maintenance](maintaining-site.md)
-for assembling the published documentation. The manual CI workflow run uploads
-per-library sites as `api-documentation`. External documentation links are
+for assembling the published documentation. Manual CI runs upload three
+`site-api-*` archives and assemble the complete site without deploying feature branches. External documentation links are
 disabled by the adapter's default offline mode.
 
 **Performance:** benchmarks separate parsing, rendering a prepared AST, combined
@@ -299,6 +301,33 @@ All declared targets are covered by the matrix:
 | `wasmWasi` | Ubuntu x64, Node.js 24 | Custom WASI runner |
 | `tvosSimulatorArm64`, `watchosSimulatorArm64` | macOS ARM64 | Custom simulator runner |
 | `iosArm64`, `tvosArm64`, `watchosArm64`, `watchosDeviceArm64` | macOS ARM64 | Compilation only; execution requires devices |
+
+The API matrix is independent of tests and partitions JVM/web, Linux, Windows,
+macOS/iOS, and tvOS/watchOS ABI checks. Its union must cover every supported ABI
+target exactly once. `node --test scripts/test/*.test.mjs` checks platform coverage
+and documentation shard completeness when modules or platforms change.
+
+Native tests build only modules containing tests and their dependencies. macOS
+and iOS execute in separate jobs. Linux ARM64 execution depends only on its
+cross-compilation job, not on the full platform matrix. Benchmark integration
+remains an explicit JVM smoke check.
+
+The same CI workflow validates examples and pages, generates Dokka in three
+parallel module shards, and assembles the site from those artifacts plus the JVM
+job's coverage reports. Reports are downloaded only from that workflow run, so
+all inputs belong to the same commit. The assembler rejects missing or unexpected
+library reports. Only main deploys; a manual feature-branch run also builds the
+complete site for review. The separate publication workflow retains all six
+independent consumer platforms.
+
+Linux x64, macOS, and Windows Native test jobs own Toolchain cache writes on their
+respective operating systems. Other jobs, including publication consumers, restore
+those shared download caches without racing to save incomplete snapshots. PRs
+remain restore-only. This avoids duplicating gigabyte-sized toolchain archives
+for every matrix entry. Project outputs are not persisted in dependency caches.
+API and documentation commands record durations in `build/reports/ci/timings.jsonl`
+and the GitHub step summary. Compare cold and warm runs separately; job-level
+parallelism reduces elapsed time but can increase runner usage.
 
 ## Documentation site
 

@@ -55,9 +55,7 @@ The API and coverage indexes are generated from the reports that already exist
 under `build/`. Generate the pages first, then assemble them with the reports:
 
 ```shell
-for module in autolink kotmark kotmark-ext-* kotmark-renderer-kotlinx-html; do
-  ./kotlin do dokkaHtml -m "$module" --build-dir build/documentation || exit
-done
+node scripts/documentation.mjs
 kotlinr plugins/kover/coverage.main.kts
 ./kotlin run --platform jvm -m site-builder
 kotlinr docs/assemble.main.kts
@@ -70,3 +68,10 @@ The loop keeps documentation generation sequential to bound memory use. Kover re
 JVM line coverage per production library; it does not measure Native, Android,
 or web coverage. The assembler fails if either report family is absent, and
 copies the finished site to `build/pages`.
+
+CI assembles the site in `.github/workflows/ci.yml`. Documentation shards run in
+parallel with the JVM coverage job; the assembler downloads their archives from
+the same run instead of rerunning coverage. A manual run on a feature branch
+builds the complete site but does not deploy it. Both report families must contain
+exactly the production-library module set, including the Kotlinx HTML renderer.
+Use `node scripts/documentation.mjs 1/3` to reproduce one documentation shard.

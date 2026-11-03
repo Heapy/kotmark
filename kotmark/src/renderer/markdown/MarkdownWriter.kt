@@ -101,6 +101,8 @@ class MarkdownWriter(
 
     private fun write(value: String) {
         buffer.append(value)
+        // Kotlin/JS string indexing does not reliably throw for an empty string.
+        if (value.isEmpty()) throw IndexOutOfBoundsException("Empty line separator")
         lastChar = value[value.lastIndex]
         isAtLineStart = false
     }

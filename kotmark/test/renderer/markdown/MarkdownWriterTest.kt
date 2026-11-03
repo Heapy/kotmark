@@ -65,5 +65,7 @@ class MarkdownWriterTest {
         val writer = MarkdownWriter(StringBuilder(), "")
         writer.raw("text")
         assertFailsWith<IndexOutOfBoundsException> { writer.line() }
+        writer.block()
+        assertFailsWith<IndexOutOfBoundsException> { writer.raw("next") }
     }
 }

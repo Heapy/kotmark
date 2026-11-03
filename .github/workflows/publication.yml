@@ -35,6 +35,7 @@ jobs:
       - uses: Heapy/setup-ktc@cc63216665ce07ce0709fe52ef4a4b0b63aeaddc # v1.1.0
         with:
           version: auto
+          cache-read-only: 'true'
       - uses: Heapy/setup-main-kts@b0858237748f325b825e752bbac2ec2eb1fb9419 # v1.0.1
         with:
           kotlin-version: '2.4.21'
