@@ -6,6 +6,15 @@
 // - Show declarations: true
 
 // Library unique name: <kotmark-ext-yaml-front-matter>
+abstract interface io.heapy.kotmark.ext.front.matter/YamlFrontMatterExtractor { // io.heapy.kotmark.ext.front.matter/YamlFrontMatterExtractor|null[0]
+    abstract fun onBlockEnd(io.heapy.kotmark.ext.front.matter/YamlFrontMatterBlock): io.heapy.kotmark.parser.block/BlockContinue // io.heapy.kotmark.ext.front.matter/YamlFrontMatterExtractor.onBlockEnd|onBlockEnd(io.heapy.kotmark.ext.front.matter.YamlFrontMatterBlock){}[0]
+    abstract fun onNextLine(io.heapy.kotmark.ext.front.matter/YamlFrontMatterBlock, kotlin/CharSequence) // io.heapy.kotmark.ext.front.matter/YamlFrontMatterExtractor.onNextLine|onNextLine(io.heapy.kotmark.ext.front.matter.YamlFrontMatterBlock;kotlin.CharSequence){}[0]
+
+    abstract fun interface Factory { // io.heapy.kotmark.ext.front.matter/YamlFrontMatterExtractor.Factory|null[0]
+        abstract fun create(): io.heapy.kotmark.ext.front.matter/YamlFrontMatterExtractor // io.heapy.kotmark.ext.front.matter/YamlFrontMatterExtractor.Factory.create|create(){}[0]
+    }
+}
+
 abstract class io.heapy.kotmark.ext.front.matter.internal/YamlFrontMatterNodeRenderer : io.heapy.kotmark.renderer/NodeRenderer { // io.heapy.kotmark.ext.front.matter.internal/YamlFrontMatterNodeRenderer|null[0]
     constructor <init>() // io.heapy.kotmark.ext.front.matter.internal/YamlFrontMatterNodeRenderer.<init>|<init>(){}[0]
 
@@ -13,8 +22,35 @@ abstract class io.heapy.kotmark.ext.front.matter.internal/YamlFrontMatterNodeRen
         open fun <get-nodeTypes>(): kotlin.collections/Set<kotlin.reflect/KClass<out io.heapy.kotmark.node/Node>> // io.heapy.kotmark.ext.front.matter.internal/YamlFrontMatterNodeRenderer.nodeTypes.<get-nodeTypes>|<get-nodeTypes>(){}[0]
 }
 
+final class io.heapy.kotmark.ext.front.matter.extractor/YamlContentExtractor : io.heapy.kotmark.ext.front.matter/YamlFrontMatterExtractor { // io.heapy.kotmark.ext.front.matter.extractor/YamlContentExtractor|null[0]
+    constructor <init>() // io.heapy.kotmark.ext.front.matter.extractor/YamlContentExtractor.<init>|<init>(){}[0]
+
+    final fun onBlockEnd(io.heapy.kotmark.ext.front.matter/YamlFrontMatterBlock): io.heapy.kotmark.parser.block/BlockContinue // io.heapy.kotmark.ext.front.matter.extractor/YamlContentExtractor.onBlockEnd|onBlockEnd(io.heapy.kotmark.ext.front.matter.YamlFrontMatterBlock){}[0]
+    final fun onNextLine(io.heapy.kotmark.ext.front.matter/YamlFrontMatterBlock, kotlin/CharSequence) // io.heapy.kotmark.ext.front.matter.extractor/YamlContentExtractor.onNextLine|onNextLine(io.heapy.kotmark.ext.front.matter.YamlFrontMatterBlock;kotlin.CharSequence){}[0]
+
+    final class Factory : io.heapy.kotmark.ext.front.matter/YamlFrontMatterExtractor.Factory { // io.heapy.kotmark.ext.front.matter.extractor/YamlContentExtractor.Factory|null[0]
+        constructor <init>() // io.heapy.kotmark.ext.front.matter.extractor/YamlContentExtractor.Factory.<init>|<init>(){}[0]
+
+        final fun create(): io.heapy.kotmark.ext.front.matter/YamlFrontMatterExtractor // io.heapy.kotmark.ext.front.matter.extractor/YamlContentExtractor.Factory.create|create(){}[0]
+    }
+}
+
+final class io.heapy.kotmark.ext.front.matter.extractor/YamlDataExtractor : io.heapy.kotmark.ext.front.matter/YamlFrontMatterExtractor { // io.heapy.kotmark.ext.front.matter.extractor/YamlDataExtractor|null[0]
+    constructor <init>() // io.heapy.kotmark.ext.front.matter.extractor/YamlDataExtractor.<init>|<init>(){}[0]
+
+    final fun onBlockEnd(io.heapy.kotmark.ext.front.matter/YamlFrontMatterBlock): io.heapy.kotmark.parser.block/BlockContinue // io.heapy.kotmark.ext.front.matter.extractor/YamlDataExtractor.onBlockEnd|onBlockEnd(io.heapy.kotmark.ext.front.matter.YamlFrontMatterBlock){}[0]
+    final fun onNextLine(io.heapy.kotmark.ext.front.matter/YamlFrontMatterBlock, kotlin/CharSequence) // io.heapy.kotmark.ext.front.matter.extractor/YamlDataExtractor.onNextLine|onNextLine(io.heapy.kotmark.ext.front.matter.YamlFrontMatterBlock;kotlin.CharSequence){}[0]
+
+    final class Factory : io.heapy.kotmark.ext.front.matter/YamlFrontMatterExtractor.Factory { // io.heapy.kotmark.ext.front.matter.extractor/YamlDataExtractor.Factory|null[0]
+        constructor <init>() // io.heapy.kotmark.ext.front.matter.extractor/YamlDataExtractor.Factory.<init>|<init>(){}[0]
+
+        final fun create(): io.heapy.kotmark.ext.front.matter/YamlFrontMatterExtractor // io.heapy.kotmark.ext.front.matter.extractor/YamlDataExtractor.Factory.create|create(){}[0]
+    }
+}
+
 final class io.heapy.kotmark.ext.front.matter.internal/YamlFrontMatterBlockParser : io.heapy.kotmark.parser.block/AbstractBlockParser { // io.heapy.kotmark.ext.front.matter.internal/YamlFrontMatterBlockParser|null[0]
     constructor <init>() // io.heapy.kotmark.ext.front.matter.internal/YamlFrontMatterBlockParser.<init>|<init>(){}[0]
+    constructor <init>(io.heapy.kotmark.ext.front.matter/YamlFrontMatterExtractor) // io.heapy.kotmark.ext.front.matter.internal/YamlFrontMatterBlockParser.<init>|<init>(io.heapy.kotmark.ext.front.matter.YamlFrontMatterExtractor){}[0]
 
     final val block // io.heapy.kotmark.ext.front.matter.internal/YamlFrontMatterBlockParser.block|{}block[0]
         final fun <get-block>(): io.heapy.kotmark.node/Block // io.heapy.kotmark.ext.front.matter.internal/YamlFrontMatterBlockParser.block.<get-block>|<get-block>(){}[0]
@@ -23,6 +59,7 @@ final class io.heapy.kotmark.ext.front.matter.internal/YamlFrontMatterBlockParse
 
     final class Factory : io.heapy.kotmark.parser.block/AbstractBlockParserFactory { // io.heapy.kotmark.ext.front.matter.internal/YamlFrontMatterBlockParser.Factory|null[0]
         constructor <init>() // io.heapy.kotmark.ext.front.matter.internal/YamlFrontMatterBlockParser.Factory.<init>|<init>(){}[0]
+        constructor <init>(io.heapy.kotmark.ext.front.matter/YamlFrontMatterExtractor.Factory) // io.heapy.kotmark.ext.front.matter.internal/YamlFrontMatterBlockParser.Factory.<init>|<init>(io.heapy.kotmark.ext.front.matter.YamlFrontMatterExtractor.Factory){}[0]
 
         final fun tryStart(io.heapy.kotmark.parser.block/ParserState, io.heapy.kotmark.parser.block/MatchedBlockParser): io.heapy.kotmark.parser.block/BlockStart? // io.heapy.kotmark.ext.front.matter.internal/YamlFrontMatterBlockParser.Factory.tryStart|tryStart(io.heapy.kotmark.parser.block.ParserState;io.heapy.kotmark.parser.block.MatchedBlockParser){}[0]
     }
@@ -40,12 +77,21 @@ final class io.heapy.kotmark.ext.front.matter/YamlFrontMatterBlock : io.heapy.ko
     constructor <init>() // io.heapy.kotmark.ext.front.matter/YamlFrontMatterBlock.<init>|<init>(){}[0]
 }
 
+final class io.heapy.kotmark.ext.front.matter/YamlFrontMatterContent : io.heapy.kotmark.node/CustomNode { // io.heapy.kotmark.ext.front.matter/YamlFrontMatterContent|null[0]
+    constructor <init>(kotlin/String) // io.heapy.kotmark.ext.front.matter/YamlFrontMatterContent.<init>|<init>(kotlin.String){}[0]
+
+    final var content // io.heapy.kotmark.ext.front.matter/YamlFrontMatterContent.content|{}content[0]
+        final fun <get-content>(): kotlin/String // io.heapy.kotmark.ext.front.matter/YamlFrontMatterContent.content.<get-content>|<get-content>(){}[0]
+        final fun <set-content>(kotlin/String) // io.heapy.kotmark.ext.front.matter/YamlFrontMatterContent.content.<set-content>|<set-content>(kotlin.String){}[0]
+}
+
 final class io.heapy.kotmark.ext.front.matter/YamlFrontMatterExtension : io.heapy.kotmark.parser/Parser.ParserExtension, io.heapy.kotmark.renderer.markdown/MarkdownRenderer.MarkdownRendererExtension { // io.heapy.kotmark.ext.front.matter/YamlFrontMatterExtension|null[0]
     final fun extend(io.heapy.kotmark.parser/Parser.Configuration) // io.heapy.kotmark.ext.front.matter/YamlFrontMatterExtension.extend|extend(io.heapy.kotmark.parser.Parser.Configuration){}[0]
     final fun extend(io.heapy.kotmark.renderer.markdown/MarkdownRenderer.Configuration) // io.heapy.kotmark.ext.front.matter/YamlFrontMatterExtension.extend|extend(io.heapy.kotmark.renderer.markdown.MarkdownRenderer.Configuration){}[0]
 
     final object Companion { // io.heapy.kotmark.ext.front.matter/YamlFrontMatterExtension.Companion|null[0]
         final fun create(): io.heapy.kotmark/Extension // io.heapy.kotmark.ext.front.matter/YamlFrontMatterExtension.Companion.create|create(){}[0]
+        final fun create(io.heapy.kotmark.ext.front.matter/YamlFrontMatterExtractor.Factory): io.heapy.kotmark/Extension // io.heapy.kotmark.ext.front.matter/YamlFrontMatterExtension.Companion.create|create(io.heapy.kotmark.ext.front.matter.YamlFrontMatterExtractor.Factory){}[0]
     }
 }
 
@@ -66,5 +112,15 @@ final class io.heapy.kotmark.ext.front.matter/YamlFrontMatterVisitor : io.heapy.
     final val data // io.heapy.kotmark.ext.front.matter/YamlFrontMatterVisitor.data|{}data[0]
         final fun <get-data>(): kotlin.collections/MutableMap<kotlin/String, kotlin.collections/List<kotlin/String>> // io.heapy.kotmark.ext.front.matter/YamlFrontMatterVisitor.data.<get-data>|<get-data>(){}[0]
 
+    final var content // io.heapy.kotmark.ext.front.matter/YamlFrontMatterVisitor.content|{}content[0]
+        final fun <get-content>(): kotlin/String // io.heapy.kotmark.ext.front.matter/YamlFrontMatterVisitor.content.<get-content>|<get-content>(){}[0]
+    final var isFrontMatterPresent // io.heapy.kotmark.ext.front.matter/YamlFrontMatterVisitor.isFrontMatterPresent|{}isFrontMatterPresent[0]
+        final fun <get-isFrontMatterPresent>(): kotlin/Boolean // io.heapy.kotmark.ext.front.matter/YamlFrontMatterVisitor.isFrontMatterPresent.<get-isFrontMatterPresent>|<get-isFrontMatterPresent>(){}[0]
+
     final fun visit(io.heapy.kotmark.node/CustomNode) // io.heapy.kotmark.ext.front.matter/YamlFrontMatterVisitor.visit|visit(io.heapy.kotmark.node.CustomNode){}[0]
+
+    final object Companion { // io.heapy.kotmark.ext.front.matter/YamlFrontMatterVisitor.Companion|null[0]
+        final fun readContent(io.heapy.kotmark.node/Node): kotlin/String // io.heapy.kotmark.ext.front.matter/YamlFrontMatterVisitor.Companion.readContent|readContent(io.heapy.kotmark.node.Node){}[0]
+        final fun readData(io.heapy.kotmark.node/Node): kotlin.collections/Map<kotlin/String, kotlin.collections/List<kotlin/String>> // io.heapy.kotmark.ext.front.matter/YamlFrontMatterVisitor.Companion.readData|readData(io.heapy.kotmark.node.Node){}[0]
+    }
 }

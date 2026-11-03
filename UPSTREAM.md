@@ -26,6 +26,17 @@ Autolink preserves upstream behavior without an additional GFM mode; API
 adaptations, test coverage and known GFM differences are documented in
 [autolink/README.md](autolink/README.md).
 
+### Additional commonmark-java ports
+
+The following changes are adapted on top of the base revision above; they do not
+advance the pinned test corpora or imply a full update to a later release.
+
+| Source commit | Local scope | Adaptation |
+| --- | --- | --- |
+| [614abc159d31ae0b1ef46540f838c76d2aad2a9c](https://github.com/commonmark/commonmark-java/commit/614abc159d31ae0b1ef46540f838c76d2aad2a9c), YAML front matter extractors | `kotmark-ext-yaml-front-matter` code and adapted tests | Kotlin extractor API, raw-content AST node and Markdown rendering; existing no-argument entry points retained |
+
+These adaptations retain the commonmark-java BSD-2-Clause notice below.
+
 ## Build tooling
 
 The optional `kotmark-renderer-kotlinx-html` module downloads

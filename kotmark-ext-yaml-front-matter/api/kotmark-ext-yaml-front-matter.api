@@ -2,15 +2,33 @@ public final class io/heapy/kotmark/ext/front/matter/YamlFrontMatterBlock : io/h
 	public fun <init> ()V
 }
 
+public final class io/heapy/kotmark/ext/front/matter/YamlFrontMatterContent : io/heapy/kotmark/node/CustomNode {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun getContent ()Ljava/lang/String;
+	public final fun setContent (Ljava/lang/String;)V
+}
+
 public final class io/heapy/kotmark/ext/front/matter/YamlFrontMatterExtension : io/heapy/kotmark/parser/Parser$ParserExtension, io/heapy/kotmark/renderer/markdown/MarkdownRenderer$MarkdownRendererExtension {
 	public static final field Companion Lio/heapy/kotmark/ext/front/matter/YamlFrontMatterExtension$Companion;
+	public synthetic fun <init> (Lio/heapy/kotmark/ext/front/matter/YamlFrontMatterExtractor$Factory;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public static final fun create ()Lio/heapy/kotmark/Extension;
+	public static final fun create (Lio/heapy/kotmark/ext/front/matter/YamlFrontMatterExtractor$Factory;)Lio/heapy/kotmark/Extension;
 	public fun extend (Lio/heapy/kotmark/parser/Parser$Configuration;)V
 	public fun extend (Lio/heapy/kotmark/renderer/markdown/MarkdownRenderer$Configuration;)V
 }
 
 public final class io/heapy/kotmark/ext/front/matter/YamlFrontMatterExtension$Companion {
 	public final fun create ()Lio/heapy/kotmark/Extension;
+	public final fun create (Lio/heapy/kotmark/ext/front/matter/YamlFrontMatterExtractor$Factory;)Lio/heapy/kotmark/Extension;
+}
+
+public abstract interface class io/heapy/kotmark/ext/front/matter/YamlFrontMatterExtractor {
+	public abstract fun onBlockEnd (Lio/heapy/kotmark/ext/front/matter/YamlFrontMatterBlock;)Lio/heapy/kotmark/parser/block/BlockContinue;
+	public abstract fun onNextLine (Lio/heapy/kotmark/ext/front/matter/YamlFrontMatterBlock;Ljava/lang/CharSequence;)V
+}
+
+public abstract interface class io/heapy/kotmark/ext/front/matter/YamlFrontMatterExtractor$Factory {
+	public abstract fun create ()Lio/heapy/kotmark/ext/front/matter/YamlFrontMatterExtractor;
 }
 
 public final class io/heapy/kotmark/ext/front/matter/YamlFrontMatterNode : io/heapy/kotmark/node/CustomNode {
@@ -22,14 +40,47 @@ public final class io/heapy/kotmark/ext/front/matter/YamlFrontMatterNode : io/he
 }
 
 public final class io/heapy/kotmark/ext/front/matter/YamlFrontMatterVisitor : io/heapy/kotmark/node/AbstractVisitor {
+	public static final field Companion Lio/heapy/kotmark/ext/front/matter/YamlFrontMatterVisitor$Companion;
 	public fun <init> ()V
+	public final fun getContent ()Ljava/lang/String;
 	public final fun getData ()Ljava/util/Map;
+	public final fun isFrontMatterPresent ()Z
+	public static final fun readContent (Lio/heapy/kotmark/node/Node;)Ljava/lang/String;
+	public static final fun readData (Lio/heapy/kotmark/node/Node;)Ljava/util/Map;
 	public fun visit (Lio/heapy/kotmark/node/CustomNode;)V
+}
+
+public final class io/heapy/kotmark/ext/front/matter/YamlFrontMatterVisitor$Companion {
+	public final fun readContent (Lio/heapy/kotmark/node/Node;)Ljava/lang/String;
+	public final fun readData (Lio/heapy/kotmark/node/Node;)Ljava/util/Map;
+}
+
+public final class io/heapy/kotmark/ext/front/matter/extractor/YamlContentExtractor : io/heapy/kotmark/ext/front/matter/YamlFrontMatterExtractor {
+	public fun <init> ()V
+	public fun onBlockEnd (Lio/heapy/kotmark/ext/front/matter/YamlFrontMatterBlock;)Lio/heapy/kotmark/parser/block/BlockContinue;
+	public fun onNextLine (Lio/heapy/kotmark/ext/front/matter/YamlFrontMatterBlock;Ljava/lang/CharSequence;)V
+}
+
+public final class io/heapy/kotmark/ext/front/matter/extractor/YamlContentExtractor$Factory : io/heapy/kotmark/ext/front/matter/YamlFrontMatterExtractor$Factory {
+	public fun <init> ()V
+	public fun create ()Lio/heapy/kotmark/ext/front/matter/YamlFrontMatterExtractor;
+}
+
+public final class io/heapy/kotmark/ext/front/matter/extractor/YamlDataExtractor : io/heapy/kotmark/ext/front/matter/YamlFrontMatterExtractor {
+	public fun <init> ()V
+	public fun onBlockEnd (Lio/heapy/kotmark/ext/front/matter/YamlFrontMatterBlock;)Lio/heapy/kotmark/parser/block/BlockContinue;
+	public fun onNextLine (Lio/heapy/kotmark/ext/front/matter/YamlFrontMatterBlock;Ljava/lang/CharSequence;)V
+}
+
+public final class io/heapy/kotmark/ext/front/matter/extractor/YamlDataExtractor$Factory : io/heapy/kotmark/ext/front/matter/YamlFrontMatterExtractor$Factory {
+	public fun <init> ()V
+	public fun create ()Lio/heapy/kotmark/ext/front/matter/YamlFrontMatterExtractor;
 }
 
 public final class io/heapy/kotmark/ext/front/matter/internal/YamlFrontMatterBlockParser : io/heapy/kotmark/parser/block/AbstractBlockParser {
 	public static final field Companion Lio/heapy/kotmark/ext/front/matter/internal/YamlFrontMatterBlockParser$Companion;
 	public fun <init> ()V
+	public fun <init> (Lio/heapy/kotmark/ext/front/matter/YamlFrontMatterExtractor;)V
 	public fun getBlock ()Lio/heapy/kotmark/node/Block;
 	public fun tryContinue (Lio/heapy/kotmark/parser/block/ParserState;)Lio/heapy/kotmark/parser/block/BlockContinue;
 }
@@ -39,6 +90,7 @@ public final class io/heapy/kotmark/ext/front/matter/internal/YamlFrontMatterBlo
 
 public final class io/heapy/kotmark/ext/front/matter/internal/YamlFrontMatterBlockParser$Factory : io/heapy/kotmark/parser/block/AbstractBlockParserFactory {
 	public fun <init> ()V
+	public fun <init> (Lio/heapy/kotmark/ext/front/matter/YamlFrontMatterExtractor$Factory;)V
 	public fun tryStart (Lio/heapy/kotmark/parser/block/ParserState;Lio/heapy/kotmark/parser/block/MatchedBlockParser;)Lio/heapy/kotmark/parser/block/BlockStart;
 }
 
