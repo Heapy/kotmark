@@ -26,9 +26,11 @@ Autolink preserves upstream behavior without an additional GFM mode; API
 adaptations, test coverage and known GFM differences are documented in
 [autolink/README.md](autolink/README.md).
 
-Selected changes from later commonmark-java revisions are adapted on top of the
-base revision above. Their source commits are recorded in Git commit messages;
-they do not advance the pinned test corpora or imply a full release update.
+Changes after the commonmark-java base revision have been reviewed through
+[3e1f83bde15825f2080999fd8fd353900ffd699b](https://github.com/commonmark/commonmark-java/commit/3e1f83bde15825f2080999fd8fd353900ffd699b).
+Selected changes are adapted on top of that base; their source commits are
+recorded in Git commit messages. This review checkpoint does not advance the
+pinned test corpora or imply a full release update.
 
 ## Build tooling
 
