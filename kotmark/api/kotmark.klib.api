@@ -1439,6 +1439,10 @@ final class io.heapy.kotmark.renderer.markdown/MarkdownRenderer : io.heapy.kotma
     }
 
     final class Configuration { // io.heapy.kotmark.renderer.markdown/MarkdownRenderer.Configuration|null[0]
+        final var lineSeparator // io.heapy.kotmark.renderer.markdown/MarkdownRenderer.Configuration.lineSeparator|{}lineSeparator[0]
+            final fun <get-lineSeparator>(): kotlin/String // io.heapy.kotmark.renderer.markdown/MarkdownRenderer.Configuration.lineSeparator.<get-lineSeparator>|<get-lineSeparator>(){}[0]
+            final fun <set-lineSeparator>(kotlin/String) // io.heapy.kotmark.renderer.markdown/MarkdownRenderer.Configuration.lineSeparator.<set-lineSeparator>|<set-lineSeparator>(kotlin.String){}[0]
+
         final fun extensions(kotlin.collections/Iterable<io.heapy.kotmark/Extension>) // io.heapy.kotmark.renderer.markdown/MarkdownRenderer.Configuration.extensions|extensions(kotlin.collections.Iterable<io.heapy.kotmark.Extension>){}[0]
         final fun nodeRendererFactory(io.heapy.kotmark.renderer.markdown/MarkdownNodeRendererFactory) // io.heapy.kotmark.renderer.markdown/MarkdownRenderer.Configuration.nodeRendererFactory|nodeRendererFactory(io.heapy.kotmark.renderer.markdown.MarkdownNodeRendererFactory){}[0]
     }
@@ -1446,6 +1450,7 @@ final class io.heapy.kotmark.renderer.markdown/MarkdownRenderer : io.heapy.kotma
 
 final class io.heapy.kotmark.renderer.markdown/MarkdownWriter { // io.heapy.kotmark.renderer.markdown/MarkdownWriter|null[0]
     constructor <init>(kotlin.text/Appendable) // io.heapy.kotmark.renderer.markdown/MarkdownWriter.<init>|<init>(kotlin.text.Appendable){}[0]
+    constructor <init>(kotlin.text/Appendable, kotlin/String) // io.heapy.kotmark.renderer.markdown/MarkdownWriter.<init>|<init>(kotlin.text.Appendable;kotlin.String){}[0]
 
     final var isAtLineStart // io.heapy.kotmark.renderer.markdown/MarkdownWriter.isAtLineStart|{}isAtLineStart[0]
         final fun <get-isAtLineStart>(): kotlin/Boolean // io.heapy.kotmark.renderer.markdown/MarkdownWriter.isAtLineStart.<get-isAtLineStart>|<get-isAtLineStart>(){}[0]

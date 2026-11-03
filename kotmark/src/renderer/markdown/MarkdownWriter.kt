@@ -4,7 +4,10 @@ import io.heapy.kotmark.text.CharMatcher
 
 class MarkdownWriter(
     private val buffer: Appendable,
+    private val lineSeparator: String,
 ) {
+    constructor(buffer: Appendable) : this(buffer, "\n")
+
     private var blockSeparator = 0
     var lastChar: Char = '\u0000'
         private set
@@ -39,7 +42,7 @@ class MarkdownWriter(
     }
 
     fun line() {
-        write('\n')
+        write(lineSeparator)
         writePrefixes()
         isAtLineStart = true
     }
@@ -96,6 +99,12 @@ class MarkdownWriter(
         isAtLineStart = false
     }
 
+    private fun write(value: String) {
+        buffer.append(value)
+        lastChar = value[value.lastIndex]
+        isAtLineStart = false
+    }
+
     private fun write(character: Char) {
         append(character, null)
         lastChar = character
@@ -110,10 +119,10 @@ class MarkdownWriter(
 
     private fun flushBlockSeparator() {
         if (blockSeparator != 0) {
-            write('\n')
+            write(lineSeparator)
             writePrefixes()
             if (blockSeparator > 1) {
-                write('\n')
+                write(lineSeparator)
                 writePrefixes()
             }
             blockSeparator = 0

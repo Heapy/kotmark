@@ -1300,7 +1300,9 @@ public final class io/heapy/kotmark/renderer/markdown/MarkdownRenderer : io/heap
 
 public final class io/heapy/kotmark/renderer/markdown/MarkdownRenderer$Configuration {
 	public final fun extensions (Ljava/lang/Iterable;)V
+	public final fun getLineSeparator ()Ljava/lang/String;
 	public final fun nodeRendererFactory (Lio/heapy/kotmark/renderer/markdown/MarkdownNodeRendererFactory;)V
+	public final fun setLineSeparator (Ljava/lang/String;)V
 }
 
 public abstract interface class io/heapy/kotmark/renderer/markdown/MarkdownRenderer$MarkdownRendererExtension : io/heapy/kotmark/Extension {
@@ -1314,6 +1316,7 @@ public final class io/heapy/kotmark/renderer/markdown/MarkdownRendererKt {
 
 public final class io/heapy/kotmark/renderer/markdown/MarkdownWriter {
 	public fun <init> (Ljava/lang/Appendable;)V
+	public fun <init> (Ljava/lang/Appendable;Ljava/lang/String;)V
 	public final fun block ()V
 	public final fun getLastChar ()C
 	public final fun isAtLineStart ()Z

@@ -230,6 +230,36 @@ class MarkdownRendererTest {
         assertEquals("# Custom heading\n", renderer.render(parse("# Hello")))
     }
 
+    @Test
+    fun customLineSeparator() {
+        val renderer = markdownRenderer { lineSeparator = "\r\n" }
+        assertEquals("# Heading\r\n\r\nBody\r\n", renderer.render(parse("# Heading\n\nBody\n")))
+    }
+
+    @Test
+    fun customLineSeparatorPreservesQuoteAndListPrefixes() {
+        val renderer = markdownRenderer { lineSeparator = "\r\n" }
+        assertEquals(
+            "> # Title\r\n> \r\n> Body\r\n> \r\n> - one\r\n> - two\r\n",
+            renderer.render(parse("> # Title\n> \n> Body\n> \n> - one\n> - two\n")),
+        )
+        assertEquals("- one\r\n\r\n- two\r\n", renderer.render(parse("- one\n\n- two\n")))
+    }
+
+    @Test
+    fun lineSeparatorIsSnapshottedWhenRendererIsCreated() {
+        lateinit var configuration: MarkdownRenderer.Configuration
+        val renderer = markdownRenderer {
+            configuration = this
+            lineSeparator = "\r\n"
+        }
+        configuration.lineSeparator = "\r"
+
+        val document = parse("one\ntwo\n")
+        assertEquals("one\r\ntwo\r\n", renderer.render(document))
+        assertEquals("one\ntwo\n", markdownRenderer().render(document))
+    }
+
     private fun assertRoundTrips(vararg inputs: String) {
         for (input in inputs) {
             assertEquals(input, render(parse(input)), "round trip for: ${input.replace("\n", "\\n")}")

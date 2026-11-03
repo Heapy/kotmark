@@ -8,6 +8,7 @@ import io.heapy.kotmark.renderer.NodeRenderer
 import io.heapy.kotmark.renderer.Renderer
 
 class MarkdownRenderer private constructor(configuration: Configuration) : Renderer {
+    private val lineSeparator = configuration.lineSeparator
     private val nodeRendererFactories =
         buildList {
             addAll(configuration.nodeRendererFactories)
@@ -22,7 +23,7 @@ class MarkdownRenderer private constructor(configuration: Configuration) : Rende
         }
 
     override fun render(node: Node, output: Appendable) {
-        RendererContext(MarkdownWriter(output)).render(node)
+        RendererContext(MarkdownWriter(output, lineSeparator)).render(node)
     }
 
     override fun render(node: Node): String =
@@ -32,6 +33,9 @@ class MarkdownRenderer private constructor(configuration: Configuration) : Rende
 
     @KotmarkDsl
     class Configuration internal constructor() {
+        /** Line terminator emitted by the writer; defaults to `\n` on every platform. */
+        var lineSeparator: String = "\n"
+
         internal val nodeRendererFactories = mutableListOf<MarkdownNodeRendererFactory>()
 
         internal fun create(): MarkdownRenderer = MarkdownRenderer(this)
