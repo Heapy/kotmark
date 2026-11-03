@@ -69,6 +69,12 @@ class PathologicalTest {
     }
 
     @Test
+    fun openerSearchLowerBound() {
+        val source = "a**b" + "c* ".repeat(80_000)
+        assertRendering(source, "<p>${source.trim()}</p>\n")
+    }
+
+    @Test
     fun nestedBrackets() {
         val source = "[".repeat(size) + "a" + "]".repeat(size)
         assertRendering(source, "<p>$source</p>\n")

@@ -441,7 +441,8 @@ class InlineParserImpl(
     }
 
     private fun processDelimiters(stackBottom: Delimiter?) {
-        val openersBottom = mutableMapOf<Char, Delimiter?>()
+        // Keep a lower bound on the opener search for each kind of closer.
+        val openerBottoms = mutableMapOf<DelimiterSearchKey, Delimiter?>()
 
         var closer = lastDelimiter
         while (closer != null && closer.previous !== stackBottom) {
@@ -457,6 +458,11 @@ class InlineParserImpl(
                 continue
             }
 
+            val searchKey = DelimiterSearchKey(
+                delimiterChar,
+                currentCloser.originalLength() % 3 + if (currentCloser.canOpen()) 3 else 0,
+            )
+            val openerBottom = openerBottoms[searchKey]
             val openingDelimiterChar = delimiterProcessor.openingCharacter
             var usedDelimiters = 0
             var openerFound = false
@@ -465,7 +471,7 @@ class InlineParserImpl(
             while (
                 opener != null &&
                 opener !== stackBottom &&
-                opener !== openersBottom[delimiterChar]
+                opener !== openerBottom
             ) {
                 if (opener.canOpen() && opener.delimiterChar == openingDelimiterChar) {
                     potentialOpenerFound = true
@@ -479,8 +485,14 @@ class InlineParserImpl(
             }
 
             if (!openerFound) {
-                if (!potentialOpenerFound) {
-                    openersBottom[delimiterChar] = currentCloser.previous
+                // Only built-in emphasis rejection is determined by the search key. Custom and
+                // staggered processors may accept a later closer with the same key.
+                if (
+                    !potentialOpenerFound ||
+                    delimiterProcessor is AsteriskDelimiterProcessor ||
+                    delimiterProcessor is UnderscoreDelimiterProcessor
+                ) {
+                    openerBottoms[searchKey] = currentCloser.previous
                     if (!currentCloser.canOpen()) {
                         removeDelimiterKeepNode(currentCloser)
                     }
@@ -623,6 +635,8 @@ class InlineParserImpl(
         val destination: String,
         val title: String?,
     )
+
+    private data class DelimiterSearchKey(val delimiterChar: Char, val caseNumber: Int)
 
     private class LinkInfoImpl(
         private val marker: Text?,

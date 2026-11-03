@@ -67,6 +67,12 @@ class StrikethroughTest {
     }
 
     @Test
+    fun rejectedCloserDoesNotHideLaterMatchingLength() {
+        assertHtml("~a~~~~ b~", "<p><del>a~~~~ b</del></p>\n")
+        assertHtml("~~a~~~~~ b~~", "<p><del>a~~~~~ b</del></p>\n")
+    }
+
+    @Test
     fun delimiterTextMarkdownAndSourceSpans() {
         val node = parser.parse("~~foo~~").firstChild?.firstChild as Strikethrough
         assertEquals("~~", node.openingDelimiter)
