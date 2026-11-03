@@ -37,10 +37,10 @@ Production libraries share Central publication settings in
 `library.module-template.yaml`: signed artifacts, sources, and POM metadata.
 Module names and descriptions supply each POM's name and description. Kotlin
 Toolchain 0.13.0 automatically adds an empty javadoc JAR; the generated Dokka site
-is not embedded in that archive. The `docs-jar` command below produces a separate
+is not embedded in that archive. The `dokkaJar` command below produces a separate
 archive with the actual documentation. Connecting it to the Central bundle before
 signing and checksum generation still requires a publication integration; running
-`docs-jar` before `publish` does not replace the Toolchain's placeholder.
+`dokkaJar` before `publish` does not replace the Toolchain's placeholder.
 
 Before a release, select a non-SNAPSHOT version in the library template and
 complete release verification, including the full multiplatform publication and
@@ -237,20 +237,27 @@ standalone Kover checks and therefore executes those tests again.
 Native SDKs (macOS with Xcode for this project):
 
 ```shell
-node scripts/library-tools.mjs docs
-# Generate HTML and a standalone documentation archive for one library:
-node scripts/library-tools.mjs docs-jar kotmark
+./kotlin do dokkaHtml -m kotmark
+./kotlin do dokkaJar -m kotmark
 ```
 
-Open `build/documentation/tasks/_<module>_dokkaHtml@dokka/html/index.html`. The helper
-creates a disposable source/model copy under `build/documentation-project`, omitting
-Android and mapping shared JVM/Android sources to JVM. Production targets and the
-locked plugin installation remain unchanged and verifiable. Dokka 0.3.0 handles
-package directories such as `io.heapy.kotmark.renderer.html` without a local patch.
-`docs-jar` uses the same model and writes
-`build/documentation/tasks/_<module>_dokkaJar@dokka/<module>-javadoc.jar`, including
-all generated HTML and site assets. It does not include Android-only API or attach
-the archive to a Maven publication.
+Open `build/tasks/_<module>_dokkaHtml@dokka/html/index.html`. The plugin reads the
+real project model, including Android and shared JVM/Android source sets, without
+copying or rewriting the project. Android-specific sources require the configured
+Android SDK. `dokkaJar` first generates HTML, then writes
+`build/tasks/_<module>_dokkaJar@dokka/<module>-javadoc.jar`, including all generated
+HTML and site assets. It does not attach the archive to a Maven publication.
+
+For the complete site's API reference, generate modules sequentially to bound
+memory use by nested compiler and Dokka processes:
+
+```shell
+for module in autolink kotmark kotmark-ext-* kotmark-renderer-kotlinx-html; do
+  ./kotlin do dokkaHtml -m "$module" --build-dir build/documentation || exit
+done
+```
+
+The site assembler reads these outputs from `build/documentation/tasks`.
 Sites include public and protected API. See [site maintenance](maintaining-site.md)
 for assembling the published documentation. The manual CI workflow run uploads
 per-library sites as `api-documentation`. External documentation links are

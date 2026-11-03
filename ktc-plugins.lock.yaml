@@ -135,13 +135,13 @@ plugins:
         executable: false
   'dokka':
     repository: 'Heapy/ktc-dokka'
-    declarationSha256: '67799ce60ea6ce1e41961dfa47762a7cc64db0eb949a7f783ab10c69a0d3d7ef'
-    commit: 'fe7e056c8894f5ba5b99676299ca8a4201199806'
+    declarationSha256: '79ed0fa91c213ac66385d20653a07d54a6f15243ae2b664ac31d65764b69d91b'
+    commit: '76f9f361ec63db6c76f88cc93e7f3efaa1402900'
     sourcePath: 'plugins/dokka'
     destination: 'plugins/dokka'
     mode: 'downloaded'
     pluginId: 'dokka'
-    treeSha256: 'dbcef1659c3c521fb9ebca0ac746458e0432f191735f8a6d5223464bca00998d'
+    treeSha256: '7d5e7a89b46f71a6f6ba02b666c526266c91cf480d7691aaf553a820032eebe6'
     producer:
       path: ktc-plugin.yaml
       sha256: '87bbdde4690b83d34fdc2a187cb1c5c27377f74349eb0d9097fc4cef183c4952'
@@ -151,7 +151,7 @@ plugins:
         sha256: 'cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30'
         executable: false
       'module.yaml':
-        sha256: '73c09dc0ea8761a13223fb484df3247ace50e965b8387217bba45b645e6d4bc3'
+        sha256: '6ea34780aa40f34597199d07da2a2198844bc4233f314b376a16fc33fe43306c'
         executable: false
       'plugin.yaml':
         sha256: 'c7c9b483deb0e7da9a79226cb6645a3de48971ed18bd586e00762d4ebe13009b'
@@ -169,7 +169,7 @@ plugins:
         sha256: '312d4514006678b553be540359947a51cb7c0e0008fec6c19675f47718cf0adf'
         executable: false
       'src/SourceSets.kt':
-        sha256: 'd070150e92da5e181491f8c8787f22f158fef27fb17b48e528592b0ba5835660'
+        sha256: '981b113591893ac8101f491b90c3a05fc3113765507b96af3e1141cc95c0c55b'
         executable: false
       'test/JavadocJarTest.kt':
         sha256: '0cbcb99f9935075b0bd4effdcb0e63c3ac4e04dd8711f77f85f874135ffeabf9'
@@ -179,6 +179,9 @@ plugins:
         executable: false
       'test/ResolvedTypesTest.kt':
         sha256: '66eba6f5f7482cb1e39e02cdf138fd281746e402974e995c7dac0cf093112e26'
+        executable: false
+      'test/SourceSetsTest.kt':
+        sha256: '57ed8e6e5acca2351cdd853e7961b36e3be970b27c091c0b4120bd3c311d11be'
         executable: false
   'kover':
     repository: 'Heapy/ktc-kover'

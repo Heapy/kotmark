@@ -55,14 +55,18 @@ The API and coverage indexes are generated from the reports that already exist
 under `build/`. Generate the pages first, then assemble them with the reports:
 
 ```shell
-node scripts/library-tools.mjs docs
+for module in autolink kotmark kotmark-ext-* kotmark-renderer-kotlinx-html; do
+  ./kotlin do dokkaHtml -m "$module" --build-dir build/documentation || exit
+done
 kotlinr plugins/kover/coverage.main.kts
 ./kotlin run --platform jvm -m site-builder
 kotlinr docs/assemble.main.kts
 kotlinr docs/check.main.kts --assembled build/pages
 ```
 
-Dokka needs the Native SDKs used by the project (macOS with Xcode). Kover reports
+Dokka reads the real source-set model; Android-specific sources require the configured
+Android SDK, and Native-specific sources need their SDKs (macOS with Xcode here).
+The loop keeps documentation generation sequential to bound memory use. Kover reports
 JVM line coverage per production library; it does not measure Native, Android,
 or web coverage. The assembler fails if either report family is absent, and
 copies the finished site to `build/pages`.

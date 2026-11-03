@@ -4,7 +4,6 @@ import { readdirSync, readFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { resolve } from 'node:path';
-import { prepareDocumentationProject } from './documentation-project.mjs';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const commands = {
@@ -14,8 +13,6 @@ const commands = {
   'jvm-api-dump': [['do', 'apiDump']],
   'klib-api-check': [['check', 'klibApiCheck']],
   'klib-api-dump': [['do', 'klibApiDump']],
-  docs: [['do', 'dokkaHtml']],
-  'docs-jar': [['do', 'dokkaJar']],
 };
 const [command, ...requestedModules] = process.argv.slice(2);
 if (!Object.hasOwn(commands, command)) {
@@ -36,14 +33,13 @@ const modules = requestedModules.length ? requestedModules : libraries;
 if (!modules.length || modules.some(name => !libraries.includes(name))) {
   throw new Error(`Select library modules from: ${libraries.join(', ')}`);
 }
-const projectOptions = command === 'docs' || command === 'docs-jar' ? prepareDocumentationProject(root, libraries) : [];
 for (const module of modules) {
   for (const args of commands[command]) {
     console.log(`${module}: ${args.join(' ')}`);
     const windows = process.platform === 'win32';
     const executable = windows ? 'cmd.exe' : './kotlin';
     const prefix = windows ? ['/d', '/c', 'kotlin.bat'] : [];
-    const result = spawnSync(executable, [...prefix, ...args, '-m', module, ...projectOptions], { cwd: root, stdio: 'inherit' });
+    const result = spawnSync(executable, [...prefix, ...args, '-m', module], { cwd: root, stdio: 'inherit' });
     if (result.error) throw result.error;
     if (result.status !== 0) process.exit(result.status ?? 1);
   }

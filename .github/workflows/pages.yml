@@ -13,8 +13,6 @@ on:
       - 'library.module-template.yaml'
       - 'ktc-plugins.yaml'
       - 'ktc-plugins.lock.yaml'
-      - 'scripts/library-tools.mjs'
-      - 'scripts/documentation-project.mjs'
       - 'README.md'
       - 'UPSTREAM.md'
       - '.github/workflows/pages.yml'
@@ -30,8 +28,6 @@ on:
       - 'library.module-template.yaml'
       - 'ktc-plugins.yaml'
       - 'ktc-plugins.lock.yaml'
-      - 'scripts/library-tools.mjs'
-      - 'scripts/documentation-project.mjs'
       - 'README.md'
       - 'UPSTREAM.md'
       - '.github/workflows/pages.yml'
@@ -87,10 +83,6 @@ jobs:
         uses: Heapy/setup-ktc@cc63216665ce07ce0709fe52ef4a4b0b63aeaddc # v1.1.0
         with:
           version: auto
-      - name: Set up Node.js
-        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
-        with:
-          node-version: '24'
       - name: Set up Kotlin scripting
         uses: Heapy/setup-main-kts@b0858237748f325b825e752bbac2ec2eb1fb9419 # v1.0.1
         with:
@@ -99,7 +91,10 @@ jobs:
       - name: Generate Markdown pages
         run: ./kotlin run --platform jvm -m site-builder
       - name: Generate Dokka API pages
-        run: node scripts/library-tools.mjs docs
+        run: |
+          for module in autolink kotmark kotmark-ext-* kotmark-renderer-kotlinx-html; do
+            ./kotlin do dokkaHtml -m "$module" --build-dir build/documentation
+          done
       - name: Generate per-module JVM coverage
         run: kotlinr plugins/kover/coverage.main.kts
       - name: Assemble and validate Pages site
