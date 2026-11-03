@@ -48,7 +48,6 @@ public final class io/heapy/kotmark/ext/front/matter/YamlFrontMatterVisitor$Comp
 
 public final class io/heapy/kotmark/ext/front/matter/internal/YamlFrontMatterBlockParser : io/heapy/kotmark/parser/block/AbstractBlockParser {
 	public static final field Companion Lio/heapy/kotmark/ext/front/matter/internal/YamlFrontMatterBlockParser$Companion;
-	public fun <init> ()V
 	public fun <init> (Lio/heapy/kotmark/ext/front/matter/parser/FrontMatterParser;)V
 	public fun getBlock ()Lio/heapy/kotmark/node/Block;
 	public fun tryContinue (Lio/heapy/kotmark/parser/block/ParserState;)Lio/heapy/kotmark/parser/block/BlockContinue;
@@ -58,7 +57,6 @@ public final class io/heapy/kotmark/ext/front/matter/internal/YamlFrontMatterBlo
 }
 
 public final class io/heapy/kotmark/ext/front/matter/internal/YamlFrontMatterBlockParser$Factory : io/heapy/kotmark/parser/block/AbstractBlockParserFactory {
-	public fun <init> ()V
 	public fun <init> (Lio/heapy/kotmark/ext/front/matter/parser/FrontMatterParser$Factory;)V
 	public fun tryStart (Lio/heapy/kotmark/parser/block/ParserState;Lio/heapy/kotmark/parser/block/MatchedBlockParser;)Lio/heapy/kotmark/parser/block/BlockStart;
 }

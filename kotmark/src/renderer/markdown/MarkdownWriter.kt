@@ -4,10 +4,8 @@ import io.heapy.kotmark.text.CharMatcher
 
 class MarkdownWriter(
     private val buffer: Appendable,
-    private val lineSeparator: String,
+    private val lineSeparator: String = "\n",
 ) {
-    constructor(buffer: Appendable) : this(buffer, "\n")
-
     private var blockSeparator = 0
     var lastChar: Char = '\u0000'
         private set

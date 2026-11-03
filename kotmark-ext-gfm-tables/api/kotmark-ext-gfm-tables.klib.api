@@ -30,7 +30,6 @@ final class io.heapy.kotmark.ext.gfm.tables.internal/TableBlockParser : io.heapy
     final fun tryContinue(io.heapy.kotmark.parser.block/ParserState): io.heapy.kotmark.parser.block/BlockContinue? // io.heapy.kotmark.ext.gfm.tables.internal/TableBlockParser.tryContinue|tryContinue(io.heapy.kotmark.parser.block.ParserState){}[0]
 
     final class Factory : io.heapy.kotmark.parser.block/AbstractBlockParserFactory { // io.heapy.kotmark.ext.gfm.tables.internal/TableBlockParser.Factory|null[0]
-        constructor <init>() // io.heapy.kotmark.ext.gfm.tables.internal/TableBlockParser.Factory.<init>|<init>(){}[0]
         constructor <init>(kotlin/Int?) // io.heapy.kotmark.ext.gfm.tables.internal/TableBlockParser.Factory.<init>|<init>(kotlin.Int?){}[0]
 
         final fun tryStart(io.heapy.kotmark.parser.block/ParserState, io.heapy.kotmark.parser.block/MatchedBlockParser): io.heapy.kotmark.parser.block/BlockStart? // io.heapy.kotmark.ext.gfm.tables.internal/TableBlockParser.Factory.tryStart|tryStart(io.heapy.kotmark.parser.block.ParserState;io.heapy.kotmark.parser.block.MatchedBlockParser){}[0]

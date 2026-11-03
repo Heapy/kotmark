@@ -141,7 +141,6 @@ class AlertBlockParser private constructor(
                 active.firstChild == null &&
                 (nextNonSpace >= line.length || line[nextNonSpace] != '>')
             ) {
-                @Suppress("DEPRECATION")
                 start = start.replaceActiveBlockParser()
             }
             return start

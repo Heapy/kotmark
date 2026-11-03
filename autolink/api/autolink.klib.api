@@ -22,10 +22,6 @@ final enum class io.heapy.kotmark.autolink/LinkType : kotlin/Enum<io.heapy.kotma
     final fun values(): kotlin/Array<io.heapy.kotmark.autolink/LinkType> // io.heapy.kotmark.autolink/LinkType.values|values#static(){}[0]
 }
 
-abstract fun interface io.heapy.kotmark.autolink/LinkRenderer { // io.heapy.kotmark.autolink/LinkRenderer|null[0]
-    abstract fun render(io.heapy.kotmark.autolink/LinkSpan, kotlin/CharSequence, kotlin.text/StringBuilder) // io.heapy.kotmark.autolink/LinkRenderer.render|render(io.heapy.kotmark.autolink.LinkSpan;kotlin.CharSequence;kotlin.text.StringBuilder){}[0]
-}
-
 abstract interface io.heapy.kotmark.autolink/LinkSpan : io.heapy.kotmark.autolink/Span { // io.heapy.kotmark.autolink/LinkSpan|null[0]
     abstract val type // io.heapy.kotmark.autolink/LinkSpan.type|{}type[0]
         abstract fun <get-type>(): io.heapy.kotmark.autolink/LinkType // io.heapy.kotmark.autolink/LinkSpan.type.<get-type>|<get-type>(){}[0]
@@ -50,10 +46,6 @@ final class io.heapy.kotmark.autolink/LinkExtractor { // io.heapy.kotmark.autoli
             final fun <get-linkTypes>(): kotlin.collections/Set<io.heapy.kotmark.autolink/LinkType> // io.heapy.kotmark.autolink/LinkExtractor.Configuration.linkTypes.<get-linkTypes>|<get-linkTypes>(){}[0]
             final fun <set-linkTypes>(kotlin.collections/Set<io.heapy.kotmark.autolink/LinkType>) // io.heapy.kotmark.autolink/LinkExtractor.Configuration.linkTypes.<set-linkTypes>|<set-linkTypes>(kotlin.collections.Set<io.heapy.kotmark.autolink.LinkType>){}[0]
     }
-}
-
-final object io.heapy.kotmark.autolink/Autolink { // io.heapy.kotmark.autolink/Autolink|null[0]
-    final fun renderLinks(kotlin/CharSequence, kotlin.collections/Iterable<io.heapy.kotmark.autolink/LinkSpan>, io.heapy.kotmark.autolink/LinkRenderer): kotlin/String // io.heapy.kotmark.autolink/Autolink.renderLinks|renderLinks(kotlin.CharSequence;kotlin.collections.Iterable<io.heapy.kotmark.autolink.LinkSpan>;io.heapy.kotmark.autolink.LinkRenderer){}[0]
 }
 
 final fun io.heapy.kotmark.autolink/linkExtractor(kotlin/Function1<io.heapy.kotmark.autolink/LinkExtractor.Configuration, kotlin/Unit> = ...): io.heapy.kotmark.autolink/LinkExtractor // io.heapy.kotmark.autolink/linkExtractor|linkExtractor(kotlin.Function1<io.heapy.kotmark.autolink.LinkExtractor.Configuration,kotlin.Unit>){}[0]

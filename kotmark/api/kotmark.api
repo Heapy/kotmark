@@ -186,7 +186,6 @@ public final class io/heapy/kotmark/internal/InlineParserContextImpl : io/heapy/
 	public fun getCustomLinkMarkers ()Ljava/util/Set;
 	public fun getCustomLinkProcessors ()Ljava/util/List;
 	public fun getDefinition (Lkotlin/reflect/KClass;Ljava/lang/String;)Ljava/lang/Object;
-	public fun getLinkReferenceDefinition (Ljava/lang/String;)Lio/heapy/kotmark/node/LinkReferenceDefinition;
 	public fun getMaxInlineNesting ()I
 }
 
@@ -492,9 +491,7 @@ public final class io/heapy/kotmark/node/BlockQuote : io/heapy/kotmark/node/Bloc
 public final class io/heapy/kotmark/node/BulletList : io/heapy/kotmark/node/ListBlock {
 	public fun <init> ()V
 	public fun accept (Lio/heapy/kotmark/node/Visitor;)V
-	public final fun getBulletMarker ()C
 	public final fun getMarker ()Ljava/lang/String;
-	public final fun setBulletMarker (C)V
 	public final fun setMarker (Ljava/lang/String;)V
 }
 
@@ -552,18 +549,14 @@ public final class io/heapy/kotmark/node/FencedCodeBlock : io/heapy/kotmark/node
 	public fun <init> ()V
 	public fun accept (Lio/heapy/kotmark/node/Visitor;)V
 	public final fun getClosingFenceLength ()Ljava/lang/Integer;
-	public final fun getFenceChar ()C
 	public final fun getFenceCharacter ()Ljava/lang/String;
 	public final fun getFenceIndent ()I
-	public final fun getFenceLength ()I
 	public final fun getInfo ()Ljava/lang/String;
 	public final fun getLiteral ()Ljava/lang/String;
 	public final fun getOpeningFenceLength ()Ljava/lang/Integer;
 	public final fun setClosingFenceLength (Ljava/lang/Integer;)V
-	public final fun setFenceChar (C)V
 	public final fun setFenceCharacter (Ljava/lang/String;)V
 	public final fun setFenceIndent (I)V
-	public final fun setFenceLength (I)V
 	public final fun setInfo (Ljava/lang/String;)V
 	public final fun setLiteral (Ljava/lang/String;)V
 	public final fun setOpeningFenceLength (Ljava/lang/Integer;)V
@@ -682,14 +675,10 @@ public final class io/heapy/kotmark/node/Nodes {
 public final class io/heapy/kotmark/node/OrderedList : io/heapy/kotmark/node/ListBlock {
 	public fun <init> ()V
 	public fun accept (Lio/heapy/kotmark/node/Visitor;)V
-	public final fun getDelimiter ()C
 	public final fun getMarkerDelimiter ()Ljava/lang/String;
 	public final fun getMarkerStartNumber ()Ljava/lang/Integer;
-	public final fun getStartNumber ()I
-	public final fun setDelimiter (C)V
 	public final fun setMarkerDelimiter (Ljava/lang/String;)V
 	public final fun setMarkerStartNumber (Ljava/lang/Integer;)V
-	public final fun setStartNumber (I)V
 }
 
 public final class io/heapy/kotmark/node/Paragraph : io/heapy/kotmark/node/Block {
@@ -711,7 +700,6 @@ public final class io/heapy/kotmark/node/SourceSpan {
 	public final fun getLength ()I
 	public final fun getLineIndex ()I
 	public fun hashCode ()I
-	public static final fun of (III)Lio/heapy/kotmark/node/SourceSpan;
 	public static final fun of (IIII)Lio/heapy/kotmark/node/SourceSpan;
 	public final fun subSpan (I)Lio/heapy/kotmark/node/SourceSpan;
 	public final fun subSpan (II)Lio/heapy/kotmark/node/SourceSpan;
@@ -719,7 +707,6 @@ public final class io/heapy/kotmark/node/SourceSpan {
 }
 
 public final class io/heapy/kotmark/node/SourceSpan$Companion {
-	public final fun of (III)Lio/heapy/kotmark/node/SourceSpan;
 	public final fun of (IIII)Lio/heapy/kotmark/node/SourceSpan;
 }
 
@@ -805,12 +792,7 @@ public abstract interface class io/heapy/kotmark/parser/InlineParserContext {
 	public abstract fun getCustomLinkMarkers ()Ljava/util/Set;
 	public abstract fun getCustomLinkProcessors ()Ljava/util/List;
 	public abstract fun getDefinition (Lkotlin/reflect/KClass;Ljava/lang/String;)Ljava/lang/Object;
-	public fun getLinkReferenceDefinition (Ljava/lang/String;)Lio/heapy/kotmark/node/LinkReferenceDefinition;
 	public abstract fun getMaxInlineNesting ()I
-}
-
-public final class io/heapy/kotmark/parser/InlineParserContext$DefaultImpls {
-	public static fun getLinkReferenceDefinition (Lio/heapy/kotmark/parser/InlineParserContext;Ljava/lang/String;)Lio/heapy/kotmark/node/LinkReferenceDefinition;
 }
 
 public abstract interface class io/heapy/kotmark/parser/InlineParserFactory {
@@ -1325,8 +1307,8 @@ public final class io/heapy/kotmark/renderer/markdown/MarkdownRendererKt {
 }
 
 public final class io/heapy/kotmark/renderer/markdown/MarkdownWriter {
-	public fun <init> (Ljava/lang/Appendable;)V
 	public fun <init> (Ljava/lang/Appendable;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/Appendable;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun block ()V
 	public final fun getLastChar ()C
 	public final fun isAtLineStart ()Z
@@ -1380,13 +1362,8 @@ public final class io/heapy/kotmark/renderer/text/LineBreakRendering : java/lang
 
 public abstract interface class io/heapy/kotmark/renderer/text/TextContentNodeRendererContext {
 	public abstract fun getLineBreakRendering ()Lio/heapy/kotmark/renderer/text/LineBreakRendering;
-	public fun getStripNewlines ()Z
 	public abstract fun getWriter ()Lio/heapy/kotmark/renderer/text/TextContentWriter;
 	public abstract fun render (Lio/heapy/kotmark/node/Node;)V
-}
-
-public final class io/heapy/kotmark/renderer/text/TextContentNodeRendererContext$DefaultImpls {
-	public static fun getStripNewlines (Lio/heapy/kotmark/renderer/text/TextContentNodeRendererContext;)Z
 }
 
 public final class io/heapy/kotmark/renderer/text/TextContentNodeRendererContextKt {

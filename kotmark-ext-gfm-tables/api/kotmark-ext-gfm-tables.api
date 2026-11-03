@@ -72,7 +72,6 @@ public final class io/heapy/kotmark/ext/gfm/tables/internal/TableBlockParser$Com
 }
 
 public final class io/heapy/kotmark/ext/gfm/tables/internal/TableBlockParser$Factory : io/heapy/kotmark/parser/block/AbstractBlockParserFactory {
-	public fun <init> ()V
 	public fun <init> (Ljava/lang/Integer;)V
 	public fun tryStart (Lio/heapy/kotmark/parser/block/ParserState;Lio/heapy/kotmark/parser/block/MatchedBlockParser;)Lio/heapy/kotmark/parser/block/BlockStart;
 }

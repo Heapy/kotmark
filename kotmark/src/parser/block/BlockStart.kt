@@ -8,9 +8,10 @@ abstract class BlockStart protected constructor() {
 
     abstract fun atColumn(newColumn: Int): BlockStart
 
-    @Deprecated("Use replaceParagraphLines(Int.MAX_VALUE)")
+    /** Replaces the entire active block, including a non-paragraph block such as a block quote. */
     abstract fun replaceActiveBlockParser(): BlockStart
 
+    /** Replaces trailing lines of an active paragraph, preserving any preceding paragraph lines. */
     abstract fun replaceParagraphLines(lines: Int): BlockStart
 
     companion object {

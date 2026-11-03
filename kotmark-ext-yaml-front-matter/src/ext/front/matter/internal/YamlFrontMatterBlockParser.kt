@@ -2,7 +2,6 @@ package io.heapy.kotmark.ext.front.matter.internal
 
 import io.heapy.kotmark.ext.front.matter.YamlFrontMatterBlock
 import io.heapy.kotmark.ext.front.matter.parser.FrontMatterParser
-import io.heapy.kotmark.ext.front.matter.parser.YamlSubsetParser
 import io.heapy.kotmark.node.Block
 import io.heapy.kotmark.node.Document
 import io.heapy.kotmark.parser.block.AbstractBlockParser
@@ -15,8 +14,6 @@ import io.heapy.kotmark.parser.block.ParserState
 class YamlFrontMatterBlockParser(
     private val frontMatterParser: FrontMatterParser,
 ) : AbstractBlockParser() {
-    constructor() : this(YamlSubsetParser())
-
     override val block: Block
         field = YamlFrontMatterBlock()
 
@@ -36,8 +33,6 @@ class YamlFrontMatterBlockParser(
     class Factory(
         private val frontMatterParserFactory: FrontMatterParser.Factory,
     ) : AbstractBlockParserFactory() {
-        constructor() : this(YamlSubsetParser.Factory())
-
         override fun tryStart(
             state: ParserState,
             matchedBlockParser: MatchedBlockParser,

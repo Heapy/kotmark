@@ -38,7 +38,7 @@ Choose checks for the change:
 | --- | --- |
 | Parser or extension behavior | `./kotlin test --platform jvm -m <module>`; add a focused regression and run `integration-test` for interactions. |
 | Shared/platform-specific behavior | Run the relevant Native or web suite; commands and host requirements are in [development](docs/development.md#conformance-and-platform-tests). |
-| Public API | Run `node scripts/library-tools.mjs api-check <module>` before and after edits. Review compatibility before updating snapshots with `api-dump`. |
+| Public API | Review declaration changes, update snapshots with `api-dump`, and run `api-check` for affected modules and selected local targets. The full target matrix runs in CI. |
 | Site or examples | `kotlinr docs/check.main.kts`; when Kotlin examples change, also run `./kotlin test --platform jvm -m examples`. |
 | Pinned test corpora | Update originals, checksums, counts, and UPSTREAM.md; regenerate with `kotlinr scripts/generate-test-fixtures.main.kts`, then run fixture and affected spec suites. |
 
@@ -46,6 +46,10 @@ The full JVM suite is `./kotlin test --platform jvm`. Use [development](docs/dev
 for fuzzing, coverage, benchmarks, and the CI target matrix. KLib API checks are
 host-dependent; a local pass does not cover every target. Keep generated reports
 under ignored `build/`; review committed API baselines and fixture sources explicitly.
+
+Kotmark has not had its first release, so its ABI is not frozen. Prefer a clean
+API over deprecated aliases or forwarding overloads kept solely for compatibility.
+Update callers, documentation, and API snapshots together when changing declarations.
 
 ## Behavioral contracts
 
@@ -65,7 +69,7 @@ under ignored `build/`; review committed API baselines and fixture sources expli
 
 - `README.md`: project purpose, installation, one minimal example, platform families,
   high-level spec coverage, and links. Document `io.heapy.kotmark:kotmark:0.1.0`
-  as the published release; local build metadata may still use a snapshot version.
+  as the planned first release; local build metadata may still use a snapshot version.
 - `docs/site` and `docs/pages`: a hand-written `index.html`, shared assets, and
   Markdown sources rendered to matching HTML pages by `docs/site-builder` with
   kotmark. `docs/pages/site.yml` is decoded with kotaml and orders navigation.

@@ -37,4 +37,22 @@ See [custom block continuation](custom-blocks.md) for the public outcomes and an
 
 ## Standalone autolink API
 
-Java getters become Kotlin properties (with equivalent JVM getters); nullable inputs are excluded by Kotlin types. The `linkExtractor { … }` configuration DSL retains the upstream options as `linkTypes` and `emailDomainMustHaveDot` properties; it replaces the upstream builder API. Kotlin read-only `Iterator` omits `remove`; the generated JVM implementation still throws `UnsupportedOperationException`. Internal implementation classes are Kotlin `internal`. Deprecated `Autolink.renderLinks` and `LinkRenderer` are retained. Java module descriptors and package-info documentation are not KMP runtime components.
+Java getters become Kotlin properties (with equivalent JVM getters); nullable inputs are excluded by Kotlin types. The `linkExtractor { … }` configuration DSL retains the upstream options as `linkTypes` and `emailDomainMustHaveDot` properties; it replaces the upstream builder API. Kotlin read-only `Iterator` omits `remove`; the generated JVM implementation still throws `UnsupportedOperationException`. Internal implementation classes are Kotlin `internal`. Use `LinkExtractor.extractSpans` and render the returned spans in place of the removed `Autolink.renderLinks` and `LinkRenderer`. Java module descriptors and package-info documentation are not KMP runtime components.
+
+## Upstream compatibility aliases
+
+Kotmark omits obsolete upstream aliases. Use these declarations when adapting code:
+
+| Removed declaration | Replacement |
+| --- | --- |
+| `FencedCodeBlock.fenceChar` / `setFenceChar` | `fenceCharacter` |
+| `FencedCodeBlock.fenceLength` / `setFenceLength` | `openingFenceLength` |
+| `OrderedList.startNumber` / `setStartNumber` | `markerStartNumber` |
+| `OrderedList.delimiter` / `setDelimiter` | `markerDelimiter` |
+| `BulletList.bulletMarker` / `setBulletMarker` | `marker` |
+| Three-argument `SourceSpan.of` | `SourceSpan.of(line, column, inputIndex, length)` |
+| `InlineParserContext.getLinkReferenceDefinition(label)` | `getDefinition(LinkReferenceDefinition::class, label)` |
+| `TextContentNodeRendererContext.stripNewlines` | `lineBreakRendering == LineBreakRendering.STRIP` |
+
+`MarkdownWriter(buffer)` still uses LF in Kotlin through a default parameter;
+Java callers pass the line separator explicitly.

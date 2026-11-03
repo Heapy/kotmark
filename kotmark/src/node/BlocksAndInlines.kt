@@ -23,15 +23,6 @@ class BlockQuote : Block() {
 class BulletList : ListBlock() {
     var marker: String? = null
 
-    @Deprecated("use marker instead", ReplaceWith("marker"))
-    val bulletMarker: Char
-        get() = marker?.firstOrNull() ?: '\u0000'
-
-    @Deprecated("use marker instead")
-    fun setBulletMarker(bulletMarker: Char) {
-        marker = if (bulletMarker != '\u0000') bulletMarker.toString() else null
-    }
-
     override fun accept(visitor: Visitor) {
         visitor.visit(this)
     }

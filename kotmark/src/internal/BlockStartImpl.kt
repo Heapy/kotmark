@@ -23,7 +23,6 @@ class BlockStartImpl(
         this.newColumn = newColumn
     }
 
-    @Deprecated("Use replaceParagraphLines(Int.MAX_VALUE)")
     override fun replaceActiveBlockParser(): BlockStart = apply {
         isReplaceActiveBlockParser = true
     }

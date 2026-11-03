@@ -5,7 +5,6 @@ import io.heapy.kotmark.ext.gfm.tables.TableBody
 import io.heapy.kotmark.ext.gfm.tables.TableCell
 import io.heapy.kotmark.ext.gfm.tables.TableHead
 import io.heapy.kotmark.ext.gfm.tables.TableRow
-import io.heapy.kotmark.ext.gfm.tables.TablesExtension
 import io.heapy.kotmark.node.Block
 import io.heapy.kotmark.parser.InlineParser
 import io.heapy.kotmark.parser.SourceLine
@@ -117,8 +116,6 @@ class TableBlockParser private constructor(
     }
 
     class Factory(private val maxCells: Int?) : AbstractBlockParserFactory() {
-        constructor() : this(TablesExtension.DEFAULT_MAX_CELLS)
-
         override fun tryStart(
             state: ParserState,
             matchedBlockParser: MatchedBlockParser,

@@ -231,7 +231,6 @@ abstract interface io.heapy.kotmark.parser/InlineParserContext { // io.heapy.kot
         abstract fun <get-maxInlineNesting>(): kotlin/Int // io.heapy.kotmark.parser/InlineParserContext.maxInlineNesting.<get-maxInlineNesting>|<get-maxInlineNesting>(){}[0]
 
     abstract fun <#A1: kotlin/Any> getDefinition(kotlin.reflect/KClass<#A1>, kotlin/String): #A1? // io.heapy.kotmark.parser/InlineParserContext.getDefinition|getDefinition(kotlin.reflect.KClass<0:0>;kotlin.String){0§<kotlin.Any>}[0]
-    open fun getLinkReferenceDefinition(kotlin/String): io.heapy.kotmark.node/LinkReferenceDefinition? // io.heapy.kotmark.parser/InlineParserContext.getLinkReferenceDefinition|getLinkReferenceDefinition(kotlin.String){}[0]
 }
 
 abstract interface io.heapy.kotmark.renderer.html/AttributeProviderContext // io.heapy.kotmark.renderer.html/AttributeProviderContext|null[0]
@@ -282,8 +281,6 @@ abstract interface io.heapy.kotmark.renderer.text/TextContentNodeRendererContext
         abstract fun <get-lineBreakRendering>(): io.heapy.kotmark.renderer.text/LineBreakRendering // io.heapy.kotmark.renderer.text/TextContentNodeRendererContext.lineBreakRendering.<get-lineBreakRendering>|<get-lineBreakRendering>(){}[0]
     abstract val writer // io.heapy.kotmark.renderer.text/TextContentNodeRendererContext.writer|{}writer[0]
         abstract fun <get-writer>(): io.heapy.kotmark.renderer.text/TextContentWriter // io.heapy.kotmark.renderer.text/TextContentNodeRendererContext.writer.<get-writer>|<get-writer>(){}[0]
-    open val stripNewlines // io.heapy.kotmark.renderer.text/TextContentNodeRendererContext.stripNewlines|{}stripNewlines[0]
-        open fun <get-stripNewlines>(): kotlin/Boolean // io.heapy.kotmark.renderer.text/TextContentNodeRendererContext.stripNewlines.<get-stripNewlines>|<get-stripNewlines>(){}[0]
 
     abstract fun render(io.heapy.kotmark.node/Node) // io.heapy.kotmark.renderer.text/TextContentNodeRendererContext.render|render(io.heapy.kotmark.node.Node){}[0]
 }
@@ -939,15 +936,11 @@ final class io.heapy.kotmark.node/BlockQuote : io.heapy.kotmark.node/Block { // 
 final class io.heapy.kotmark.node/BulletList : io.heapy.kotmark.node/ListBlock { // io.heapy.kotmark.node/BulletList|null[0]
     constructor <init>() // io.heapy.kotmark.node/BulletList.<init>|<init>(){}[0]
 
-    final val bulletMarker // io.heapy.kotmark.node/BulletList.bulletMarker|{}bulletMarker[0]
-        final fun <get-bulletMarker>(): kotlin/Char // io.heapy.kotmark.node/BulletList.bulletMarker.<get-bulletMarker>|<get-bulletMarker>(){}[0]
-
     final var marker // io.heapy.kotmark.node/BulletList.marker|{}marker[0]
         final fun <get-marker>(): kotlin/String? // io.heapy.kotmark.node/BulletList.marker.<get-marker>|<get-marker>(){}[0]
         final fun <set-marker>(kotlin/String?) // io.heapy.kotmark.node/BulletList.marker.<set-marker>|<set-marker>(kotlin.String?){}[0]
 
     final fun accept(io.heapy.kotmark.node/Visitor) // io.heapy.kotmark.node/BulletList.accept|accept(io.heapy.kotmark.node.Visitor){}[0]
-    final fun setBulletMarker(kotlin/Char) // io.heapy.kotmark.node/BulletList.setBulletMarker|setBulletMarker(kotlin.Char){}[0]
 }
 
 final class io.heapy.kotmark.node/Code : io.heapy.kotmark.node/Node { // io.heapy.kotmark.node/Code|null[0]
@@ -985,11 +978,6 @@ final class io.heapy.kotmark.node/Emphasis : io.heapy.kotmark.node/Delimited, io
 final class io.heapy.kotmark.node/FencedCodeBlock : io.heapy.kotmark.node/Block { // io.heapy.kotmark.node/FencedCodeBlock|null[0]
     constructor <init>() // io.heapy.kotmark.node/FencedCodeBlock.<init>|<init>(){}[0]
 
-    final val fenceChar // io.heapy.kotmark.node/FencedCodeBlock.fenceChar|{}fenceChar[0]
-        final fun <get-fenceChar>(): kotlin/Char // io.heapy.kotmark.node/FencedCodeBlock.fenceChar.<get-fenceChar>|<get-fenceChar>(){}[0]
-    final val fenceLength // io.heapy.kotmark.node/FencedCodeBlock.fenceLength|{}fenceLength[0]
-        final fun <get-fenceLength>(): kotlin/Int // io.heapy.kotmark.node/FencedCodeBlock.fenceLength.<get-fenceLength>|<get-fenceLength>(){}[0]
-
     final var closingFenceLength // io.heapy.kotmark.node/FencedCodeBlock.closingFenceLength|{}closingFenceLength[0]
         final fun <get-closingFenceLength>(): kotlin/Int? // io.heapy.kotmark.node/FencedCodeBlock.closingFenceLength.<get-closingFenceLength>|<get-closingFenceLength>(){}[0]
         final fun <set-closingFenceLength>(kotlin/Int?) // io.heapy.kotmark.node/FencedCodeBlock.closingFenceLength.<set-closingFenceLength>|<set-closingFenceLength>(kotlin.Int?){}[0]
@@ -1010,8 +998,6 @@ final class io.heapy.kotmark.node/FencedCodeBlock : io.heapy.kotmark.node/Block 
         final fun <set-openingFenceLength>(kotlin/Int?) // io.heapy.kotmark.node/FencedCodeBlock.openingFenceLength.<set-openingFenceLength>|<set-openingFenceLength>(kotlin.Int?){}[0]
 
     final fun accept(io.heapy.kotmark.node/Visitor) // io.heapy.kotmark.node/FencedCodeBlock.accept|accept(io.heapy.kotmark.node.Visitor){}[0]
-    final fun setFenceChar(kotlin/Char) // io.heapy.kotmark.node/FencedCodeBlock.setFenceChar|setFenceChar(kotlin.Char){}[0]
-    final fun setFenceLength(kotlin/Int) // io.heapy.kotmark.node/FencedCodeBlock.setFenceLength|setFenceLength(kotlin.Int){}[0]
 
     final object Companion // io.heapy.kotmark.node/FencedCodeBlock.Companion|null[0]
 }
@@ -1124,11 +1110,6 @@ final class io.heapy.kotmark.node/ListItem : io.heapy.kotmark.node/Block { // io
 final class io.heapy.kotmark.node/OrderedList : io.heapy.kotmark.node/ListBlock { // io.heapy.kotmark.node/OrderedList|null[0]
     constructor <init>() // io.heapy.kotmark.node/OrderedList.<init>|<init>(){}[0]
 
-    final val delimiter // io.heapy.kotmark.node/OrderedList.delimiter|{}delimiter[0]
-        final fun <get-delimiter>(): kotlin/Char // io.heapy.kotmark.node/OrderedList.delimiter.<get-delimiter>|<get-delimiter>(){}[0]
-    final val startNumber // io.heapy.kotmark.node/OrderedList.startNumber|{}startNumber[0]
-        final fun <get-startNumber>(): kotlin/Int // io.heapy.kotmark.node/OrderedList.startNumber.<get-startNumber>|<get-startNumber>(){}[0]
-
     final var markerDelimiter // io.heapy.kotmark.node/OrderedList.markerDelimiter|{}markerDelimiter[0]
         final fun <get-markerDelimiter>(): kotlin/String? // io.heapy.kotmark.node/OrderedList.markerDelimiter.<get-markerDelimiter>|<get-markerDelimiter>(){}[0]
         final fun <set-markerDelimiter>(kotlin/String?) // io.heapy.kotmark.node/OrderedList.markerDelimiter.<set-markerDelimiter>|<set-markerDelimiter>(kotlin.String?){}[0]
@@ -1137,8 +1118,6 @@ final class io.heapy.kotmark.node/OrderedList : io.heapy.kotmark.node/ListBlock 
         final fun <set-markerStartNumber>(kotlin/Int?) // io.heapy.kotmark.node/OrderedList.markerStartNumber.<set-markerStartNumber>|<set-markerStartNumber>(kotlin.Int?){}[0]
 
     final fun accept(io.heapy.kotmark.node/Visitor) // io.heapy.kotmark.node/OrderedList.accept|accept(io.heapy.kotmark.node.Visitor){}[0]
-    final fun setDelimiter(kotlin/Char) // io.heapy.kotmark.node/OrderedList.setDelimiter|setDelimiter(kotlin.Char){}[0]
-    final fun setStartNumber(kotlin/Int) // io.heapy.kotmark.node/OrderedList.setStartNumber|setStartNumber(kotlin.Int){}[0]
 }
 
 final class io.heapy.kotmark.node/Paragraph : io.heapy.kotmark.node/Block { // io.heapy.kotmark.node/Paragraph|null[0]
@@ -1170,7 +1149,6 @@ final class io.heapy.kotmark.node/SourceSpan { // io.heapy.kotmark.node/SourceSp
     final fun toString(): kotlin/String // io.heapy.kotmark.node/SourceSpan.toString|toString(){}[0]
 
     final object Companion { // io.heapy.kotmark.node/SourceSpan.Companion|null[0]
-        final fun of(kotlin/Int, kotlin/Int, kotlin/Int): io.heapy.kotmark.node/SourceSpan // io.heapy.kotmark.node/SourceSpan.Companion.of|of(kotlin.Int;kotlin.Int;kotlin.Int){}[0]
         final fun of(kotlin/Int, kotlin/Int, kotlin/Int, kotlin/Int): io.heapy.kotmark.node/SourceSpan // io.heapy.kotmark.node/SourceSpan.Companion.of|of(kotlin.Int;kotlin.Int;kotlin.Int;kotlin.Int){}[0]
     }
 }
@@ -1463,8 +1441,7 @@ final class io.heapy.kotmark.renderer.markdown/MarkdownRenderer : io.heapy.kotma
 }
 
 final class io.heapy.kotmark.renderer.markdown/MarkdownWriter { // io.heapy.kotmark.renderer.markdown/MarkdownWriter|null[0]
-    constructor <init>(kotlin.text/Appendable) // io.heapy.kotmark.renderer.markdown/MarkdownWriter.<init>|<init>(kotlin.text.Appendable){}[0]
-    constructor <init>(kotlin.text/Appendable, kotlin/String) // io.heapy.kotmark.renderer.markdown/MarkdownWriter.<init>|<init>(kotlin.text.Appendable;kotlin.String){}[0]
+    constructor <init>(kotlin.text/Appendable, kotlin/String = ...) // io.heapy.kotmark.renderer.markdown/MarkdownWriter.<init>|<init>(kotlin.text.Appendable;kotlin.String){}[0]
 
     final var isAtLineStart // io.heapy.kotmark.renderer.markdown/MarkdownWriter.isAtLineStart|{}isAtLineStart[0]
         final fun <get-isAtLineStart>(): kotlin/Boolean // io.heapy.kotmark.renderer.markdown/MarkdownWriter.isAtLineStart.<get-isAtLineStart>|<get-isAtLineStart>(){}[0]

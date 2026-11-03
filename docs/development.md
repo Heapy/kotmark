@@ -191,15 +191,17 @@ node scripts/test-additional-platforms.mjs watchosSimulatorArm64
 Production libraries apply `library.module-template.yaml`; test infrastructure and
 benchmarks use the common template without API, documentation, or coverage policy.
 The library template supplies `io.heapy.kotmark:…:0.1.0-SNAPSHOT` metadata for
-publication and Dokka's KMP model. These development coordinates are separate from the published
-`0.1.0` release used in the user guides.
+publication and Dokka's KMP model. The `0.1.0` coordinates in the user guides refer
+to the planned first release.
 
-**API review:** BCV checks committed JVM and KLib snapshots. Run checks before and
-after changing public declarations; update snapshots only after reviewing the change:
+**API review:** BCV checks committed JVM and KLib snapshots. Before the first
+release, the ABI is not frozen: remove obsolete compatibility aliases instead of
+preserving them. Review declaration changes and update callers, documentation, and
+snapshots together, then check the affected modules:
 
 ```shell
-node scripts/library-tools.mjs api-check
-node scripts/library-tools.mjs api-dump kotmark
+node scripts/library-tools.mjs api-dump --targets jvm,js kotmark
+node scripts/library-tools.mjs api-check --targets jvm,js kotmark
 ```
 
 The optional module arguments select production libraries; omitting them selects
@@ -210,8 +212,8 @@ supported by the current host. The plugin revalidates compiler inputs even when
 artifacts already exist. Nested compiler outputs live in `build/bcv-workspace`,
 separately from the outer build lock. `jvm-api-check`, `jvm-api-dump`, `klib-api-check`, and `klib-api-dump`
 select one snapshot format. Compatible additions also require baseline review.
-KLib checks select web targets and the current host's Native family. Run on macOS,
-Linux, and Windows for complete supported-target coverage; updates preserve other
+KLib checks select web targets and the current host's Native family. CI runs on
+macOS, Linux, and Windows for complete supported-target coverage; updates preserve other
 targets already in the baseline. BCV excludes Android and `watchosDeviceArm64`;
 their existing platform builds/tests remain enabled. Swift/TypeScript exports and
 behavioral compatibility are not checked.

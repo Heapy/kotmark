@@ -68,10 +68,5 @@ class SourceSpan private constructor(
         @JvmStatic
         fun of(line: Int, col: Int, input: Int, length: Int): SourceSpan =
             SourceSpan(line, col, input, length)
-
-        @JvmStatic
-        @Deprecated("Use of(line, col, input, length) to also specify input index")
-        fun of(lineIndex: Int, columnIndex: Int, length: Int): SourceSpan =
-            of(lineIndex, columnIndex, 0, length)
     }
 }

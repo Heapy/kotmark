@@ -23,24 +23,6 @@ class FencedCodeBlock : Block() {
     var info: String? = null
     var literal: String? = null
 
-    @Deprecated("use fenceCharacter", ReplaceWith("fenceCharacter"))
-    val fenceChar: Char
-        get() = fenceCharacter?.firstOrNull() ?: '\u0000'
-
-    @Deprecated("use fenceCharacter")
-    fun setFenceChar(fenceChar: Char) {
-        fenceCharacter = if (fenceChar != '\u0000') fenceChar.toString() else null
-    }
-
-    @Deprecated("use openingFenceLength", ReplaceWith("openingFenceLength ?: 0"))
-    val fenceLength: Int
-        get() = openingFenceLength ?: 0
-
-    @Deprecated("use openingFenceLength")
-    fun setFenceLength(fenceLength: Int) {
-        openingFenceLength = if (fenceLength != 0) fenceLength else null
-    }
-
     override fun accept(visitor: Visitor) {
         visitor.visit(this)
     }
@@ -139,24 +121,6 @@ class ListItem : Block() {
 class OrderedList : ListBlock() {
     var markerDelimiter: String? = null
     var markerStartNumber: Int? = null
-
-    @Deprecated("use markerStartNumber", ReplaceWith("markerStartNumber ?: 0"))
-    val startNumber: Int
-        get() = markerStartNumber ?: 0
-
-    @Deprecated("use markerStartNumber")
-    fun setStartNumber(startNumber: Int) {
-        markerStartNumber = if (startNumber != 0) startNumber else null
-    }
-
-    @Deprecated("use markerDelimiter", ReplaceWith("markerDelimiter"))
-    val delimiter: Char
-        get() = markerDelimiter?.firstOrNull() ?: '\u0000'
-
-    @Deprecated("use markerDelimiter")
-    fun setDelimiter(delimiter: Char) {
-        markerDelimiter = if (delimiter != '\u0000') delimiter.toString() else null
-    }
 
     override fun accept(visitor: Visitor) {
         visitor.visit(this)

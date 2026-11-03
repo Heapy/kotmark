@@ -8,7 +8,7 @@ import kotlin.test.assertTrue
 
 class MarkdownWriterTest {
     @Test
-    fun existingConstructorUsesLfAndMaintainsLineState() {
+    fun defaultSeparatorUsesLfAndMaintainsLineState() {
         val output = StringBuilder()
         val writer = MarkdownWriter(output)
         writer.raw("one")

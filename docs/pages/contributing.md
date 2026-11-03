@@ -53,4 +53,4 @@ Every declared target is built in CI; most also run the test suite.
 
 - Generated [API reference](api/index.html) and [JVM line coverage](coverage/index.html) are rebuilt for each published revision.
 - Property tests and fuzzing check parser invariants beyond the specification examples.
-- Binary-compatibility checks guard the public API of production modules.
+- API snapshots make changes to public declarations reviewable. The ABI is not frozen before the first release.

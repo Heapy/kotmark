@@ -1,6 +1,5 @@
 package io.heapy.kotmark.ext.front.matter
 
-import io.heapy.kotmark.ext.front.matter.internal.YamlFrontMatterBlockParser
 import io.heapy.kotmark.ext.front.matter.parser.FrontMatterParser
 import io.heapy.kotmark.ext.front.matter.parser.FrontMatterParser.SeparatorRole
 import io.heapy.kotmark.ext.front.matter.parser.RawContentParser
@@ -137,16 +136,6 @@ class YamlFrontMatterRawContentTest {
             assertEquals("", YamlFrontMatterVisitor.readRawContent(document))
             assertFalse(visit(document).isFrontMatterPresent)
         }
-    }
-
-    @Test
-    fun existingBlockParserFactoryConstructorRemainsUsable() {
-        val oldStyleParser = parser { customBlockParserFactory(YamlFrontMatterBlockParser.Factory()) }
-        assertIs<YamlFrontMatterBlock>(YamlFrontMatterBlockParser().block)
-        assertEquals(
-            mapOf("key" to listOf("value")),
-            YamlFrontMatterVisitor.readData(oldStyleParser.parse("---\nkey: value\n---")),
-        )
     }
 
     private fun visit(document: Node): YamlFrontMatterVisitor =
