@@ -78,13 +78,14 @@ fun renderMarkdown(markdown: String): String {
     </section>
     <section class="field-section" id="extensions" data-index="03" aria-labelledby="extensions-title">
         <div class="section-body">
-            <p class="section-kicker">Extension index / twelve opt-ins</p>
+            <p class="section-kicker">Extension index / opt-in syntax</p>
             <h2 id="extensions-title">Keep the core lean.<br><em>Pull in what you use.</em></h2>
             <p class="lede">Add the extension module you need and register it with the parser and each renderer you use. The <code>autolink</code> module also provides a standalone URL and email extractor.</p>
             <div class="extension-table-wrap"><table class="extension-table">
                 <thead><tr><th scope="col">Module</th><th scope="col">Adds</th><th scope="col">Dialect note</th></tr></thead>
                 <tbody>
                 <tr><th scope="row"><a href="extensions/autolink.html">autolink</a></th><td>Bare URL and email links</td><td>Uses upstream autolink-java rules</td></tr>
+                <tr><th scope="row"><a href="extensions/emoji.html">emoji</a></th><td>Unicode emoji from shortcodes</td><td>GitHub gemoji aliases and custom mappings</td></tr>
                 <tr><th scope="row"><a href="extensions/footnotes.html">footnotes</a></th><td>Footnote references and definitions</td><td>Opt-in syntax</td></tr>
                 <tr><th scope="row"><a href="extensions/gfm-alerts.html">gfm-alerts</a></th><td>GitHub-style alert blocks</td><td>Supported alert fixtures; not full GFM</td></tr>
                 <tr><th scope="row"><a href="extensions/gfm-strikethrough.html">gfm-strikethrough</a></th><td>Struck-through text</td><td>Configurable delimiter rules</td></tr>

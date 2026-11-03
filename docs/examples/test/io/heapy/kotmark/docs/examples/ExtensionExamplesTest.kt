@@ -6,6 +6,7 @@ import io.heapy.kotmark.docs.examples.extensions.readPage
 import io.heapy.kotmark.docs.examples.extensions.renderArticle
 import io.heapy.kotmark.docs.examples.extensions.renderWithAlerts
 import io.heapy.kotmark.docs.examples.extensions.renderWithAutolinks
+import io.heapy.kotmark.docs.examples.extensions.renderWithEmoji
 import io.heapy.kotmark.docs.examples.extensions.renderWithFootnotes
 import io.heapy.kotmark.docs.examples.extensions.renderWithHeadingIds
 import io.heapy.kotmark.docs.examples.extensions.renderWithHighlight
@@ -23,6 +24,14 @@ import kotlin.test.assertEquals
 
 /** Inputs and outputs mirror the examples shown on the site's extension pages. */
 class ExtensionExamplesTest {
+    @Test
+    fun emoji() {
+        assertEquals(
+            "<p>A 🐛 fixed, a 🌟 earned. People ❤️ that!</p>\n",
+            renderWithEmoji("A :bug: fixed, a :star2: earned. People :heart: that!"),
+        )
+    }
+
     @Test
     fun autolink() {
         assertEquals(

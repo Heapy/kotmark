@@ -13,6 +13,7 @@ cards: []
 | --- | --- | --- |
 | [commonmark-java](https://github.com/commonmark/commonmark-java) | Core parser, renderers, extensions, and tests | BSD-2-Clause |
 | [autolink-java](https://github.com/robinst/autolink-java) | `autolink` module and tests | MIT |
+| [gemoji](https://github.com/github/gemoji) | Emoji shortcode dictionary | MIT |
 
 ## Specification corpora
 
@@ -30,6 +31,9 @@ The revisions and corpus checksums are recorded in `UPSTREAM.md`. The notices be
 ## License notices {#upstream-notices}
 
 ```text upstream="MIT notice for autolink"
+```
+
+```text upstream="MIT notice for gemoji"
 ```
 
 ```text upstream="BSD notice for commonmark-java"

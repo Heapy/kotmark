@@ -6,6 +6,7 @@ import io.heapy.kotmark.docs.examples.extensions.readPage
 import io.heapy.kotmark.docs.examples.extensions.renderArticle
 import io.heapy.kotmark.docs.examples.extensions.renderWithAlerts
 import io.heapy.kotmark.docs.examples.extensions.renderWithAutolinks
+import io.heapy.kotmark.docs.examples.extensions.renderWithEmoji
 import io.heapy.kotmark.docs.examples.extensions.renderWithFootnotes
 import io.heapy.kotmark.docs.examples.extensions.renderWithHeadingIds
 import io.heapy.kotmark.docs.examples.extensions.renderWithHighlight
@@ -508,6 +509,7 @@ private fun upstreamNotice(repository: Path, name: String): String {
 
 internal fun renderExample(id: String, input: String, repository: Path): String = when (id) {
     "autolink" -> renderWithAutolinks(input)
+    "emoji" -> renderWithEmoji(input)
     "autolink-extractor" -> findLinks(input).joinToString("\n")
     "footnotes" -> renderWithFootnotes(input)
     "gfm-alerts" -> renderWithAlerts(input)

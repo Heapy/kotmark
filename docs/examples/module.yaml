@@ -7,6 +7,7 @@ dependencies:
   - //kotmark
   - //autolink
   - //kotmark-ext-autolink
+  - //kotmark-ext-emoji
   - //kotmark-ext-footnotes
   - //kotmark-ext-gfm-alerts
   - //kotmark-ext-gfm-strikethrough

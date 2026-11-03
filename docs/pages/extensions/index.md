@@ -12,6 +12,7 @@ cards: []
 | Module | Adds |
 | --- | --- |
 | [Autolink](autolink.md) | Bare URL and email links |
+| [Emoji](emoji.md) | Unicode emoji from `:shortcode:` aliases |
 | [Footnotes](footnotes.md) | Footnote references and definitions |
 | [GFM alerts](gfm-alerts.md) | GitHub-style alert blocks |
 | [GFM strikethrough](gfm-strikethrough.md) | Struck-through text |
@@ -36,6 +37,7 @@ functions from the packages listed on the individual extension pages.
 | Module | Registration inside `extensions { … }` |
 | --- | --- |
 | Autolink | `autolink { linkTypes = setOf(AutolinkType.URL) }` |
+| Emoji | `emoji()` or `emoji(customAliases = mapOf("party" to "🥳"))` |
 | Footnotes | `footnotes { inlineFootnotes = true }` |
 | GFM alerts | `alerts { addCustomType("INFO", "Information") }` |
 | GFM strikethrough | `strikethrough { requireTwoTildes = true }` |
