@@ -87,22 +87,7 @@ class MarkdownWriter(
         if (rawEscapes.isEmpty() && escape == null) {
             buffer.append(value)
         } else {
-            // Append unescaped spans in bulk; Writer implementations may synchronize each call.
-            val end = value.length
-            var start = 0
-            for (index in 0..<end) {
-                val character = value[index]
-                if (needsEscaping(character, escape)) {
-                    if (start < index) {
-                        buffer.append(value, start, index)
-                    }
-                    appendEscaped(character)
-                    start = index + 1
-                }
-            }
-            if (start < end) {
-                buffer.append(value, start, end)
-            }
+            append(value, escape)
         }
         if (value.isNotEmpty()) {
             lastChar = value.last()
@@ -139,6 +124,28 @@ class MarkdownWriter(
                 writePrefixes()
             }
             blockSeparator = 0
+        }
+    }
+
+    private fun append(
+        value: String,
+        escape: CharMatcher?,
+    ) {
+        // Append unescaped spans in bulk; Writer implementations may synchronize each call.
+        val end = value.length
+        var start = 0
+        for (index in 0..<end) {
+            val character = value[index]
+            if (needsEscaping(character, escape)) {
+                if (start < index) {
+                    buffer.append(value, start, index)
+                }
+                appendEscaped(character)
+                start = index + 1
+            }
+        }
+        if (start < end) {
+            buffer.append(value, start, end)
         }
     }
 
