@@ -200,7 +200,6 @@ public final class io/heapy/kotmark/internal/InlineParserImpl$Companion {
 }
 
 public final class io/heapy/kotmark/internal/LinkReferenceDefinitionParser {
-	public static final field Companion Lio/heapy/kotmark/internal/LinkReferenceDefinitionParser$Companion;
 	public fun <init> ()V
 	public final fun addSourceSpan (Lio/heapy/kotmark/node/SourceSpan;)V
 	public final fun getDefinitions ()Ljava/util/List;
@@ -209,9 +208,6 @@ public final class io/heapy/kotmark/internal/LinkReferenceDefinitionParser {
 	public final fun getState ()Lio/heapy/kotmark/internal/LinkReferenceDefinitionParser$State;
 	public final fun parse (Lio/heapy/kotmark/parser/SourceLine;)V
 	public final fun removeLines (I)Ljava/util/List;
-}
-
-public final class io/heapy/kotmark/internal/LinkReferenceDefinitionParser$Companion {
 }
 
 public final class io/heapy/kotmark/internal/LinkReferenceDefinitionParser$State : java/lang/Enum {

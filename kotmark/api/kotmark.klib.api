@@ -857,8 +857,6 @@ final class io.heapy.kotmark.internal/LinkReferenceDefinitionParser { // io.heap
         final fun valueOf(kotlin/String): io.heapy.kotmark.internal/LinkReferenceDefinitionParser.State // io.heapy.kotmark.internal/LinkReferenceDefinitionParser.State.valueOf|valueOf#static(kotlin.String){}[0]
         final fun values(): kotlin/Array<io.heapy.kotmark.internal/LinkReferenceDefinitionParser.State> // io.heapy.kotmark.internal/LinkReferenceDefinitionParser.State.values|values#static(){}[0]
     }
-
-    final object Companion // io.heapy.kotmark.internal/LinkReferenceDefinitionParser.Companion|null[0]
 }
 
 final class io.heapy.kotmark.internal/ListBlockParser : io.heapy.kotmark.parser.block/AbstractBlockParser { // io.heapy.kotmark.internal/ListBlockParser|null[0]

@@ -13,6 +13,13 @@ class PathologicalTest {
     private val size = 100_000
 
     @Test
+    fun paragraphOfLinesThatTryBlockStarts() {
+        // Potential block starts must not copy all accumulated paragraph lines on each attempt.
+        val count = 1_000_000
+        assertRendering("1\n".repeat(count), "<p>" + "1\n".repeat(count - 1) + "1</p>\n")
+    }
+
+    @Test
     fun nestedStrongEmphasis() {
         val count = 500
         val source = "*a **a ".repeat(count) + "b" + " a** a*".repeat(count)

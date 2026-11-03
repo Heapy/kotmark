@@ -12,7 +12,7 @@ class LinkReferenceDefinitionParser {
     var state: State = State.START_DEFINITION
         private set
 
-    private val paragraphLinesField = mutableListOf<SourceLine>()
+    private var paragraphLinesField = SourceLines()
     private val definitionsField = mutableListOf<LinkReferenceDefinition>()
     private val sourceSpans = mutableListOf<SourceSpan>()
 
@@ -24,7 +24,7 @@ class LinkReferenceDefinitionParser {
     private var referenceSourceSpanCount: Int = 0
 
     val paragraphLines: SourceLines
-        get() = SourceLines.of(paragraphLinesField)
+        get() = paragraphLinesField
 
     val paragraphSourceSpans: List<SourceSpan>
         get() = sourceSpans
@@ -36,7 +36,7 @@ class LinkReferenceDefinitionParser {
         }
 
     fun parse(line: SourceLine) {
-        paragraphLinesField.add(line)
+        paragraphLinesField.addLine(line)
         if (state == State.PARAGRAPH) {
             return
         }
@@ -71,7 +71,8 @@ class LinkReferenceDefinitionParser {
         // Replacing paragraph lines must preserve spans already committed to a definition.
         val firstRemoved = (sourceSpans.size - lines).coerceAtLeast(referenceSourceSpanCount)
         val removedSpans = sourceSpans.subList(firstRemoved, sourceSpans.size).toList()
-        removeLast(lines, paragraphLinesField)
+        val paragraphLines = paragraphLinesField.lines
+        paragraphLinesField = SourceLines.of(paragraphLines.subList(0, (paragraphLines.size - lines).coerceAtLeast(0)))
         sourceSpans.subList(firstRemoved, sourceSpans.size).clear()
         return removedSpans
     }
@@ -143,7 +144,7 @@ class LinkReferenceDefinitionParser {
         val whitespace = scanner.whitespace()
         if (!scanner.hasNext()) {
             referenceValid = true
-            paragraphLinesField.clear()
+            paragraphLinesField = SourceLines()
         } else if (whitespace == 0) {
             return false
         }
@@ -199,7 +200,7 @@ class LinkReferenceDefinitionParser {
         }
 
         referenceValid = true
-        paragraphLinesField.clear()
+        paragraphLinesField = SourceLines()
         state = State.START_DEFINITION
         return true
     }
@@ -232,17 +233,5 @@ class LinkReferenceDefinitionParser {
         START_TITLE,
         TITLE,
         PARAGRAPH,
-    }
-
-    companion object {
-        private fun <T> removeLast(count: Int, list: MutableList<T>) {
-            if (count >= list.size) {
-                list.clear()
-            } else {
-                repeat(count) {
-                    list.removeAt(list.lastIndex)
-                }
-            }
-        }
     }
 }
