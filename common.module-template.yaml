@@ -18,3 +18,8 @@ settings@android:
   android:
     minSdk: 24
     compileSdk: 37
+
+test-settings@mingwX64:
+  kotlin:
+    # Pathological nesting fixtures need a larger stack in Windows test binaries.
+    linkerOptions: ["-Wl,--stack,16777216"]
