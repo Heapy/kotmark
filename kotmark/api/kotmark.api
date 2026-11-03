@@ -934,6 +934,10 @@ public final class io/heapy/kotmark/parser/beta/Scanner {
 	public fun <init> (Ljava/util/List;II)V
 	public final fun find (C)I
 	public final fun find (Lio/heapy/kotmark/text/CharMatcher;)I
+	public final fun findPrev (C)I
+	public final fun findPrev (CLio/heapy/kotmark/parser/beta/Position;)I
+	public final fun findPrev (Lio/heapy/kotmark/text/CharMatcher;)I
+	public final fun findPrev (Lio/heapy/kotmark/text/CharMatcher;Lio/heapy/kotmark/parser/beta/Position;)I
 	public final fun getSource (Lio/heapy/kotmark/parser/beta/Position;Lio/heapy/kotmark/parser/beta/Position;)Lio/heapy/kotmark/parser/SourceLines;
 	public final fun hasNext ()Z
 	public final fun match (Lio/heapy/kotmark/text/CharMatcher;)I
@@ -946,6 +950,7 @@ public final class io/heapy/kotmark/parser/beta/Scanner {
 	public final fun peekCodePoint ()I
 	public final fun peekPreviousCodePoint ()I
 	public final fun position ()Lio/heapy/kotmark/parser/beta/Position;
+	public final fun prev ()V
 	public final fun setPosition (Lio/heapy/kotmark/parser/beta/Position;)V
 	public final fun whitespace ()I
 }

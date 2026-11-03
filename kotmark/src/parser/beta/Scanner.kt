@@ -73,6 +73,23 @@ class Scanner(
         }
     }
 
+    /**
+     * Moves backward by one UTF-16 code unit, reversing [next].
+     * Crossing a line boundary lands on its synthetic newline. There is no newline after the
+     * final line: from EOF this moves to the last character, or the preceding newline when the
+     * final line is empty. At the start of input, including empty input, this does nothing.
+     */
+    fun prev() {
+        if (index > 0) {
+            index--
+        } else if (lineIndex > 0) {
+            lineIndex--
+            // Preserve next()'s representation when stepping back from repeated calls at EOF.
+            setLine(if (lineIndex < lines.size) lines[lineIndex] else SourceLine.of("", null))
+            index = lineLength
+        }
+    }
+
     fun next(c: Char): Boolean {
         if (peek() != c) {
             return false
@@ -157,6 +174,63 @@ class Scanner(
         }
     }
 
+    /**
+     * Finds [c] at or before the current position, including synthetic newlines but never [END].
+     * Returns the UTF-16 units moved backward, or -1 on a miss, leaving the cursor at input start.
+     * An immediate match returns 0; matching the last character from EOF returns 1.
+     */
+    fun findPrev(c: Char): Int = findPrev(c, null, 0, 0)
+
+    /**
+     * Like [findPrev] for a character, but uses [matcher]. [END] is never passed to the matcher.
+     * Returns the UTF-16 units moved backward, or -1 with the cursor at input start on a miss.
+     */
+    fun findPrev(matcher: CharMatcher): Int = findPrev(END, matcher, 0, 0)
+
+    /**
+     * Finds [c] at or before the cursor and at or after the inclusive [bound], never matching [END].
+     * Returns the UTF-16 units moved backward, or -1 with the cursor at [bound] on a miss.
+     * The canonical start position is a valid bound for empty input, where the result is -1.
+     * Positions should come from this scanner, as with [setPosition].
+     * @throws IllegalArgumentException before moving if [bound] is outside this input or after the cursor.
+     */
+    fun findPrev(c: Char, bound: Position): Int {
+        checkLowerBound(bound)
+        return findPrev(c, null, bound.lineIndex, bound.index)
+    }
+
+    /**
+     * Finds a character matched by [matcher] between the cursor and inclusive [bound].
+     * [END] is never passed to [matcher]. Returns the UTF-16 units moved backward, or -1 with the
+     * cursor at [bound] on a miss. The canonical start position is valid for empty input.
+     * Positions should come from this scanner, as with [setPosition].
+     * @throws IllegalArgumentException before moving if [bound] is outside this input or after the cursor.
+     */
+    fun findPrev(matcher: CharMatcher, bound: Position): Int {
+        checkLowerBound(bound)
+        return findPrev(END, matcher, bound.lineIndex, bound.index)
+    }
+
+    private fun findPrev(c: Char, matcher: CharMatcher?, boundLine: Int, boundIndex: Int): Int {
+        var count = 0
+        while (true) {
+            val current = peek()
+            if (current != END && (matcher?.matches(current) ?: (current == c))) {
+                return count
+            }
+            if (lineIndex == boundLine && index == boundIndex) {
+                return -1
+            }
+            val lineBefore = lineIndex
+            val indexBefore = index
+            prev()
+            if (lineIndex == lineBefore && index == indexBefore) {
+                return -1
+            }
+            count++
+        }
+    }
+
     fun position(): Position = Position(lineIndex, index)
 
     fun setPosition(position: Position) {
@@ -203,7 +277,24 @@ class Scanner(
         }
     }
 
+    private fun checkLowerBound(position: Position) {
+        if (lines.isEmpty()) {
+            require(position.lineIndex == 0) {
+                "Line index ${position.lineIndex} out of range, number of lines: ${lines.size}"
+            }
+            require(position.index == 0) {
+                "Index ${position.index} out of range, line length: 0"
+            }
+        } else {
+            checkPosition(position.lineIndex, position.index)
+        }
+        require(position.lineIndex < lineIndex || position.lineIndex == lineIndex && position.index <= index) {
+            "Bound line ${position.lineIndex} index ${position.index} is after the current position line $lineIndex index $index"
+        }
+    }
+
     companion object {
+        /** End-of-input sentinel, never matched by [find] or [findPrev]. */
         const val END: Char = '\u0000'
 
         private val WHITESPACE = charArrayOf(' ', '\t', '\n', '\u000B', '\u000C', '\r')
