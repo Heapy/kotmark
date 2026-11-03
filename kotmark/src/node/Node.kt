@@ -13,6 +13,9 @@ abstract class Node {
     private var nextField: Node? = null
     private var sourceSpans: MutableList<SourceSpan>? = null
 
+    // Parser identity maps must not use equality or hash codes overridden by custom node types.
+    internal fun identityHashCode(): Int = super.hashCode()
+
     abstract fun accept(visitor: Visitor)
 
     val next: Node? get() = nextField

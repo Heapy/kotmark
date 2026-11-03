@@ -36,6 +36,7 @@ class DocumentParser(
     private val linkMarkers: Set<Char>,
     private val includeSourceSpans: IncludeSourceSpans,
     private val maxOpenBlockParsers: Int,
+    private val maxInlineNesting: Int,
 ) : ParserState {
     private lateinit var currentLine: SourceLine
     private var lineIndex = -1
@@ -362,6 +363,7 @@ class DocumentParser(
                 linkProcessors,
                 linkMarkers,
                 definitions,
+                maxInlineNesting,
             )
         val inlineParser = inlineParserFactory.create(context)
         for (blockParser in allBlockParsers) {

@@ -25,6 +25,17 @@ import kotlin.test.assertEquals
 import kotlin.test.fail
 
 class IntegrationTest {
+    @Test
+    fun inlineNestingLimitIncludesExtensionDelimitersAndImages() {
+        val parser = parser {
+            maxInlineNesting = 1
+            extensions(listOf(InsExtension.create()))
+        }
+        val renderer = htmlRenderer { extensions(listOf(InsExtension.create())) }
+        assertEquals("<p>++<ins>x</ins>++</p>\n", renderer.render(parser.parse("++++x++++")))
+        assertEquals("<p>++<img src=\"u\" alt=\"x\" />++</p>\n", renderer.render(parser.parse("++![x](u)++")))
+    }
+
     private val extensions: List<Extension> =
         listOf(
             AutolinkExtension.create(),

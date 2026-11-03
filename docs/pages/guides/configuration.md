@@ -34,6 +34,21 @@ Set `parser { maxOpenBlockParsers = Int.MAX_VALUE }` to remove the limit, or cho
 another non-negative value. This option controls block nesting; it does not limit
 inline nesting or the total number of blocks in a document.
 
+## Inline nesting limit
+
+`maxInlineNesting` defaults to `100`. It tracks combined nesting from emphasis-like
+delimiters, bracketed links, and images. Markers that would exceed the limit remain
+plain text. Set `parser { maxInlineNesting = 3 }` to choose another non-negative
+limit, or use `Int.MAX_VALUE` to disable it.
+
+Emphasis inside a link is processed after the link's limit check, so that
+combination can exceed the configured limit by one level. Custom delimiter
+processors participate when they insert their new node directly after the opener;
+arbitrary subtrees supplied by custom extensions are not fully measured.
+
+Disabling the limit permits deep trees that recursive renderers and visitors may
+not be able to traverse.
+
 ## Configuration rules
 
 - Register extensions with the parser and with each renderer that should handle them.

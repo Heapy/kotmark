@@ -18,6 +18,8 @@ class Bracket private constructor(
 ) {
     var allowed: Boolean = true
     var bracketAfter: Boolean = false
+    /** Deepest recorded inline subtree within this bracket's content. */
+    var contentNestingDepth: Int = 0
 
     companion object {
         @JvmStatic

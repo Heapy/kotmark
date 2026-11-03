@@ -42,6 +42,7 @@ public final class io/heapy/kotmark/internal/Bracket {
 	public final fun getBracketAfter ()Z
 	public final fun getBracketNode ()Lio/heapy/kotmark/node/Text;
 	public final fun getBracketPosition ()Lio/heapy/kotmark/parser/beta/Position;
+	public final fun getContentNestingDepth ()I
 	public final fun getContentPosition ()Lio/heapy/kotmark/parser/beta/Position;
 	public final fun getMarkerNode ()Lio/heapy/kotmark/node/Text;
 	public final fun getMarkerPosition ()Lio/heapy/kotmark/parser/beta/Position;
@@ -50,6 +51,7 @@ public final class io/heapy/kotmark/internal/Bracket {
 	public static final fun link (Lio/heapy/kotmark/node/Text;Lio/heapy/kotmark/parser/beta/Position;Lio/heapy/kotmark/parser/beta/Position;Lio/heapy/kotmark/internal/Bracket;Lio/heapy/kotmark/internal/Delimiter;)Lio/heapy/kotmark/internal/Bracket;
 	public final fun setAllowed (Z)V
 	public final fun setBracketAfter (Z)V
+	public final fun setContentNestingDepth (I)V
 	public static final fun withMarker (Lio/heapy/kotmark/node/Text;Lio/heapy/kotmark/parser/beta/Position;Lio/heapy/kotmark/node/Text;Lio/heapy/kotmark/parser/beta/Position;Lio/heapy/kotmark/parser/beta/Position;Lio/heapy/kotmark/internal/Bracket;Lio/heapy/kotmark/internal/Delimiter;)Lio/heapy/kotmark/internal/Bracket;
 }
 
@@ -93,7 +95,7 @@ public final class io/heapy/kotmark/internal/DocumentBlockParser : io/heapy/kotm
 
 public final class io/heapy/kotmark/internal/DocumentParser : io/heapy/kotmark/parser/block/ParserState {
 	public static final field Companion Lio/heapy/kotmark/internal/DocumentParser$Companion;
-	public fun <init> (Ljava/util/List;Lio/heapy/kotmark/parser/InlineParserFactory;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/Set;Lio/heapy/kotmark/parser/IncludeSourceSpans;I)V
+	public fun <init> (Ljava/util/List;Lio/heapy/kotmark/parser/InlineParserFactory;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/Set;Lio/heapy/kotmark/parser/IncludeSourceSpans;II)V
 	public fun getActiveBlockParser ()Lio/heapy/kotmark/parser/block/BlockParser;
 	public fun getColumn ()I
 	public fun getIndent ()I
@@ -178,13 +180,14 @@ public final class io/heapy/kotmark/internal/IndentedCodeBlockParser$Factory : i
 }
 
 public final class io/heapy/kotmark/internal/InlineParserContextImpl : io/heapy/kotmark/parser/InlineParserContext {
-	public fun <init> (Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/Set;Lio/heapy/kotmark/internal/Definitions;)V
+	public fun <init> (Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/Set;Lio/heapy/kotmark/internal/Definitions;I)V
 	public fun getCustomDelimiterProcessors ()Ljava/util/List;
 	public fun getCustomInlineContentParserFactories ()Ljava/util/List;
 	public fun getCustomLinkMarkers ()Ljava/util/Set;
 	public fun getCustomLinkProcessors ()Ljava/util/List;
 	public fun getDefinition (Lkotlin/reflect/KClass;Ljava/lang/String;)Ljava/lang/Object;
 	public fun getLinkReferenceDefinition (Ljava/lang/String;)Lio/heapy/kotmark/node/LinkReferenceDefinition;
+	public fun getMaxInlineNesting ()I
 }
 
 public final class io/heapy/kotmark/internal/InlineParserImpl : io/heapy/kotmark/parser/InlineParser, io/heapy/kotmark/parser/beta/InlineParserState {
@@ -803,6 +806,7 @@ public abstract interface class io/heapy/kotmark/parser/InlineParserContext {
 	public abstract fun getCustomLinkProcessors ()Ljava/util/List;
 	public abstract fun getDefinition (Lkotlin/reflect/KClass;Ljava/lang/String;)Ljava/lang/Object;
 	public fun getLinkReferenceDefinition (Ljava/lang/String;)Lio/heapy/kotmark/node/LinkReferenceDefinition;
+	public abstract fun getMaxInlineNesting ()I
 }
 
 public final class io/heapy/kotmark/parser/InlineParserContext$DefaultImpls {
@@ -826,6 +830,7 @@ public final class io/heapy/kotmark/parser/Parser$Configuration {
 	public final fun getEnabledBlockTypes ()Ljava/util/Set;
 	public final fun getIncludeSourceSpans ()Lio/heapy/kotmark/parser/IncludeSourceSpans;
 	public final fun getInlineParserFactory ()Lio/heapy/kotmark/parser/InlineParserFactory;
+	public final fun getMaxInlineNesting ()I
 	public final fun getMaxOpenBlockParsers ()I
 	public final fun linkMarker (C)V
 	public final fun linkProcessor (Lio/heapy/kotmark/parser/beta/LinkProcessor;)V
@@ -833,6 +838,7 @@ public final class io/heapy/kotmark/parser/Parser$Configuration {
 	public final fun setEnabledBlockTypes (Ljava/util/Set;)V
 	public final fun setIncludeSourceSpans (Lio/heapy/kotmark/parser/IncludeSourceSpans;)V
 	public final fun setInlineParserFactory (Lio/heapy/kotmark/parser/InlineParserFactory;)V
+	public final fun setMaxInlineNesting (I)V
 	public final fun setMaxOpenBlockParsers (I)V
 }
 

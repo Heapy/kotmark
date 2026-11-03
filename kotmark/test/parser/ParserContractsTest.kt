@@ -47,8 +47,10 @@ class ParserContractsTest {
             emptyList(),
             emptySet(),
             definitions,
+            3,
         )
         assertSame(first, context.getDefinition(LinkReferenceDefinition::class, "foo bar"))
+        assertEquals(3, context.maxInlineNesting)
     }
 
     @Test

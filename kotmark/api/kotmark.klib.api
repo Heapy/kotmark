@@ -227,6 +227,8 @@ abstract interface io.heapy.kotmark.parser/InlineParserContext { // io.heapy.kot
         abstract fun <get-customLinkMarkers>(): kotlin.collections/Set<kotlin/Char> // io.heapy.kotmark.parser/InlineParserContext.customLinkMarkers.<get-customLinkMarkers>|<get-customLinkMarkers>(){}[0]
     abstract val customLinkProcessors // io.heapy.kotmark.parser/InlineParserContext.customLinkProcessors|{}customLinkProcessors[0]
         abstract fun <get-customLinkProcessors>(): kotlin.collections/List<io.heapy.kotmark.parser.beta/LinkProcessor> // io.heapy.kotmark.parser/InlineParserContext.customLinkProcessors.<get-customLinkProcessors>|<get-customLinkProcessors>(){}[0]
+    abstract val maxInlineNesting // io.heapy.kotmark.parser/InlineParserContext.maxInlineNesting|{}maxInlineNesting[0]
+        abstract fun <get-maxInlineNesting>(): kotlin/Int // io.heapy.kotmark.parser/InlineParserContext.maxInlineNesting.<get-maxInlineNesting>|<get-maxInlineNesting>(){}[0]
 
     abstract fun <#A1: kotlin/Any> getDefinition(kotlin.reflect/KClass<#A1>, kotlin/String): #A1? // io.heapy.kotmark.parser/InlineParserContext.getDefinition|getDefinition(kotlin.reflect.KClass<0:0>;kotlin.String){0§<kotlin.Any>}[0]
     open fun getLinkReferenceDefinition(kotlin/String): io.heapy.kotmark.node/LinkReferenceDefinition? // io.heapy.kotmark.parser/InlineParserContext.getLinkReferenceDefinition|getLinkReferenceDefinition(kotlin.String){}[0]
@@ -648,6 +650,9 @@ final class io.heapy.kotmark.internal/Bracket { // io.heapy.kotmark.internal/Bra
     final var bracketAfter // io.heapy.kotmark.internal/Bracket.bracketAfter|{}bracketAfter[0]
         final fun <get-bracketAfter>(): kotlin/Boolean // io.heapy.kotmark.internal/Bracket.bracketAfter.<get-bracketAfter>|<get-bracketAfter>(){}[0]
         final fun <set-bracketAfter>(kotlin/Boolean) // io.heapy.kotmark.internal/Bracket.bracketAfter.<set-bracketAfter>|<set-bracketAfter>(kotlin.Boolean){}[0]
+    final var contentNestingDepth // io.heapy.kotmark.internal/Bracket.contentNestingDepth|{}contentNestingDepth[0]
+        final fun <get-contentNestingDepth>(): kotlin/Int // io.heapy.kotmark.internal/Bracket.contentNestingDepth.<get-contentNestingDepth>|<get-contentNestingDepth>(){}[0]
+        final fun <set-contentNestingDepth>(kotlin/Int) // io.heapy.kotmark.internal/Bracket.contentNestingDepth.<set-contentNestingDepth>|<set-contentNestingDepth>(kotlin.Int){}[0]
 
     final object Companion { // io.heapy.kotmark.internal/Bracket.Companion|null[0]
         final fun link(io.heapy.kotmark.node/Text, io.heapy.kotmark.parser.beta/Position, io.heapy.kotmark.parser.beta/Position, io.heapy.kotmark.internal/Bracket?, io.heapy.kotmark.internal/Delimiter?): io.heapy.kotmark.internal/Bracket // io.heapy.kotmark.internal/Bracket.Companion.link|link(io.heapy.kotmark.node.Text;io.heapy.kotmark.parser.beta.Position;io.heapy.kotmark.parser.beta.Position;io.heapy.kotmark.internal.Bracket?;io.heapy.kotmark.internal.Delimiter?){}[0]
@@ -701,7 +706,7 @@ final class io.heapy.kotmark.internal/DocumentBlockParser : io.heapy.kotmark.par
 }
 
 final class io.heapy.kotmark.internal/DocumentParser : io.heapy.kotmark.parser.block/ParserState { // io.heapy.kotmark.internal/DocumentParser|null[0]
-    constructor <init>(kotlin.collections/List<io.heapy.kotmark.parser.block/BlockParserFactory>, io.heapy.kotmark.parser/InlineParserFactory, kotlin.collections/List<io.heapy.kotmark.parser.beta/InlineContentParserFactory>, kotlin.collections/List<io.heapy.kotmark.parser.delimiter/DelimiterProcessor>, kotlin.collections/List<io.heapy.kotmark.parser.beta/LinkProcessor>, kotlin.collections/Set<kotlin/Char>, io.heapy.kotmark.parser/IncludeSourceSpans, kotlin/Int) // io.heapy.kotmark.internal/DocumentParser.<init>|<init>(kotlin.collections.List<io.heapy.kotmark.parser.block.BlockParserFactory>;io.heapy.kotmark.parser.InlineParserFactory;kotlin.collections.List<io.heapy.kotmark.parser.beta.InlineContentParserFactory>;kotlin.collections.List<io.heapy.kotmark.parser.delimiter.DelimiterProcessor>;kotlin.collections.List<io.heapy.kotmark.parser.beta.LinkProcessor>;kotlin.collections.Set<kotlin.Char>;io.heapy.kotmark.parser.IncludeSourceSpans;kotlin.Int){}[0]
+    constructor <init>(kotlin.collections/List<io.heapy.kotmark.parser.block/BlockParserFactory>, io.heapy.kotmark.parser/InlineParserFactory, kotlin.collections/List<io.heapy.kotmark.parser.beta/InlineContentParserFactory>, kotlin.collections/List<io.heapy.kotmark.parser.delimiter/DelimiterProcessor>, kotlin.collections/List<io.heapy.kotmark.parser.beta/LinkProcessor>, kotlin.collections/Set<kotlin/Char>, io.heapy.kotmark.parser/IncludeSourceSpans, kotlin/Int, kotlin/Int) // io.heapy.kotmark.internal/DocumentParser.<init>|<init>(kotlin.collections.List<io.heapy.kotmark.parser.block.BlockParserFactory>;io.heapy.kotmark.parser.InlineParserFactory;kotlin.collections.List<io.heapy.kotmark.parser.beta.InlineContentParserFactory>;kotlin.collections.List<io.heapy.kotmark.parser.delimiter.DelimiterProcessor>;kotlin.collections.List<io.heapy.kotmark.parser.beta.LinkProcessor>;kotlin.collections.Set<kotlin.Char>;io.heapy.kotmark.parser.IncludeSourceSpans;kotlin.Int;kotlin.Int){}[0]
 
     final val activeBlockParser // io.heapy.kotmark.internal/DocumentParser.activeBlockParser|{}activeBlockParser[0]
         final fun <get-activeBlockParser>(): io.heapy.kotmark.parser.block/BlockParser // io.heapy.kotmark.internal/DocumentParser.activeBlockParser.<get-activeBlockParser>|<get-activeBlockParser>(){}[0]
@@ -799,7 +804,7 @@ final class io.heapy.kotmark.internal/IndentedCodeBlockParser : io.heapy.kotmark
 }
 
 final class io.heapy.kotmark.internal/InlineParserContextImpl : io.heapy.kotmark.parser/InlineParserContext { // io.heapy.kotmark.internal/InlineParserContextImpl|null[0]
-    constructor <init>(kotlin.collections/List<io.heapy.kotmark.parser.beta/InlineContentParserFactory>, kotlin.collections/List<io.heapy.kotmark.parser.delimiter/DelimiterProcessor>, kotlin.collections/List<io.heapy.kotmark.parser.beta/LinkProcessor>, kotlin.collections/Set<kotlin/Char>, io.heapy.kotmark.internal/Definitions) // io.heapy.kotmark.internal/InlineParserContextImpl.<init>|<init>(kotlin.collections.List<io.heapy.kotmark.parser.beta.InlineContentParserFactory>;kotlin.collections.List<io.heapy.kotmark.parser.delimiter.DelimiterProcessor>;kotlin.collections.List<io.heapy.kotmark.parser.beta.LinkProcessor>;kotlin.collections.Set<kotlin.Char>;io.heapy.kotmark.internal.Definitions){}[0]
+    constructor <init>(kotlin.collections/List<io.heapy.kotmark.parser.beta/InlineContentParserFactory>, kotlin.collections/List<io.heapy.kotmark.parser.delimiter/DelimiterProcessor>, kotlin.collections/List<io.heapy.kotmark.parser.beta/LinkProcessor>, kotlin.collections/Set<kotlin/Char>, io.heapy.kotmark.internal/Definitions, kotlin/Int) // io.heapy.kotmark.internal/InlineParserContextImpl.<init>|<init>(kotlin.collections.List<io.heapy.kotmark.parser.beta.InlineContentParserFactory>;kotlin.collections.List<io.heapy.kotmark.parser.delimiter.DelimiterProcessor>;kotlin.collections.List<io.heapy.kotmark.parser.beta.LinkProcessor>;kotlin.collections.Set<kotlin.Char>;io.heapy.kotmark.internal.Definitions;kotlin.Int){}[0]
 
     final val customDelimiterProcessors // io.heapy.kotmark.internal/InlineParserContextImpl.customDelimiterProcessors|{}customDelimiterProcessors[0]
         final fun <get-customDelimiterProcessors>(): kotlin.collections/List<io.heapy.kotmark.parser.delimiter/DelimiterProcessor> // io.heapy.kotmark.internal/InlineParserContextImpl.customDelimiterProcessors.<get-customDelimiterProcessors>|<get-customDelimiterProcessors>(){}[0]
@@ -809,6 +814,8 @@ final class io.heapy.kotmark.internal/InlineParserContextImpl : io.heapy.kotmark
         final fun <get-customLinkMarkers>(): kotlin.collections/Set<kotlin/Char> // io.heapy.kotmark.internal/InlineParserContextImpl.customLinkMarkers.<get-customLinkMarkers>|<get-customLinkMarkers>(){}[0]
     final val customLinkProcessors // io.heapy.kotmark.internal/InlineParserContextImpl.customLinkProcessors|{}customLinkProcessors[0]
         final fun <get-customLinkProcessors>(): kotlin.collections/List<io.heapy.kotmark.parser.beta/LinkProcessor> // io.heapy.kotmark.internal/InlineParserContextImpl.customLinkProcessors.<get-customLinkProcessors>|<get-customLinkProcessors>(){}[0]
+    final val maxInlineNesting // io.heapy.kotmark.internal/InlineParserContextImpl.maxInlineNesting|{}maxInlineNesting[0]
+        final fun <get-maxInlineNesting>(): kotlin/Int // io.heapy.kotmark.internal/InlineParserContextImpl.maxInlineNesting.<get-maxInlineNesting>|<get-maxInlineNesting>(){}[0]
 
     final fun <#A1: kotlin/Any> getDefinition(kotlin.reflect/KClass<#A1>, kotlin/String): #A1? // io.heapy.kotmark.internal/InlineParserContextImpl.getDefinition|getDefinition(kotlin.reflect.KClass<0:0>;kotlin.String){0§<kotlin.Any>}[0]
 }
@@ -1265,6 +1272,9 @@ final class io.heapy.kotmark.parser/Parser { // io.heapy.kotmark.parser/Parser|n
         final var inlineParserFactory // io.heapy.kotmark.parser/Parser.Configuration.inlineParserFactory|{}inlineParserFactory[0]
             final fun <get-inlineParserFactory>(): io.heapy.kotmark.parser/InlineParserFactory? // io.heapy.kotmark.parser/Parser.Configuration.inlineParserFactory.<get-inlineParserFactory>|<get-inlineParserFactory>(){}[0]
             final fun <set-inlineParserFactory>(io.heapy.kotmark.parser/InlineParserFactory?) // io.heapy.kotmark.parser/Parser.Configuration.inlineParserFactory.<set-inlineParserFactory>|<set-inlineParserFactory>(io.heapy.kotmark.parser.InlineParserFactory?){}[0]
+        final var maxInlineNesting // io.heapy.kotmark.parser/Parser.Configuration.maxInlineNesting|{}maxInlineNesting[0]
+            final fun <get-maxInlineNesting>(): kotlin/Int // io.heapy.kotmark.parser/Parser.Configuration.maxInlineNesting.<get-maxInlineNesting>|<get-maxInlineNesting>(){}[0]
+            final fun <set-maxInlineNesting>(kotlin/Int) // io.heapy.kotmark.parser/Parser.Configuration.maxInlineNesting.<set-maxInlineNesting>|<set-maxInlineNesting>(kotlin.Int){}[0]
         final var maxOpenBlockParsers // io.heapy.kotmark.parser/Parser.Configuration.maxOpenBlockParsers|{}maxOpenBlockParsers[0]
             final fun <get-maxOpenBlockParsers>(): kotlin/Int // io.heapy.kotmark.parser/Parser.Configuration.maxOpenBlockParsers.<get-maxOpenBlockParsers>|<get-maxOpenBlockParsers>(){}[0]
             final fun <set-maxOpenBlockParsers>(kotlin/Int) // io.heapy.kotmark.parser/Parser.Configuration.maxOpenBlockParsers.<set-maxOpenBlockParsers>|<set-maxOpenBlockParsers>(kotlin.Int){}[0]

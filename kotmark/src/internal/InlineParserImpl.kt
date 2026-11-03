@@ -41,6 +41,10 @@ class InlineParserImpl(
         calculateLinkProcessors(context.customLinkProcessors)
     private val linkMarkers: Set<Char> =
         context.customLinkMarkers + '!'
+    private val maxInlineNesting = context.maxInlineNesting
+    private val limitInlineNesting = maxInlineNesting != Int.MAX_VALUE
+    // Shared by delimiter and bracket wrappers, keyed by identity even for custom Node subclasses.
+    private val nestingDepths = mutableMapOf<IdentityKey, Int>()
     private val specialCharacters: Set<Char> =
         calculateSpecialCharacters(linkMarkers, delimiterProcessors.keys, inlineContentParserFactories)
 
@@ -71,6 +75,7 @@ class InlineParserImpl(
         trailingSpaces = 0
         lastDelimiter = null
         lastBracket = null
+        nestingDepths.clear()
         inlineParsers = createInlineContentParsers()
     }
 
@@ -263,7 +268,11 @@ class InlineParserImpl(
         opener: Bracket,
         wrapperNode: Node,
         includeMarker: Boolean,
-    ): Node {
+    ): Node? {
+        // Delimiters inside this bracket are resolved below, so their resulting depth can make
+        // the wrapper exceed the limit by one. The depth recorded afterwards includes them.
+        if (limitInlineNesting && opener.contentNestingDepth >= maxInlineNesting) return null
+
         var node = opener.bracketNode.next
         while (node != null) {
             val next = node.next
@@ -290,6 +299,7 @@ class InlineParserImpl(
         }
         opener.bracketNode.unlink()
         removeLastBracket()
+        recordNestingDepth(wrapperNode, opener.contentNestingDepth + 1)
 
         if (opener.markerNode == null) {
             disallowPreviousLinks()
@@ -328,6 +338,8 @@ class InlineParserImpl(
             node = next
         }
 
+        recordNestingDepth(replacement, nestingDepthOfSiblings(replacement.firstChild, null) + 1)
+
         if (opener.markerNode == null || !includeMarker) {
             disallowPreviousLinks()
         }
@@ -340,7 +352,11 @@ class InlineParserImpl(
     }
 
     private fun removeLastBracket() {
-        lastBracket = lastBracket?.previous
+        val bracket = lastBracket ?: return
+        lastBracket = bracket.previous
+        lastBracket?.let { enclosing ->
+            enclosing.contentNestingDepth = maxOf(enclosing.contentNestingDepth, bracket.contentNestingDepth)
+        }
     }
 
     private fun disallowPreviousLinks() {
@@ -467,17 +483,31 @@ class InlineParserImpl(
             var usedDelimiters = 0
             var openerFound = false
             var potentialOpenerFound = false
+            var matchDepth = 0
+            var createdNode: Node? = null
             var opener = currentCloser.previous
+            var scanBoundary: Node = currentCloser.closer
+            var contentDepth = 0
             while (
                 opener != null &&
                 opener !== stackBottom &&
                 opener !== openerBottom
             ) {
+                if (limitInlineNesting) {
+                    // Extend a running maximum instead of rescanning the growing sibling range
+                    // for every candidate opener. A rejected depth cannot improve farther back.
+                    contentDepth = maxOf(contentDepth, nestingDepthOfSiblings(opener.opener.next, scanBoundary))
+                    scanBoundary = opener.opener
+                    if (contentDepth >= maxInlineNesting) break
+                }
                 if (opener.canOpen() && opener.delimiterChar == openingDelimiterChar) {
                     potentialOpenerFound = true
                     usedDelimiters = delimiterProcessor.process(opener, currentCloser)
                     if (usedDelimiters > 0) {
                         openerFound = true
+                        matchDepth = contentDepth + 1
+                        // Capture before consumed delimiter characters are unlinked.
+                        createdNode = opener.opener.next
                         break
                     }
                 }
@@ -510,6 +540,7 @@ class InlineParserImpl(
             }
 
             removeDelimitersBetween(foundOpener, currentCloser)
+            createdNode?.let { recordNestingDepth(it, matchDepth) }
             if (foundOpener.length() == 0) {
                 removeDelimiterAndNodes(foundOpener)
             }
@@ -523,6 +554,29 @@ class InlineParserImpl(
         while (lastDelimiter != null && lastDelimiter !== stackBottom) {
             removeDelimiterKeepNode(requireNotNull(lastDelimiter))
         }
+    }
+
+    private fun recordNestingDepth(node: Node, depth: Int) {
+        if (!limitInlineNesting) return
+        nestingDepths[IdentityKey(node)] = depth
+        lastBracket?.let { bracket ->
+            bracket.contentNestingDepth = maxOf(bracket.contentNestingDepth, depth)
+        }
+    }
+
+    private fun nestingDepthOfSiblings(first: Node?, end: Node?): Int {
+        var depth = 0
+        var node = first
+        while (node != null && node !== end) {
+            depth = maxOf(depth, nestingDepths[IdentityKey(node)] ?: 0)
+            node = node.next
+        }
+        return depth
+    }
+
+    private class IdentityKey(private val node: Node) {
+        override fun equals(other: Any?): Boolean = other is IdentityKey && node === other.node
+        override fun hashCode(): Int = node.identityHashCode()
     }
 
     private fun removeDelimitersBetween(opener: Delimiter, closer: Delimiter) {

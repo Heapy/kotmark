@@ -12,6 +12,7 @@ class InlineParserContextImpl(
     override val customLinkProcessors: List<LinkProcessor>,
     override val customLinkMarkers: Set<Char>,
     private val definitions: Definitions,
+    override val maxInlineNesting: Int,
 ) : InlineParserContext {
     override fun <D : Any> getDefinition(type: KClass<D>, label: String): D? =
         definitions.getDefinition(type, label)

@@ -206,7 +206,7 @@ class ParserTest {
     @Test
     fun deeplyNestedInlineDoesNotOverflowParsing() {
         val count = 50_000
-        var node = parser().parse("*".repeat(count) + "x" + "*".repeat(count))
+        var node = parser { maxInlineNesting = Int.MAX_VALUE }.parse("*".repeat(count) + "x" + "*".repeat(count))
         var nesting = 0
         // Inspect iteratively: rendering or visiting this deep tree recursively is out of scope.
         while (true) {

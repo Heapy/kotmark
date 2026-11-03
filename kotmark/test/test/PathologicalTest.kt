@@ -1,9 +1,11 @@
 package io.heapy.kotmark.test
 
+import io.heapy.kotmark.node.Node
 import io.heapy.kotmark.parser.parser
 import io.heapy.kotmark.renderer.html.htmlRenderer
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class PathologicalTest {
     private val parser = parser()
@@ -13,10 +15,12 @@ class PathologicalTest {
     @Test
     fun nestedStrongEmphasis() {
         val count = 500
-        assertRendering(
-            "*a **a ".repeat(count) + "b" + " a** a*".repeat(count),
+        val source = "*a **a ".repeat(count) + "b" + " a** a*".repeat(count)
+        val unlimitedParser = parser { maxInlineNesting = Int.MAX_VALUE }
+        assertEquals(
             "<p>" + "<em>a <strong>a ".repeat(count) + "b" +
                 " a</strong> a</em>".repeat(count) + "</p>\n",
+            renderer.render(unlimitedParser.parse(source)),
         )
     }
 
@@ -157,6 +161,56 @@ class PathologicalTest {
     fun autolinkEmail() {
         val email = "a@" + "a.".repeat(4_000) + "a"
         assertRendering("<$email>", "<p><a href=\"mailto:$email\">$email</a></p>\n")
+    }
+
+    @Test
+    fun nestedEmphasisSamePair() {
+        val count = 40_000
+        assertNestingLimited("*".repeat(count) + "x" + "*".repeat(count))
+    }
+
+    @Test
+    fun nestedEmphasisReusedOpener() {
+        val count = 40_000
+        assertNestingLimited("*".repeat(count) + "x" + "*".repeat(count) + "b*".repeat(count))
+    }
+
+    @Test
+    fun nestedEmphasisDifferentDelimiters() {
+        val count = 40_000
+        assertNestingLimited("*a ".repeat(count) + " b*".repeat(count))
+    }
+
+    @Test
+    fun nestedImages() {
+        val count = 40_000
+        assertNestingLimited("![".repeat(count) + "x" + "](u)".repeat(count))
+    }
+
+    @Test
+    fun nestedEmphasisAndImagesInterleaved() {
+        val count = 20_000
+        assertNestingLimited("*![".repeat(count) + "x" + "](u)*".repeat(count))
+        assertNestingLimited("![*".repeat(count) + "x" + "*](u)".repeat(count))
+    }
+
+    private fun assertNestingLimited(source: String) {
+        val document = parser.parse(source)
+        val pending = ArrayDeque<Pair<Node, Int>>()
+        pending.addLast(document to 0)
+        var maximum = 0
+        while (pending.isNotEmpty()) {
+            val [node, depth] = pending.removeLast()
+            maximum = maxOf(maximum, depth)
+            var child = node.firstChild
+            while (child != null) {
+                pending.addLast(child to depth + 1)
+                child = child.next
+            }
+        }
+        assertTrue(maximum < 110, "Depth including block and text nodes: $maximum")
+        // Only render after confirming the tree has bounded depth.
+        val _ = renderer.render(document)
     }
 
     private fun assertRendering(source: String, expected: String) {

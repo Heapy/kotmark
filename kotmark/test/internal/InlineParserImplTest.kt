@@ -114,6 +114,7 @@ class InlineParserImplTest {
                 emptyList(),
                 emptySet(),
                 Definitions(),
+                100,
             ),
         ).parse(lines, paragraph)
         return paragraph

@@ -31,6 +31,7 @@ class Parser private constructor(configuration: Configuration) {
     private val postProcessors = configuration.postProcessors.toList()
     private val includeSourceSpans = configuration.includeSourceSpans
     private val maxOpenBlockParsers = configuration.maxOpenBlockParsers
+    private val maxInlineNesting = configuration.maxInlineNesting
 
     init {
         val context =
@@ -40,6 +41,7 @@ class Parser private constructor(configuration: Configuration) {
                 linkProcessors,
                 linkMarkers,
                 Definitions(),
+                maxInlineNesting,
             )
         // Validate the inline parser configuration eagerly; parsing creates fresh state.
         val _ = inlineParserFactory.create(context)
@@ -63,6 +65,7 @@ class Parser private constructor(configuration: Configuration) {
             linkMarkers,
             includeSourceSpans,
             maxOpenBlockParsers,
+            maxInlineNesting,
         )
 
     private fun postProcess(document: Node): Node {
@@ -98,6 +101,22 @@ class Parser private constructor(configuration: Configuration) {
         var maxOpenBlockParsers: Int = 100
             set(value) {
                 require(value >= 0) { "maxOpenBlockParsers must be >= 0" }
+                field = value
+            }
+
+        /**
+         * Limits nesting produced by emphasis-like delimiters and links/images. Delimiters or
+         * brackets that would exceed the limit remain plain text. Defaults to 100; use
+         * [Int.MAX_VALUE] to disable depth tracking. Must be zero or greater.
+         *
+         * Emphasis inside brackets is resolved after the bracket check, so their combined depth
+         * can exceed this limit by one. Custom delimiter processors must insert their wrapper
+         * immediately after the opener for it to participate in this accounting; arbitrary
+         * subtrees supplied by custom processors are not independently limited.
+         */
+        var maxInlineNesting: Int = 100
+            set(value) {
+                require(value >= 0) { "maxInlineNesting must be >= 0" }
                 field = value
             }
 

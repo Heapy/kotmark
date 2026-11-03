@@ -11,6 +11,8 @@ interface InlineParserContext {
     val customDelimiterProcessors: List<DelimiterProcessor>
     val customLinkProcessors: List<LinkProcessor>
     val customLinkMarkers: Set<Char>
+    /** The configured [Parser.Configuration.maxInlineNesting]. */
+    val maxInlineNesting: Int
 
     @Deprecated("Use getDefinition(LinkReferenceDefinition::class, label)")
     fun getLinkReferenceDefinition(label: String): LinkReferenceDefinition? =
