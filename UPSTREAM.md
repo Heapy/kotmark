@@ -26,22 +26,9 @@ Autolink preserves upstream behavior without an additional GFM mode; API
 adaptations, test coverage and known GFM differences are documented in
 [autolink/README.md](autolink/README.md).
 
-### Additional commonmark-java ports
-
-The following changes are adapted on top of the base revision above; they do not
-advance the pinned test corpora or imply a full update to a later release.
-
-| Source commit | Local scope | Adaptation |
-| --- | --- | --- |
-| [614abc159d31ae0b1ef46540f838c76d2aad2a9c](https://github.com/commonmark/commonmark-java/commit/614abc159d31ae0b1ef46540f838c76d2aad2a9c), YAML front matter extractors | `kotmark-ext-yaml-front-matter` code and adapted tests | Kotlin extractor API, raw-content AST node and Markdown rendering; existing no-argument entry points retained |
-| [2b264befeb501d1561c1200ccb2333cad8924dd0](https://github.com/commonmark/commonmark-java/commit/2b264befeb501d1561c1200ccb2333cad8924dd0), front matter parser API | `kotmark-ext-yaml-front-matter` code and adapted tests | Renamed raw-content API, source lines and explicit separator roles; pre-existing no-argument entry points retained |
-| [e45a48033f430d7675cd8388eaf5057e94e9ea96](https://github.com/commonmark/commonmark-java/commit/e45a48033f430d7675cd8388eaf5057e94e9ea96), Markdown line separators | `kotmark` Markdown renderer, writer and adapted tests | Configurable line separators through the Kotlin DSL; existing writer constructor and default LF output retained |
-| [5f4778b90381dbc3b4983b72885f73b1f7fcf6f3](https://github.com/commonmark/commonmark-java/commit/5f4778b90381dbc3b4983b72885f73b1f7fcf6f3), front matter parser package | `kotmark-ext-yaml-front-matter` API and references | Moved `FrontMatterParser` into the `parser` subpackage; Kotlin factory parameter naming retained |
-| [946b6c5e63a82d324f00b0f78cd39a401bbd127c](https://github.com/commonmark/commonmark-java/commit/946b6c5e63a82d324f00b0f78cd39a401bbd127c), inline HTML scan caching | `kotmark` inline HTML parser and adapted tests | Per-fragment failed-terminator caches avoid repeated scans of unterminated HTML constructs |
-| [4fd2d38c724cdad9e29ff7a389f17309568b6b24](https://github.com/commonmark/commonmark-java/commit/4fd2d38c724cdad9e29ff7a389f17309568b6b24), table cell limit | `kotmark-ext-gfm-tables` code and adapted tests | Per-table limit defaults to 1,000,000 cells, configurable through the Kotlin DSL; existing no-argument entry points retained |
-| [ddcccbe865f0c1f2fccb02296ede2b8c36467e44](https://github.com/commonmark/commonmark-java/commit/ddcccbe865f0c1f2fccb02296ede2b8c36467e44), default block nesting limit | `kotmark` parser configuration and adapted tests | Existing open-block limit defaults to 100; `Int.MAX_VALUE` retains unlimited parsing |
-
-These adaptations retain the commonmark-java BSD-2-Clause notice below.
+Selected changes from later commonmark-java revisions are adapted on top of the
+base revision above. Their source commits are recorded in Git commit messages;
+they do not advance the pinned test corpora or imply a full release update.
 
 ## Build tooling
 

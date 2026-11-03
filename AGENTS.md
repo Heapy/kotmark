@@ -1,8 +1,10 @@
 # Working in Kotmark
 
 All Kotlin packages must use `io.heapy.kotmark` or a subpackage.
-Source repositories, exact revisions, and third-party notices are recorded in
-[UPSTREAM.md](UPSTREAM.md). Preserve notices when adapting upstream code or fixtures.
+Source repositories, base revisions, and third-party notices are recorded in
+[UPSTREAM.md](UPSTREAM.md). Record individual upstream port SHAs in Git commit
+messages rather than adding per-commit entries to that document. Preserve notices
+when adapting upstream code or fixtures.
 
 ## Repository map
 
