@@ -4,6 +4,21 @@ import kotlin.test.Test
 
 class SpecialInputTest : CoreRenderingTestCase() {
     @Test
+    fun codeSpansAfterUnmatchedBackticks() {
+        assertRendering("`` unmatched `matched`", "<p>`` unmatched <code>matched</code></p>\n")
+        assertRendering("`` unmatched\n`a\nb`", "<p>`` unmatched\n<code>a b</code></p>\n")
+        assertRendering("`a ``b`` c ``", "<p>`a <code>b</code> c ``</p>\n")
+        assertRendering("`a ``b`` c ``d``", "<p>`a <code>b</code> c <code>d</code></p>\n")
+    }
+
+    @Test
+    fun backtickCacheIsIsolatedBetweenParagraphsAndParses() {
+        assertRendering("x `unclosed\n\n`code`", "<p>x `unclosed</p>\n<p><code>code</code></p>\n")
+        assertRendering("x `unclosed", "<p>x `unclosed</p>\n")
+        assertRendering("`code`", "<p><code>code</code></p>\n")
+    }
+
+    @Test
     fun autolinksRecoverAfterNestedOpeningBrackets() {
         assertRendering(
             "<<https://example.com>",

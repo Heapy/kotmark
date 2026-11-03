@@ -1215,7 +1215,11 @@ final class io.heapy.kotmark.node/ThematicBreak : io.heapy.kotmark.node/Block { 
     final fun accept(io.heapy.kotmark.node/Visitor) // io.heapy.kotmark.node/ThematicBreak.accept|accept(io.heapy.kotmark.node.Visitor){}[0]
 }
 
-final class io.heapy.kotmark.parser.beta/Position // io.heapy.kotmark.parser.beta/Position|null[0]
+final class io.heapy.kotmark.parser.beta/Position : kotlin/Comparable<io.heapy.kotmark.parser.beta/Position> { // io.heapy.kotmark.parser.beta/Position|null[0]
+    final fun compareTo(io.heapy.kotmark.parser.beta/Position): kotlin/Int // io.heapy.kotmark.parser.beta/Position.compareTo|compareTo(io.heapy.kotmark.parser.beta.Position){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.heapy.kotmark.parser.beta/Position.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.heapy.kotmark.parser.beta/Position.hashCode|hashCode(){}[0]
+}
 
 final class io.heapy.kotmark.parser.beta/Scanner { // io.heapy.kotmark.parser.beta/Scanner|null[0]
     constructor <init>(kotlin.collections/List<io.heapy.kotmark.parser/SourceLine>, kotlin/Int, kotlin/Int) // io.heapy.kotmark.parser.beta/Scanner.<init>|<init>(kotlin.collections.List<io.heapy.kotmark.parser.SourceLine>;kotlin.Int;kotlin.Int){}[0]

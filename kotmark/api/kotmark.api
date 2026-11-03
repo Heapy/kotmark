@@ -937,7 +937,11 @@ public final class io/heapy/kotmark/parser/beta/ParsedInline$Companion {
 	public final fun of (Lio/heapy/kotmark/node/Node;Lio/heapy/kotmark/parser/beta/Position;)Lio/heapy/kotmark/parser/beta/ParsedInline;
 }
 
-public final class io/heapy/kotmark/parser/beta/Position {
+public final class io/heapy/kotmark/parser/beta/Position : java/lang/Comparable {
+	public fun compareTo (Lio/heapy/kotmark/parser/beta/Position;)I
+	public synthetic fun compareTo (Ljava/lang/Object;)I
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
 }
 
 public final class io/heapy/kotmark/parser/beta/Scanner {

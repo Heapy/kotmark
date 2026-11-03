@@ -136,6 +136,17 @@ class PathologicalTest {
         assertRendering("<".repeat(count), "<p>" + "&lt;".repeat(count) + "</p>\n")
     }
 
+    @Test
+    fun backticksDistinctLengths() {
+        val source = buildString {
+            for (length in 1..3_000) {
+                append("`".repeat(length))
+                append('x')
+            }
+        }
+        assertRendering(source, "<p>$source</p>\n")
+    }
+
     private fun assertRendering(source: String, expected: String) {
         assertEquals(expected, renderer.render(parser.parse(source)))
     }
