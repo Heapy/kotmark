@@ -1,0 +1,27 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, js, linuxArm64, linuxX64, macosArm64, mingwX64, tvosArm64, tvosSimulatorArm64, wasmJs, wasmWasi, watchosArm64, watchosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <kotmark-ext-emoji>
+final class io.heapy.kotmark.ext.emoji/Emoji : io.heapy.kotmark.node/CustomNode { // io.heapy.kotmark.ext.emoji/Emoji|null[0]
+    constructor <init>(kotlin/String, kotlin/String) // io.heapy.kotmark.ext.emoji/Emoji.<init>|<init>(kotlin.String;kotlin.String){}[0]
+
+    final val shortcode // io.heapy.kotmark.ext.emoji/Emoji.shortcode|{}shortcode[0]
+        final fun <get-shortcode>(): kotlin/String // io.heapy.kotmark.ext.emoji/Emoji.shortcode.<get-shortcode>|<get-shortcode>(){}[0]
+}
+
+final class io.heapy.kotmark.ext.emoji/EmojiExtension : io.heapy.kotmark.parser/Parser.ParserExtension, io.heapy.kotmark.renderer.html/HtmlRenderer.HtmlRendererExtension, io.heapy.kotmark.renderer.markdown/MarkdownRenderer.MarkdownRendererExtension, io.heapy.kotmark.renderer.text/TextContentRenderer.TextContentRendererExtension { // io.heapy.kotmark.ext.emoji/EmojiExtension|null[0]
+    final fun extend(io.heapy.kotmark.parser/Parser.Configuration) // io.heapy.kotmark.ext.emoji/EmojiExtension.extend|extend(io.heapy.kotmark.parser.Parser.Configuration){}[0]
+    final fun extend(io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration) // io.heapy.kotmark.ext.emoji/EmojiExtension.extend|extend(io.heapy.kotmark.renderer.html.HtmlRenderer.Configuration){}[0]
+    final fun extend(io.heapy.kotmark.renderer.markdown/MarkdownRenderer.Configuration) // io.heapy.kotmark.ext.emoji/EmojiExtension.extend|extend(io.heapy.kotmark.renderer.markdown.MarkdownRenderer.Configuration){}[0]
+    final fun extend(io.heapy.kotmark.renderer.text/TextContentRenderer.Configuration) // io.heapy.kotmark.ext.emoji/EmojiExtension.extend|extend(io.heapy.kotmark.renderer.text.TextContentRenderer.Configuration){}[0]
+
+    final object Companion { // io.heapy.kotmark.ext.emoji/EmojiExtension.Companion|null[0]
+        final fun create(kotlin.collections/Map<kotlin/String, kotlin/String> = ...): io.heapy.kotmark/Extension // io.heapy.kotmark.ext.emoji/EmojiExtension.Companion.create|create(kotlin.collections.Map<kotlin.String,kotlin.String>){}[0]
+    }
+}
+
+final fun (io.heapy.kotmark/ExtensionsBuilder).io.heapy.kotmark.ext.emoji/emoji(kotlin.collections/Map<kotlin/String, kotlin/String> = ...) // io.heapy.kotmark.ext.emoji/emoji|emoji@io.heapy.kotmark.ExtensionsBuilder(kotlin.collections.Map<kotlin.String,kotlin.String>){}[0]

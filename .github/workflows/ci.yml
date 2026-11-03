@@ -153,6 +153,8 @@ jobs:
           node-version: '24'
       - name: Check CI orchestration
         run: node --test scripts/test/*.test.mjs
+      - name: Check generated emoji dictionary
+        run: node scripts/generate-emoji.mjs --check
       - name: Run library JVM tests with coverage
         run: kotlinr plugins/kover/coverage.main.kts
       - name: Run fixture and integration JVM tests

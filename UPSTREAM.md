@@ -127,6 +127,20 @@ counts, and preserve attribution and license notices. Keep the two CommonMark
 corpus versions distinct. Run `kotlinr scripts/generate-test-fixtures.main.kts`
 after updating the originals, then run the JVM and common platform suites.
 
+## Emoji dictionary
+
+`kotmark-ext-emoji/data/gemoji.json` is copied from
+[GitHub gemoji at ee6e06c648e85d601756b573d356327d4e51031d](https://github.com/github/gemoji/blob/ee6e06c648e85d601756b573d356327d4e51031d/db/emoji.json).
+It contains 1,870 Unicode emoji entries and 1,913 aliases, under the MIT license
+by GitHub, Inc. Input SHA-256:
+`b174ae2aeb321b52f64adb9ff412f966a7f338839d780784dd15dcad702c2dd6`.
+
+`node scripts/generate-emoji.mjs` verifies the vendored input and generates the
+common Kotlin lookup in `kotmark-ext-emoji/src/ext/emoji/internal/generated/`.
+Use `--check` to verify the generated file without changing it. Generation and
+ordinary builds need no network access for this dictionary. The notice below is
+also packaged in `kotmark-ext-emoji/resources/META-INF/LICENSE-gemoji.txt`.
+
 ## Unicode data
 
 The supplementary category ranges in
@@ -164,6 +178,31 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+## MIT notice for gemoji
+
+Copyright (c) 2019 GitHub, Inc.
+
+Permission is hereby granted, free of charge, to any person
+obtaining a copy of this software and associated documentation
+files (the "Software"), to deal in the Software without
+restriction, including without limitation the rights to use,
+copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following
+conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
 
 ## BSD notice for commonmark-java
 

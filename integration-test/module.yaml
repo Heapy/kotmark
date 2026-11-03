@@ -13,6 +13,7 @@ test-dependencies:
 
 dependencies:
   - //kotmark
+  - //kotmark-ext-emoji
   - ../kotmark-ext-autolink
   - ../kotmark-ext-footnotes
   - ../kotmark-ext-gfm-alerts
