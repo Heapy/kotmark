@@ -5,6 +5,8 @@ import io.heapy.kotmark.node.Document
 import io.heapy.kotmark.node.Emphasis
 import io.heapy.kotmark.node.FencedCodeBlock
 import io.heapy.kotmark.node.Heading
+import io.heapy.kotmark.node.Image
+import io.heapy.kotmark.node.Link
 import io.heapy.kotmark.node.ListItem
 import io.heapy.kotmark.node.Node
 import io.heapy.kotmark.node.OrderedList
@@ -16,8 +18,54 @@ import io.heapy.kotmark.renderer.NodeRenderer
 import kotlin.reflect.KClass
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertIs
 
 class MarkdownRendererTest {
+    private val destinationsWithAmpersands = listOf(
+        "/url?value=&copy;",
+        "/my uri?value=&copy;",
+        "/url?value=&#65;",
+        "/url?value=&#x41;",
+        "/url?a=1&b=2",
+    )
+    private val titlesWithAmpersands = listOf("literal &copy;", "literal &#65;", "literal &#x41;", "bread & butter")
+
+    @Test
+    fun linkDestinationPreservesLiteralAmpersands() {
+        for (destination in destinationsWithAmpersands) {
+            val link = Link(destination, null).apply { appendChild(Text("link")) }
+            val reparsed = assertIs<Link>(parse(render(link)).firstChild?.firstChild)
+            assertEquals(destination, reparsed.destination, destination)
+        }
+    }
+
+    @Test
+    fun imageDestinationPreservesLiteralAmpersands() {
+        for (destination in destinationsWithAmpersands) {
+            val image = Image(destination, null).apply { appendChild(Text("image")) }
+            val reparsed = assertIs<Image>(parse(render(image)).firstChild?.firstChild)
+            assertEquals(destination, reparsed.destination, destination)
+        }
+    }
+
+    @Test
+    fun linkTitlePreservesLiteralAmpersands() {
+        for (title in titlesWithAmpersands) {
+            val link = Link("/url", title).apply { appendChild(Text("link")) }
+            val reparsed = assertIs<Link>(parse(render(link)).firstChild?.firstChild)
+            assertEquals(title, reparsed.title, title)
+        }
+    }
+
+    @Test
+    fun imageTitlePreservesLiteralAmpersands() {
+        for (title in titlesWithAmpersands) {
+            val image = Image("/url", title).apply { appendChild(Text("image")) }
+            val reparsed = assertIs<Image>(parse(render(image)).firstChild?.firstChild)
+            assertEquals(title, reparsed.title, title)
+        }
+    }
+
     @Test
     fun leafBlocksRoundTrip() {
         assertRoundTrips(

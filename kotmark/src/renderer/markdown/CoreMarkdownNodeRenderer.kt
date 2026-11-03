@@ -41,10 +41,10 @@ class CoreMarkdownNodeRenderer(
         asciiMatcher(textEscape) { c('#') }
     private val linkDestinationNeedsAngleBrackets =
         asciiMatcher { anyOf(" ()<>\n\\") }
-    private val linkDestinationEscapeInAngleBrackets =
-        asciiMatcher { anyOf("<>\n\\") }
+    private val linkDestinationEscape =
+        asciiMatcher { anyOf("<>\n\\&") }
     private val linkTitleEscapeInQuotes =
-        asciiMatcher { anyOf("\"\n\\") }
+        asciiMatcher { anyOf("\"\n\\&") }
     private val orderedListMarkerPattern = Regex("^([0-9]{1,9})([.)])")
     private var listHolder: ListHolder? = null
 
@@ -353,10 +353,10 @@ class CoreMarkdownNodeRenderer(
         writer.raw('(')
         if (contains(destination, linkDestinationNeedsAngleBrackets)) {
             writer.raw('<')
-            writer.text(destination, linkDestinationEscapeInAngleBrackets)
+            writer.text(destination, linkDestinationEscape)
             writer.raw('>')
         } else {
-            writer.raw(destination)
+            writer.text(destination, linkDestinationEscape)
         }
         if (title != null) {
             writer.raw(' ')
