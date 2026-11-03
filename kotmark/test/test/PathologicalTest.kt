@@ -147,6 +147,12 @@ class PathologicalTest {
         assertRendering(source, "<p>$source</p>\n")
     }
 
+    @Test
+    fun htmlBlockAttributes() {
+        val attributes = " a".repeat(4_000)
+        assertRendering("<a$attributes", "<p>&lt;a$attributes</p>\n")
+    }
+
     private fun assertRendering(source: String, expected: String) {
         assertEquals(expected, renderer.render(parser.parse(source)))
     }

@@ -47,21 +47,19 @@ class HtmlBlockParser private constructor(
                 return BlockStart.none()
             }
 
-            for (blockType in 1..7) {
-                if (
-                    blockType == 7 &&
-                    (
-                        matchedBlockParser.matchedBlockParser.block is Paragraph ||
-                            state.activeBlockParser.canHaveLazyContinuationLines()
-                    )
-                ) {
-                    continue
-                }
-
+            val opening = line.subSequence(nextNonSpace, line.length)
+            for (blockType in 1..6) {
                 val patterns = BLOCK_PATTERNS[blockType]
-                if (patterns.opener.containsMatchIn(line.subSequence(nextNonSpace, line.length))) {
+                if (patterns.opener.containsMatchIn(opening)) {
                     return BlockStart.of(HtmlBlockParser(patterns.closer)).atIndex(state.index)
                 }
+            }
+            if (
+                matchedBlockParser.matchedBlockParser.block !is Paragraph &&
+                !state.activeBlockParser.canHaveLazyContinuationLines() &&
+                isCompleteTag(opening)
+            ) {
+                return BlockStart.of(HtmlBlockParser(null)).atIndex(state.index)
             }
             return BlockStart.none()
         }
@@ -82,10 +80,27 @@ class HtmlBlockParser private constructor(
             "(?:$UNQUOTED_VALUE|$SINGLE_QUOTED_VALUE|$DOUBLE_QUOTED_VALUE)"
         private const val ATTRIBUTE_VALUE_SPEC = """(?:\s*=\s*$ATTRIBUTE_VALUE)"""
         private const val ATTRIBUTE = """(?:\s+$ATTRIBUTE_NAME$ATTRIBUTE_VALUE_SPEC?)"""
-        private const val OPEN_TAG = """<$TAG_NAME$ATTRIBUTE*\s*/?>"""
         private const val CLOSE_TAG = """</$TAG_NAME\s*[>]"""
 
         private val IGNORE_CASE = setOf(RegexOption.IGNORE_CASE)
+        private val OPEN_TAG_START = Regex("^<$TAG_NAME", IGNORE_CASE)
+        private val ATTRIBUTE_PATTERN = Regex(ATTRIBUTE, IGNORE_CASE)
+        private val OPEN_TAG_END = Regex("""\s*/?>\s*$""", IGNORE_CASE)
+        private val CLOSE_TAG_PATTERN = Regex("""^$CLOSE_TAG\s*$""", IGNORE_CASE)
+
+        private fun isCompleteTag(line: CharSequence): Boolean {
+            if (CLOSE_TAG_PATTERN.matches(line)) return true
+            var index = OPEN_TAG_START.matchAt(line, 0)?.range?.last?.plus(1) ?: return false
+            // Match attributes one at a time so long tags do not recurse through a repeated
+            // regex group. Keep the same greedy attribute grammar on every platform.
+            while (true) {
+                val attribute = ATTRIBUTE_PATTERN.matchAt(line, index) ?: break
+                index = attribute.range.last + 1
+            }
+            val end = OPEN_TAG_END.matchAt(line, index) ?: return false
+            return end.range.last + 1 == line.length
+        }
+
         private val BLOCK_PATTERNS = listOf(
             BlockPatterns(Regex("(?!x)x"), null),
             BlockPatterns(
@@ -107,10 +122,6 @@ class HtmlBlockParser private constructor(
                         """(?:\s|[/]?[>]|$)""",
                     IGNORE_CASE,
                 ),
-                null,
-            ),
-            BlockPatterns(
-                Regex("""^(?:$OPEN_TAG|$CLOSE_TAG)\s*$""", IGNORE_CASE),
                 null,
             ),
         )
