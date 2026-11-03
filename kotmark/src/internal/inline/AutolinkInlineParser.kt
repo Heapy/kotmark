@@ -25,7 +25,7 @@ class AutolinkInlineParser : InlineContentParser {
 
             val destination = when {
                 URI.matches(content) -> content
-                EMAIL.matches(content) -> "mailto:$content"
+                isEmail(content) -> "mailto:$content"
                 else -> null
             }
 
@@ -53,10 +53,20 @@ class AutolinkInlineParser : InlineContentParser {
         }
 
         private val URI = Regex("""^[a-zA-Z][a-zA-Z0-9.+-]{1,31}:[^<>\u0000-\u0020]*$""")
-        private val EMAIL = Regex(
-            """^([a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9]""" +
-                "(?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?" +
-                """(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*)$""",
-        )
+        private val EMAIL_LOCAL_PART = Regex("""^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@""")
+        private val EMAIL_DOMAIN_LABEL = Regex("[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?")
+
+        private fun isEmail(content: String): Boolean {
+            val localPart = EMAIL_LOCAL_PART.matchAt(content, 0) ?: return false
+            var index = localPart.range.last + 1
+            // Match bounded labels separately instead of recursing through a repeated regex group.
+            while (true) {
+                val label = EMAIL_DOMAIN_LABEL.matchAt(content, index) ?: return false
+                index = label.range.last + 1
+                if (index == content.length) return true
+                if (content[index] != '.') return false
+                index++
+            }
+        }
     }
 }

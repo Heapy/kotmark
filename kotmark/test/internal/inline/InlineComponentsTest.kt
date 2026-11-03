@@ -33,6 +33,58 @@ class InlineComponentsTest {
     }
 
     @Test
+    fun autolinkEmailDomainLabels() {
+        val emails = listOf(
+            "a@a",
+            "A1@Z9",
+            "a@1.a-b.C9",
+            "a@" + "a".repeat(63),
+            "a@a" + "-".repeat(61) + "b",
+            "a@" + "a".repeat(63) + "." + "b".repeat(63),
+        )
+        for (email in emails) {
+            val link = assertIs<Link>(parse(AutolinkInlineParser(), "<$email>").node, email)
+            assertEquals("mailto:$email", link.destination, email)
+            assertEquals(email, assertIs<Text>(link.firstChild).literal, email)
+        }
+    }
+
+    @Test
+    fun autolinkEmailRejectsInvalidDomainsAndLocalParts() {
+        val emails = listOf(
+            "a@" + "a".repeat(64),
+            "a@x." + "a".repeat(64),
+            "a@",
+            "@a",
+            "a@.x",
+            "a@x.",
+            "a@x..y",
+            "a@-x",
+            "a@x-",
+            "a@x.-y",
+            "a@x.y-",
+            "a@x_y",
+            "a@é",
+            "é@a",
+            "a b@x",
+            "a@b@c",
+        )
+        for (email in emails) {
+            assertNull(tryParse(AutolinkInlineParser(), "<$email>"), email)
+        }
+    }
+
+    @Test
+    fun autolinkEmailLocalPartUsesCommonMarkGrammar() {
+        for (email in listOf(""".!#$%&'*+/=?^_`{|}~-..@a""", "a..b.@x")) {
+            val link = assertIs<Link>(parse(AutolinkInlineParser(), "<$email>").node)
+            assertEquals("mailto:$email", link.destination)
+        }
+        val uri = assertIs<Link>(parse(AutolinkInlineParser(), "<https://a@b>").node)
+        assertEquals("https://a@b", uri.destination)
+    }
+
+    @Test
     fun backslashEscapesAndBreaks() {
         assertEquals("*", assertIs<Text>(parse(BackslashInlineParser(), "\\*").node).literal)
         assertEquals("\\", assertIs<Text>(parse(BackslashInlineParser(), "\\a").node).literal)

@@ -153,6 +153,12 @@ class PathologicalTest {
         assertRendering("<a$attributes", "<p>&lt;a$attributes</p>\n")
     }
 
+    @Test
+    fun autolinkEmail() {
+        val email = "a@" + "a.".repeat(4_000) + "a"
+        assertRendering("<$email>", "<p><a href=\"mailto:$email\">$email</a></p>\n")
+    }
+
     private fun assertRendering(source: String, expected: String) {
         assertEquals(expected, renderer.render(parser.parse(source)))
     }
