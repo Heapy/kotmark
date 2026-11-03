@@ -3,12 +3,15 @@
 Create parsers and renderers with configuration blocks. Omitting the block uses the defaults.
 
 ```kotlin
-import io.heapy.kotmark.ext.gfm.strikethrough.strikethroughExtension
+import io.heapy.kotmark.ext.gfm.strikethrough.strikethrough
+import io.heapy.kotmark.extensions
 import io.heapy.kotmark.parser.IncludeSourceSpans
 import io.heapy.kotmark.parser.parser
 import io.heapy.kotmark.renderer.html.htmlRenderer
 
-val extensions = listOf(strikethroughExtension { requireTwoTildes = true })
+val extensions = extensions {
+    strikethrough { requireTwoTildes = true }
+}
 val parser = parser {
     includeSourceSpans = IncludeSourceSpans.BLOCKS_AND_INLINES
     extensions(extensions)
@@ -20,6 +23,20 @@ val renderer = htmlRenderer {
 }
 val html = renderer.render(parser.parse("Hello **Kotlin** and ~~builders~~!"))
 ```
+
+## Extension lists
+
+`extensions { … }` builds a read-only `List<Extension>` snapshot to share between
+parsers and renderers. Import its registration functions from the optional modules,
+for example `io.heapy.kotmark.ext.gfm.tables.tables` for `tables { maxCells = 10_000 }`.
+Use `add(customExtension)` for an existing instance or `addAll(existingExtensions)`
+to append another collection. Order and duplicates are preserved; custom renderer
+overrides must precede the extensions that supply defaults.
+
+Later changes to the builder or source collections do not change the list.
+Extension objects and callbacks remain shared. Parsers and renderers apply only
+the extension interfaces they support. The kotlinx.html renderer uses adapters
+for extension output instead of this list.
 
 ## Factories
 
@@ -35,6 +52,7 @@ Each factory is in the same package as its class:
 | `FootnotesExtension` | `footnotesExtension { … }` |
 | `AlertsExtension` | `alertsExtension { … }` |
 | `StrikethroughExtension` | `strikethroughExtension { … }` |
+| `TablesExtension` | `tablesExtension { … }` |
 | `HeadingAnchorExtension` | `headingAnchorExtension { … }` |
 | `IdGenerator` | `idGenerator { … }` |
 | `LinkExtractor` | `linkExtractor { … }` |

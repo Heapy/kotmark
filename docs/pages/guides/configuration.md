@@ -9,12 +9,39 @@ cards: []
 
 ## Example
 
-Configure a parser and renderer with factory functions. Register syntax with the parser and the matching output extension with the renderer.
+Build one extension list and pass it to the parser and renderer. Each extension is
+created once, with the same settings used on both sides.
 
-```kotlin caption="Configure a parser and renderer"
-val parser = parser { extensions(listOf(TablesExtension.create())) }
-val renderer = htmlRenderer { extensions(listOf(TablesExtension.create())) }
+```kotlin caption="Share configured extensions" snippet=docs/examples/src/io/heapy/kotmark/docs/examples/guides/ExtensionLists.kt#extensions-list
 ```
+
+## Extension lists
+
+Import `io.heapy.kotmark.extensions` for the list builder and registration functions
+such as `tables` from the corresponding extension packages. Each function is
+provided by its optional module; see the [extension index](../extensions/index.md).
+
+Use `add(customExtension)` to register an existing extension, and
+`addAll(existingExtensions)` to compose a list from another collection:
+
+```kotlin
+val combined = extensions {
+    add(customExtension)
+    addAll(existingExtensions)
+    tables { maxCells = 10_000 }
+}
+```
+
+The builder returns a read-only `List<Extension>` snapshot. It preserves insertion
+order and duplicates; later changes to the builder or source collections do not
+change the list. Extension objects and callbacks remain shared, so any mutable
+state they hold is the caller's responsibility.
+
+Register custom renderer overrides before extensions that supply default handlers:
+the first registered renderer for a node type wins. Parsers and renderers use only
+the extension interfaces they support, so a shared list can also contain parser-only
+or renderer-only extensions. The kotlinx.html renderer uses its own
+[adapters](kotlinx-html.md) for extension output.
 
 ## Factories
 

@@ -29,3 +29,7 @@ public final class io/heapy/kotmark/ext/math/MathExtension$Companion {
 	public final fun create ()Lio/heapy/kotmark/Extension;
 }
 
+public final class io/heapy/kotmark/ext/math/MathExtensionKt {
+	public static final fun math (Lio/heapy/kotmark/ExtensionsBuilder;)V
+}
+

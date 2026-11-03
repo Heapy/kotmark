@@ -63,3 +63,5 @@ final class io.heapy.kotmark.ext.highlight/HighlightExtension : io.heapy.kotmark
         final fun create(): io.heapy.kotmark/Extension // io.heapy.kotmark.ext.highlight/HighlightExtension.Companion.create|create(){}[0]
     }
 }
+
+final fun (io.heapy.kotmark/ExtensionsBuilder).io.heapy.kotmark.ext.highlight/highlight() // io.heapy.kotmark.ext.highlight/highlight|highlight@io.heapy.kotmark.ExtensionsBuilder(){}[0]

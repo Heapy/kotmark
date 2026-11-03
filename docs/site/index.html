@@ -34,8 +34,8 @@
 
 A tree you can **walk**.</code></pre></div>
             <div class="specimen-output" data-preview-panel="tree"><span class="source-label">PARSED · node outline</span><pre><code data-language="text">Document
-└─ Heading(level = 2)
-   └─ Text("Field notes")
+├─ Heading(level = 2)
+│  └─ Text("Field notes")
 └─ Paragraph
    ├─ Text("A tree you can ")
    ├─ StrongEmphasis
@@ -108,6 +108,7 @@ fun renderMarkdown(markdown: String): String {
             <p class="lede">A custom block has two jobs: recognize its source lines and put a node in the tree. The example uses <code>:::memo</code> through <code>:::</code>, stores the body as literal text, and escapes it on HTML output.</p>
             <ol class="work-steps"><li><b>Model</b><span>Subclass <code>CustomBlock</code>; expose the content your renderers need.</span></li><li><b>Parse</b><span>Use <code>AbstractBlockParser</code> and a factory to recognize the opener, continue, and finish at the closer.</span></li><li><b>Register</b><span>Attach the factory in <code>Parser.ParserExtension</code>.</span></li><li><b>Render</b><span>Register a node renderer; send untrusted text through <code>HtmlWriter.text</code>.</span></li></ol>
             <details class="source-fold"><summary>Open the complete block extension example</summary><div class="code-proof"><pre><code data-snippet="docs/examples/src/io/heapy/kotmark/docs/examples/GuideExamples.kt#custom-block" data-language="kotlin">import io.heapy.kotmark.Extension
+import io.heapy.kotmark.extensions
 import io.heapy.kotmark.node.CustomBlock
 import io.heapy.kotmark.parser.Parser
 import io.heapy.kotmark.parser.SourceLine
@@ -191,7 +192,7 @@ class MemoExtension private constructor() : Parser.ParserExtension, HtmlRenderer
 }
 
 fun renderMemo(markdown: String): String {
-    val extensions = listOf(MemoExtension.create())
+    val extensions = extensions { add(MemoExtension.create()) }
     val document = parser { extensions(extensions) }.parse(markdown)
     return htmlRenderer { extensions(extensions) }.render(document)
 }</code></pre></div></details>

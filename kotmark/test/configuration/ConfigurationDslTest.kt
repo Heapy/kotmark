@@ -1,6 +1,7 @@
 package io.heapy.kotmark.configuration
 
 import io.heapy.kotmark.Extension
+import io.heapy.kotmark.extensions
 import io.heapy.kotmark.node.HtmlInline
 import io.heapy.kotmark.node.Heading
 import io.heapy.kotmark.node.Node
@@ -57,7 +58,11 @@ class ConfigurationDslTest {
         val unrelated = object : Extension {}
         val disableHeadings = Parser.ParserExtension { it.enabledBlockTypes = emptySet() }
         val escapeHtml = HtmlRenderer.HtmlRendererExtension { it.escapeHtml = true }
-        val extensions = listOf(unrelated, disableHeadings, escapeHtml)
+        val extensions = extensions {
+            add(unrelated)
+            add(disableHeadings)
+            add(escapeHtml)
+        }
         val parser = parser { extensions(extensions) }
         assertIs<Paragraph>(parser.parse("# title").firstChild)
         assertEquals("&lt;b&gt;", htmlRenderer { extensions(extensions) }.render(HtmlInline().apply { literal = "<b>" }))

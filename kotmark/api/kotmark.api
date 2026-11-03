@@ -1,6 +1,16 @@
 public abstract interface class io/heapy/kotmark/Extension {
 }
 
+public final class io/heapy/kotmark/ExtensionsBuilder {
+	public final fun add (Lio/heapy/kotmark/Extension;)V
+	public final fun addAll (Ljava/lang/Iterable;)V
+}
+
+public final class io/heapy/kotmark/ExtensionsBuilderKt {
+	public static final fun extensions (Lkotlin/jvm/functions/Function1;)Ljava/util/List;
+	public static synthetic fun extensions$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ljava/util/List;
+}
+
 public abstract interface annotation class io/heapy/kotmark/KotmarkDsl : java/lang/annotation/Annotation {
 }
 

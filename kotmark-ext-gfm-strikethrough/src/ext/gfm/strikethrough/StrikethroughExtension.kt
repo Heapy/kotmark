@@ -1,6 +1,7 @@
 package io.heapy.kotmark.ext.gfm.strikethrough
 
 import io.heapy.kotmark.Extension
+import io.heapy.kotmark.ExtensionsBuilder
 import io.heapy.kotmark.KotmarkDsl
 import io.heapy.kotmark.ext.gfm.strikethrough.internal.StrikethroughDelimiterProcessor
 import io.heapy.kotmark.ext.gfm.strikethrough.internal.StrikethroughHtmlNodeRenderer
@@ -62,3 +63,8 @@ class StrikethroughExtension private constructor(
 /** Creates [StrikethroughExtension] with the supplied configuration. */
 fun strikethroughExtension(configure: StrikethroughExtension.Configuration.() -> Unit = {}): StrikethroughExtension =
     StrikethroughExtension.Configuration().apply(configure).create()
+
+/** Creates and appends [StrikethroughExtension] with the supplied configuration. */
+fun ExtensionsBuilder.strikethrough(configure: StrikethroughExtension.Configuration.() -> Unit = {}) {
+    add(strikethroughExtension(configure))
+}

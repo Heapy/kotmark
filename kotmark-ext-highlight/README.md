@@ -1,14 +1,15 @@
 # Highlight extension
 
-Add the `kotmark-ext-highlight` module and register `HighlightExtension.create()`
+Add the `kotmark-ext-highlight` module and build an extension list with `highlight()`. Register it
 with the parser and each renderer you use:
 
 ```kotlin
-import io.heapy.kotmark.ext.highlight.HighlightExtension
+import io.heapy.kotmark.ext.highlight.highlight
+import io.heapy.kotmark.extensions
 import io.heapy.kotmark.parser.parser
 import io.heapy.kotmark.renderer.html.htmlRenderer
 
-val extensions = listOf(HighlightExtension.create())
+val extensions = extensions { highlight() }
 val parser = parser { extensions(extensions) }
 val html = htmlRenderer { extensions(extensions) }
 html.render(parser.parse("==important **text**=="))

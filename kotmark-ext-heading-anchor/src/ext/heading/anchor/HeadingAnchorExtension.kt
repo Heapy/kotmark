@@ -1,6 +1,7 @@
 package io.heapy.kotmark.ext.heading.anchor
 
 import io.heapy.kotmark.Extension
+import io.heapy.kotmark.ExtensionsBuilder
 import io.heapy.kotmark.KotmarkDsl
 import io.heapy.kotmark.ext.heading.anchor.internal.HeadingIdAttributeProvider
 import io.heapy.kotmark.renderer.html.HtmlRenderer
@@ -36,3 +37,8 @@ class HeadingAnchorExtension private constructor(configuration: Configuration) :
 /** Creates [HeadingAnchorExtension] with the supplied configuration. */
 fun headingAnchorExtension(configure: HeadingAnchorExtension.Configuration.() -> Unit = {}): HeadingAnchorExtension =
     HeadingAnchorExtension.Configuration().apply(configure).create()
+
+/** Creates and appends [HeadingAnchorExtension] with the supplied configuration. */
+fun ExtensionsBuilder.headingAnchor(configure: HeadingAnchorExtension.Configuration.() -> Unit = {}) {
+    add(headingAnchorExtension(configure))
+}

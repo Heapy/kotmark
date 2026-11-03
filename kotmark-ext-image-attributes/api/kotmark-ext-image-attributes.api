@@ -16,6 +16,10 @@ public final class io/heapy/kotmark/ext/image/attributes/ImageAttributesExtensio
 	public final fun create ()Lio/heapy/kotmark/Extension;
 }
 
+public final class io/heapy/kotmark/ext/image/attributes/ImageAttributesExtensionKt {
+	public static final fun imageAttributes (Lio/heapy/kotmark/ExtensionsBuilder;)V
+}
+
 public final class io/heapy/kotmark/ext/image/attributes/internal/ImageAttributesAttributeProvider : io/heapy/kotmark/renderer/html/AttributeProvider {
 	public static final field Companion Lio/heapy/kotmark/ext/image/attributes/internal/ImageAttributesAttributeProvider$Companion;
 	public fun setAttributes (Lio/heapy/kotmark/node/Node;Ljava/lang/String;Ljava/util/Map;)V

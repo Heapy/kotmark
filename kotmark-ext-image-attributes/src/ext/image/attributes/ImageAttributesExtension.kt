@@ -1,6 +1,7 @@
 package io.heapy.kotmark.ext.image.attributes
 
 import io.heapy.kotmark.Extension
+import io.heapy.kotmark.ExtensionsBuilder
 import io.heapy.kotmark.ext.image.attributes.internal.ImageAttributesAttributeProvider
 import io.heapy.kotmark.ext.image.attributes.internal.ImageAttributesDelimiterProcessor
 import io.heapy.kotmark.parser.Parser
@@ -22,4 +23,9 @@ class ImageAttributesExtension private constructor() :
         @JvmStatic
         fun create(): Extension = ImageAttributesExtension()
     }
+}
+
+/** Creates and appends [ImageAttributesExtension]. */
+fun ExtensionsBuilder.imageAttributes() {
+    add(ImageAttributesExtension.create())
 }

@@ -15,6 +15,8 @@ public final class io/heapy/kotmark/ext/autolink/AutolinkExtension$Configuration
 }
 
 public final class io/heapy/kotmark/ext/autolink/AutolinkExtensionKt {
+	public static final fun autolink (Lio/heapy/kotmark/ExtensionsBuilder;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun autolink$default (Lio/heapy/kotmark/ExtensionsBuilder;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 	public static final fun autolinkExtension (Lkotlin/jvm/functions/Function1;)Lio/heapy/kotmark/ext/autolink/AutolinkExtension;
 	public static synthetic fun autolinkExtension$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/heapy/kotmark/ext/autolink/AutolinkExtension;
 }

@@ -15,6 +15,10 @@ public final class io/heapy/kotmark/ext/task/list/items/TaskListItemsExtension$C
 	public final fun create ()Lio/heapy/kotmark/Extension;
 }
 
+public final class io/heapy/kotmark/ext/task/list/items/TaskListItemsExtensionKt {
+	public static final fun taskListItems (Lio/heapy/kotmark/ExtensionsBuilder;)V
+}
+
 public final class io/heapy/kotmark/ext/task/list/items/internal/TaskListItemHtmlNodeRenderer : io/heapy/kotmark/ext/task/list/items/internal/TaskListItemNodeRenderer {
 	public fun <init> (Lio/heapy/kotmark/renderer/html/HtmlNodeRendererContext;)V
 	public fun render (Lio/heapy/kotmark/node/Node;)V

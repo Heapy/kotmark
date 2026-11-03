@@ -1,6 +1,7 @@
 package io.heapy.kotmark.ext.front.matter
 
 import io.heapy.kotmark.Extension
+import io.heapy.kotmark.ExtensionsBuilder
 import io.heapy.kotmark.ext.front.matter.internal.YamlFrontMatterBlockParser
 import io.heapy.kotmark.ext.front.matter.internal.YamlFrontMatterMarkdownNodeRenderer
 import io.heapy.kotmark.ext.front.matter.parser.FrontMatterParser
@@ -41,4 +42,14 @@ class YamlFrontMatterExtension private constructor(
         fun create(frontMatterParserFactory: FrontMatterParser.Factory): Extension =
             YamlFrontMatterExtension(frontMatterParserFactory)
     }
+}
+
+/**
+ * Creates and appends [YamlFrontMatterExtension].
+ * [frontMatterParserFactory] creates a separate parser for every front matter block.
+ */
+fun ExtensionsBuilder.yamlFrontMatter(
+    frontMatterParserFactory: FrontMatterParser.Factory = YamlSubsetParser.Factory(),
+) {
+    add(YamlFrontMatterExtension.create(frontMatterParserFactory))
 }

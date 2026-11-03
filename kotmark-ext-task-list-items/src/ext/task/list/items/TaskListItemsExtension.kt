@@ -1,6 +1,7 @@
 package io.heapy.kotmark.ext.task.list.items
 
 import io.heapy.kotmark.Extension
+import io.heapy.kotmark.ExtensionsBuilder
 import io.heapy.kotmark.ext.task.list.items.internal.TaskListItemHtmlNodeRenderer
 import io.heapy.kotmark.ext.task.list.items.internal.TaskListItemMarkdownNodeRenderer
 import io.heapy.kotmark.ext.task.list.items.internal.TaskListItemPostProcessor
@@ -39,4 +40,9 @@ class TaskListItemsExtension private constructor() :
         @JvmStatic
         fun create(): Extension = TaskListItemsExtension()
     }
+}
+
+/** Creates and appends [TaskListItemsExtension]. */
+fun ExtensionsBuilder.taskListItems() {
+    add(TaskListItemsExtension.create())
 }

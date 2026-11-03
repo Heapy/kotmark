@@ -133,3 +133,5 @@ final class io.heapy.kotmark.ext.front.matter/YamlFrontMatterVisitor : io.heapy.
         final fun readRawContent(io.heapy.kotmark.node/Node): kotlin/String // io.heapy.kotmark.ext.front.matter/YamlFrontMatterVisitor.Companion.readRawContent|readRawContent(io.heapy.kotmark.node.Node){}[0]
     }
 }
+
+final fun (io.heapy.kotmark/ExtensionsBuilder).io.heapy.kotmark.ext.front.matter/yamlFrontMatter(io.heapy.kotmark.ext.front.matter.parser/FrontMatterParser.Factory = ...) // io.heapy.kotmark.ext.front.matter/yamlFrontMatter|yamlFrontMatter@io.heapy.kotmark.ExtensionsBuilder(io.heapy.kotmark.ext.front.matter.parser.FrontMatterParser.Factory){}[0]

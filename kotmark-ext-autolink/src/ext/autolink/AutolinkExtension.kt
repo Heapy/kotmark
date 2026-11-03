@@ -1,6 +1,7 @@
 package io.heapy.kotmark.ext.autolink
 
 import io.heapy.kotmark.Extension
+import io.heapy.kotmark.ExtensionsBuilder
 import io.heapy.kotmark.KotmarkDsl
 import io.heapy.kotmark.ext.autolink.internal.AutolinkPostProcessor
 import io.heapy.kotmark.parser.Parser
@@ -33,3 +34,8 @@ class AutolinkExtension private constructor(configuration: Configuration) : Pars
 /** Creates [AutolinkExtension] with the supplied configuration. */
 fun autolinkExtension(configure: AutolinkExtension.Configuration.() -> Unit = {}): AutolinkExtension =
     AutolinkExtension.Configuration().apply(configure).create()
+
+/** Creates and appends [AutolinkExtension] with the supplied configuration. */
+fun ExtensionsBuilder.autolink(configure: AutolinkExtension.Configuration.() -> Unit = {}) {
+    add(autolinkExtension(configure))
+}

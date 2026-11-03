@@ -1,10 +1,20 @@
 package io.heapy.kotmark.docs.examples
 
+import io.heapy.kotmark.docs.examples.guides.renderWithExtensions
 import io.heapy.kotmark.parser.parser
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class GuideExamplesTest {
+    @Test
+    fun sharedExtensionsParseAndRenderConfiguredSyntax() {
+        assertEquals(
+            "<table>\n<thead>\n<tr>\n<th>Title</th>\n</tr>\n</thead>\n" +
+                "<tbody>\n<tr>\n<td><del>old</del> ~new~</td>\n</tr>\n</tbody>\n</table>\n",
+            renderWithExtensions("| Title |\n| --- |\n| ~~old~~ ~new~ |\n"),
+        )
+    }
+
     @Test
     fun gettingStartedRendersMarkdown() {
         assertEquals("<p>Hello, <em>kotmark</em>.</p>\n", renderMarkdown("Hello, *kotmark*."))

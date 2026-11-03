@@ -1,6 +1,7 @@
 package io.heapy.kotmark.ext.gfm.alerts
 
 import io.heapy.kotmark.Extension
+import io.heapy.kotmark.ExtensionsBuilder
 import io.heapy.kotmark.KotmarkDsl
 import io.heapy.kotmark.ext.gfm.alerts.internal.AlertBlockParser
 import io.heapy.kotmark.ext.gfm.alerts.internal.AlertHtmlNodeRenderer
@@ -104,3 +105,8 @@ class AlertsExtension private constructor(configuration: Configuration) :
 /** Creates [AlertsExtension] with the supplied configuration. */
 fun alertsExtension(configure: AlertsExtension.Configuration.() -> Unit = {}): AlertsExtension =
     AlertsExtension.Configuration().apply(configure).create()
+
+/** Creates and appends [AlertsExtension] with the supplied configuration. */
+fun ExtensionsBuilder.alerts(configure: AlertsExtension.Configuration.() -> Unit = {}) {
+    add(alertsExtension(configure))
+}

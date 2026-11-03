@@ -1,19 +1,21 @@
 package io.heapy.kotmark.integration
 
-import io.heapy.kotmark.Extension
-import io.heapy.kotmark.ext.autolink.AutolinkExtension
-import io.heapy.kotmark.ext.footnotes.FootnotesExtension
+import io.heapy.kotmark.ext.autolink.autolink
+import io.heapy.kotmark.ext.footnotes.footnotes
 import io.heapy.kotmark.ext.front.matter.YamlFrontMatterExtension
 import io.heapy.kotmark.ext.front.matter.YamlFrontMatterVisitor
 import io.heapy.kotmark.ext.front.matter.parser.RawContentParser
-import io.heapy.kotmark.ext.gfm.alerts.AlertsExtension
-import io.heapy.kotmark.ext.gfm.strikethrough.StrikethroughExtension
-import io.heapy.kotmark.ext.gfm.tables.TablesExtension
-import io.heapy.kotmark.ext.highlight.HighlightExtension
-import io.heapy.kotmark.ext.image.attributes.ImageAttributesExtension
+import io.heapy.kotmark.ext.front.matter.yamlFrontMatter
+import io.heapy.kotmark.ext.gfm.alerts.alerts
+import io.heapy.kotmark.ext.gfm.strikethrough.strikethrough
+import io.heapy.kotmark.ext.gfm.tables.tables
+import io.heapy.kotmark.ext.highlight.highlight
+import io.heapy.kotmark.ext.image.attributes.imageAttributes
 import io.heapy.kotmark.ext.ins.InsExtension
-import io.heapy.kotmark.ext.math.MathExtension
-import io.heapy.kotmark.ext.task.list.items.TaskListItemsExtension
+import io.heapy.kotmark.ext.ins.ins
+import io.heapy.kotmark.ext.math.math
+import io.heapy.kotmark.ext.task.list.items.taskListItems
+import io.heapy.kotmark.extensions
 import io.heapy.kotmark.parser.IncludeSourceSpans
 import io.heapy.kotmark.parser.Parser
 import io.heapy.kotmark.parser.parser
@@ -36,20 +38,19 @@ class IntegrationTest {
         assertEquals("<p>++<img src=\"u\" alt=\"x\" />++</p>\n", renderer.render(parser.parse("++![x](u)++")))
     }
 
-    private val extensions: List<Extension> =
-        listOf(
-            AutolinkExtension.create(),
-            FootnotesExtension.create(),
-            ImageAttributesExtension.create(),
-            InsExtension.create(),
-            HighlightExtension.create(),
-            MathExtension.create(),
-            AlertsExtension.create(),
-            StrikethroughExtension.create(),
-            TablesExtension.create(),
-            TaskListItemsExtension.create(),
-            YamlFrontMatterExtension.create(),
-        )
+    private val extensions = extensions {
+        autolink()
+        footnotes()
+        imageAttributes()
+        ins()
+        highlight()
+        math()
+        alerts()
+        strikethrough()
+        tables()
+        taskListItems()
+        yamlFrontMatter()
+    }
     private val parser =
         parser {
             extensions(extensions)
@@ -110,8 +111,10 @@ class IntegrationTest {
 
     @Test
     fun rawFrontMatterDoesNotParseOtherExtensionSyntaxAndPreservesTheBody() {
-        val rawExtensions = extensions.filterNot { it is YamlFrontMatterExtension } +
-            YamlFrontMatterExtension.create(RawContentParser.Factory())
+        val rawExtensions = extensions {
+            addAll(extensions.filterNot { it is YamlFrontMatterExtension })
+            yamlFrontMatter(RawContentParser.Factory())
+        }
         val rawParser = parser { extensions(rawExtensions) }
         val rawMarkdown = markdownRenderer { extensions(rawExtensions) }
         val content = "title: '==highlight== and ++insert++'\nlink: https://example.com\n"

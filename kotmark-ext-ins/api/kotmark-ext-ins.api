@@ -17,6 +17,10 @@ public final class io/heapy/kotmark/ext/ins/InsExtension$Companion {
 	public final fun create ()Lio/heapy/kotmark/Extension;
 }
 
+public final class io/heapy/kotmark/ext/ins/InsExtensionKt {
+	public static final fun ins (Lio/heapy/kotmark/ExtensionsBuilder;)V
+}
+
 public final class io/heapy/kotmark/ext/ins/internal/InsDelimiterProcessor : io/heapy/kotmark/parser/delimiter/DelimiterProcessor {
 	public fun <init> ()V
 	public fun getClosingCharacter ()C

@@ -1,8 +1,9 @@
 package io.heapy.kotmark.docs.examples.extensions
 
 // region kotlinx-html
-import io.heapy.kotmark.ext.gfm.tables.TablesExtension
-import io.heapy.kotmark.ext.math.MathExtension
+import io.heapy.kotmark.ext.gfm.tables.tables
+import io.heapy.kotmark.ext.math.math
+import io.heapy.kotmark.extensions
 import io.heapy.kotmark.parser.parser
 import io.heapy.kotmark.renderer.kotlinxhtml.adapters.mathAdapter
 import io.heapy.kotmark.renderer.kotlinxhtml.adapters.tablesAdapter
@@ -12,7 +13,11 @@ import kotlinx.html.h1
 import kotlinx.html.stream.createHTML
 
 fun renderArticle(title: String, markdown: String): String {
-    val parser = parser { extensions(listOf(MathExtension.create(), TablesExtension.create())) }
+    val extensions = extensions {
+        math()
+        tables()
+    }
+    val parser = parser { extensions(extensions) }
     // Each syntax extension needs its matching adapter on the renderer side.
     val renderer = kotlinxHtmlRenderer { adapters(mathAdapter(), tablesAdapter()) }
     val document = parser.parse(markdown)

@@ -70,4 +70,5 @@ final class io.heapy.kotmark.ext.gfm.strikethrough/StrikethroughExtension : io.h
     }
 }
 
+final fun (io.heapy.kotmark/ExtensionsBuilder).io.heapy.kotmark.ext.gfm.strikethrough/strikethrough(kotlin/Function1<io.heapy.kotmark.ext.gfm.strikethrough/StrikethroughExtension.Configuration, kotlin/Unit> = ...) // io.heapy.kotmark.ext.gfm.strikethrough/strikethrough|strikethrough@io.heapy.kotmark.ExtensionsBuilder(kotlin.Function1<io.heapy.kotmark.ext.gfm.strikethrough.StrikethroughExtension.Configuration,kotlin.Unit>){}[0]
 final fun io.heapy.kotmark.ext.gfm.strikethrough/strikethroughExtension(kotlin/Function1<io.heapy.kotmark.ext.gfm.strikethrough/StrikethroughExtension.Configuration, kotlin/Unit> = ...): io.heapy.kotmark.ext.gfm.strikethrough/StrikethroughExtension // io.heapy.kotmark.ext.gfm.strikethrough/strikethroughExtension|strikethroughExtension(kotlin.Function1<io.heapy.kotmark.ext.gfm.strikethrough.StrikethroughExtension.Configuration,kotlin.Unit>){}[0]

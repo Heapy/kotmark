@@ -1,6 +1,7 @@
 package io.heapy.kotmark.ext.highlight
 
 import io.heapy.kotmark.Extension
+import io.heapy.kotmark.ExtensionsBuilder
 import io.heapy.kotmark.ext.highlight.internal.HighlightDelimiterProcessor
 import io.heapy.kotmark.ext.highlight.internal.HighlightHtmlNodeRenderer
 import io.heapy.kotmark.ext.highlight.internal.HighlightMarkdownNodeRenderer
@@ -46,4 +47,9 @@ class HighlightExtension private constructor() :
         @JvmStatic
         fun create(): Extension = HighlightExtension()
     }
+}
+
+/** Creates and appends [HighlightExtension]. */
+fun ExtensionsBuilder.highlight() {
+    add(HighlightExtension.create())
 }

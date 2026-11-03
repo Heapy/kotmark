@@ -1,6 +1,7 @@
 package io.heapy.kotmark.ext.math
 
 import io.heapy.kotmark.Extension
+import io.heapy.kotmark.ExtensionsBuilder
 import io.heapy.kotmark.ext.math.internal.MathBlockParser
 import io.heapy.kotmark.ext.math.internal.MathInlineParser
 import io.heapy.kotmark.ext.math.internal.mathNodeRenderers
@@ -37,4 +38,9 @@ class MathExtension private constructor() :
         @JvmStatic
         fun create(): Extension = MathExtension()
     }
+}
+
+/** Creates and appends [MathExtension]. */
+fun ExtensionsBuilder.math() {
+    add(MathExtension.create())
 }

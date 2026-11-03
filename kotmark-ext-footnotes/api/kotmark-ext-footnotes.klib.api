@@ -85,4 +85,5 @@ final class io.heapy.kotmark.ext.footnotes/InlineFootnote : io.heapy.kotmark.nod
     constructor <init>() // io.heapy.kotmark.ext.footnotes/InlineFootnote.<init>|<init>(){}[0]
 }
 
+final fun (io.heapy.kotmark/ExtensionsBuilder).io.heapy.kotmark.ext.footnotes/footnotes(kotlin/Function1<io.heapy.kotmark.ext.footnotes/FootnotesExtension.Configuration, kotlin/Unit> = ...) // io.heapy.kotmark.ext.footnotes/footnotes|footnotes@io.heapy.kotmark.ExtensionsBuilder(kotlin.Function1<io.heapy.kotmark.ext.footnotes.FootnotesExtension.Configuration,kotlin.Unit>){}[0]
 final fun io.heapy.kotmark.ext.footnotes/footnotesExtension(kotlin/Function1<io.heapy.kotmark.ext.footnotes/FootnotesExtension.Configuration, kotlin/Unit> = ...): io.heapy.kotmark.ext.footnotes/FootnotesExtension // io.heapy.kotmark.ext.footnotes/footnotesExtension|footnotesExtension(kotlin.Function1<io.heapy.kotmark.ext.footnotes.FootnotesExtension.Configuration,kotlin.Unit>){}[0]

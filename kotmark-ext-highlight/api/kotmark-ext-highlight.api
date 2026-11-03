@@ -17,6 +17,10 @@ public final class io/heapy/kotmark/ext/highlight/HighlightExtension$Companion {
 	public final fun create ()Lio/heapy/kotmark/Extension;
 }
 
+public final class io/heapy/kotmark/ext/highlight/HighlightExtensionKt {
+	public static final fun highlight (Lio/heapy/kotmark/ExtensionsBuilder;)V
+}
+
 public final class io/heapy/kotmark/ext/highlight/internal/HighlightDelimiterProcessor : io/heapy/kotmark/parser/delimiter/DelimiterProcessor {
 	public fun <init> ()V
 	public fun getClosingCharacter ()C

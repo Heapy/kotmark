@@ -19,6 +19,8 @@ public final class io/heapy/kotmark/ext/heading/anchor/HeadingAnchorExtension$Co
 }
 
 public final class io/heapy/kotmark/ext/heading/anchor/HeadingAnchorExtensionKt {
+	public static final fun headingAnchor (Lio/heapy/kotmark/ExtensionsBuilder;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun headingAnchor$default (Lio/heapy/kotmark/ExtensionsBuilder;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 	public static final fun headingAnchorExtension (Lkotlin/jvm/functions/Function1;)Lio/heapy/kotmark/ext/heading/anchor/HeadingAnchorExtension;
 	public static synthetic fun headingAnchorExtension$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/heapy/kotmark/ext/heading/anchor/HeadingAnchorExtension;
 }

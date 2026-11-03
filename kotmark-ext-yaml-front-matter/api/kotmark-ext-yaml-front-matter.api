@@ -16,6 +16,11 @@ public final class io/heapy/kotmark/ext/front/matter/YamlFrontMatterExtension$Co
 	public final fun create (Lio/heapy/kotmark/ext/front/matter/parser/FrontMatterParser$Factory;)Lio/heapy/kotmark/Extension;
 }
 
+public final class io/heapy/kotmark/ext/front/matter/YamlFrontMatterExtensionKt {
+	public static final fun yamlFrontMatter (Lio/heapy/kotmark/ExtensionsBuilder;Lio/heapy/kotmark/ext/front/matter/parser/FrontMatterParser$Factory;)V
+	public static synthetic fun yamlFrontMatter$default (Lio/heapy/kotmark/ExtensionsBuilder;Lio/heapy/kotmark/ext/front/matter/parser/FrontMatterParser$Factory;ILjava/lang/Object;)V
+}
+
 public final class io/heapy/kotmark/ext/front/matter/YamlFrontMatterNode : io/heapy/kotmark/node/CustomNode {
 	public fun <init> (Ljava/lang/String;Ljava/util/List;)V
 	public final fun getKey ()Ljava/lang/String;

@@ -1,6 +1,7 @@
 package io.heapy.kotmark.ext.footnotes
 
 import io.heapy.kotmark.Extension
+import io.heapy.kotmark.ExtensionsBuilder
 import io.heapy.kotmark.KotmarkDsl
 import io.heapy.kotmark.ext.footnotes.internal.FootnoteBlockParser
 import io.heapy.kotmark.ext.footnotes.internal.FootnoteHtmlNodeRenderer
@@ -58,3 +59,8 @@ class FootnotesExtension private constructor(
 /** Creates [FootnotesExtension] with the supplied configuration. */
 fun footnotesExtension(configure: FootnotesExtension.Configuration.() -> Unit = {}): FootnotesExtension =
     FootnotesExtension.Configuration().apply(configure).create()
+
+/** Creates and appends [FootnotesExtension] with the supplied configuration. */
+fun ExtensionsBuilder.footnotes(configure: FootnotesExtension.Configuration.() -> Unit = {}) {
+    add(footnotesExtension(configure))
+}

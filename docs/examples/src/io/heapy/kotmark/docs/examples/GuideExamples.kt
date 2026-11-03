@@ -2,6 +2,7 @@ package io.heapy.kotmark.docs.examples
 
 // region custom-block
 import io.heapy.kotmark.Extension
+import io.heapy.kotmark.extensions
 import io.heapy.kotmark.node.CustomBlock
 import io.heapy.kotmark.parser.Parser
 import io.heapy.kotmark.parser.SourceLine
@@ -85,7 +86,7 @@ class MemoExtension private constructor() : Parser.ParserExtension, HtmlRenderer
 }
 
 fun renderMemo(markdown: String): String {
-    val extensions = listOf(MemoExtension.create())
+    val extensions = extensions { add(MemoExtension.create()) }
     val document = parser { extensions(extensions) }.parse(markdown)
     return htmlRenderer { extensions(extensions) }.render(document)
 }

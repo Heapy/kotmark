@@ -4,11 +4,12 @@
 execute macros, load scripts or styles, or typeset formulas.
 
 ```kotlin
-import io.heapy.kotmark.ext.math.MathExtension
+import io.heapy.kotmark.ext.math.math
+import io.heapy.kotmark.extensions
 import io.heapy.kotmark.parser.parser
 import io.heapy.kotmark.renderer.html.htmlRenderer
 
-val extensions = listOf(MathExtension.create())
+val extensions = extensions { math() }
 val parser = parser { extensions(extensions) }
 val html = htmlRenderer { extensions(extensions) }
 val document = parser.parse($$"""Energy: $E=mc^2$.""")

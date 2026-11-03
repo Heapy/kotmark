@@ -63,3 +63,5 @@ final class io.heapy.kotmark.ext.ins/InsExtension : io.heapy.kotmark.parser/Pars
         final fun create(): io.heapy.kotmark/Extension // io.heapy.kotmark.ext.ins/InsExtension.Companion.create|create(){}[0]
     }
 }
+
+final fun (io.heapy.kotmark/ExtensionsBuilder).io.heapy.kotmark.ext.ins/ins() // io.heapy.kotmark.ext.ins/ins|ins@io.heapy.kotmark.ExtensionsBuilder(){}[0]

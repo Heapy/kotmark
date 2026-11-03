@@ -24,6 +24,8 @@ public final class io/heapy/kotmark/ext/gfm/strikethrough/StrikethroughExtension
 }
 
 public final class io/heapy/kotmark/ext/gfm/strikethrough/StrikethroughExtensionKt {
+	public static final fun strikethrough (Lio/heapy/kotmark/ExtensionsBuilder;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun strikethrough$default (Lio/heapy/kotmark/ExtensionsBuilder;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 	public static final fun strikethroughExtension (Lkotlin/jvm/functions/Function1;)Lio/heapy/kotmark/ext/gfm/strikethrough/StrikethroughExtension;
 	public static synthetic fun strikethroughExtension$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/heapy/kotmark/ext/gfm/strikethrough/StrikethroughExtension;
 }

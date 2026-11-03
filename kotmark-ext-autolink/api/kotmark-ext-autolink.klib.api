@@ -38,4 +38,5 @@ final class io.heapy.kotmark.ext.autolink/AutolinkExtension : io.heapy.kotmark.p
     }
 }
 
+final fun (io.heapy.kotmark/ExtensionsBuilder).io.heapy.kotmark.ext.autolink/autolink(kotlin/Function1<io.heapy.kotmark.ext.autolink/AutolinkExtension.Configuration, kotlin/Unit> = ...) // io.heapy.kotmark.ext.autolink/autolink|autolink@io.heapy.kotmark.ExtensionsBuilder(kotlin.Function1<io.heapy.kotmark.ext.autolink.AutolinkExtension.Configuration,kotlin.Unit>){}[0]
 final fun io.heapy.kotmark.ext.autolink/autolinkExtension(kotlin/Function1<io.heapy.kotmark.ext.autolink/AutolinkExtension.Configuration, kotlin/Unit> = ...): io.heapy.kotmark.ext.autolink/AutolinkExtension // io.heapy.kotmark.ext.autolink/autolinkExtension|autolinkExtension(kotlin.Function1<io.heapy.kotmark.ext.autolink.AutolinkExtension.Configuration,kotlin.Unit>){}[0]

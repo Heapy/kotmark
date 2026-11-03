@@ -89,4 +89,5 @@ final class io.heapy.kotmark.ext.gfm.alerts/AlertsExtension : io.heapy.kotmark.p
     }
 }
 
+final fun (io.heapy.kotmark/ExtensionsBuilder).io.heapy.kotmark.ext.gfm.alerts/alerts(kotlin/Function1<io.heapy.kotmark.ext.gfm.alerts/AlertsExtension.Configuration, kotlin/Unit> = ...) // io.heapy.kotmark.ext.gfm.alerts/alerts|alerts@io.heapy.kotmark.ExtensionsBuilder(kotlin.Function1<io.heapy.kotmark.ext.gfm.alerts.AlertsExtension.Configuration,kotlin.Unit>){}[0]
 final fun io.heapy.kotmark.ext.gfm.alerts/alertsExtension(kotlin/Function1<io.heapy.kotmark.ext.gfm.alerts/AlertsExtension.Configuration, kotlin/Unit> = ...): io.heapy.kotmark.ext.gfm.alerts/AlertsExtension // io.heapy.kotmark.ext.gfm.alerts/alertsExtension|alertsExtension(kotlin.Function1<io.heapy.kotmark.ext.gfm.alerts.AlertsExtension.Configuration,kotlin.Unit>){}[0]

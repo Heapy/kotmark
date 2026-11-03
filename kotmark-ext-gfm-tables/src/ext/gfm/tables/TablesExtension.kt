@@ -1,6 +1,7 @@
 package io.heapy.kotmark.ext.gfm.tables
 
 import io.heapy.kotmark.Extension
+import io.heapy.kotmark.ExtensionsBuilder
 import io.heapy.kotmark.KotmarkDsl
 import io.heapy.kotmark.ext.gfm.tables.internal.TableBlockParser
 import io.heapy.kotmark.ext.gfm.tables.internal.TableHtmlNodeRenderer
@@ -69,3 +70,8 @@ class TablesExtension private constructor(configuration: Configuration) :
 /** Creates [TablesExtension] with the supplied configuration. */
 fun tablesExtension(configure: TablesExtension.Configuration.() -> Unit = {}): TablesExtension =
     TablesExtension.Configuration().apply(configure).create()
+
+/** Creates and appends [TablesExtension] with the supplied configuration. */
+fun ExtensionsBuilder.tables(configure: TablesExtension.Configuration.() -> Unit = {}) {
+    add(tablesExtension(configure))
+}

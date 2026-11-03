@@ -112,4 +112,5 @@ final class io.heapy.kotmark.ext.gfm.tables/TablesExtension : io.heapy.kotmark.p
     }
 }
 
+final fun (io.heapy.kotmark/ExtensionsBuilder).io.heapy.kotmark.ext.gfm.tables/tables(kotlin/Function1<io.heapy.kotmark.ext.gfm.tables/TablesExtension.Configuration, kotlin/Unit> = ...) // io.heapy.kotmark.ext.gfm.tables/tables|tables@io.heapy.kotmark.ExtensionsBuilder(kotlin.Function1<io.heapy.kotmark.ext.gfm.tables.TablesExtension.Configuration,kotlin.Unit>){}[0]
 final fun io.heapy.kotmark.ext.gfm.tables/tablesExtension(kotlin/Function1<io.heapy.kotmark.ext.gfm.tables/TablesExtension.Configuration, kotlin/Unit> = ...): io.heapy.kotmark.ext.gfm.tables/TablesExtension // io.heapy.kotmark.ext.gfm.tables/tablesExtension|tablesExtension(kotlin.Function1<io.heapy.kotmark.ext.gfm.tables.TablesExtension.Configuration,kotlin.Unit>){}[0]

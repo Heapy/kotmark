@@ -49,3 +49,5 @@ final class io.heapy.kotmark.ext.task.list.items/TaskListItemsExtension : io.hea
         final fun create(): io.heapy.kotmark/Extension // io.heapy.kotmark.ext.task.list.items/TaskListItemsExtension.Companion.create|create(){}[0]
     }
 }
+
+final fun (io.heapy.kotmark/ExtensionsBuilder).io.heapy.kotmark.ext.task.list.items/taskListItems() // io.heapy.kotmark.ext.task.list.items/taskListItems|taskListItems@io.heapy.kotmark.ExtensionsBuilder(){}[0]

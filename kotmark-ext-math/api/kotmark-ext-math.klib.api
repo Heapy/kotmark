@@ -37,3 +37,5 @@ final class io.heapy.kotmark.ext.math/MathExtension : io.heapy.kotmark.parser/Pa
         final fun create(): io.heapy.kotmark/Extension // io.heapy.kotmark.ext.math/MathExtension.Companion.create|create(){}[0]
     }
 }
+
+final fun (io.heapy.kotmark/ExtensionsBuilder).io.heapy.kotmark.ext.math/math() // io.heapy.kotmark.ext.math/math|math@io.heapy.kotmark.ExtensionsBuilder(){}[0]

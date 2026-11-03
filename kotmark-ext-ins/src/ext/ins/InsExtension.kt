@@ -1,6 +1,7 @@
 package io.heapy.kotmark.ext.ins
 
 import io.heapy.kotmark.Extension
+import io.heapy.kotmark.ExtensionsBuilder
 import io.heapy.kotmark.ext.ins.internal.InsDelimiterProcessor
 import io.heapy.kotmark.ext.ins.internal.InsHtmlNodeRenderer
 import io.heapy.kotmark.ext.ins.internal.InsMarkdownNodeRenderer
@@ -46,4 +47,9 @@ class InsExtension private constructor() :
         @JvmStatic
         fun create(): Extension = InsExtension()
     }
+}
+
+/** Creates and appends [InsExtension]. */
+fun ExtensionsBuilder.ins() {
+    add(InsExtension.create())
 }

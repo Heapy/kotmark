@@ -12,6 +12,12 @@ cards: []
 Replace Java builders with Kotlin factory functions and configuration lambdas. The configuration is snapshotted when each factory creates its parser or renderer.
 
 ```kotlin label="Create parser and HTML renderer"
+import io.heapy.kotmark.ext.gfm.tables.tables
+import io.heapy.kotmark.extensions
+import io.heapy.kotmark.parser.parser
+import io.heapy.kotmark.renderer.html.htmlRenderer
+
+val extensions = extensions { tables() }
 val parser = parser { extensions(extensions) }
 val renderer = htmlRenderer { extensions(extensions) }
 ```

@@ -27,6 +27,8 @@ public final class io/heapy/kotmark/ext/footnotes/FootnotesExtension$Configurati
 }
 
 public final class io/heapy/kotmark/ext/footnotes/FootnotesExtensionKt {
+	public static final fun footnotes (Lio/heapy/kotmark/ExtensionsBuilder;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun footnotes$default (Lio/heapy/kotmark/ExtensionsBuilder;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 	public static final fun footnotesExtension (Lkotlin/jvm/functions/Function1;)Lio/heapy/kotmark/ext/footnotes/FootnotesExtension;
 	public static synthetic fun footnotesExtension$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/heapy/kotmark/ext/footnotes/FootnotesExtension;
 }

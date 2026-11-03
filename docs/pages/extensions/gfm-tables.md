@@ -38,6 +38,7 @@ Each table is limited to 1,000,000 parsed cells by default. Header cells and emp
 cells added to complete a body row count towards the limit. Parsing throws
 `IllegalArgumentException` before creating a cell that would exceed the limit.
 
-Use `tablesExtension { maxCells = 10_000 }` to choose a different limit, or set
+Use `tables { maxCells = 10_000 }` inside `extensions { … }` to choose a different limit, or set
 `maxCells = null` to disable it. The limit applies separately to each table.
-`TablesExtension.create()` uses the default limit.
+The standalone `tablesExtension { … }` factory is also available. `tables()` and
+`TablesExtension.create()` use the default limit.
