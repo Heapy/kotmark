@@ -1,0 +1,24 @@
+apply:
+  - //common.module-template.yaml
+
+product: jvm/lib
+
+dependencies:
+  - //kotmark
+  - //autolink
+  - //kotmark-ext-autolink
+  - //kotmark-ext-footnotes
+  - //kotmark-ext-gfm-alerts
+  - //kotmark-ext-gfm-strikethrough
+  - //kotmark-ext-gfm-tables
+  - //kotmark-ext-heading-anchor
+  - //kotmark-ext-highlight
+  - //kotmark-ext-image-attributes
+  - //kotmark-ext-ins
+  - //kotmark-ext-math
+  - //kotmark-ext-task-list-items
+  - //kotmark-ext-yaml-front-matter
+  - //kotmark-renderer-kotlinx-html
+
+test-dependencies:
+  - $kotlin.test

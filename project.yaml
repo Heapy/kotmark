@@ -2,6 +2,8 @@ modules:
   - autolink
   - benchmark-runners/*
   - benchmarks
+  - docs/examples
+  - docs/site-builder
   - fuzz
   - integration-test
   - kotmark

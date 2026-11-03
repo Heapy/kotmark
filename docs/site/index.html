@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Kotmark is a Kotlin Multiplatform CommonMark parser with a small, explicit extension surface.">
+    <title>kotmark — Markdown, with the marks left in</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+    <script src="site.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="masthead" id="top">
+    <a class="wordmark" href="#top" aria-label="Kotmark home"><span class="wordmark-stamp" aria-hidden="true">K</span><span>kotmark</span></a>
+    <p class="masthead-note">A Markdown engine<br>Kotlin Multiplatform</p>
+    <nav class="primary-nav" aria-label="Main navigation">
+        <a href="#spec">Conformance</a><a href="#extensions">Extensions</a><a href="#reference">Guides &amp; API</a><a href="https://github.com/Heapy/kotmark">GitHub <span aria-hidden="true">↗</span></a>
+    </nav>
+</header>
+<main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+            <p class="overline">CommonMark parser &amp; renderer for Kotlin</p>
+            <h1 id="hero-title">Markdown,<br>with the <em>marks</em><br>left in.</h1>
+            <p class="hero-intro">A CommonMark parser and renderer written in Kotlin. Keep the syntax, inspect the tree, and add only the extensions your application needs.</p>
+            <div class="hero-links"><a class="ink-link" href="#start">Start with a working example <span aria-hidden="true">↓</span></a><a class="quiet-link" href="api/index.html">Browse the API reference <span aria-hidden="true">↗</span></a></div>
+            <p class="hero-footnote"><span class="margin-mark">[1]</span> The core stays CommonMark-shaped; extensions are opt-in.</p>
+        </div>
+        <figure class="specimen" aria-labelledby="specimen-caption">
+            <figcaption id="specimen-caption" class="specimen-cap"><span>input.md</span><span>source → tree → html</span></figcaption>
+            <div class="preview-controls" aria-label="Choose a parser view"><button type="button" data-preview-button="tree" aria-pressed="true">Tree</button><button type="button" data-preview-button="html" aria-pressed="false">HTML</button></div>
+            <div class="specimen-source"><span class="source-label">SOURCE · CommonMark</span><pre><code data-language="markdown">## Field notes
+
+A tree you can **walk**.</code></pre></div>
+            <div class="specimen-output" data-preview-panel="tree"><span class="source-label">PARSED · node outline</span><pre><code data-language="text">Document
+└─ Heading(level = 2)
+   └─ Text("Field notes")
+└─ Paragraph
+   ├─ Text("A tree you can ")
+   ├─ StrongEmphasis
+   │  └─ Text("walk")
+   └─ Text(".")</code></pre></div>
+            <div class="specimen-output" data-preview-panel="html" hidden><span class="source-label">RENDERED · HTML</span><pre><code data-language="html">&lt;h2&gt;Field notes&lt;/h2&gt;
+&lt;p&gt;A tree you can &lt;strong&gt;walk&lt;/strong&gt;.&lt;/p&gt;</code></pre></div>
+            <div class="specimen-register" aria-hidden="true"><span>UTF-8 · LF</span><span>CommonMark 0.31.2</span></div>
+        </figure>
+        <p class="hero-index" aria-hidden="true">K / 01</p>
+    </section>
+    <div class="ticker" aria-label="Project facts"><span>Kotlin Multiplatform</span><i aria-hidden="true">*</i><span>CommonMark 0.31.2</span><i aria-hidden="true">*</i><span>Explicit extensions</span><i aria-hidden="true">*</i><span>HTML · Markdown · Plain text</span></div>
+    <section class="field-section" id="start" data-index="01" aria-labelledby="start-title">
+        <div class="section-body">
+            <p class="section-kicker">Getting started</p>
+            <h2 id="start-title">Parse Markdown.<br><em>Render your content.</em></h2>
+            <div class="split-copy">
+                <div><p class="lede">Add Kotmark to your Kotlin project.</p><p>For Kotlin Multiplatform, put the dependency in <code>commonMain.dependencies</code>. For a JVM project, use the module’s <code>dependencies</code> block. JVM applications require Java 17 or newer.</p></div>
+                <div class="command-slip"><span class="source-label">GRADLE · KOTLIN DSL</span><pre><code data-language="kotlin">implementation("io.heapy.kotmark:kotmark:0.1.0")</code></pre></div>
+            </div>
+            <h3 class="small-heading">Parse, then render</h3>
+            <p>The default parser and HTML renderer are plain Kotlin factories. Start with CommonMark; add an extension to both sides only when its syntax and output are wanted.</p>
+            <div class="code-proof"><span class="code-caption">Parse Markdown to HTML</span><pre><code data-snippet="docs/examples/src/io/heapy/kotmark/docs/examples/GettingStarted.kt#getting-started" data-language="kotlin">import io.heapy.kotmark.parser.parser
+import io.heapy.kotmark.renderer.html.htmlRenderer
+
+fun renderMarkdown(markdown: String): String {
+    val document = parser().parse(markdown)
+    return htmlRenderer().render(document)
+}</code></pre></div>
+        </div>
+    </section>
+    <section class="field-section" id="spec" data-index="02" aria-labelledby="spec-title">
+        <div class="section-body">
+            <p class="section-kicker">Specification support</p>
+            <h2 id="spec-title">CommonMark core.<br><em>Optional extensions.</em></h2>
+            <p class="lede">Kotmark implements CommonMark 0.31.2. The specification tests cover the complete current example set and the corpus bundled with commonmark-java.</p>
+            <div class="scoreline" aria-label="CommonMark specification example results"><div class="score"><strong>655<span>/</span>655</strong><span class="score-label">CommonMark spec<br>version 0.31.2</span></div><div class="score-divider" aria-hidden="true">+</div><div class="score"><strong>652<span>/</span>652</strong><span class="score-label">commonmark-java<br>bundled spec corpus</span></div></div>
+            <p>GFM tables, strikethrough, task lists, and alerts are available as extensions. Kotmark supports selected GFM features; it does not claim full GFM conformance. Bare URL detection follows autolink-java rules, with <a href="extensions/autolink.html#gfm-differences">documented differences from GFM</a>.</p>
+        </div>
+    </section>
+    <section class="field-section" id="extensions" data-index="03" aria-labelledby="extensions-title">
+        <div class="section-body">
+            <p class="section-kicker">Extension index / twelve opt-ins</p>
+            <h2 id="extensions-title">Keep the core lean.<br><em>Pull in what you use.</em></h2>
+            <p class="lede">Add the extension module you need and register it with the parser and each renderer you use. The <code>autolink</code> module also provides a standalone URL and email extractor.</p>
+            <div class="extension-table-wrap"><table class="extension-table">
+                <thead><tr><th scope="col">Module</th><th scope="col">Adds</th><th scope="col">Dialect note</th></tr></thead>
+                <tbody>
+                <tr><th scope="row"><a href="extensions/autolink.html">autolink</a></th><td>Bare URL and email links</td><td>Uses upstream autolink-java rules</td></tr>
+                <tr><th scope="row"><a href="extensions/footnotes.html">footnotes</a></th><td>Footnote references and definitions</td><td>Opt-in syntax</td></tr>
+                <tr><th scope="row"><a href="extensions/gfm-alerts.html">gfm-alerts</a></th><td>GitHub-style alert blocks</td><td>Supported alert fixtures; not full GFM</td></tr>
+                <tr><th scope="row"><a href="extensions/gfm-strikethrough.html">gfm-strikethrough</a></th><td>Struck-through text</td><td>Configurable delimiter rules</td></tr>
+                <tr><th scope="row"><a href="extensions/gfm-tables.html">gfm-tables</a></th><td>Pipe tables</td><td>Supported GFM table grammar</td></tr>
+                <tr><th scope="row"><a href="extensions/heading-anchor.html">heading-anchor</a></th><td>Stable heading IDs</td><td>Customizable ID generation</td></tr>
+                <tr><th scope="row"><a href="extensions/highlight.html">highlight</a></th><td><code>==highlighted text==</code></td><td>Own inline extension syntax</td></tr>
+                <tr><th scope="row"><a href="extensions/image-attributes.html">image-attributes</a></th><td>Extra image attributes</td><td>Parser and HTML renderer hooks</td></tr>
+                <tr><th scope="row"><a href="extensions/ins.html">ins</a></th><td>Inserted text</td><td>Opt-in inline syntax</td></tr>
+                <tr><th scope="row"><a href="extensions/math.html">math</a></th><td>Inline and fenced formula source</td><td>Opaque content; no TeX engine</td></tr>
+                <tr><th scope="row"><a href="extensions/task-list-items.html">task-list-items</a></th><td>Checkbox list items</td><td>Opt-in list rendering</td></tr>
+                <tr><th scope="row"><a href="extensions/yaml-front-matter.html">yaml-front-matter</a></th><td>YAML document metadata</td><td>Separate front-matter node</td></tr>
+                </tbody>
+            </table></div>
+            <p class="source-citation">Every module has its own page with syntax, options, and a compiled example: start from the <a href="extensions/index.html">extension index</a>. Registration is covered in the <a href="guides/configuration.html">configuration guide</a>.</p>
+        </div>
+    </section>
+    <section class="field-section" id="blocks" data-index="04" aria-labelledby="blocks-title">
+        <div class="section-body">
+            <p class="section-kicker">Extension workshop / custom blocks</p>
+            <h2 id="blocks-title">Give a block its<br><em>own shape.</em></h2>
+            <p class="lede">A custom block has two jobs: recognize its source lines and put a node in the tree. The example uses <code>:::memo</code> through <code>:::</code>, stores the body as literal text, and escapes it on HTML output.</p>
+            <ol class="work-steps"><li><b>Model</b><span>Subclass <code>CustomBlock</code>; expose the content your renderers need.</span></li><li><b>Parse</b><span>Use <code>AbstractBlockParser</code> and a factory to recognize the opener, continue, and finish at the closer.</span></li><li><b>Register</b><span>Attach the factory in <code>Parser.ParserExtension</code>.</span></li><li><b>Render</b><span>Register a node renderer; send untrusted text through <code>HtmlWriter.text</code>.</span></li></ol>
+            <details class="source-fold"><summary>Open the complete block extension example</summary><div class="code-proof"><pre><code data-snippet="docs/examples/src/io/heapy/kotmark/docs/examples/GuideExamples.kt#custom-block" data-language="kotlin">import io.heapy.kotmark.Extension
+import io.heapy.kotmark.node.CustomBlock
+import io.heapy.kotmark.parser.Parser
+import io.heapy.kotmark.parser.SourceLine
+import io.heapy.kotmark.parser.block.AbstractBlockParser
+import io.heapy.kotmark.parser.block.AbstractBlockParserFactory
+import io.heapy.kotmark.parser.block.BlockContinue
+import io.heapy.kotmark.parser.block.BlockStart
+import io.heapy.kotmark.parser.block.MatchedBlockParser
+import io.heapy.kotmark.parser.block.ParserState
+import io.heapy.kotmark.parser.parser
+import io.heapy.kotmark.renderer.html.HtmlRenderer
+import io.heapy.kotmark.renderer.html.HtmlRenderer.HtmlRendererExtension
+import io.heapy.kotmark.renderer.html.htmlRenderer
+import io.heapy.kotmark.renderer.html.nodeRenderer
+
+class MemoBlock : CustomBlock() {
+    var literal: String = ""
+}
+
+private class MemoBlockParser : AbstractBlockParser() {
+    override val block = MemoBlock()
+    private val content = StringBuilder()
+    private var openingLine = true
+
+    override fun tryContinue(parserState: ParserState): BlockContinue {
+        val line = parserState.line.content
+            .subSequence(parserState.nextNonSpaceIndex, parserState.line.content.length)
+            .toString()
+            .trimEnd(' ', '\t')
+        return if (line == ":::") {
+            BlockContinue.Finished
+        } else {
+            BlockContinue.AtIndex(parserState.nextNonSpaceIndex)
+        }
+    }
+
+    override fun addLine(line: SourceLine) {
+        if (openingLine) {
+            openingLine = false
+        } else {
+            content.append(line.content).append('\n')
+        }
+    }
+
+    override fun closeBlock() {
+        block.literal = content.toString()
+    }
+}
+
+private class MemoBlockParserFactory : AbstractBlockParserFactory() {
+    override fun tryStart(
+        state: ParserState,
+        matchedBlockParser: MatchedBlockParser,
+    ): BlockStart? {
+        val line = state.line.content
+            .subSequence(state.nextNonSpaceIndex, state.line.content.length)
+            .toString()
+        if (state.indent &gt;= 4 || line != ":::memo") return null
+        return BlockStart.of(MemoBlockParser()).atIndex(state.line.content.length)
+    }
+}
+
+class MemoExtension private constructor() : Parser.ParserExtension, HtmlRendererExtension {
+    override fun extend(parserConfiguration: Parser.Configuration) {
+        parserConfiguration.customBlockParserFactory(MemoBlockParserFactory())
+    }
+
+    override fun extend(rendererConfiguration: HtmlRenderer.Configuration) {
+        rendererConfiguration.nodeRenderer&lt;MemoBlock&gt; { memo -&gt;
+            writer.line()
+            writer.tag("aside", mapOf("class" to "memo"))
+            writer.text(memo.literal)
+            writer.tag("/aside")
+            writer.line()
+        }
+    }
+
+    companion object {
+        fun create(): Extension = MemoExtension()
+    }
+}
+
+fun renderMemo(markdown: String): String {
+    val extensions = listOf(MemoExtension.create())
+    val document = parser { extensions(extensions) }.parse(markdown)
+    return htmlRenderer { extensions(extensions) }.render(document)
+}</code></pre></div></details>
+            <p class="margin-note"><span class="margin-mark">[5]</span> This is an intentionally small teaching grammar. Production extensions should define container behavior, indentation, unterminated input, and precedence explicitly.</p>
+        </div>
+    </section>
+    <section class="field-section" id="renderer" data-index="05" aria-labelledby="renderer-title">
+        <div class="section-body">
+            <p class="section-kicker">Extension workshop / custom renderers</p>
+            <h2 id="renderer-title">Replace one mark.<br><em>Keep the rest.</em></h2>
+            <p class="lede">Register a typed handler with <code>nodeRenderer&lt;Heading&gt;</code>. The heading is already typed, and the context is the receiver. Delegate children with <code>renderChildren</code> so emphasis and other inline nodes still use their normal renderers.</p>
+            <div class="split-copy renderer-demo">
+                <div class="code-proof"><span class="code-caption">A typed handler for headings</span><pre><code data-snippet="docs/examples/src/io/heapy/kotmark/docs/examples/CustomRenderer.kt#custom-renderer" data-language="kotlin">import io.heapy.kotmark.node.Heading
+import io.heapy.kotmark.renderer.html.HtmlRenderer
+import io.heapy.kotmark.renderer.html.htmlRenderer
+import io.heapy.kotmark.renderer.html.nodeRenderer
+import io.heapy.kotmark.renderer.html.renderChildren
+
+fun chapterRenderer(): HtmlRenderer = htmlRenderer {
+    nodeRenderer&lt;Heading&gt; { heading -&gt;
+        val tag = "h${heading.level}"
+        writer.line()
+        writer.tag(tag, extendAttributes(heading, tag, mapOf("class" to "chapter-title")))
+        renderChildren(heading)
+        writer.tag("/$tag")
+        writer.line()
+    }
+}</code></pre></div>
+                <div class="renderer-margin"><p class="source-label">WHAT THIS PRESERVES</p><ul class="check-list"><li>Core rendering for inline children</li><li>Attribute-provider changes</li><li>Escaping in delegated text nodes</li></ul><p>Factories are consulted in registration order. A custom renderer registered before another renderer for the same node type takes precedence.</p><p class="source-citation">For data attributes on core-rendered nodes, prefer an <code>AttributeProvider</code> over replacing the renderer.</p></div>
+            </div>
+        </div>
+    </section>
+    <section class="field-section" id="system" data-index="06" aria-labelledby="system-title">
+        <div class="section-body">
+            <p class="section-kicker">Under the paper / parse to output</p>
+            <h2 id="system-title">One tree.<br>Several ways out.</h2>
+            <p class="lede">The parser builds a document tree; renderers walk that same tree into HTML, Markdown, or plain text. Extensions join at the parse or render boundary, not by rewriting a string after the fact.</p>
+            <figure class="architecture"><svg viewBox="0 0 1000 330" role="img" aria-labelledby="arch-title arch-desc">
+                <title id="arch-title">Kotmark parsing and rendering path</title><desc id="arch-desc">Markdown source passes through block and inline parsing into a node tree, then the tree can be rendered as HTML, Markdown, or text.</desc>
+                <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="currentColor"></path></marker></defs>
+                <g class="diagram-lines" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#arrow)"><path d="M190 154 H270"></path><path d="M440 154 H520"></path><path d="M680 154 H748 V72 H816"></path><path d="M748 154 H816"></path><path d="M748 154 V238 H816"></path></g>
+                <g class="diagram-node"><rect x="25" y="120" width="165" height="68" rx="2"></rect><text x="107" y="148" text-anchor="middle">Markdown</text><text class="diagram-small" x="107" y="169" text-anchor="middle">source lines</text><rect x="270" y="120" width="170" height="68" rx="2"></rect><text x="355" y="148" text-anchor="middle">Parser</text><text class="diagram-small" x="355" y="169" text-anchor="middle">blocks + inlines</text><rect class="tree-node" x="520" y="120" width="160" height="68" rx="2"></rect><text x="600" y="148" text-anchor="middle">Node tree</text><text class="diagram-small" x="600" y="169" text-anchor="middle">document structure</text><rect x="816" y="38" width="155" height="68" rx="2"></rect><text x="893" y="78" text-anchor="middle">HTML</text><rect x="816" y="120" width="155" height="68" rx="2"></rect><text x="893" y="160" text-anchor="middle">Markdown</text><rect x="816" y="204" width="155" height="68" rx="2"></rect><text x="893" y="244" text-anchor="middle">Plain text</text></g>
+                <text class="diagram-note" x="355" y="228" text-anchor="middle">block parser factories</text><text class="diagram-note" x="600" y="228" text-anchor="middle">extension nodes fit here</text>
+            </svg><figcaption>Figure A · Custom syntax becomes structure before any renderer sees it.</figcaption></figure>
+        </div>
+    </section>
+    <section class="field-section" id="platforms" data-index="07" aria-labelledby="platforms-title">
+        <div class="section-body">
+            <p class="section-kicker">Supported platforms</p>
+            <h2 id="platforms-title">Kotlin across<br>more than the JVM.</h2>
+            <div class="platform-strip"><p><b>JVM + Android</b><span>Java 17+ on the JVM</span></p><p><b>JS + Wasm</b><span>JavaScript, Wasm-JS, and Wasm-WASI</span></p><p><b>Desktop Native</b><span>Linux, macOS, and Windows</span></p><p><b>Apple platforms</b><span>iOS, tvOS, and watchOS</span></p></div>
+            <p class="source-citation">Exact targets and their runtime verification are listed in the <a href="contributing.html#targets">platform matrix</a>.</p>
+        </div>
+    </section>
+    <section class="field-section" id="reference" data-index="08" aria-labelledby="reference-title">
+        <div class="section-body">
+            <p class="section-kicker">Guides &amp; API</p>
+            <h2 id="reference-title">Build on the basics.</h2>
+            <div class="evidence-list">
+                <article><span class="evidence-number">A</span><div><h3>Configuration</h3><p>Configure parsers, renderers, source spans, and extensions.</p></div><a class="evidence-link" href="guides/configuration.html">Read the guide <span aria-hidden="true">→</span></a></article>
+                <article><span class="evidence-number">B</span><div><h3>URL resolution</h3><p>Resolve relative links and images against a base URL or your application’s routes.</p></div><a class="evidence-link" href="guides/url-resolution.html">Read the guide <span aria-hidden="true">→</span></a></article>
+                <article><span class="evidence-number">C</span><div><h3>kotlinx.html renderer</h3><p>Render documents straight into the kotlinx.html DSL or a DOM consumer, with an adapter for each extension.</p></div><a class="evidence-link" href="guides/kotlinx-html.html">Read the guide <span aria-hidden="true">→</span></a></article>
+                <article><span class="evidence-number">D</span><div><h3>API reference</h3><p>Explore the nodes, parser options, rendering hooks, and extension APIs.</p></div><a class="evidence-link" href="api/index.html">Open the reference <span aria-hidden="true">→</span></a></article>
+            </div>
+        </div>
+    </section>
+    <section class="field-section" id="migration" data-index="09" aria-labelledby="migration-title">
+        <div class="section-body">
+            <p class="section-kicker">Migration / Java lineage, Kotlin API</p>
+            <h2 id="migration-title">Familiar grammar.<br><em>Different surface.</em></h2>
+            <p class="lede">Moving from commonmark-java or an earlier builder-based API? Kotmark uses Kotlin configuration factories and the <code>io.heapy.kotmark</code> packages. Existing integrations need source changes and recompilation.</p>
+            <div class="migration-compare"><div><span class="source-label">COMMONMARK-JAVA STYLE</span><code>Parser.builder().build()</code></div><span class="compare-arrow" aria-hidden="true">→</span><div><span class="source-label">KOTMARK DSL</span><code>parser { includeSourceSpans = … }</code></div></div>
+            <ul class="migration-list"><li>Configuration uses top-level Kotlin factories such as <code>parser { }</code> and <code>htmlRenderer { }</code>.</li><li>Extensions are registered through typed configuration hooks; add them to the parser and the renderers you use.</li><li>Block continuation uses explicit outcomes: <code>AtIndex</code>, <code>AtColumn</code>, <code>Finished</code>, or <code>null</code>.</li><li>Review source and binary changes against the migration notes before porting extensions.</li></ul>
+            <p class="source-citation"><a href="guides/migration.html">Migration guide →</a> · <a href="guides/block-continuation.html">Block continuation →</a> · <a href="credits.html">Upstream record →</a></p>
+        </div>
+    </section>
+</main>
+<footer class="colophon"><a class="wordmark footer-mark" href="#top"><span class="wordmark-stamp" aria-hidden="true">K</span><span>kotmark</span></a><p>Apache-2.0 · <a href="credits.html">Third-party notices</a><br><a href="https://github.com/Heapy/kotmark/issues">Report an issue</a> · <a href="contributing.html">Contributing</a></p><a href="#top">[back to top]</a></footer>
+</body>
+</html>

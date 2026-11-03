@@ -1,0 +1,20 @@
+apply:
+  - //common.module-template.yaml
+
+product: jvm/app
+
+description: Builds the kotmark documentation site from Markdown sources.
+
+settings:
+  kotlin:
+    serialization: enabled
+
+dependencies:
+  - //docs/examples
+  - //kotmark
+  - //kotmark-ext-gfm-tables
+  - //kotmark-ext-math
+  - io.heapy.kotaml:kotaml:0.112.0
+
+test-dependencies:
+  - $kotlin.test

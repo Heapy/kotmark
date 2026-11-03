@@ -1,0 +1,94 @@
+navigation:
+  - title: Start
+    items:
+      - label: Overview
+        href: index.html
+      - label: Getting started
+        href: index.html#start
+      - label: Custom blocks
+        href: index.html#blocks
+      - label: Custom renderers
+        href: index.html#renderer
+  - title: Guides
+    items:
+      - label: Configuration
+        href: guides/configuration.html
+      - label: URL resolution
+        href: guides/url-resolution.html
+      - label: Block continuation
+        href: guides/block-continuation.html
+      - label: kotlinx.html renderer
+        href: guides/kotlinx-html.html
+      - label: Migration
+        href: guides/migration.html
+  - title: Extensions
+    items:
+      - label: All extensions
+        href: extensions/index.html
+      - label: Autolink
+        href: extensions/autolink.html
+        number: "01"
+      - label: Footnotes
+        href: extensions/footnotes.html
+        number: "02"
+      - label: GFM alerts
+        href: extensions/gfm-alerts.html
+        number: "03"
+      - label: GFM strikethrough
+        href: extensions/gfm-strikethrough.html
+        number: "04"
+      - label: GFM tables
+        href: extensions/gfm-tables.html
+        number: "05"
+      - label: Heading anchors
+        href: extensions/heading-anchor.html
+        number: "06"
+      - label: Highlight
+        href: extensions/highlight.html
+        number: "07"
+      - label: Image attributes
+        href: extensions/image-attributes.html
+        number: "08"
+      - label: Inserted text
+        href: extensions/ins.html
+        number: "09"
+      - label: Math
+        href: extensions/math.html
+        number: "10"
+      - label: Task list items
+        href: extensions/task-list-items.html
+        number: "11"
+      - label: YAML front matter
+        href: extensions/yaml-front-matter.html
+        number: "12"
+  - title: Project
+    items:
+      - label: Contributing
+        href: contributing.html
+      - label: Credits & notices
+        href: credits.html
+      - label: API reference
+        href: api/index.html
+      - label: Coverage
+        href: coverage/index.html
+pages:
+  - guides/configuration.md
+  - guides/url-resolution.md
+  - guides/block-continuation.md
+  - guides/kotlinx-html.md
+  - guides/migration.md
+  - extensions/index.md
+  - extensions/autolink.md
+  - extensions/footnotes.md
+  - extensions/gfm-alerts.md
+  - extensions/gfm-strikethrough.md
+  - extensions/gfm-tables.md
+  - extensions/heading-anchor.md
+  - extensions/highlight.md
+  - extensions/image-attributes.md
+  - extensions/ins.md
+  - extensions/math.md
+  - extensions/task-list-items.md
+  - extensions/yaml-front-matter.md
+  - contributing.md
+  - credits.md
