@@ -15,10 +15,10 @@ sealed and can be handled exhaustively:
 An extension can return these outcomes directly:
 
 ```kotlin
-override fun tryContinue(state: ParserState): BlockContinue? = when {
-    state.line.content.toString() == "END" -> BlockContinue.Finished
-    state.indent >= 4 -> BlockContinue.AtColumn(state.column + 4)
-    state.isBlank -> BlockContinue.AtIndex(state.index)
+override fun tryContinue(parserState: ParserState): BlockContinue? = when {
+    parserState.line.content.toString() == "END" -> BlockContinue.Finished
+    parserState.indent >= 4 -> BlockContinue.AtColumn(parserState.column + 4)
+    parserState.isBlank -> BlockContinue.AtIndex(parserState.index)
     else -> null
 }
 ```

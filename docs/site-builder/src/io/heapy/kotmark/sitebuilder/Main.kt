@@ -415,12 +415,16 @@ private fun renderFence(context: HtmlNodeRendererContext, repository: Path, bloc
     context.writer.line()
     when {
         example != null -> {
-            val output = renderExample(example, original, repository)
+            val frontMatter = if (example == "yaml-front-matter") readPage(original) else null
+            val output = frontMatter?.html ?: renderExample(example, original, repository)
             context.writer.tag("div", mapOf("class" to "io-pair"))
             renderCodePanel(context, inputLabel, inputLanguage, original)
             context.writer.tag("span", mapOf("class" to "io-arrow", "aria-hidden" to "true"))
             context.writer.text("↓")
             context.writer.tag("/span")
+            if (frontMatter != null) {
+                renderCodePanel(context, "METADATA · Kotlin map", "text", frontMatter.metadata.toString())
+            }
             renderCodePanel(context, outputLabel, outputLanguage, output)
             context.writer.tag("/div")
         }
@@ -515,7 +519,7 @@ internal fun renderExample(id: String, input: String, repository: Path): String 
     "ins" -> renderWithIns(input)
     "math" -> renderWithMath(input)
     "task-list-items" -> renderWithTaskLists(input)
-    "yaml-front-matter" -> readPage(input).let { "${it.metadata}\n${it.html}" }
+    "yaml-front-matter" -> readPage(input).html
     "configuration" -> renderConfigured(input)
     "base-url" -> baseUrlRenderer.render(parser().parse(input))
     "url-routing" -> routingRenderer.render(parser().parse(input))

@@ -20,6 +20,9 @@ Visit the parsed document with `YamlFrontMatterVisitor` to read the top-level me
 
 ## Example
 
+`readPage` returns metadata and HTML separately. The map below is the extracted
+metadata; only the Markdown body appears in the HTML output.
+
 ```example example=yaml-front-matter
 ---
 title: Release notes

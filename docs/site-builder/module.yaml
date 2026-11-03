@@ -18,3 +18,4 @@ dependencies:
 
 test-dependencies:
   - $kotlin.test
+  - org.jsoup:jsoup:1.23.2

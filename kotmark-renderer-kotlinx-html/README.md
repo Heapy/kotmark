@@ -15,7 +15,8 @@ dependencies:
 ```
 
 ```kotlin
-import io.heapy.kotmark.ext.math.MathExtension
+import io.heapy.kotmark.ext.math.math
+import io.heapy.kotmark.extensions
 import io.heapy.kotmark.parser.parser
 import io.heapy.kotmark.renderer.kotlinxhtml.kotlinxHtmlRenderer
 import io.heapy.kotmark.renderer.kotlinxhtml.adapters.mathAdapter
@@ -23,7 +24,8 @@ import kotlinx.html.div
 import kotlinx.html.span
 import kotlinx.html.stream.createHTML
 
-val parser = parser { extensions(listOf(MathExtension.create())) }
+val extensions = extensions { math() }
+val parser = parser { extensions(extensions) }
 val renderer = kotlinxHtmlRenderer { adapters(mathAdapter()) }
 val document = parser.parse("Energy: \$E=mc^2\$.")
 
@@ -87,6 +89,7 @@ is plain text.
 
 ```kotlin
 import io.heapy.kotmark.node.Code
+import io.heapy.kotmark.renderer.kotlinxhtml.kotlinxHtmlRenderer
 import io.heapy.kotmark.renderer.kotlinxhtml.nodeRenderer
 
 val custom = kotlinxHtmlRenderer {

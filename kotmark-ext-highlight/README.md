@@ -12,7 +12,7 @@ import io.heapy.kotmark.renderer.html.htmlRenderer
 val extensions = extensions { highlight() }
 val parser = parser { extensions(extensions) }
 val html = htmlRenderer { extensions(extensions) }
-html.render(parser.parse("==important **text**=="))
+val rendered = html.render(parser.parse("==important **text**=="))
 // <p><mark>important <strong>text</strong></mark></p>
 ```
 

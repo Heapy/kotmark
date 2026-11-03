@@ -84,9 +84,11 @@ import io.heapy.kotmark.renderer.html.renderChildren
 val renderer = htmlRenderer {
     nodeRenderer<Heading> { heading ->
         val tag = "h${heading.level}"
+        writer.line()
         writer.tag(tag, extendAttributes(heading, tag, mapOf("class" to "chapter-title")))
         renderChildren(heading)
         writer.tag("/$tag")
+        writer.line()
     }
 }
 ```

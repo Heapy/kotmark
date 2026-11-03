@@ -15,7 +15,8 @@ import io.heapy.kotmark.docs.examples.extensions.renderWithMath
 import io.heapy.kotmark.docs.examples.extensions.renderWithStrikethrough
 import io.heapy.kotmark.docs.examples.extensions.renderWithTables
 import io.heapy.kotmark.docs.examples.extensions.renderWithTaskLists
-import io.heapy.kotmark.ext.math.MathExtension
+import io.heapy.kotmark.ext.math.math
+import io.heapy.kotmark.extensions
 import io.heapy.kotmark.parser.parser
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -146,7 +147,8 @@ class ExtensionExamplesTest {
                 "<div class=\"math math-block\">\\sum_{k=1}^n a_k^2\n</div>\n",
             renderWithMath("Energy: \$E=mc^2\$.\n\n\$\$\n\\sum_{k=1}^n a_k^2\n\$\$\n"),
         )
-        val document = parser { extensions(listOf(MathExtension.create())) }.parse("Energy: \$E=mc^2\$.")
+        val extensions = extensions { math() }
+        val document = parser { extensions(extensions) }.parse("Energy: \$E=mc^2\$.")
         assertEquals("<p>Energy: <code class=\"tex\">E=mc^2</code>.</p>\n", mathAsCodeRenderer().render(document))
     }
 

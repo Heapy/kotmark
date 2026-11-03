@@ -4,10 +4,14 @@ import io.heapy.kotmark.docs.examples.guides.NoteBlockParser
 import io.heapy.kotmark.docs.examples.guides.baseUrlRenderer
 import io.heapy.kotmark.docs.examples.guides.renderConfigured
 import io.heapy.kotmark.docs.examples.guides.routingRenderer
+import io.heapy.kotmark.parser.SourceLine
+import io.heapy.kotmark.parser.block.BlockContinue
+import io.heapy.kotmark.parser.block.ParserState
 import io.heapy.kotmark.parser.parser
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
+import kotlin.test.assertNull
 
 /** Inputs and outputs mirror the examples shown on the site's guide pages. */
 class GuidePagesTest {
@@ -40,5 +44,24 @@ class GuidePagesTest {
     @Test
     fun blockContinuationParserCreatesItsNode() {
         assertIs<io.heapy.kotmark.docs.examples.guides.NoteBlock>(NoteBlockParser().block)
+    }
+
+    @Test
+    fun blockContinuationReturnsTheDocumentedOutcomes() {
+        val parser = NoteBlockParser()
+        fun state(content: String, index: Int = 0, column: Int = 0, indent: Int = 0) = object : ParserState {
+            override val line = SourceLine.of(content, null)
+            override val index = index
+            override val column = column
+            override val indent = indent
+            override val isBlank = content.substring(index).isBlank()
+            override val nextNonSpaceIndex = content.indexOfFirst { !it.isWhitespace() }
+                .takeIf { it >= 0 } ?: content.length
+            override val activeBlockParser = parser
+        }
+        assertEquals(BlockContinue.Finished, parser.tryContinue(state("END")))
+        assertEquals(BlockContinue.AtColumn(4), parser.tryContinue(state("\ttext", indent = 4)))
+        assertEquals(BlockContinue.AtIndex(1), parser.tryContinue(state(" \t", index = 1, column = 1, indent = 3)))
+        assertNull(parser.tryContinue(state("next paragraph")))
     }
 }

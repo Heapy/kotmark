@@ -24,12 +24,7 @@ provided by its optional module; see the [extension index](../extensions/index.m
 Use `add(customExtension)` to register an existing extension, and
 `addAll(existingExtensions)` to compose a list from another collection:
 
-```kotlin
-val combined = extensions {
-    add(customExtension)
-    addAll(existingExtensions)
-    tables { maxCells = 10_000 }
-}
+```kotlin caption="Compose extension lists" snippet=docs/examples/src/io/heapy/kotmark/docs/examples/guides/CombineExtensions.kt#combine-extensions
 ```
 
 The builder returns a read-only `List<Extension>` snapshot. It preserves insertion
