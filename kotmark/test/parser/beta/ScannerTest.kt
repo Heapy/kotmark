@@ -13,7 +13,7 @@ import kotlin.test.assertTrue
 
 class ScannerTest {
     @Test
-    fun prevReversesUtf16MovementAndLineBoundaries() {
+    fun boundedSearchTraversesUtf16AndLineBoundaries() {
         val inputs = listOf(
             emptyList(), listOf(""), listOf("abc"), listOf("ab", "c"),
             listOf("a", "bbb"), listOf("", "", ""), listOf("a", ""), listOf("A\uD83D\uDE0AZ"),
@@ -33,63 +33,68 @@ class ScannerTest {
             }
             assertEquals(Scanner.END, scanner.peek())
             for (index in positions.indices.reversed()) {
-                scanner.prev()
+                assertEquals(-1, scanner.findPrev(Scanner.END, positions[index]))
                 assertEquals(positions[index], scanner.position(), input.toString())
                 assertEquals(characters[index], scanner.peek())
                 assertEquals(codePoints[index], scanner.peekCodePoint())
                 assertEquals(previousCodePoints[index], scanner.peekPreviousCodePoint())
                 val position = scanner.position()
                 scanner.next()
-                scanner.prev()
+                assertEquals(-1, scanner.findPrev(Scanner.END, position))
                 assertEquals(position, scanner.position())
             }
             val start = scanner.position()
-            scanner.prev()
+            assertEquals(-1, scanner.findPrev(Scanner.END, start))
             assertEquals(start, scanner.position())
         }
     }
 
     @Test
-    fun prevReversesRepeatedNextAtEof() {
+    fun boundedSearchReturnsFromRepeatedNextAtEof() {
         for (input in listOf(emptyList(), listOf(""), listOf("a"), listOf("a", ""))) {
             val scanner = Scanner.of(SourceLines.of(input.map { SourceLine.of(it, null) }))
+            val start = scanner.position()
             while (scanner.hasNext()) scanner.next()
-            val eof = scanner.position()
-            val positions = mutableListOf(eof)
             repeat(3) {
                 scanner.next()
-                positions.add(scanner.position())
                 assertFalse(scanner.hasNext())
                 assertEquals(Scanner.END, scanner.peek())
             }
-            for (position in positions.dropLast(1).asReversed()) {
-                scanner.prev()
-                assertEquals(position, scanner.position())
-                assertEquals(Scanner.END, scanner.peek())
+            val found = scanner.findPrev(CharMatcher {
+                assertNotEquals(Scanner.END, it)
+                true
+            }, start)
+            val content = input.joinToString("\n")
+            if (content.isEmpty()) {
+                assertEquals(-1, found)
+                assertEquals(start, scanner.position())
+            } else {
+                // Three extra EOF advances and one step to the last real character.
+                assertEquals(4, found)
+                assertEquals(content.last(), scanner.peek())
             }
-            repeat(3) { scanner.next() }
-            assertEquals(-1, scanner.findPrev(Scanner.END))
-            assertEquals(Position(0, 0), scanner.position())
+            assertEquals(-1, scanner.findPrev(Scanner.END, start))
+            assertEquals(start, scanner.position())
         }
     }
 
     @Test
     fun findPrevIncludesCurrentPositionAndSkipsEnd() {
         val scanner = scanner("abXcdX")
-        assertBackwardSearch(scanner, Position(0, 0), 'a', null, 0, Position(0, 0))
-        assertBackwardSearch(scanner, Position(0, 2), 'X', null, 0, Position(0, 2))
-        assertBackwardSearch(scanner, Position(0, 4), 'X', null, 2, Position(0, 2))
-        assertBackwardSearch(scanner, Position(0, 6), 'X', null, 1, Position(0, 5))
-        assertBackwardSearch(scanner, Position(0, 6), 'z', null, -1, Position(0, 0))
-        assertBackwardSearch(scanner, Position(0, 6), Scanner.END, null, -1, Position(0, 0))
+        assertBackwardSearch(scanner, Position(0, 0), 'a', Position(0, 0), 0, Position(0, 0))
+        assertBackwardSearch(scanner, Position(0, 2), 'X', Position(0, 0), 0, Position(0, 2))
+        assertBackwardSearch(scanner, Position(0, 4), 'X', Position(0, 0), 2, Position(0, 2))
+        assertBackwardSearch(scanner, Position(0, 6), 'X', Position(0, 0), 1, Position(0, 5))
+        assertBackwardSearch(scanner, Position(0, 6), 'z', Position(0, 0), -1, Position(0, 0))
+        assertBackwardSearch(scanner, Position(0, 6), Scanner.END, Position(0, 0), -1, Position(0, 0))
         scanner.setPosition(Position(0, 6))
-        assertEquals(1, scanner.findPrev(CharMatcher { true }))
+        assertEquals(1, scanner.findPrev(CharMatcher { true }, Position(0, 0)))
         assertEquals('X', scanner.peek())
-        assertEquals(0, scanner.findPrev(CharMatcher { true }))
+        assertEquals(0, scanner.findPrev(CharMatcher { true }, Position(0, 0)))
 
         val lines = scanner("ab", "c")
-        assertBackwardSearch(lines, Position(1, 1), '\n', null, 2, Position(0, 2))
-        assertBackwardSearch(lines, Position(0, 2), '\n', null, 0, Position(0, 2))
+        assertBackwardSearch(lines, Position(1, 1), '\n', Position(0, 0), 2, Position(0, 2))
+        assertBackwardSearch(lines, Position(0, 2), '\n', Position(0, 0), 0, Position(0, 2))
     }
 
     @Test
@@ -133,9 +138,6 @@ class ScannerTest {
         for (scanner in listOf(scanner(), scanner(""))) {
             val start = scanner.position()
             val matcher = CharMatcher { error("END must not be passed to the matcher") }
-            assertEquals(-1, scanner.findPrev('a'))
-            assertEquals(-1, scanner.findPrev(Scanner.END))
-            assertEquals(-1, scanner.findPrev(matcher))
             assertEquals(-1, scanner.findPrev('a', start))
             assertEquals(-1, scanner.findPrev(Scanner.END, start))
             assertEquals(-1, scanner.findPrev(matcher, start))
@@ -150,10 +152,10 @@ class ScannerTest {
     @Test
     fun findPrevCountsUtf16UnitsAndPreservesSourceSpans() {
         val unicode = scanner("A\uD83D\uDE0AZ")
-        assertBackwardSearch(unicode, Position(0, 4), '\uDE0A', null, 2, Position(0, 2))
+        assertBackwardSearch(unicode, Position(0, 4), '\uDE0A', Position(0, 0), 2, Position(0, 2))
         assertEquals('\uDE0A'.code, unicode.peekCodePoint())
         assertEquals('\uD83D'.code, unicode.peekPreviousCodePoint())
-        assertBackwardSearch(unicode, Position(0, 4), '\uD83D', null, 3, Position(0, 1))
+        assertBackwardSearch(unicode, Position(0, 4), '\uD83D', Position(0, 0), 3, Position(0, 1))
         assertEquals(128522, unicode.peekCodePoint())
         assertEquals('A'.code, unicode.peekPreviousCodePoint())
         unicode.setPosition(Position(0, 3))
@@ -164,7 +166,7 @@ class ScannerTest {
             SourceLine.of("cde", SourceSpan.of(11, 4, 20, 3)),
         ), 1, 3)
         val end = scanner.position()
-        assertEquals(5, scanner.findPrev('b'))
+        assertEquals(5, scanner.findPrev('b', Position(0, 0)))
         assertSourceLines(scanner.getSource(scanner.position(), end), "b\ncde",
             SourceSpan.of(10, 4, 14, 1), SourceSpan.of(11, 4, 20, 3))
     }
@@ -351,19 +353,19 @@ class ScannerTest {
         scanner: Scanner,
         start: Position,
         target: Char,
-        bound: Position?,
+        bound: Position,
         expectedCount: Int,
         expectedPosition: Position,
     ) {
         scanner.setPosition(start)
-        assertEquals(expectedCount, if (bound == null) scanner.findPrev(target) else scanner.findPrev(target, bound))
+        assertEquals(expectedCount, scanner.findPrev(target, bound))
         assertEquals(expectedPosition, scanner.position())
         scanner.setPosition(start)
         val matcher = CharMatcher {
             assertNotEquals(Scanner.END, it)
             it == target
         }
-        assertEquals(expectedCount, if (bound == null) scanner.findPrev(matcher) else scanner.findPrev(matcher, bound))
+        assertEquals(expectedCount, scanner.findPrev(matcher, bound))
         assertEquals(expectedPosition, scanner.position())
     }
 

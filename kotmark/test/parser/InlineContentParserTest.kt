@@ -23,9 +23,9 @@ class InlineContentParserTest {
             })
         }
         val cases = listOf(
-            Triple("img(not-a-link-)more-text) more text", "not-a-link-)more-text", " more text"),
-            Triple("img(not-a-link-)more-text)", "not-a-link-)more-text", null),
-            Triple("img(not-a-link) more text", "not-a-link", " more text"),
+            Triple("img(a-link) more text", "a-link", " more text"),
+            Triple("img(a-link-)more-text) more text", "a-link-)more-text", " more text"),
+            Triple("img(a-link-)more-text)", "a-link-)more-text", null),
             Triple("img() more text", "", " more text"),
         )
         for ([source, destination, followingText] in cases) {

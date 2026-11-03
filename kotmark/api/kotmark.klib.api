@@ -1209,9 +1209,7 @@ final class io.heapy.kotmark.parser.beta/Scanner { // io.heapy.kotmark.parser.be
 
     final fun find(io.heapy.kotmark.text/CharMatcher): kotlin/Int // io.heapy.kotmark.parser.beta/Scanner.find|find(io.heapy.kotmark.text.CharMatcher){}[0]
     final fun find(kotlin/Char): kotlin/Int // io.heapy.kotmark.parser.beta/Scanner.find|find(kotlin.Char){}[0]
-    final fun findPrev(io.heapy.kotmark.text/CharMatcher): kotlin/Int // io.heapy.kotmark.parser.beta/Scanner.findPrev|findPrev(io.heapy.kotmark.text.CharMatcher){}[0]
     final fun findPrev(io.heapy.kotmark.text/CharMatcher, io.heapy.kotmark.parser.beta/Position): kotlin/Int // io.heapy.kotmark.parser.beta/Scanner.findPrev|findPrev(io.heapy.kotmark.text.CharMatcher;io.heapy.kotmark.parser.beta.Position){}[0]
-    final fun findPrev(kotlin/Char): kotlin/Int // io.heapy.kotmark.parser.beta/Scanner.findPrev|findPrev(kotlin.Char){}[0]
     final fun findPrev(kotlin/Char, io.heapy.kotmark.parser.beta/Position): kotlin/Int // io.heapy.kotmark.parser.beta/Scanner.findPrev|findPrev(kotlin.Char;io.heapy.kotmark.parser.beta.Position){}[0]
     final fun getSource(io.heapy.kotmark.parser.beta/Position, io.heapy.kotmark.parser.beta/Position): io.heapy.kotmark.parser/SourceLines // io.heapy.kotmark.parser.beta/Scanner.getSource|getSource(io.heapy.kotmark.parser.beta.Position;io.heapy.kotmark.parser.beta.Position){}[0]
     final fun hasNext(): kotlin/Boolean // io.heapy.kotmark.parser.beta/Scanner.hasNext|hasNext(){}[0]
@@ -1224,7 +1222,6 @@ final class io.heapy.kotmark.parser.beta/Scanner { // io.heapy.kotmark.parser.be
     final fun peekCodePoint(): kotlin/Int // io.heapy.kotmark.parser.beta/Scanner.peekCodePoint|peekCodePoint(){}[0]
     final fun peekPreviousCodePoint(): kotlin/Int // io.heapy.kotmark.parser.beta/Scanner.peekPreviousCodePoint|peekPreviousCodePoint(){}[0]
     final fun position(): io.heapy.kotmark.parser.beta/Position // io.heapy.kotmark.parser.beta/Scanner.position|position(){}[0]
-    final fun prev() // io.heapy.kotmark.parser.beta/Scanner.prev|prev(){}[0]
     final fun setPosition(io.heapy.kotmark.parser.beta/Position) // io.heapy.kotmark.parser.beta/Scanner.setPosition|setPosition(io.heapy.kotmark.parser.beta.Position){}[0]
     final fun whitespace(): kotlin/Int // io.heapy.kotmark.parser.beta/Scanner.whitespace|whitespace(){}[0]
 

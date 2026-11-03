@@ -6,6 +6,11 @@ import io.heapy.kotmark.parser.SourceLines
 import io.heapy.kotmark.text.CharMatcher
 import kotlin.jvm.JvmStatic
 
+/**
+ * A cursor over source lines for parsing inline content.
+ * Lines form one character sequence with a synthetic `\n` between lines, but none after the last.
+ * Positions, movement, and returned character counts use UTF-16 code units.
+ */
 class Scanner(
     private val lines: List<SourceLine>,
     private var lineIndex: Int,
@@ -21,6 +26,7 @@ class Scanner(
         }
     }
 
+    /** Returns the current character without moving, a newline between lines, or [END] at EOF. */
     fun peek(): Char =
         if (index < lineLength) {
             line.content[index]
@@ -30,6 +36,10 @@ class Scanner(
             END
         }
 
+    /**
+     * Returns the current code point without moving. A high surrogate followed by a low surrogate
+     * on the same line is combined. Returns a newline between lines or [END]'s code at EOF.
+     */
     fun peekCodePoint(): Int {
         if (index >= lineLength) {
             return if (lineIndex < lines.lastIndex) '\n'.code else END.code
@@ -45,6 +55,10 @@ class Scanner(
         return high.code
     }
 
+    /**
+     * Returns the preceding code point without moving, combining a low surrogate with a preceding
+     * high surrogate on the same line. At a line's start returns a newline, or [END]'s code at input start.
+     */
     fun peekPreviousCodePoint(): Int {
         if (index <= 0) {
             return if (lineIndex > 0) '\n'.code else END.code
@@ -61,9 +75,11 @@ class Scanner(
         return low.code
     }
 
+    /** Whether the current position has a character, including a newline between lines. */
     fun hasNext(): Boolean =
         index < lineLength || lineIndex < lines.lastIndex
 
+    /** Advances one UTF-16 code unit, moving to the next line after its preceding newline. */
     fun next() {
         index++
         if (index > lineLength) {
@@ -73,13 +89,9 @@ class Scanner(
         }
     }
 
-    /**
-     * Moves backward by one UTF-16 code unit, reversing [next].
-     * Crossing a line boundary lands on its synthetic newline. There is no newline after the
-     * final line: from EOF this moves to the last character, or the preceding newline when the
-     * final line is empty. At the start of input, including empty input, this does nothing.
-     */
-    fun prev() {
+    // Reverses next() by one UTF-16 unit, crossing onto the preceding line's synthetic newline.
+    // At input start, including empty input, this does nothing.
+    private fun prev() {
         if (index > 0) {
             index--
         } else if (lineIndex > 0) {
@@ -90,6 +102,7 @@ class Scanner(
         }
     }
 
+    /** Advances one character if the current character is [c]; otherwise returns false without moving. */
     fun next(c: Char): Boolean {
         if (peek() != c) {
             return false
@@ -98,6 +111,10 @@ class Scanner(
         return true
     }
 
+    /**
+     * Advances over [content] if it matches entirely within the current line.
+     * Returns false without moving on a mismatch or when positioned at the end of the line.
+     */
     fun next(content: String): Boolean {
         if (index >= lineLength || index + content.length > lineLength) {
             return false
@@ -111,7 +128,7 @@ class Scanner(
         return true
     }
 
-    /** Consumes consecutive occurrences of [c], returning the number consumed. */
+    /** Consumes consecutive occurrences of [c], including newlines, returning the UTF-16 units consumed. */
     @IgnorableReturnValue
     fun matchMultiple(c: Char): Int {
         var count = 0
@@ -122,7 +139,10 @@ class Scanner(
         return count
     }
 
-    /** Consumes matching characters, returning the number consumed. */
+    /**
+     * Consumes consecutive characters matched by [matcher], returning the UTF-16 units consumed.
+     * The matcher receives newlines between lines and [END] at the end of input.
+     */
     @IgnorableReturnValue
     fun match(matcher: CharMatcher): Int {
         var count = 0
@@ -133,7 +153,7 @@ class Scanner(
         return count
     }
 
-    /** Consumes whitespace, returning the number of characters consumed. */
+    /** Consumes spaces, tabs, newlines, vertical tabs, form feeds, and carriage returns, returning their count. */
     @IgnorableReturnValue
     fun whitespace(): Int {
         var count = 0
@@ -144,6 +164,11 @@ class Scanner(
         return count
     }
 
+    /**
+     * Finds [c] at or after the current position, including newlines but never [END].
+     * Returns the UTF-16 units moved forward and leaves the cursor at the match, or returns -1
+     * at EOF on a miss. An immediate match returns 0.
+     */
     fun find(c: Char): Int {
         var count = 0
         while (true) {
@@ -159,6 +184,11 @@ class Scanner(
         }
     }
 
+    /**
+     * Finds a character matched by [matcher] at or after the current position.
+     * Returns the UTF-16 units moved forward, leaving the cursor at the match, or -1 at EOF
+     * on a miss. [END] is never passed to [matcher].
+     */
     fun find(matcher: CharMatcher): Int {
         var count = 0
         while (true) {
@@ -175,21 +205,11 @@ class Scanner(
     }
 
     /**
-     * Finds [c] at or before the current position, including synthetic newlines but never [END].
-     * Returns the UTF-16 units moved backward, or -1 on a miss, leaving the cursor at input start.
-     * An immediate match returns 0; matching the last character from EOF returns 1.
-     */
-    fun findPrev(c: Char): Int = findPrev(c, null, 0, 0)
-
-    /**
-     * Like [findPrev] for a character, but uses [matcher]. [END] is never passed to the matcher.
-     * Returns the UTF-16 units moved backward, or -1 with the cursor at input start on a miss.
-     */
-    fun findPrev(matcher: CharMatcher): Int = findPrev(END, matcher, 0, 0)
-
-    /**
      * Finds [c] at or before the cursor and at or after the inclusive [bound], never matching [END].
+     * The current character is included: an immediate match returns 0, and matching the last
+     * character from EOF returns 1. Synthetic newlines between lines can be matched.
      * Returns the UTF-16 units moved backward, or -1 with the cursor at [bound] on a miss.
+     * A bound equal to the cursor checks only that position; the search never goes before it.
      * The canonical start position is a valid bound for empty input, where the result is -1.
      * Positions should come from this scanner, as with [setPosition].
      * @throws IllegalArgumentException before moving if [bound] is outside this input or after the cursor.
@@ -231,8 +251,13 @@ class Scanner(
         }
     }
 
+    /** Returns the current position for [setPosition], [getSource], or bounded [findPrev]. */
     fun position(): Position = Position(lineIndex, index)
 
+    /**
+     * Moves to a position saved from this scanner within its source lines.
+     * @throws IllegalArgumentException if the coordinates are outside the source lines.
+     */
     fun setPosition(position: Position) {
         checkPosition(position.lineIndex, position.index)
         lineIndex = position.lineIndex
@@ -240,6 +265,11 @@ class Scanner(
         setLine(lines[lineIndex])
     }
 
+    /**
+     * Returns source from inclusive [begin] to exclusive [end] without moving the cursor.
+     * Both positions must be within this scanner's source lines, with [end] not before [begin].
+     * Newlines are represented by separate lines, retaining source spans where available.
+     */
     fun getSource(begin: Position, end: Position): SourceLines {
         if (begin.lineIndex == end.lineIndex) {
             val sourceLine = lines[begin.lineIndex]
@@ -294,11 +324,15 @@ class Scanner(
     }
 
     companion object {
-        /** End-of-input sentinel, never matched by [find] or [findPrev]. */
+        /**
+         * Sentinel for EOF or the beginning when looking backward. CommonMark replaces NUL input
+         * before inline scanning. [find] and [findPrev] never match this sentinel.
+         */
         const val END: Char = '\u0000'
 
         private val WHITESPACE = charArrayOf(' ', '\t', '\n', '\u000B', '\u000C', '\r')
 
+        /** Creates a scanner at the beginning of [lines]. */
         @JvmStatic
         fun of(lines: SourceLines): Scanner = Scanner(lines.lines, 0, 0)
 
