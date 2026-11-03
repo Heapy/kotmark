@@ -15,7 +15,19 @@ class HtmlInlineParserTest {
         assertRendering("inline <!- <!-- a -->", "<p>inline &lt;!- <!-- a --></p>\n")
         assertRendering("inline <?? <?php ?>", "<p>inline &lt;?? <?php ?></p>\n")
         assertRendering("inline <![x]]> <![CDATA[a]]>", "<p>inline &lt;![x]]&gt; <![CDATA[a]]></p>\n")
-        assertRendering("inline <!foo> <!bar baz>", "<p>inline &lt;!foo&gt; <!bar baz></p>\n")
+        assertRendering("inline <!1> <!bar baz>", "<p>inline &lt;!1&gt; <!bar baz></p>\n")
+    }
+
+    @Test
+    fun declarationsAllowLowercaseAndNoWhitespace() {
+        for (declaration in listOf("<!FOO>", "<!FOO >", "<!FOO 'bar'>", "<!foo bar>", "<!foo>")) {
+            assertRendering("inline $declaration", "<p>inline $declaration</p>\n")
+        }
+    }
+
+    @Test
+    fun unterminatedDeclarationsRemainText() {
+        assertRendering("inline <!foo <!bar", "<p>inline &lt;!foo &lt;!bar</p>\n")
     }
 
     @Test
@@ -25,6 +37,7 @@ class HtmlInlineParserTest {
         assertRendering("x <!--a\n\nx <!--b-->", "<p>x &lt;!--a</p>\n<p>x <!--b--></p>\n")
         assertRendering("x <![CDATA[a\n\nx <![CDATA[b]]>", "<p>x &lt;![CDATA[a</p>\n<p>x <![CDATA[b]]></p>\n")
         assertRendering("x <!A a\n\nx <!A b>", "<p>x &lt;!A a</p>\n<p>x <!A b></p>\n")
+        assertRendering("x <!foo\n\nx <!bar>", "<p>x &lt;!foo</p>\n<p>x <!bar></p>\n")
     }
 
     private fun assertRendering(source: String, expected: String) {

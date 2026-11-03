@@ -141,7 +141,7 @@ class InlineComponentsTest {
         for (sample in samples) {
             assertEquals(sample, assertIs<HtmlInline>(parse(HtmlInlineParser(), sample).node).literal)
         }
-        assertNull(tryParse(HtmlInlineParser(), "<!FOO>"))
+        assertNull(tryParse(HtmlInlineParser(), "<!1>"))
     }
 
     @Test

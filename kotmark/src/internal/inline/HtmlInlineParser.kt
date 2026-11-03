@@ -90,7 +90,6 @@ class HtmlInlineParser : InlineContentParser {
     private fun tryDeclaration(scanner: Scanner): Boolean {
         if (noDeclarationEnd) return false
         scanner.match(ASCII_LETTER)
-        if (scanner.whitespace() <= 0) return false
         if (scanner.find('>') >= 0) {
             scanner.next()
             return true

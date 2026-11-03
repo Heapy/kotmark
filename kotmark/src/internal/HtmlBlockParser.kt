@@ -109,7 +109,7 @@ class HtmlBlockParser private constructor(
             ),
             BlockPatterns(Regex("^<!--"), Regex("-->")),
             BlockPatterns(Regex("^<[?]"), Regex("""\?>""")),
-            BlockPatterns(Regex("^<![A-Z]"), Regex(">")),
+            BlockPatterns(Regex("^<![A-Za-z]"), Regex(">")),
             BlockPatterns(Regex("""^<!\[CDATA\["""), Regex("""\]\]>""")),
             BlockPatterns(
                 Regex(

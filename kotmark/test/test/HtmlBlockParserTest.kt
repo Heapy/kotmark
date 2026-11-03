@@ -4,6 +4,7 @@ import io.heapy.kotmark.node.BlockQuote
 import io.heapy.kotmark.node.HtmlBlock
 import io.heapy.kotmark.node.Paragraph
 import io.heapy.kotmark.parser.parser
+import io.heapy.kotmark.renderer.html.htmlRenderer
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
@@ -11,6 +12,30 @@ import kotlin.test.assertNull
 
 class HtmlBlockParserTest {
     private val parser = parser()
+
+    @Test
+    fun lowercaseDeclarationStartsHtmlBlock() {
+        val document = parser.parse("<!doctype html>")
+        assertIs<HtmlBlock>(document.firstChild)
+        assertEquals("<!doctype html>\n", htmlRenderer().render(document))
+    }
+
+    @Test
+    fun declarationEndsOnClosingAngleBracket() {
+        val document = parser.parse("<!x\nfoo>\nbar")
+        val declaration = assertIs<HtmlBlock>(document.firstChild)
+        assertIs<Paragraph>(declaration.next)
+        assertEquals("<!x\nfoo>\n<p>bar</p>\n", htmlRenderer().render(document))
+    }
+
+    @Test
+    fun declarationsRequireAsciiLetterButMayContinueToEof() {
+        assertIs<Paragraph>(parser.parse("<!1>").firstChild)
+        assertIs<Paragraph>(parser.parse("<!é>").firstChild)
+        val document = parser.parse("<!x\nfoo")
+        assertIs<HtmlBlock>(document.firstChild)
+        assertEquals("<!x\nfoo\n", htmlRenderer().render(document))
+    }
 
     @Test
     fun completeTagsPreserveAttributeGrammar() {
