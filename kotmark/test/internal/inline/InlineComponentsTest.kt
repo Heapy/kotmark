@@ -145,6 +145,13 @@ class InlineComponentsTest {
     }
 
     @Test
+    fun processingInstructionConsumesConsecutiveQuestionMarksAsOneNode() {
+        val source = "<?? <?php ?>"
+        val inline = assertIs<HtmlInline>(parse(HtmlInlineParser(), source).node)
+        assertEquals(source, inline.literal)
+    }
+
+    @Test
     fun emphasisDelimiterProcessing() {
         val parent = Paragraph()
         val opener = Text("*")

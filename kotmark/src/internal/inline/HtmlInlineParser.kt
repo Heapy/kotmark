@@ -44,14 +44,11 @@ class HtmlInlineParser : InlineContentParser {
     private fun tryProcessingInstruction(scanner: Scanner): Boolean {
         if (noProcessingInstructionEnd) return false
         scanner.next()
-        var found = scanner.find('?')
-        while (found > 0) {
+        while (scanner.find('?') >= 0) {
             scanner.next()
             if (scanner.next('>')) return true
-            found = scanner.find('?')
         }
-        // Finding `?` at the current position is an early failure, not the end of the input.
-        noProcessingInstructionEnd = found < 0
+        noProcessingInstructionEnd = true
         return false
     }
 
