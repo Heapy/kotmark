@@ -3,7 +3,6 @@ package io.heapy.kotmark.internal
 import io.heapy.kotmark.node.Block
 import io.heapy.kotmark.node.ListBlock
 import io.heapy.kotmark.node.ListItem
-import io.heapy.kotmark.node.Paragraph
 import io.heapy.kotmark.parser.block.AbstractBlockParser
 import io.heapy.kotmark.parser.block.BlockContinue
 import io.heapy.kotmark.parser.block.ParserState
@@ -17,24 +16,27 @@ class ListItemParser(
         this.contentIndent = this@ListItemParser.contentIndent
     }
 
-    private var hadBlankLine: Boolean = false
+    private var lineBlank: Boolean = false
+    private var previousLineBlank: Boolean = false
 
     override fun isContainer(): Boolean = true
 
     override fun canContain(childBlock: Block): Boolean {
-        if (hadBlankLine) {
+        if (previousLineBlank) {
+            // A new block after a blank line makes the list loose; an empty item would have ended.
             (block.parent as? ListBlock)?.isTight = false
         }
         return true
     }
 
     override fun tryContinue(parserState: ParserState): BlockContinue? {
-        if (parserState.isBlank) {
+        // Blank lines inside a continuing block must not affect the list's tightness later.
+        previousLineBlank = lineBlank
+        lineBlank = parserState.isBlank
+        if (lineBlank) {
             if (block.firstChild == null) {
                 return null
             }
-            val activeBlock = parserState.activeBlockParser.block
-            hadBlankLine = activeBlock is Paragraph || activeBlock is ListItem
             return BlockContinue.AtIndex(parserState.nextNonSpaceIndex)
         }
 

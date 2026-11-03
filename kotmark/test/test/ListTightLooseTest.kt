@@ -4,6 +4,95 @@ import kotlin.test.Test
 
 class ListTightLooseTest : CoreRenderingTestCase() {
     @Test
+    fun looseBlankLineAfterHtmlBlock() {
+        assertRendering(
+            "- <!-- comment -->\n\n  bar\n",
+            """
+                |<ul>
+                |<li>
+                |<!-- comment -->
+                |<p>bar</p>
+                |</li>
+                |</ul>
+                |
+            """.trimMargin(),
+        )
+    }
+
+    @Test
+    fun looseBlankLineAfterIndentedCodeBlock() {
+        assertRendering(
+            "-     foo\n\n  bar\n",
+            """
+                |<ul>
+                |<li>
+                |<pre><code>foo
+                |</code></pre>
+                |<p>bar</p>
+                |</li>
+                |</ul>
+                |
+            """.trimMargin(),
+        )
+    }
+
+    @Test
+    fun looseBlankLineAfterSetextHeading() {
+        assertRendering(
+            "- foo\n  -\n\n  bar\n",
+            """
+                |<ul>
+                |<li>
+                |<h2>foo</h2>
+                |<p>bar</p>
+                |</li>
+                |</ul>
+                |
+            """.trimMargin(),
+        )
+    }
+
+    @Test
+    fun tightListWithIndentedCodeBlock() {
+        assertRendering(
+            "-     foo\n\n      bar\n  baz\n",
+            """
+                |<ul>
+                |<li>
+                |<pre><code>foo
+                |
+                |bar
+                |</code></pre>
+                |baz</li>
+                |</ul>
+                |
+            """.trimMargin(),
+        )
+    }
+
+    @Test
+    fun tightOuterWithLooseNested() {
+        // The blank line separates blocks in the nested item, not in the outer item.
+        assertRendering(
+            "- a\n  - b\n\n    c\n  # d\n",
+            """
+                |<ul>
+                |<li>a
+                |<ul>
+                |<li>
+                |<p>b</p>
+                |<p>c</p>
+                |</li>
+                |</ul>
+                |<h1>d</h1>
+                |</li>
+                |</ul>
+                |
+            """.trimMargin(),
+        )
+    }
+
+    @Test
     fun tight() {
         assertRendering(
             "- foo\n" +
