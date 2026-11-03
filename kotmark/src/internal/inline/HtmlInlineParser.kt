@@ -10,6 +10,14 @@ import io.heapy.kotmark.parser.beta.Scanner
 import io.heapy.kotmark.text.asciiMatcher
 
 class HtmlInlineParser : InlineContentParser {
+    // A scan reaching the end proves that later scans in the same inline snippet cannot find
+    // the terminator either. Remembering that avoids quadratic rescanning of unclosed constructs.
+    // A parser is created for each inline snippet, so these flags do not need to be reset.
+    private var noProcessingInstructionEnd = false
+    private var noCommentEnd = false
+    private var noCdataEnd = false
+    private var noDeclarationEnd = false
+
     override fun tryParse(inlineParserState: InlineParserState): ParsedInline? {
         val scanner = inlineParserState.scanner()
         val start = scanner.position()
@@ -31,6 +39,64 @@ class HtmlInlineParser : InlineContentParser {
             }
         }
         return ParsedInline.none()
+    }
+
+    private fun tryProcessingInstruction(scanner: Scanner): Boolean {
+        if (noProcessingInstructionEnd) return false
+        scanner.next()
+        var found = scanner.find('?')
+        while (found > 0) {
+            scanner.next()
+            if (scanner.next('>')) return true
+            found = scanner.find('?')
+        }
+        // Finding `?` at the current position is an early failure, not the end of the input.
+        noProcessingInstructionEnd = found < 0
+        return false
+    }
+
+    private fun tryComment(scanner: Scanner): Boolean {
+        // Both short comments, `<!-->` and `<!--->`, also contain `-->`.
+        if (noCommentEnd) return false
+        scanner.next()
+        if (!scanner.next('-')) return false
+        if (scanner.next('>') || scanner.next("->")) return true
+
+        while (scanner.find('-') >= 0) {
+            if (scanner.next("-->")) {
+                return true
+            }
+            scanner.next()
+        }
+        noCommentEnd = true
+        return false
+    }
+
+    private fun tryCdata(scanner: Scanner): Boolean {
+        if (noCdataEnd) return false
+        scanner.next()
+        if (scanner.next("CDATA[")) {
+            while (scanner.find(']') >= 0) {
+                if (scanner.next("]]>")) {
+                    return true
+                }
+                scanner.next()
+            }
+            noCdataEnd = true
+        }
+        return false
+    }
+
+    private fun tryDeclaration(scanner: Scanner): Boolean {
+        if (noDeclarationEnd) return false
+        scanner.match(ASCII_LETTER)
+        if (scanner.whitespace() <= 0) return false
+        if (scanner.find('>') >= 0) {
+            scanner.next()
+            return true
+        }
+        noDeclarationEnd = true
+        return false
     }
 
     class Factory : InlineContentParserFactory {
@@ -121,52 +187,6 @@ class HtmlInlineParser : InlineContentParser {
             scanner.match(TAG_NAME_CONTINUE)
             scanner.whitespace()
             return scanner.next('>')
-        }
-
-        private fun tryProcessingInstruction(scanner: Scanner): Boolean {
-            scanner.next()
-            while (scanner.find('?') > 0) {
-                scanner.next()
-                if (scanner.next('>')) return true
-            }
-            return false
-        }
-
-        private fun tryComment(scanner: Scanner): Boolean {
-            scanner.next()
-            if (!scanner.next('-')) return false
-            if (scanner.next('>') || scanner.next("->")) return true
-
-            while (scanner.find('-') >= 0) {
-                if (scanner.next("-->")) {
-                    return true
-                }
-                scanner.next()
-            }
-            return false
-        }
-
-        private fun tryCdata(scanner: Scanner): Boolean {
-            scanner.next()
-            if (scanner.next("CDATA[")) {
-                while (scanner.find(']') >= 0) {
-                    if (scanner.next("]]>")) {
-                        return true
-                    }
-                    scanner.next()
-                }
-            }
-            return false
-        }
-
-        private fun tryDeclaration(scanner: Scanner): Boolean {
-            scanner.match(ASCII_LETTER)
-            if (scanner.whitespace() <= 0) return false
-            if (scanner.find('>') >= 0) {
-                scanner.next()
-                return true
-            }
-            return false
         }
     }
 }

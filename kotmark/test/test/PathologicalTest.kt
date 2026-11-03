@@ -105,6 +105,23 @@ class PathologicalTest {
         )
     }
 
+    // Nearby `>` characters keep the separate autolink scan cheap. Leading text prevents HTML
+    // block parsing, so these exercise repeated inline scans for a terminator that never occurs.
+    @Test
+    fun htmlProcessingInstructionsWithNoEnd() {
+        assertRendering("x <? >".repeat(size), "<p>" + "x &lt;? &gt;".repeat(size) + "</p>\n")
+    }
+
+    @Test
+    fun htmlCommentsWithNoEnd() {
+        assertRendering("x <!-- >".repeat(size), "<p>" + "x &lt;!-- &gt;".repeat(size) + "</p>\n")
+    }
+
+    @Test
+    fun htmlCdataWithNoEnd() {
+        assertRendering("x <![CDATA[ >".repeat(size), "<p>" + "x &lt;![CDATA[ &gt;".repeat(size) + "</p>\n")
+    }
+
     private fun assertRendering(source: String, expected: String) {
         assertEquals(expected, renderer.render(parser.parse(source)))
     }
