@@ -14,15 +14,15 @@ test-dependencies:
 dependencies:
   - //kotmark
   - //kotmark-ext-emoji
-  - ../kotmark-ext-autolink
-  - ../kotmark-ext-footnotes
-  - ../kotmark-ext-gfm-alerts
-  - ../kotmark-ext-gfm-strikethrough
-  - ../kotmark-ext-gfm-tables
-  - ../kotmark-ext-heading-anchor
-  - ../kotmark-ext-image-attributes
-  - ../kotmark-ext-ins
+  - //kotmark-ext-autolink
+  - //kotmark-ext-footnotes
+  - //kotmark-ext-gfm-alerts
+  - //kotmark-ext-gfm-strikethrough
+  - //kotmark-ext-gfm-tables
+  - //kotmark-ext-heading-anchor
+  - //kotmark-ext-image-attributes
+  - //kotmark-ext-ins
   - //kotmark-ext-highlight
   - //kotmark-ext-math
-  - ../kotmark-ext-task-list-items
-  - ../kotmark-ext-yaml-front-matter
+  - //kotmark-ext-task-list-items
+  - //kotmark-ext-yaml-front-matter
