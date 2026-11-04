@@ -16,6 +16,7 @@ import io.heapy.kotmark.docs.examples.extensions.renderWithMath
 import io.heapy.kotmark.docs.examples.extensions.renderWithStrikethrough
 import io.heapy.kotmark.docs.examples.extensions.renderWithTables
 import io.heapy.kotmark.docs.examples.extensions.renderWithTaskLists
+import io.heapy.kotmark.docs.examples.extensions.renderWithToc
 import io.heapy.kotmark.docs.examples.guides.baseUrlRenderer
 import io.heapy.kotmark.docs.examples.guides.renderConfigured
 import io.heapy.kotmark.docs.examples.guides.routingRenderer
@@ -516,6 +517,7 @@ internal fun renderExample(id: String, input: String, repository: Path): String 
     "gfm-strikethrough" -> renderWithStrikethrough(input)
     "gfm-tables" -> renderWithTables(input)
     "heading-anchor" -> renderWithHeadingIds(input)
+    "toc" -> renderWithToc(input)
     "highlight" -> renderWithHighlight(input)
     "image-attributes" -> renderWithImageAttributes(input)
     "ins" -> renderWithIns(input)

@@ -25,4 +25,5 @@ dependencies:
   - //kotmark-ext-highlight
   - //kotmark-ext-math
   - //kotmark-ext-task-list-items
+  - //kotmark-ext-toc
   - //kotmark-ext-yaml-front-matter

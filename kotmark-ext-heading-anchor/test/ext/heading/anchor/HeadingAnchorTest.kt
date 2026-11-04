@@ -12,6 +12,13 @@ class HeadingAnchorTest {
         htmlRenderer { extensions(listOf(HeadingAnchorExtension.create())) }
 
     @Test
+    fun generatedSuffixesNeverReuseAnEarlierNaturalId() {
+        val generator = idGenerator { prefix = "p-"; suffix = "-s" }
+        assertEquals(listOf("p-a-1-s", "p-a-s", "p-a-2-s", "p-a-1-1-s", "p-a-3-s"),
+            listOf("a-1", "a", "a", "a-1", "a").map(generator::generateId))
+    }
+
+    @Test
     fun supplementaryLettersDigitsAndMarksArePreserved() {
         val text = "\uD840\uDC00\uD835\uDFCE\uD834\uDD65"
         assertHtml("# $text", """<h1 id="$text">$text</h1>""" + "\n")
@@ -52,7 +59,7 @@ class HeadingAnchorTest {
             """
                 |<h1 id="header">Header</h1>
                 |<h1 id="header-1">Header</h1>
-                |<h1 id="header-1">Header-1</h1>
+                |<h1 id="header-1-1">Header-1</h1>
                 |
             """.trimMargin(),
         )

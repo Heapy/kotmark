@@ -18,6 +18,7 @@ cards: []
 | [GFM strikethrough](gfm-strikethrough.md) | Struck-through text |
 | [GFM tables](gfm-tables.md) | Pipe tables |
 | [Heading anchors](heading-anchor.md) | Stable heading IDs |
+| [Table of contents](toc.md) | Linked heading outlines with `[TOC]` or `[[_TOC_]]` |
 | [Highlight](highlight.md) | `==highlighted text==` |
 | [Image attributes](image-attributes.md) | Extra image attributes |
 | [Inserted text](ins.md) | Inserted text syntax |
@@ -43,6 +44,7 @@ functions from the packages listed on the individual extension pages.
 | GFM strikethrough | `strikethrough { requireTwoTildes = true }` |
 | GFM tables | `tables { maxCells = 100_000 }` |
 | Heading anchors | `headingAnchor { idPrefix = "section-" }` |
+| Table of contents | `toc { headingLevels = 2..6 }` |
 | Highlight | `highlight()` |
 | Image attributes | `imageAttributes()` |
 | Inserted text | `ins()` |

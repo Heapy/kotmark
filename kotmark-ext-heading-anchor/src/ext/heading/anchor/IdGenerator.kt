@@ -5,6 +5,7 @@ import io.heapy.kotmark.internal.util.UnicodeCategories
 
 class IdGenerator private constructor(configuration: Configuration) {
     private val identities = mutableMapOf<String, Int>()
+    private val usedIds = mutableSetOf<String>()
     private val defaultIdentifier = configuration.defaultId
     private val prefix = configuration.prefix
     private val suffix = configuration.suffix
@@ -14,14 +15,14 @@ class IdGenerator private constructor(configuration: Configuration) {
         if (normalized.isEmpty()) {
             normalized = defaultIdentifier
         }
-        val count = identities[normalized]
-        return if (count == null) {
-            identities[normalized] = 1
-            "$prefix$normalized$suffix"
-        } else {
-            identities[normalized] = count + 1
-            "$prefix$normalized-$count$suffix"
-        }
+        var count = identities[normalized] ?: 0
+        var candidate: String
+        do {
+            candidate = "$prefix$normalized${if (count == 0) "" else "-$count"}$suffix"
+            count++
+        } while (!usedIds.add(candidate))
+        identities[normalized] = count
+        return candidate
     }
 
     private fun normalizeText(text: String): String =

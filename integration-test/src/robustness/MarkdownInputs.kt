@@ -14,6 +14,7 @@ object MarkdownInputs {
         "https://example.com/a_(b) user@example.com www.example.com",
         "&amp; &#0; &#x10FFFF; \\*escaped\\*", "# same\n\n# same\n",
         "[ref] [^note]\n", "[[[[[[[[(((((((********________````````",
+        "[TOC]\n\n# Heading\n\n### Nested\n\n[[_TOC_]]\n",
     )
     private val tokens = seeds + listOf("\n", "\r\n", "\t", " ", "[", "]", "(", ")", "*", "_", "`", "\\", "<", ">", "&", "|", "$", "=", "+", "~")
 

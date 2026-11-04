@@ -18,6 +18,7 @@ dependencies:
   - //kotmark-ext-ins
   - //kotmark-ext-math
   - //kotmark-ext-task-list-items
+  - //kotmark-ext-toc
   - //kotmark-ext-yaml-front-matter
   - //kotmark-renderer-kotlinx-html
 

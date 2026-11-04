@@ -64,6 +64,9 @@ navigation:
       - label: Emoji
         href: extensions/emoji.html
         number: "13"
+      - label: Table of contents
+        href: extensions/toc.html
+        number: "14"
   - title: Project
     items:
       - label: Contributing
@@ -94,5 +97,6 @@ pages:
   - extensions/task-list-items.md
   - extensions/yaml-front-matter.md
   - extensions/emoji.md
+  - extensions/toc.md
   - contributing.md
   - credits.md

@@ -16,6 +16,7 @@ import io.heapy.kotmark.docs.examples.extensions.renderWithMath
 import io.heapy.kotmark.docs.examples.extensions.renderWithStrikethrough
 import io.heapy.kotmark.docs.examples.extensions.renderWithTables
 import io.heapy.kotmark.docs.examples.extensions.renderWithTaskLists
+import io.heapy.kotmark.docs.examples.extensions.renderWithToc
 import io.heapy.kotmark.ext.math.math
 import io.heapy.kotmark.extensions
 import io.heapy.kotmark.parser.parser
@@ -24,6 +25,27 @@ import kotlin.test.assertEquals
 
 /** Inputs and outputs mirror the examples shown on the site's extension pages. */
 class ExtensionExamplesTest {
+    @Test
+    fun tableOfContents() {
+        assertEquals(
+            """
+                |<ul>
+                |<li><a href="#section-getting-started">Getting started</a>
+                |<ul>
+                |<li><a href="#section-install">Install</a></li>
+                |</ul>
+                |</li>
+                |<li><a href="#section-usage">Usage</a></li>
+                |</ul>
+                |<h2 id="section-getting-started">Getting started</h2>
+                |<h3 id="section-install">Install</h3>
+                |<h2 id="section-usage">Usage</h2>
+                |
+            """.trimMargin(),
+            renderWithToc("[TOC]\n\n## Getting started\n### Install\n## Usage"),
+        )
+    }
+
     @Test
     fun emoji() {
         assertEquals(

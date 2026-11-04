@@ -29,3 +29,8 @@ Configure a prefix and a fallback ID for headings whose text has no slug charact
 ## ID generation
 
 Heading text is normalized to lowercase, punctuation is removed, and repeated IDs get a numeric suffix. The extension can add a prefix and suffix to each generated value.
+
+Generated IDs also avoid collisions with earlier suffixed headings: `Header`,
+`Header`, `Header-1` become `header`, `header-1`, `header-1-1`.
+Combine this extension with [table of contents](toc.md) to link an outline to the
+same IDs.

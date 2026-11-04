@@ -1,0 +1,48 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, js, linuxArm64, linuxX64, macosArm64, mingwX64, tvosArm64, tvosSimulatorArm64, wasmJs, wasmWasi, watchosArm64, watchosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <kotmark-ext-toc>
+final enum class io.heapy.kotmark.ext.toc/TocPlacement : kotlin/Enum<io.heapy.kotmark.ext.toc/TocPlacement> { // io.heapy.kotmark.ext.toc/TocPlacement|null[0]
+    enum entry APPEND_IF_MISSING // io.heapy.kotmark.ext.toc/TocPlacement.APPEND_IF_MISSING|null[0]
+    enum entry MARKERS // io.heapy.kotmark.ext.toc/TocPlacement.MARKERS|null[0]
+    enum entry PREPEND_IF_MISSING // io.heapy.kotmark.ext.toc/TocPlacement.PREPEND_IF_MISSING|null[0]
+
+    final val entries // io.heapy.kotmark.ext.toc/TocPlacement.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<io.heapy.kotmark.ext.toc/TocPlacement> // io.heapy.kotmark.ext.toc/TocPlacement.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): io.heapy.kotmark.ext.toc/TocPlacement // io.heapy.kotmark.ext.toc/TocPlacement.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<io.heapy.kotmark.ext.toc/TocPlacement> // io.heapy.kotmark.ext.toc/TocPlacement.values|values#static(){}[0]
+}
+
+final class io.heapy.kotmark.ext.toc/TableOfContents : io.heapy.kotmark.node/CustomBlock { // io.heapy.kotmark.ext.toc/TableOfContents|null[0]
+    constructor <init>(kotlin/String = ...) // io.heapy.kotmark.ext.toc/TableOfContents.<init>|<init>(kotlin.String){}[0]
+
+    final val marker // io.heapy.kotmark.ext.toc/TableOfContents.marker|{}marker[0]
+        final fun <get-marker>(): kotlin/String // io.heapy.kotmark.ext.toc/TableOfContents.marker.<get-marker>|<get-marker>(){}[0]
+}
+
+final class io.heapy.kotmark.ext.toc/TocExtension : io.heapy.kotmark.parser/Parser.ParserExtension, io.heapy.kotmark.renderer.html/HtmlRenderer.HtmlRendererExtension, io.heapy.kotmark.renderer.markdown/MarkdownRenderer.MarkdownRendererExtension, io.heapy.kotmark.renderer.text/TextContentRenderer.TextContentRendererExtension { // io.heapy.kotmark.ext.toc/TocExtension|null[0]
+    final fun extend(io.heapy.kotmark.parser/Parser.Configuration) // io.heapy.kotmark.ext.toc/TocExtension.extend|extend(io.heapy.kotmark.parser.Parser.Configuration){}[0]
+    final fun extend(io.heapy.kotmark.renderer.html/HtmlRenderer.Configuration) // io.heapy.kotmark.ext.toc/TocExtension.extend|extend(io.heapy.kotmark.renderer.html.HtmlRenderer.Configuration){}[0]
+    final fun extend(io.heapy.kotmark.renderer.markdown/MarkdownRenderer.Configuration) // io.heapy.kotmark.ext.toc/TocExtension.extend|extend(io.heapy.kotmark.renderer.markdown.MarkdownRenderer.Configuration){}[0]
+    final fun extend(io.heapy.kotmark.renderer.text/TextContentRenderer.Configuration) // io.heapy.kotmark.ext.toc/TocExtension.extend|extend(io.heapy.kotmark.renderer.text.TextContentRenderer.Configuration){}[0]
+
+    final class Configuration { // io.heapy.kotmark.ext.toc/TocExtension.Configuration|null[0]
+        final var headingLevels // io.heapy.kotmark.ext.toc/TocExtension.Configuration.headingLevels|{}headingLevels[0]
+            final fun <get-headingLevels>(): kotlin.ranges/IntRange // io.heapy.kotmark.ext.toc/TocExtension.Configuration.headingLevels.<get-headingLevels>|<get-headingLevels>(){}[0]
+            final fun <set-headingLevels>(kotlin.ranges/IntRange) // io.heapy.kotmark.ext.toc/TocExtension.Configuration.headingLevels.<set-headingLevels>|<set-headingLevels>(kotlin.ranges.IntRange){}[0]
+        final var markers // io.heapy.kotmark.ext.toc/TocExtension.Configuration.markers|{}markers[0]
+            final fun <get-markers>(): kotlin.collections/List<kotlin/String> // io.heapy.kotmark.ext.toc/TocExtension.Configuration.markers.<get-markers>|<get-markers>(){}[0]
+            final fun <set-markers>(kotlin.collections/List<kotlin/String>) // io.heapy.kotmark.ext.toc/TocExtension.Configuration.markers.<set-markers>|<set-markers>(kotlin.collections.List<kotlin.String>){}[0]
+        final var placement // io.heapy.kotmark.ext.toc/TocExtension.Configuration.placement|{}placement[0]
+            final fun <get-placement>(): io.heapy.kotmark.ext.toc/TocPlacement // io.heapy.kotmark.ext.toc/TocExtension.Configuration.placement.<get-placement>|<get-placement>(){}[0]
+            final fun <set-placement>(io.heapy.kotmark.ext.toc/TocPlacement) // io.heapy.kotmark.ext.toc/TocExtension.Configuration.placement.<set-placement>|<set-placement>(io.heapy.kotmark.ext.toc.TocPlacement){}[0]
+    }
+}
+
+final fun (io.heapy.kotmark/ExtensionsBuilder).io.heapy.kotmark.ext.toc/toc(kotlin/Function1<io.heapy.kotmark.ext.toc/TocExtension.Configuration, kotlin/Unit> = ...) // io.heapy.kotmark.ext.toc/toc|toc@io.heapy.kotmark.ExtensionsBuilder(kotlin.Function1<io.heapy.kotmark.ext.toc.TocExtension.Configuration,kotlin.Unit>){}[0]
+final fun io.heapy.kotmark.ext.toc/tocExtension(kotlin/Function1<io.heapy.kotmark.ext.toc/TocExtension.Configuration, kotlin/Unit> = ...): io.heapy.kotmark.ext.toc/TocExtension // io.heapy.kotmark.ext.toc/tocExtension|tocExtension(kotlin.Function1<io.heapy.kotmark.ext.toc.TocExtension.Configuration,kotlin.Unit>){}[0]

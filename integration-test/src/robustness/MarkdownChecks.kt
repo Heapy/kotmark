@@ -13,6 +13,7 @@ import io.heapy.kotmark.ext.image.attributes.ImageAttributesExtension
 import io.heapy.kotmark.ext.ins.InsExtension
 import io.heapy.kotmark.ext.math.MathExtension
 import io.heapy.kotmark.ext.task.list.items.TaskListItemsExtension
+import io.heapy.kotmark.ext.toc.tocExtension
 import io.heapy.kotmark.node.Node
 import io.heapy.kotmark.parser.IncludeSourceSpans
 import io.heapy.kotmark.parser.parser
@@ -35,6 +36,7 @@ fun robustnessExtensions(): List<Extension> = listOf(
     TaskListItemsExtension.create(),
     YamlFrontMatterExtension.create(),
     HeadingAnchorExtension.create(),
+    tocExtension(),
 )
 
 class MarkdownChecks(private val extensions: List<Extension> = emptyList()) {

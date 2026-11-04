@@ -1,0 +1,40 @@
+public final class io/heapy/kotmark/ext/toc/TableOfContents : io/heapy/kotmark/node/CustomBlock {
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getMarker ()Ljava/lang/String;
+}
+
+public final class io/heapy/kotmark/ext/toc/TocExtension : io/heapy/kotmark/parser/Parser$ParserExtension, io/heapy/kotmark/renderer/html/HtmlRenderer$HtmlRendererExtension, io/heapy/kotmark/renderer/markdown/MarkdownRenderer$MarkdownRendererExtension, io/heapy/kotmark/renderer/text/TextContentRenderer$TextContentRendererExtension {
+	public synthetic fun <init> (Lio/heapy/kotmark/ext/toc/TocExtension$Configuration;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun extend (Lio/heapy/kotmark/parser/Parser$Configuration;)V
+	public fun extend (Lio/heapy/kotmark/renderer/html/HtmlRenderer$Configuration;)V
+	public fun extend (Lio/heapy/kotmark/renderer/markdown/MarkdownRenderer$Configuration;)V
+	public fun extend (Lio/heapy/kotmark/renderer/text/TextContentRenderer$Configuration;)V
+}
+
+public final class io/heapy/kotmark/ext/toc/TocExtension$Configuration {
+	public final fun getHeadingLevels ()Lkotlin/ranges/IntRange;
+	public final fun getMarkers ()Ljava/util/List;
+	public final fun getPlacement ()Lio/heapy/kotmark/ext/toc/TocPlacement;
+	public final fun setHeadingLevels (Lkotlin/ranges/IntRange;)V
+	public final fun setMarkers (Ljava/util/List;)V
+	public final fun setPlacement (Lio/heapy/kotmark/ext/toc/TocPlacement;)V
+}
+
+public final class io/heapy/kotmark/ext/toc/TocExtensionKt {
+	public static final fun toc (Lio/heapy/kotmark/ExtensionsBuilder;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun toc$default (Lio/heapy/kotmark/ExtensionsBuilder;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public static final fun tocExtension (Lkotlin/jvm/functions/Function1;)Lio/heapy/kotmark/ext/toc/TocExtension;
+	public static synthetic fun tocExtension$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/heapy/kotmark/ext/toc/TocExtension;
+}
+
+public final class io/heapy/kotmark/ext/toc/TocPlacement : java/lang/Enum {
+	public static final field APPEND_IF_MISSING Lio/heapy/kotmark/ext/toc/TocPlacement;
+	public static final field MARKERS Lio/heapy/kotmark/ext/toc/TocPlacement;
+	public static final field PREPEND_IF_MISSING Lio/heapy/kotmark/ext/toc/TocPlacement;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/heapy/kotmark/ext/toc/TocPlacement;
+	public static fun values ()[Lio/heapy/kotmark/ext/toc/TocPlacement;
+}
+
