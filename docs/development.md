@@ -44,8 +44,8 @@ signing and checksum generation still requires a publication integration; runnin
 
 Before a release, select a non-SNAPSHOT version in the library template and
 complete release verification, including the full multiplatform publication and
-an independent Gradle consumer. The current `0.1.0-SNAPSHOT` is still the
-development version; enabling Central publication does not prepare a release.
+an independent Gradle consumer. The library template selects the release version;
+enabling Central publication does not by itself prepare a release.
 
 Set these environment variables in the local publishing shell using credentials
 from your secret store (do not commit their values):
@@ -190,13 +190,11 @@ node scripts/test-additional-platforms.mjs watchosSimulatorArm64
 
 Production libraries apply `library.module-template.yaml`; test infrastructure and
 benchmarks use the common template without API, documentation, or coverage policy.
-The library template supplies `io.heapy.kotmark:…:0.1.0-SNAPSHOT` metadata for
-publication and Dokka's KMP model. The `0.1.0` coordinates in the user guides refer
-to the planned first release.
+The library template supplies `io.heapy.kotmark:…:0.1.0` metadata for
+publication and Dokka's KMP model, matching the coordinates in the user guides.
 
-**API review:** BCV checks committed JVM and KLib snapshots. Before the first
-release, the ABI is not frozen: remove obsolete compatibility aliases instead of
-preserving them. Review declaration changes and update callers, documentation, and
+**API review:** BCV checks committed JVM and KLib snapshots. Review the compatibility
+impact of changes to published declarations. Update callers, documentation, and
 snapshots together, then check the affected modules:
 
 ```shell

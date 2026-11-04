@@ -47,9 +47,8 @@ for fuzzing, coverage, benchmarks, and the CI target matrix. KLib API checks are
 host-dependent; a local pass does not cover every target. Keep generated reports
 under ignored `build/`; review committed API baselines and fixture sources explicitly.
 
-Kotmark has not had its first release, so its ABI is not frozen. Prefer a clean
-API over deprecated aliases or forwarding overloads kept solely for compatibility.
-Update callers, documentation, and API snapshots together when changing declarations.
+Review the compatibility impact of changes to published declarations. Update
+callers, documentation, and API snapshots together when changing declarations.
 
 ## Behavioral contracts
 
@@ -69,7 +68,7 @@ Update callers, documentation, and API snapshots together when changing declarat
 
 - `README.md`: project purpose, installation, one minimal example, platform families,
   high-level spec coverage, and links. Document `io.heapy.kotmark:kotmark:0.1.0`
-  as the planned first release; local build metadata may still use a snapshot version.
+  as the first release; keep release coordinates and build metadata aligned.
 - `docs/site` and `docs/pages`: a hand-written `index.html`, shared assets, and
   Markdown sources rendered to matching HTML pages by `docs/site-builder` with
   kotmark. `docs/pages/site.yml` is decoded with kotaml and orders navigation.
