@@ -147,6 +147,7 @@ jobs:
       - uses: Heapy/setup-main-kts@b0858237748f325b825e752bbac2ec2eb1fb9419 # v1.0.1
         with:
           kotlin-version: '2.4.21'
+          kotlin-sha256: '7cc140e76daf416a0424a5557f99afd7ca89ebd463ea1101261e3e01c33e75cd'
           java-version: '25'
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
@@ -315,6 +316,7 @@ jobs:
         uses: Heapy/setup-main-kts@b0858237748f325b825e752bbac2ec2eb1fb9419 # v1.0.1
         with:
           kotlin-version: '2.4.21'
+          kotlin-sha256: '7cc140e76daf416a0424a5557f99afd7ca89ebd463ea1101261e3e01c33e75cd'
           java-version: '25'
       - name: Compile and test the site builder and examples
         run: ./kotlin test --platform jvm -m examples -m site-builder
@@ -388,6 +390,7 @@ jobs:
       - uses: Heapy/setup-main-kts@b0858237748f325b825e752bbac2ec2eb1fb9419 # v1.0.1
         with:
           kotlin-version: '2.4.21'
+          kotlin-sha256: '7cc140e76daf416a0424a5557f99afd7ca89ebd463ea1101261e3e01c33e75cd'
           java-version: '25'
       - name: Download reports from this workflow run
         uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
